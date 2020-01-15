@@ -4,6 +4,9 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 
 
-// TODO: change routes
-Route::get('paypal/ec-checkout', 'PayPalController@getExpressCheckout');
-Route::get('paypal/ec-checkout-success', 'PayPalController@getExpressCheckoutSuccess');
+/**
+ * Payments
+ */
+Route::get('paypal/create', 'PayPalController@create')->name('paypal.create');
+Route::get('paypal/success', 'PayPalController@success')->name('paypal.success');
+Route::get('paypal/cancel', 'PayPalController@cancel')->name('paypal.cancel');

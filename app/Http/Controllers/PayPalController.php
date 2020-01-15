@@ -3,190 +3,133 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\Role;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
-use Srmklive\PayPal\Services\AdaptivePayments;
-use Srmklive\PayPal\Services\ExpressCheckout;
+use PayPal\Api\Amount;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Rest\ApiContext;
 
-// TODO: fix code make it work
 class PayPalController extends Controller
 {
-    /**
-     * @var ExpressCheckout
-     */
-    protected $provider;
+    private $paypal;
 
     public function __construct()
     {
-        $this->provider = new ExpressCheckout();
+        $this->paypal = new ApiContext(new OAuthTokenCredential(
+                config('paypal.client_id'),
+                config('paypal.secret'))
+        );
+        $this->paypal->setConfig(config('paypal.settings'));
+        $this->middleware('auth');
     }
 
-    public function getIndex(Request $request)
+    public function create()
     {
-        $response = [];
-        if (session()->has('code')) {
-            $response['code'] = session()->get('code');
-            session()->forget('code');
+        $user = auth()->user();
+
+        if ($user->hasPurchased()) {
+            return back()->with('error', 'You already own the client.');
         }
 
-        if (session()->has('message')) {
-            $response['message'] = session()->get('message');
-            session()->forget('message');
-        }
+        $price = 20.0;
+        $name = config('app.name');
 
-        return view('welcome', compact('response'));
-    }
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function getExpressCheckout(Request $request)
-    {
-        $recurring = ($request->get('mode') === 'recurring') ? true : false;
-        $cart = $this->getCheckoutData($recurring);
+        $item = new Item();
+        $item->setName($name)
+            ->setCurrency('USD')
+            ->setQuantity(1)
+            ->setPrice($price);
+
+        $itemList = new ItemList();
+        $itemList->setItems([$item]);
+
+        $amount = new Amount();
+        $amount->setCurrency('USD')
+            ->setTotal($price);
+
+        $transaction = new Transaction();
+        $transaction->setAmount($amount)
+            ->setItemList($itemList)
+            ->setDescription($name)
+            ->setInvoiceNumber(uniqid());
+
+        $redirectUrls = new RedirectUrls();
+        $redirectUrls->setReturnUrl(route('paypal.success'))
+            ->setCancelUrl(route('paypal.cancel'));
+
+        $payment = new Payment();
+        $payment->setIntent('sale')
+            ->setPayer($payer)
+            ->setRedirectUrls($redirectUrls)
+            ->setTransactions([$transaction]);
 
         try {
-            $response = $this->provider->setExpressCheckout($cart, $recurring);
-
-            return redirect($response['paypal_link']);
-        } catch (\Exception $e) {
-            $invoice = $this->createInvoice($cart, 'Invalid');
-
-            session()->put(['code' => 'danger', 'message' => "Error processing PayPal payment for Order $invoice->id!"]);
+            $payment->create($this->paypal);
+        } catch (Exception $e) {
+            return redirect('/')->with('error', 'Some error occurred, please try again later.');
         }
+
+        session(['payment_id' => $payment->getId()]);
+        return redirect()->away($payment->getApprovalLink());
     }
 
-    /**
-     * Process payment on PayPal.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getExpressCheckoutSuccess(Request $request)
+    public function success(Request $request)
     {
-        $recurring = ($request->get('mode') === 'recurring') ? true : false;
-        $token = $request->get('token');
-        $PayerID = $request->get('PayerID');
+        $paymentID = session('payment_id');
+        session()->forget('payment_id');
 
-        $cart = $this->getCheckoutData($recurring);
-
-        // Verify Express Checkout Token
-        $response = $this->provider->getExpressCheckoutDetails($token);
-
-        if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-            if ($recurring === true) {
-                $response = $this->provider->createMonthlySubscription($response['TOKEN'], 9.99, $cart['subscription_desc']);
-                if (!empty($response['PROFILESTATUS']) && in_array($response['PROFILESTATUS'], ['ActiveProfile', 'PendingProfile'])) {
-                    $status = 'Processed';
-                } else {
-                    $status = 'Invalid';
-                }
-            } else {
-                // Perform transaction on PayPal
-                $payment_status = $this->provider->doExpressCheckoutPayment($cart, $token, $PayerID);
-                $status = $payment_status['PAYMENTINFO_0_PAYMENTSTATUS'];
-            }
-
-            $invoice = $this->createInvoice($cart, $status);
-
-            if ($invoice->paid) {
-                session()->put(['code' => 'success', 'message' => "Order $invoice->id has been paid successfully!"]);
-            } else {
-                session()->put(['code' => 'danger', 'message' => "Error processing PayPal payment for Order $invoice->id!"]);
-            }
-
-            return redirect('/');
+        if (!$request->has('PayerID') || !$request->has('token')) {
+            return redirect('/')->with('error', 'Payment failed.');
         }
+
+        $token = $request->token;
+        $payerID = $request->PayerID;
+
+        $execution = new PaymentExecution();
+        $execution->setPayerId($payerID);
+
+        try {
+            $result = Payment::get($paymentID, $this->paypal)->execute($execution, $this->paypal);
+        } catch (Exception $e) {
+            return redirect('/')->with('error', 'Payment failed.');
+        }
+
+        if ($result->getState() == 'approved') {
+
+            $user = auth()->user();
+
+            $invoice = new Invoice();
+            $invoice->token = $token;
+            $invoice->payer_id = $payerID;
+            $invoice->payment_id = $paymentID;
+            $invoice->invoice_id = $result->getTransactions()[0]->getInvoiceNumber();
+            $invoice->user_id = $user->id;
+            $invoice->save();
+
+            $user->role_id = Role::PREMIUM[0];
+            $user->save();
+
+            return redirect('/')->with('success', 'Payment success.');
+        }
+
+        return redirect('/')->with('error', 'Payment failed.');
     }
 
-
-    /**
-     * Set cart data for processing payment on PayPal.
-     *
-     * @param bool $recurring
-     *
-     * @return array
-     */
-    protected function getCheckoutData($recurring = false)
+    public function cancel()
     {
-        $data = [];
-
-        $order_id = Invoice::all()->count() + 1;
-
-        if ($recurring === true) {
-            $data['items'] = [
-                [
-                    'name' => 'Monthly Subscription ' . config('paypal.invoice_prefix') . ' #' . $order_id,
-                    'price' => 0,
-                    'qty' => 1,
-                ],
-            ];
-
-            $data['return_url'] = url('/paypal/ec-checkout-success?mode=recurring');
-            $data['subscription_desc'] = 'Monthly Subscription ' . config('paypal.invoice_prefix') . ' #' . $order_id;
-        } else {
-            $data['items'] = [
-                [
-                    'name' => 'Product 1',
-                    'price' => 9.99,
-                    'qty' => 1,
-                ],
-                [
-                    'name' => 'Product 2',
-                    'price' => 4.99,
-                    'qty' => 2,
-                ],
-            ];
-
-            $data['return_url'] = url('/paypal/ec-checkout-success');
-        }
-
-        $data['invoice_id'] = config('paypal.invoice_prefix') . '_' . $order_id;
-        $data['invoice_description'] = "Order #$order_id Invoice";
-        $data['cancel_url'] = url('/');
-
-        $total = 0;
-        foreach ($data['items'] as $item) {
-            $total += $item['price'] * $item['qty'];
-        }
-
-        $data['total'] = $total;
-
-        return $data;
+        return redirect('/')->with('error', 'Payment cancelled.');
     }
 
-    /**
-     * Create invoice.
-     *
-     * @param array $cart
-     * @param string $status
-     *
-     * @return \App\Invoice
-     */
-    protected function createInvoice($cart, $status)
-    {
-        $invoice = new Invoice();
-        $invoice->title = $cart['invoice_description'];
-        $invoice->price = $cart['total'];
-        if (!strcasecmp($status, 'Completed') || !strcasecmp($status, 'Processed')) {
-            $invoice->paid = 1;
-        } else {
-            $invoice->paid = 0;
-        }
-        $invoice->save();
-
-        collect($cart['items'])->each(function ($product) use ($invoice) {
-            $item = new Item();
-            $item->invoice_id = $invoice->id;
-            $item->item_name = $product['name'];
-            $item->item_price = $product['price'];
-            $item->item_qty = $product['qty'];
-
-            $item->save();
-        });
-
-        return $invoice;
-    }
 }

@@ -22,13 +22,13 @@ class CreateRolesTable extends Migration
 
         // inserting default data
         DB::table('roles')->insert(
-            ['name' => Role::DEFAULT]
+            ['name' => Role::DEFAULT[1]]
         );
         DB::table('roles')->insert(
-            ['name' => Role::PREMIUM]
+            ['name' => Role::PREMIUM[1]]
         );
         DB::table('roles')->insert(
-            ['name' => Role::ADMIN]
+            ['name' => Role::ADMIN[1]]
         );
     }
 

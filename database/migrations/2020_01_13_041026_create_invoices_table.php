@@ -14,11 +14,12 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            // TODO: add more attributes 
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
-            $table->double('price', 2);
-            $table->boolean('paid');
+            $table->string('invoice_id');
+            $table->string('payment_id');
+            $table->string('payer_id');
+            $table->string('token');
             $table->timestamps();
         });
     }

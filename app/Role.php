@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    const DEFAULT = 'Default';
-    const PREMIUM = 'Premium';
-    const ADMIN = 'Admin';
+    const DEFAULT = [1, 'Default'];
+    const PREMIUM = [2, 'Premium'];
+    const ADMIN = [3, 'Admin'];
 }
