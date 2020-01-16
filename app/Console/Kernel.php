@@ -2,6 +2,11 @@
 
 namespace App\Console;
 
+use App\Notifications\SubscriptionUpdate;
+use App\Role;
+use App\User;
+use App\Util\Constants;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,13 +24,17 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+            $users = User::where('subscription_end', Carbon::now()->format(Constants::DATE_FORMAT))->get();
+            foreach ($users as $user) {
+                $user->renewSubscription();
+            }
+        })->at('01:00');
     }
 
     /**
@@ -35,7 +44,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . ' /Commands');
 
         require base_path('routes/console.php');
     }

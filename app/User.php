@@ -2,19 +2,19 @@
 
 namespace App;
 
+use App\Notifications\SubscriptionUpdate;
+use Bavix\Wallet\Interfaces\Wallet;
+use Bavix\Wallet\Traits\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-/**
- * @property int role_id
- */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, Wallet
 {
-    use Notifiable;
+    use Notifiable, HasWallet;
 
     protected $fillable = [
-        'name', 'email', 'password', 'hwid'
+        'name', 'email', 'password', 'hwid', 'role_id'
     ];
 
     protected $hidden = [
@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'subscription_end' => 'date'
     ];
 
     public function isAdmin(): bool
@@ -35,8 +36,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role_id == Role::PREMIUM[0] || $this->isAdmin();
     }
 
-    public function invoice()
+    public function invoices()
     {
-        return $this->hasOne('App\Invoice');
+        return $this->hasMany('App\Invoice');
+    }
+
+    public function renewSubscription()
+    {
+        if ($this->safePay($item)) {
+            $this->pay($item);
+        } else {
+            $this->role_id = Role::DEFAULT;
+            $this->subscription_end = null;
+            $this->save();
+            $this->notify(new SubscriptionUpdate($this, 'Your subscription has expired. Please renew it you want to continue using the client.'));
+        }
     }
 }
