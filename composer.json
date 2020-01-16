@@ -13,8 +13,7 @@
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.1",
-        "paypal/rest-api-sdk-php": "*",
-        "ext-http": "*"
+        "paypal/rest-api-sdk-php": "*"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
