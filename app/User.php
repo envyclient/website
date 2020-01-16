@@ -3,15 +3,13 @@
 namespace App;
 
 use App\Notifications\SubscriptionUpdate;
-use Bavix\Wallet\Interfaces\Wallet;
-use Bavix\Wallet\Traits\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail, Wallet
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasWallet;
+    use Notifiable;
 
     protected $fillable = [
         'name', 'email', 'password', 'hwid', 'role_id'
@@ -26,6 +24,16 @@ class User extends Authenticatable implements MustVerifyEmail, Wallet
         'subscription_end' => 'date'
     ];
 
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice');
+    }
+
+    public function subscription()
+    {
+        return $this->hasOne('App\Subscription');
+    }
+
     public function isAdmin(): bool
     {
         return $this->role_id == Role::ADMIN[0];
@@ -36,20 +44,18 @@ class User extends Authenticatable implements MustVerifyEmail, Wallet
         return $this->role_id == Role::PREMIUM[0] || $this->isAdmin();
     }
 
-    public function invoices()
-    {
-        return $this->hasMany('App\Invoice');
-    }
-
     public function renewSubscription()
     {
+        $item = $this->subscription->plan;
         if ($this->safePay($item)) {
             $this->pay($item);
+
+            $this->notify(new SubscriptionUpdate($this, 'Your subscription has been renewed.'));
         } else {
             $this->role_id = Role::DEFAULT;
-            $this->subscription_end = null;
+            $this->subscription->end_date = null;
             $this->save();
-            $this->notify(new SubscriptionUpdate($this, 'Your subscription has expired. Please renew it you want to continue using the client.'));
+            $this->notify(new SubscriptionUpdate($this, 'Your subscription has expired. Please renew it you wish to continue using the client.'));
         }
     }
 }

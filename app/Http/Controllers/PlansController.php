@@ -13,6 +13,8 @@ class PlansController extends Controller
         $user = auth()->user();
         if ($user->safePay($item)) {
             $user->pay($item);
+
+
         } else {
             return back()->with('error', 'You do not have enough credits.');
         }

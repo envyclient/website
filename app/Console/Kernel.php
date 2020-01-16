@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
 {
     /**
      * The Artisan commands provided by your application.
-     *
+     * comp *
      * @var array
      */
     protected $commands = [
@@ -30,9 +30,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $users = User::where('subscription_end', Carbon::now()->format(Constants::DATE_FORMAT))->get();
-            foreach ($users as $user) {
-                $user->renewSubscription();
+            $subscriptions = User::where('end_date', Carbon::now()->format(Constants::DATE_FORMAT))->get();
+            foreach ($subscriptions as $subscription) {
+                $subscription->user->renewSubscription();
             }
         })->at('01:00');
     }
