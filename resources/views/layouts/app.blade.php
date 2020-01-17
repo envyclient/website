@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -40,6 +41,8 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
+
+
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
@@ -51,6 +54,15 @@
                             </li>
                         @endif
                     @else
+
+                        {{-- TODO: link to purchase plans page --}}
+                        <div class="m-2">
+                            <a href="#" class="badge badge-secondary fa-1x">
+                                <i class="fas fa-coins" style="padding-right: 5px;"></i>
+                                {{ Auth::user()->balance == null ? 0 :  Auth::user()->balance == null}}
+                            </a>
+                        </div>
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

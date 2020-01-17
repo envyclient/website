@@ -30,7 +30,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $subscriptions = User::where('end_date', Carbon::now()->format(Constants::DATE_FORMAT))->get();
+            $subscriptions = User::where([
+                'end_date' => Carbon::now()->format(Constants::DATE_FORMAT),
+                'renew' => true
+            ])->get();
             foreach ($subscriptions as $subscription) {
                 $subscription->user->renewSubscription();
             }

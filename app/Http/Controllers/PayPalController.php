@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
-use App\Role;
-use Carbon\Carbon;
+use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Http\Request;
 use PayPal\Api\Amount;
@@ -24,24 +23,18 @@ class PayPalController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['verified', 'auth']);
+
         $this->paypal = new ApiContext(new OAuthTokenCredential(
                 config('paypal.client_id'),
                 config('paypal.secret'))
         );
         $this->paypal->setConfig(config('paypal.settings'));
-        $this->middleware('auth');
     }
 
-    public function create()
+    public function create(float $price)
     {
-        $user = auth()->user();
-
-        if ($user->hasPurchased()) {
-            return back()->with('error', 'You already own the client.');
-        }
-
-        $price = 20.0;
-        $name = config('app.name');
+        $name = config('app.name') . ': Add Credits';
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
@@ -78,20 +71,24 @@ class PayPalController extends Controller
         try {
             $payment->create($this->paypal);
         } catch (Exception $e) {
-            return redirect('/')->with('error', 'Some error occurred, please try again later.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Some error occurred, please try again later.');
         }
 
-        session(['payment_id' => $payment->getId()]);
+        session([
+            'payment_id' => $payment->getId(),
+            'price' => $price
+        ]);
         return redirect()->away($payment->getApprovalLink());
     }
 
     public function success(Request $request)
     {
         $paymentID = session('payment_id');
-        session()->forget('payment_id');
+        $price = session('price');
+        session()->forget(['payment_id', 'price']);
 
         if (!$request->has('PayerID') || !$request->has('token')) {
-            return redirect('/')->with('error', 'Payment failed.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Payment failed.');
         }
 
         $token = $request->token;
@@ -103,7 +100,7 @@ class PayPalController extends Controller
         try {
             $result = Payment::get($paymentID, $this->paypal)->execute($execution, $this->paypal);
         } catch (Exception $e) {
-            return redirect('/')->with('error', 'Payment failed.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Payment failed.');
         }
 
         if ($result->getState() == 'approved') {
@@ -118,18 +115,17 @@ class PayPalController extends Controller
             $invoice->user_id = $user->id;
             $invoice->save();
 
-            $user->role_id = Role::PREMIUM[0];
-            $user->save();
+            $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => 'Deposit of ' . $price . ' credits from Stripe Payment.']);
 
-            return redirect('/')->with('success', 'Payment success.');
+            return redirect(RouteServiceProvider::HOME)->with('success', 'Payment success.');
         }
 
-        return redirect('/')->with('error', 'Payment failed.');
+        return redirect(RouteServiceProvider::HOME)->with('error', 'Payment failed.');
     }
 
     public function cancel()
     {
-        return redirect('/')->with('error', 'Payment cancelled.');
+        return redirect(RouteServiceProvider::HOME)->with('error', 'Payment cancelled.');
     }
 
 }
