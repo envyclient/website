@@ -3,25 +3,25 @@
 namespace App;
 
 use App\Notifications\SubscriptionUpdate;
+use App\Traits\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasWallet;
 
     protected $fillable = [
         'name', 'email', 'password', 'hwid', 'role_id'
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'subscription_end' => 'date'
+        'email_verified_at' => 'datetime'
     ];
 
     public function invoices()
@@ -34,22 +34,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Subscription');
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->role_id == Role::ADMIN[0];
-    }
-
-    public function hasPurchased(): bool
-    {
-        return $this->role_id == Role::PREMIUM[0] || $this->isAdmin();
-    }
-
     public function renewSubscription()
     {
-        $item = $this->subscription->plan;
-        if ($this->safePay($item)) {
-            $this->pay($item);
+        $user = auth()->user();
+        $price = $this->subscription->plan->price;
 
+        if ($user->canWithdraw($price)) {
+            $user->withdraw($price);
             $this->notify(new SubscriptionUpdate($this, 'Your subscription has been renewed.'));
         } else {
             $this->role_id = Role::DEFAULT;
