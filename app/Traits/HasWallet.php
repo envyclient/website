@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use App\Wallet;
-
 trait HasWallet
 {
     /**
@@ -27,7 +25,7 @@ trait HasWallet
      */
     public function transactions()
     {
-        return $this->hasManyThrough('App\Transaction', config('wallet.wallet_model', Wallet::class))->latest();
+        return $this->hasManyThrough('App\Transaction', 'App\Wallet')->latest();
     }
 
     /**

@@ -59,7 +59,7 @@
                         <div class="m-2">
                             <a href="#" class="badge badge-secondary fa-1x">
                                 <i class="fas fa-coins" style="padding-right: 5px;"></i>
-                                {{ Auth::user()->balance == null ? 0 :  Auth::user()->balance == null}}
+                                {{ Auth::user()->balance == null ? 0 :  Auth::user()->balance }}
                             </a>
                         </div>
 
@@ -89,6 +89,9 @@
     </nav>
 
     <main class="py-4">
+        <div class="container">
+            @include('inc.notifications')
+        </div>
         @yield('content')
     </main>
 </div>

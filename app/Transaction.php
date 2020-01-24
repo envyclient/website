@@ -22,7 +22,7 @@ class Transaction extends Model
      */
     public function wallet()
     {
-        return $this->belongsTo(config('wallet.wallet_model', Wallet::class));
+        return $this->belongsTo('App\Wallet');
     }
 
     /**
