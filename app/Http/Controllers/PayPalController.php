@@ -32,9 +32,14 @@ class PayPalController extends Controller
         $this->paypal->setConfig(config('paypal.settings'));
     }
 
-    public function create(float $price)
+    public function create(Request $request)
     {
+        $this->validate($request, [
+            'price' => 'required|numeric'
+        ]);
+
         $name = config('app.name') . ': Add Credits';
+        $price = $request->price;
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');

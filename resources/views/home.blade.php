@@ -13,7 +13,17 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <a class="btn btn-primary" href="{{ route('paypal.create') }}">TEST</a>
+
+                        {!! Form::open(['action' => 'PayPalController@create', 'method' => 'POST']) !!}
+                        {{ Form::hidden('price', 10) }}
+                        {{ Form::submit('10', ['class' => 'btn btn-secondary', 'style' => 'margin-right: 5px']) }}
+                        {!! Form::close() !!}
+
+                        {!! Form::open(['action' => 'PayPalController@create', 'method' => 'POST']) !!}
+                        {{ Form::hidden('price', 15) }}
+                        {{ Form::submit('15', ['class' => 'btn btn-secondary']) }}
+                        {!! Form::close() !!}
+
                     </div>
                 </div>
             </div>
