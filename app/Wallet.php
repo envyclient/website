@@ -10,4 +10,9 @@ class Wallet extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany('App\Transaction');
+    }
 }
