@@ -120,7 +120,7 @@ class PayPalController extends Controller
             $invoice->user_id = $user->id;
             $invoice->save();
 
-            $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => 'Deposit of ' . $price . ' credits from Stripe Payment.']);
+            $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => 'Deposit of ' . $price . ' credits from PayPal Payment.']);
 
             return redirect(RouteServiceProvider::HOME)->with('success', 'Payment success.');
         }

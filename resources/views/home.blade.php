@@ -26,6 +26,35 @@
 
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">Transactions</div>
+
+                    <div class="card-body">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($transactions as $transaction)
+                                <tr>
+                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                    <td>{{ $transaction->amount }}</td>
+                                    <td>{{ $transaction->meta['description'] }}</td>
+                                    <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
