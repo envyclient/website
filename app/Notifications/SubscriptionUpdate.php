@@ -23,7 +23,7 @@ class SubscriptionUpdate extends Notification implements ShouldQueue
     public function __construct(User $user, string $message)
     {
         $this->user = $user;
-        $this->$message = $message;
+        $this->message = $message;
     }
 
     /**

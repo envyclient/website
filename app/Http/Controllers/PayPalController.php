@@ -35,7 +35,7 @@ class PayPalController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'price' => 'required|numeric'
+            'price' => 'required|int|between:5,100'
         ]);
 
         $name = config('app.name') . ': Add Credits';
@@ -120,7 +120,7 @@ class PayPalController extends Controller
             $invoice->user_id = $user->id;
             $invoice->save();
 
-            $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => 'Deposit of ' . $price . ' credits from PayPal Payment.']);
+            $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => 'Deposit of ' . $price . ' credits using PayPal.']);
 
             return redirect(RouteServiceProvider::HOME)->with('success', 'Payment success.');
         }

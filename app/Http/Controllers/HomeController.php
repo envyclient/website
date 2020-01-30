@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Plan;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
@@ -16,10 +17,11 @@ class HomeController extends Controller
      *
      * @return Renderable
      */
-    public function index()
+    public function dashboard()
     {
         return view('home')->with([
-            'transactions' => auth()->user()->wallet->transactions
+            'transactions' => auth()->user()->wallet->transactions,
+            'plans' => Plan::all()
         ]);
     }
 }

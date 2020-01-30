@@ -2,9 +2,17 @@
 
 Auth::routes(['verify' => true]);
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
+/**
+ * Home
+ */
+Route::get('/', 'HomeController@dashboard')->name('home');
+Route::get('home', 'HomeController@dashboard')->name('dashboard');
 
+/**
+ * Subscriptions
+ */
+Route::post('subscriptions/subscribe', 'SubscriptionsController@subscribe')->name('subscriptions.subscribe');
+Route::post('subscriptions/cancel', 'SubscriptionsController@cancel')->name('subscriptions.cancel');
 
 /**
  * Payments
