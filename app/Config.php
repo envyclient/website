@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Config extends Model
 {
+    const LIMIT = 5;
+    
     protected $casts = [
         'data' => 'json'
     ];

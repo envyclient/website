@@ -11,7 +11,7 @@ class ConfigsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('api');
+        $this->middleware('auth:api');
     }
 
     public function index()
@@ -66,7 +66,16 @@ class ConfigsController extends Controller
             ], 400);
         }
 
+        $user = $request->user();
+
+        if ($user->configs()->count() === Config::LIMIT) {
+            return response()->json([
+                'message' => '406 Not Acceptable'
+            ], 406);
+        }
+
         $config = new Config();
+        $config->user_id = $user->id;
         $config->title = $request->title;
         $config->data = $request->data;
         if ($request->has('public')) {

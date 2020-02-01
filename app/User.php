@@ -26,7 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime'
     ];
 
-
     public function configs()
     {
         return $this->hasMany('App\Config');
