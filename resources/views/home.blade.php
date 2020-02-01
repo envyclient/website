@@ -22,17 +22,28 @@
                         <hr>
 
                         <h5>Subscribe</h5>
-
                         @foreach($plans as $plan)
                             {!! Form::open(['action' => 'SubscriptionsController@subscribe', 'method' => 'POST']) !!}
                             {{ Form::hidden('plan', $plan->id) }}
                             {{ Form::submit('' . $plan->price . ' / '.$plan->title, ['class' => 'btn btn-secondary']) }}
                             {!! Form::close() !!}
                         @endforeach
-
                         {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
                         {{ Form::submit('Cancel', ['class' => 'btn btn-danger']) }}
                         {!! Form::close() !!}
+
+                        <hr>
+
+                        <h5>AAL Name (you can not change)</h5>
+                        @if(auth()->user()->aal_name !== null)
+                            <input type="text" class="form-control" value="{{ auth()->user()->aal_name }}" disabled>
+                        @else
+                            {!! Form::open(['action' => 'HomeController@updateAalName', 'method' => 'POST']) !!}
+                            {{ Form::text('name', auth()->user()->aal_name, ['class' => 'form-control', 'required']) }}
+                            {{ Form::hidden('_method', 'PUT') }}
+                            {{ Form::submit('Submit', ['class' => 'btn btn-secondary']) }}
+                            {!! Form::close() !!}
+                        @endif
 
                     </div>
                 </div>

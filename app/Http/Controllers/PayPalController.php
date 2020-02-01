@@ -23,7 +23,7 @@ class PayPalController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['verified', 'auth']);
+        $this->middleware(['auth', 'verified', 'aal_name']);
 
         $this->paypal = new ApiContext(new OAuthTokenCredential(
                 config('paypal.client_id'),

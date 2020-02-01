@@ -4,6 +4,7 @@ namespace App;
 
 use App\Notifications\SubscriptionUpdate;
 use App\Traits\HasWallet;
+use App\Util\AAL;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,6 +59,10 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->withdraw($price);
             $this->notify(new SubscriptionUpdate($this, 'Your subscription has been renewed.'));
         } else {
+
+            //TODO: check return code
+            AAL::removeUser($this);
+
             $this->subscription->end_date = null;
             $this->save();
             $this->notify(new SubscriptionUpdate($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.'));

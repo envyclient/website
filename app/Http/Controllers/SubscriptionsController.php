@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Plan;
 use App\Rules\PlanExists;
 use App\Subscription;
+use App\Util\AAL;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class SubscriptionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'auth']);
+        $this->middleware(['auth', 'verified', 'aal_name']);
     }
 
     public function subscribe(Request $request)
@@ -30,6 +31,9 @@ class SubscriptionsController extends Controller
 
         $price = $plan->price;
         if ($user->canWithdraw($price)) {
+
+            //TODO: check return code
+            AAL::addUser($user);
 
             $subscription = Subscription::firstOrNew(['user_id' => $user->id]);
             $subscription->plan_id = $plan->id;
