@@ -15,7 +15,8 @@
         "laravel/ui": "^1.1",
         "laravelcollective/html": "^6.0",
         "mashape/unirest-php": "^3.0",
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "*",
+        "tymon/jwt-auth": "1.0.0-rc.5.1"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

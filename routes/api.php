@@ -1,6 +1,15 @@
 <?php
 
-Route::get('api/configs/user/{name}', 'ConfigsController@getConfigsByUser');
-Route::resource('configs', 'ConfigsController')->only([
+Route::group([
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('login', 'API\AuthController@login');
+    Route::post('logout', 'API\AuthController@logout');
+    Route::post('refresh', 'API\AuthController@refresh');
+    Route::post('me', 'API\AuthController@me');
+});
+
+Route::get('api/configs/user/{name}', 'API\ConfigsController@getConfigsByUser');
+Route::resource('configs', 'API\ConfigsController')->only([
     'index', 'show', 'store'
 ]);
