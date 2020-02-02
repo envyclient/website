@@ -19,20 +19,17 @@ class ConfigsController extends Controller
     {
         return Config::with('user')
             ->where('public', true)
-            ->orderBy('stars', 'desc')
             ->get();
+    }
+
+    public function getCurrentUserConfigs(Request $request)
+    {
+        return $request->user()->configs;
     }
 
     public function getConfigsByUser(Request $request, $name)
     {
-        $user = User::where('name', $name);
-
-        if (!$user->exists()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
+        $user = User::where('name', $name)->firstOrFail();
         return $user->configs()
             ->where('public', true)
             ->get();
@@ -40,17 +37,10 @@ class ConfigsController extends Controller
 
     public function show(Request $request, $id)
     {
-        $config = Config::with('user')
+        return Config::with('user')
+            ->where('id', $id)
             ->where('public', true)
-            ->where('id', $id);
-
-        if (!$config->exists()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
-        return $config->get();
+            ->firstOrFail();
     }
 
     public function store(Request $request)
@@ -87,5 +77,13 @@ class ConfigsController extends Controller
         return response()->json([
             'message' => '201 Created'
         ], 201);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $request->user()->configs()->findOrFail($id)->delete();
+        return response()->json([
+            'message' => '200 OK'
+        ], 200);
     }
 }

@@ -9,7 +9,8 @@ Route::group([
     Route::post('me', 'API\AuthController@me');
 });
 
-Route::get('api/configs/user/{name}', 'API\ConfigsController@getConfigsByUser');
+Route::get('user/configs', 'API\ConfigsController@getCurrentUserConfigs');
+Route::get('configs/user/{name}', 'API\ConfigsController@getConfigsByUser');
 Route::resource('configs', 'API\ConfigsController')->only([
-    'index', 'show', 'store'
+    'index', 'show', 'store', 'destroy'
 ]);

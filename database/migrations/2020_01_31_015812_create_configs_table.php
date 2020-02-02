@@ -16,9 +16,9 @@ class CreateConfigsTable extends Migration
         Schema::create('configs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->string('title');
             $table->json('data');
             $table->boolean('public')->default(false);
-            $table->unsignedInteger('stars')->default(0);
             $table->timestamps();
         });
     }
