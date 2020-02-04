@@ -35,15 +35,42 @@
                         <hr>
 
                         <h5>AAL Name (you can not change)</h5>
-                        @if(auth()->user()->aal_name !== null)
-                            <input type="text" class="form-control" value="{{ auth()->user()->aal_name }}" disabled>
+                        @if($user->aal_name !== null)
+                            <input type="text" class="form-control" value="{{ $user->aal_name }}" disabled>
                         @else
-                            {!! Form::open(['action' => 'HomeController@updateAalName', 'method' => 'POST']) !!}
-                            {{ Form::text('name', auth()->user()->aal_name, ['class' => 'form-control', 'required']) }}
+                            {!! Form::open(['action' => 'UsersController@updateAalName', 'method' => 'POST']) !!}
+                            {{ Form::text('name', $user->aal_name, ['class' => 'form-control', 'required']) }}
                             {{ Form::hidden('_method', 'PUT') }}
                             {{ Form::submit('Submit', ['class' => 'btn btn-secondary']) }}
                             {!! Form::close() !!}
                         @endif
+
+                        <hr>
+
+                        <div>
+                            {!! Form::open(['action' => 'UsersController@updateCape', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                            <div class="form-group">
+                                <h5>Cape</h5>
+                                @if($user->cape != null)
+                                    <img src="{{ url('/storage/capes/' . $user->cape) }}"
+                                         alt="cape"
+                                         class="rounded"
+                                         height="197"
+                                         width="256">
+                                @else
+                                    <img src="{{ asset('assets/default-cape.png') }}" alt="no cape" class="rounded"
+                                         height="197"
+                                         width="256">
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                {{ Form::file('file') }}
+                            </div>
+                            {{ Form::hidden('_method', 'PUT') }}
+                            {{ Form::submit('Upload', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
+                        </div>
+
 
                     </div>
                 </div>

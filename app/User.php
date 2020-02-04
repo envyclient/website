@@ -15,8 +15,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use Notifiable, HasWallet;
 
+    const CAPES_DIRECTORY = 'public/capes';
+
     protected $fillable = [
-        'name', 'email', 'password', 'hwid', 'admin'
+        'name', 'email', 'password', 'hwid', 'admin', 'cape'
     ];
 
     protected $hidden = [

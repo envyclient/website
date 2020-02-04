@@ -21,4 +21,8 @@ Route::post('paypal/create', 'PayPalController@create')->name('paypal.create');
 Route::get('paypal/success', 'PayPalController@success')->name('paypal.success');
 Route::get('paypal/cancel', 'PayPalController@cancel')->name('paypal.cancel');
 
-Route::put('user/update/aal', 'HomeController@updateAalName');
+/**
+ * Users
+ */
+Route::put('user/update/aal', 'UsersController@updateAalName');
+Route::put('user/update/cape', 'UsersController@updateCape');
