@@ -299,7 +299,7 @@
                                                 <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
                                                     <div class="card-body">
                                                         <h5 class="card-title text-center" style="font-size: 25px;">
-                                                            $10</h5>
+                                                            ${{ $moneyToday }}</h5>
                                                     </div>
                                                     <div
                                                         class="card-footer bg-transparent text-center font-weight-bold">
@@ -311,7 +311,7 @@
                                                 <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
                                                     <div class="card-body">
                                                         <h5 class="card-title text-center" style="font-size: 25px;">
-                                                            $50</h5>
+                                                            ${{ $moneyWeek }}</h5>
                                                     </div>
                                                     <div
                                                         class="card-footer bg-transparent text-center font-weight-bold">
@@ -323,54 +323,7 @@
                                                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                                                     <div class="card-body">
                                                         <h5 class="card-title text-center" style="font-size: 25px;">
-                                                            $150</h5>
-                                                    </div>
-                                                    <div
-                                                        class="card-footer bg-transparent text-center font-weight-bold">
-                                                        MONTH
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <i class="fas fa-rocket" style="padding-right:10px;"></i> Client Launches
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title text-center" style="font-size: 25px;">
-                                                            50</h5>
-                                                    </div>
-                                                    <div
-                                                        class="card-footer bg-transparent text-center font-weight-bold">
-                                                        TODAY
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title text-center" style="font-size: 25px;">
-                                                            250</h5>
-                                                    </div>
-                                                    <div
-                                                        class="card-footer bg-transparent text-center font-weight-bold">
-                                                        WEEK
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="card bg-light mb-3" style="max-width: 18rem;">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title text-center" style="font-size: 25px;">
-                                                            500</h5>
+                                                            ${{ $moneyMonth }}</h5>
                                                     </div>
                                                     <div
                                                         class="card-footer bg-transparent text-center font-weight-bold">
@@ -402,65 +355,51 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-striped text-center">
+                                        <table class="table table-sm">
                                             <thead>
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Email</th>
+                                                <th scope="col">AAL Name</th>
+                                                <th scope="col">Cape</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>
-                                                    <button type="button"
-                                                            class="btn btn-success d-inline-block text-white">
-                                                        <i class="fas fa-coins"></i>
-                                                    </button>
-                                                    <button type="button"
-                                                            class="btn btn-info d-inline-block text-white">
-                                                        <i class="far fa-address-card"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>
-                                                    <button type="button"
-                                                            class="btn btn-success d-inline-block text-white">
-                                                        <i class="fas fa-coins"></i>
-                                                    </button>
-                                                    <button type="button"
-                                                            class="btn btn-info d-inline-block text-white">
-                                                        <i class="far fa-address-card"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>
-                                                    <button type="button"
-                                                            class="btn btn-success d-inline-block text-white">
-                                                        <i class="fas fa-coins"></i>
-                                                    </button>
-                                                    <button type="button"
-                                                            class="btn btn-info d-inline-block text-white">
-                                                        <i class="far fa-address-card"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-
+                                            @foreach($users as $user)
+                                                <tr>
+                                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    @if($user->aal_name === null)
+                                                        <td class="text-muted">NOT SET</td>
+                                                    @else
+                                                        <td>{{ $user->aal_name }}</td>
+                                                    @endif
+                                                    @if($user->cape != null)
+                                                        <td>
+                                                            <img src="{{url('/storage/capes/' . $user->cape) }}"
+                                                                 alt="no cape" class="rounded" height="32" width="32">
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                            <img src="{{ asset('assets/default-cape.png') }}"
+                                                                 alt="no cape" class="rounded" height="32" width="32">
+                                                        </td>
+                                                    @endif
+                                                    <td>
+                                                        <button type="button"
+                                                                class="btn btn-success d-inline-block text-white">
+                                                            <i class="fas fa-coins"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                                class="btn btn-info d-inline-block text-white">
+                                                            <i class="far fa-address-card"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
