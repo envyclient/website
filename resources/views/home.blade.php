@@ -64,7 +64,7 @@
             </div>
             <div class="col-8">
                 <div class="tab-content">
-                    <div class="tab-pane fade" id="profile" role="tabpanel">
+                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
                         <div class="card" style="width:100%;">
                             <div class="card-header">
                                 <i class="fas fa-user-circle" style="padding-right:10px;"></i> Profile
@@ -372,7 +372,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" id="users" role="tabpanel">
+                        <div class="tab-pane fade" id="users" role="tabpanel">
                             <div class="card-body">
                                 <div class="card">
                                     <div class="card-header">
