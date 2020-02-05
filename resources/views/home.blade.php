@@ -64,7 +64,7 @@
             </div>
             <div class="col-8">
                 <div class="tab-content">
-                    <div class="tab-pane fade" id="profile" role="tabpanel">
+                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
                         <div class="card" style="width:100%;">
                             <div class="card-header">
                                 <i class="fas fa-user-circle" style="padding-right:10px;"></i> Profile
@@ -375,7 +375,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" id="users" role="tabpanel">
+                        <div class="tab-pane fade" id="users" role="tabpanel">
                             <div class="card-body">
                                 <div class="card">
                                     <div class="card-header">
@@ -460,6 +460,32 @@
                             </div>
                         </div>
                     @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Wooooow! Are you sure there bud?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body" style="color:red;">
+                    By delete your account you will lose access to the client & all of your current balance!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>
