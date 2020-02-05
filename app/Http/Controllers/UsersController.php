@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Util\AAL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -75,6 +76,9 @@ class UsersController extends Controller
         if ($user->id !== auth()->id() && !auth()->user()->admin) {
             return back()->with('error', 'You do not have the permission to delete this user');
         }
+
+        // TODO: remove user from aal
+        AAL::removeUser($user);
 
         $user->configs()->delete();
         $user->invoices()->delete();
