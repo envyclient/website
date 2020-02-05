@@ -5,39 +5,41 @@
         <div class="row">
             <div class="col-3">
                 <div class="list-group">
-                    <div class="list-group list-group-flush">
-                        <h3 style="margin-bottom: 25px;">
-                            <small class="text-muted">Settings</small>
-                        </h3>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile"
-                            style="cursor:pointer;">
-                            <i class="fas fa-user-circle" style="padding-right:10px;"></i>
-                            Profile
-                        </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#security"
-                            style="cursor:pointer;">
-                            <i class="fas fa-lock" style="padding-right:10px;"></i>
-                            Security
-                        </a>
-
-                        <h3 style="margin:25px 0;">
-                            <small class="text-muted">Billing</small>
-                        </h3>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#subscription"
-                            style="cursor:pointer;">
-                            <i class="fas fa-redo" style="padding-right:10px;"></i>
-                            Subscription
-                        </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#credits"
-                            style="cursor:pointer;">
-                            <i class="fas fa-credit-card" style="padding-right:10px;"></i>
-                            Add Credits
-                        </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
-                            style="cursor:pointer;">
-                            <i class="fas fa-shopping-cart" style="padding-right:10px;"></i>
-                            Transactions
-                        </a>
+                    <div class="card" style="width:100%;">
+                        <div class="list-group list-group-flush">
+                        
+                            <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
+                                <small class="text-muted">SETTINGS</small>
+                            </h3>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile"
+                               style="cursor:pointer;">
+                                <i class="fas fa-user-circle" style="padding-right:10px;"></i>
+                                Profile
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#security"
+                               style="cursor:pointer;">
+                                <i class="fas fa-lock" style="padding-right:10px;"></i>
+                                Security
+                            </a>
+                            <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
+                                <small class="text-muted">BILLING</small>
+                            </h3>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#subscription"
+                               style="cursor:pointer;">
+                                <i class="fas fa-redo" style="padding-right:10px;"></i>
+                                Subscription
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#credits"
+                               style="cursor:pointer;">
+                                <i class="fas fa-credit-card" style="padding-right:10px;"></i>
+                                Add Credits
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
+                               style="cursor:pointer;">
+                                <i class="fas fa-shopping-cart" style="padding-right:10px;"></i>
+                                Transactions
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,7 +51,7 @@
                     <div class="tab-pane fade" id="security" role="tabpanel">
                         security
                     </div>
-                    <div class="tab-pane fade show active" id="subscription" role="tabpanel">
+                    <div class="tab-pane fade" id="subscription" role="tabpanel">
                         <div class="card" style="width:100%;">
                             <div class="card-header">
                                 Update Subscription
@@ -95,8 +97,44 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="credits" role="tabpanel">
-                        credits
+                    <div class="tab-pane fade show active" id="credits" role="tabpanel">
+                        <div class="card" style="width: 100%;">
+                            <div class="card-header">
+                                Add Credits
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <h5 class="font-weight-bold">Payment methods</h5>
+                                    <h7>Currently we are only supporting PayPal payments</h7>
+                                    <div class="container m-3 font-weight-bold">
+                                        <p>Terms and Conditions</p>
+                                        <ul class="font-weight-normal">
+                                            <li>Charging back is not allowed and if detected your account will be
+                                                terminated.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card" style="width: 100%;margin-top:10px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="font-weight: bold;"><i
+                                                    class="fab fa-paypal"></i> PayPal</h5>
+                                            <p class="card-text">By purchasing credits you agree to all the terms
+                                                above.</p>
+                                            <div class="form-group">
+                                                <label for="sel1">Cash amount: </label>
+                                                <select class="form-control" id="sel1">
+                                                    <option>$5</option>
+                                                    <option>$10</option>
+                                                    <option>$15</option>
+                                                    <option>$20</option>
+                                                </select>
+                                            </div>
+                                            <button type="button" class="btn btn-primary">Add Credits</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="invoices" role="tabpanel">
                         <div class="card">
