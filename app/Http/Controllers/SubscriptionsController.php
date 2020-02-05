@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\Generic;
 use App\Plan;
 use App\Rules\PlanExists;
 use App\Subscription;
@@ -35,6 +36,8 @@ class SubscriptionsController extends Controller
             //TODO: check return code
             AAL::addUser($user);
 
+            // TODO: send email about new subscription
+
             $subscription = Subscription::firstOrNew(['user_id' => $user->id]);
             $subscription->plan_id = $plan->id;
             $subscription->end_date = Carbon::now()->addDays($plan->interval);
@@ -56,6 +59,9 @@ class SubscriptionsController extends Controller
         $subscription = $user->subscription;
         $subscription->renew = false;
         $subscription->save();
+
+        $this->notify(new Generic($user, 'You have cancelled your subscription and it will not renew.'));
+
         return back()->with('success', 'Your subscription has been cancelled and will not renew.');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\Notifications\Generic;
 use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Http\Request;
@@ -120,7 +121,9 @@ class PayPalController extends Controller
             $invoice->user_id = $user->id;
             $invoice->save();
 
-            $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => 'Deposit of ' . $price . ' credits using PayPal.']);
+            $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => "Deposit of $price credits using PayPal."]);
+
+            $this->notify(new Generic($user, "You have deposited $price credits using PayPal."));
 
             return redirect(RouteServiceProvider::HOME)->with('success', 'Payment success.');
         }

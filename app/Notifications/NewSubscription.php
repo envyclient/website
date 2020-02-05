@@ -2,28 +2,22 @@
 
 namespace App\Notifications;
 
-use App\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SubscriptionUpdate extends Notification implements ShouldQueue
+class NewSubscription extends Notification
 {
     use Queueable;
-
-    private $user, $message;
 
     /**
      * Create a new notification instance.
      *
-     * @param User $user
-     * @param string $message
+     * @return void
      */
-    public function __construct(User $user, string $message)
+    public function __construct()
     {
-        $this->user = $user;
-        $this->message = $message;
+        //
     }
 
     /**
@@ -46,9 +40,9 @@ class SubscriptionUpdate extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Hello ' . $this->user->name)
-            ->line($this->message)
-            ->action('Visit Website', url('/'));
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**

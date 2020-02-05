@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Notifications\SubscriptionUpdate;
+use App\Notifications\Generic;
 use App\Traits\HasWallet;
 use App\Util\AAL;
 use Carbon\Carbon;
@@ -59,7 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             $user->subscription()->save();
 
             $user->withdraw($price);
-            $this->notify(new SubscriptionUpdate($this, 'Your subscription has been renewed.'));
+            $this->notify(new Generic($this, 'Your subscription has been renewed.'));
         } else {
 
             //TODO: check return code
@@ -67,7 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
             $this->subscription->end_date = null;
             $this->save();
-            $this->notify(new SubscriptionUpdate($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.'));
+            $this->notify(new Generic($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.'));
         }
     }
 
