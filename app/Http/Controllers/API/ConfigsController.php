@@ -25,6 +25,8 @@ class ConfigsController extends Controller
 
     public function getCurrentUserConfigs(Request $request)
     {
+        // TODO: return user configs, user favorite configs, and followed users configs
+
         return $request->user()->configs;
     }
 
