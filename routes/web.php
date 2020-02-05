@@ -5,7 +5,7 @@ Auth::routes(['verify' => true]);
 /**
  * Home
  */
-Route::get('/', 'HomeController@dashboard')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('home', 'HomeController@dashboard')->name('dashboard');
 
 /**

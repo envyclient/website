@@ -9,7 +9,12 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'auth']);
+        $this->middleware(['verified', 'auth'])->except('index');
+    }
+
+    public function index()
+    {
+        return view('pages.index');
     }
 
     /**
@@ -19,7 +24,7 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
-        return view('home')->with([
+        return view('pages.dashboard')->with([
             'user' => auth()->user(),
             'transactions' => auth()->user()->wallet->transactions,
             'plans' => Plan::all()
