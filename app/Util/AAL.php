@@ -66,7 +66,7 @@ class AAL
         Request::verifyPeer(false);
 
         $endpoint = config('aal.endpoint');
-        $app_id = 1;
+        $app_id = config('all.app_id');
         $name = $user->aal_name;
         $api_key = config('aal.api_key');
         $header = [

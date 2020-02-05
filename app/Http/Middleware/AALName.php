@@ -16,7 +16,7 @@ class AALName
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->isAdmin !== null) {
+        if (auth()->user()->aal_name !== null) {
             return $next($request);
         }
         return back()->with('error', 'You must set your AAL name');
