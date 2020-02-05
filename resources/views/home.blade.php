@@ -21,6 +21,11 @@
                                 <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                                 Security
                             </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#support"
+                               style="cursor:pointer;">
+                                <i class="fas fa-question-circle p-2" style="margin-right:10px;"></i>
+                                Support
+                            </a>
                             <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
                                 <small class="text-muted ">BILLING</small>
                             </h3>
@@ -45,17 +50,66 @@
             </div>
             <div class="col-8">
                 <div class="tab-content">
-                    <div class="tab-pane fade" id="profile" role="tabpanel">
-                        profile
+                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                        <div class="card" style="width:100%;">
+                            <div class="card-header">
+                                <i class="fas fa-user-circle" style="padding-right:10px;"></i> Profile
+                            </div>
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            {!! Form::open(['action' => 'UsersController@updateCape', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                            <div class="form-group">
+                                                <h5>Cape</h5>
+                                                @if($user->cape != null)
+                                                    <img src="{{ url('/storage/capes/' . $user->cape) }}"
+                                                         alt="cape"
+                                                         class="rounded"
+                                                         height="197"
+                                                         width="256">
+                                                @else
+                                                    <img src="{{ asset('assets/default-cape.png') }}" alt="no cape"
+                                                         class="rounded"
+                                                         height="197"
+                                                         width="256">
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                {{ Form::file('file') }}
+                                            </div>
+                                            {{ Form::hidden('_method', 'PUT') }}
+                                            {{ Form::submit('Upload', ['class' => 'btn btn-primary']) }}
+                                            {!! Form::close() !!}
+                                        </div>
+                                        <div class="col">
+                                            <h5>AAL Name (you can not change)</h5>
+                                            @if($user->aal_name !== null)
+                                                <input type="text" class="form-control" value="{{ $user->aal_name }}"
+                                                       disabled>
+                                            @else
+                                                {!! Form::open(['action' => 'UsersController@updateAalName', 'method' => 'POST']) !!}
+                                                {{ Form::text('name', $user->aal_name, ['class' => 'form-control', 'required']) }}
+                                                {{ Form::hidden('_method', 'PUT') }}
+                                                {{ Form::submit('Submit', ['class' => 'btn btn-secondary']) }}
+                                                {!! Form::close() !!}
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tab-pane fade show active" id="security" role="tabpanel">
+                    <div class="tab-pane fade" id="security" role="tabpanel">
                         <div class="card">
                             <div class="card-header">
                                 <i class="fas fa-lock" style="padding-right:10px;"></i> Security
                             </div>
                             <div class="card-body">
-                                <h5 class="font-weight-bold">Email: <p class="font-weight-normal m-2">test@email.com</p></h5>
-                                <h5 class="font-weight-bold">Name: <p class="font-weight-normal m-2">test_name</p></h5>
+                                <h5 class="font-weight-bold">Email: <p
+                                        class="font-weight-normal m-2">{{$user->email}}</p></h5>
+                                <h5 class="font-weight-bold">Name: <p class="font-weight-normal m-2">{{$user->name}}</p>
+                                </h5>
                                 <div class="card-body">
                                     <div class="container">
                                         <h6>Password: </h6>
@@ -75,6 +129,9 @@
                                 <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Delete Account</button>
                             </ul>
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="support" role="tabpanel">
+                        support
                     </div>
                     <div class="tab-pane fade" id="subscription" role="tabpanel">
                         <div class="card" style="width:100%;">
@@ -117,7 +174,8 @@
                         <br>
                         <div class="card" style="width: 100%;">
                             <ul class="list-group list-group-flush">
-                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Cancel Subscription</button>
+                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Cancel Subscription
+                                </button>
                             </ul>
                         </div>
                     </div>
