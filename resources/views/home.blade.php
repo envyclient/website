@@ -13,30 +13,30 @@
                             </h3>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile"
                                style="cursor:pointer;">
-                                <i class="fas fa-user-circle" style="padding-right:10px;"></i>
+                                <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
                                 Profile
                             </a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#security"
                                style="cursor:pointer;">
-                                <i class="fas fa-lock" style="padding-right:10px;"></i>
+                                <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                                 Security
                             </a>
                             <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
-                                <small class="text-muted">BILLING</small>
+                                <small class="text-muted ">BILLING</small>
                             </h3>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#subscription"
                                style="cursor:pointer;">
-                                <i class="fas fa-redo" style="padding-right:10px;"></i>
+                                <i class="fas fa-redo  p-2" style="margin-right:10px;"></i>
                                 Subscription
                             </a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#credits"
                                style="cursor:pointer;">
-                                <i class="fas fa-credit-card" style="padding-right:10px;"></i>
+                                <i class="fas fa-credit-card p-2" style="margin-right:10px;"></i>
                                 Add Credits
                             </a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
                                style="cursor:pointer;">
-                                <i class="fas fa-shopping-cart" style="padding-right:10px;"></i>
+                                <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
                                 Transactions
                             </a>
                         </div>
@@ -48,8 +48,33 @@
                     <div class="tab-pane fade" id="profile" role="tabpanel">
                         profile
                     </div>
-                    <div class="tab-pane fade" id="security" role="tabpanel">
-                        security
+                    <div class="tab-pane fade show active" id="security" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-lock" style="padding-right:10px;"></i> Security
+                            </div>
+                            <div class="card-body">
+                                <h5 class="font-weight-bold">Email: <p class="font-weight-normal m-2">test@email.com</p></h5>
+                                <h5 class="font-weight-bold">Name: <p class="font-weight-normal m-2">test_name</p></h5>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <h6>Password: </h6>
+                                        <input type="password" class="form-control" value="">
+                                        <br>
+                                        <h6>Confirm Password: </h6>
+                                        <input type="password" class="form-control" value="">
+                                        <br>
+                                        <button type="button" class="btn btn-success">Change Password</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="card" style="width: 100%;">
+                            <ul class="list-group list-group-flush">
+                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Delete Account</button>
+                            </ul>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="subscription" role="tabpanel">
                         <div class="card" style="width:100%;">
@@ -96,7 +121,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-pane fade show active" id="credits" role="tabpanel">
+                    <div class="tab-pane fade" id="credits" role="tabpanel">
                         <div class="card" style="width: 100%;">
                             <div class="card-header">
                                 <i class="fas fa-credit-card" style="padding-right:10px;"></i> Add Credits
@@ -137,7 +162,9 @@
                     </div>
                     <div class="tab-pane fade" id="invoices" role="tabpanel">
                         <div class="card">
-                            <div class="card-header"><i class="fas fa-shopping-cart" style="padding-right:10px;"></i> Transactions</div>
+                            <div class="card-header"><i class="fas fa-shopping-cart" style="padding-right:10px;"></i>
+                                Transactions
+                            </div>
                             <div class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
