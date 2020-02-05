@@ -26,3 +26,4 @@ Route::get('paypal/cancel', 'PayPalController@cancel')->name('paypal.cancel');
  */
 Route::put('user/update/aal', 'UsersController@updateAalName');
 Route::put('user/update/cape', 'UsersController@updateCape');
+Route::delete('user/{user}', 'UsersController@destroy');

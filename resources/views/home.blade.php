@@ -140,7 +140,10 @@
                         <br>
                         <div class="card" style="width: 100%;">
                             <ul class="list-group list-group-flush">
-                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Delete Account</button>
+                                {!! Form::open(['action' => ['UsersController@destroy', auth()->id()]]) !!}
+                                {{ Form::hidden('_method', 'DELETE') }}
+                                {{ Form::submit('Delete Account', ['class' => 'btn btn-outline-danger w-25 m-sm-2']) }}
+                                {!! Form::close() !!}
                             </ul>
                         </div>
                     </div>

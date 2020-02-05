@@ -48,4 +48,19 @@ class UsersController extends Controller
 
         return back()->with('success', 'Cape updated');
     }
+
+    public function destroy(Request $request, $user)
+    {
+        $user = User::findOrFail($request->user);
+        if ($user->id !== auth()->id() && !auth()->user()->admin) {
+            return back()->with('error', 'You do not have the permission to delete this user');
+        }
+
+        $user->configs()->delete();
+        $user->invoices()->delete();
+        $user->subscription()->delete();
+        $user->delete();
+
+        return back()->with('success', 'Account deleted');
+    }
 }
