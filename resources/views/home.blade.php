@@ -106,9 +106,9 @@
                                 <i class="fas fa-lock" style="padding-right:10px;"></i> Security
                             </div>
                             <div class="card-body">
-                                <h5 class="font-weight-bold">Email: <p
-                                        class="font-weight-normal m-2">{{$user->email}}</p></h5>
-                                <h5 class="font-weight-bold">Name: <p class="font-weight-normal m-2">{{$user->name}}</p>
+                                <h5 class="font-weight-bold p-1">EMAIL: <p
+                                        class="font-weight-normal m-2" style="padding-left:5px;">{{$user->email}}</p></h5>
+                                <h5 class="font-weight-bold p-1">NAME: <p class="font-weight-normal m-2" style="padding-left:5px;">{{$user->name}}</p>
                                 </h5>
                                 <div class="card-body">
                                     <div class="container">
@@ -131,7 +131,14 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="support" role="tabpanel">
-                        support
+                        <div class="card" style="width:100%;">
+                            <div class="card-header">
+                                <i class="fas fa-question-circle" style="padding-right:10px;"></i> Support
+                            </div>
+                            <ul class="card-body">
+                                <li class="list-group-item">Working progress...</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="subscription" role="tabpanel">
                         <div class="card" style="width:100%;">
