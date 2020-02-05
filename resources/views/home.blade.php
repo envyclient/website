@@ -5,45 +5,44 @@
         <div class="row">
             <div class="col-3">
                 <div class="list-group">
-                    <div class="card" style="width:100%;">
-                        <div class="list-group list-group-flush">
-                            <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
-                                <small class="text-muted">SETTINGS</small>
-                            </h3>
-                            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#profile"
-                               style="cursor:pointer;">
-                                <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
-                                Profile
-                            </a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#security"
-                               style="cursor:pointer;">
-                                <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
-                                Security
-                            </a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#support"
-                               style="cursor:pointer;">
-                                <i class="fas fa-question-circle p-2" style="margin-right:10px;"></i>
-                                Support
-                            </a>
-                            <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
-                                <small class="text-muted ">BILLING</small>
-                            </h3>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#subscription"
-                               style="cursor:pointer;">
-                                <i class="fas fa-redo  p-2" style="margin-right:10px;"></i>
-                                Subscription
-                            </a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#credits"
-                               style="cursor:pointer;">
-                                <i class="fas fa-credit-card p-2" style="margin-right:10px;"></i>
-                                Add Credits
-                            </a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
-                               style="cursor:pointer;">
-                                <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
-                                Transactions
-                            </a>
-                        </div>
+                    <div class="list-group list-group-flush">
+                        <h3 class="m-3 font-weight-bold" style="font-size:18px;">
+                            <small class="text-muted">SETTINGS</small>
+                        </h3>
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#profile"
+                           style="cursor:pointer;">
+                            <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
+                            Profile
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#security"
+                           style="cursor:pointer;">
+                            <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
+                            Security
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#support"
+                           style="cursor:pointer;">
+                            <i class="fas fa-question-circle p-2" style="margin-right:10px;"></i>
+                            Support
+                        </a>
+                        <br>
+                        <h3 class="m-3 font-weight-bold" style="font-size:18px;">
+                            <small class="text-muted ">BILLING</small>
+                        </h3>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#subscription"
+                           style="cursor:pointer;">
+                            <i class="fas fa-redo  p-2" style="margin-right:10px;"></i>
+                            Subscription
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#credits"
+                           style="cursor:pointer;">
+                            <i class="fas fa-credit-card p-2" style="margin-right:10px;"></i>
+                            Add Credits
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
+                           style="cursor:pointer;">
+                            <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
+                            Transactions
+                        </a>
                     </div>
                 </div>
             </div>
