@@ -7,7 +7,7 @@
                 <div class="list-group">
                     <div class="card" style="width:100%;">
                         <div class="list-group list-group-flush">
-                        
+
                             <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
                                 <small class="text-muted">SETTINGS</small>
                             </h3>
@@ -54,7 +54,7 @@
                     <div class="tab-pane fade" id="subscription" role="tabpanel">
                         <div class="card" style="width:100%;">
                             <div class="card-header">
-                                Update Subscription
+                                <i class="fas fa-redo" style="padding-right:10px;"></i> Update Subscription
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">You are currently subscribed to the Basic (Monthly) plan.
@@ -92,15 +92,14 @@
                         <br>
                         <div class="card" style="width: 100%;">
                             <ul class="list-group list-group-flush">
-                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Cancel Subscription
-                                </button>
+                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Cancel Subscription</button>
                             </ul>
                         </div>
                     </div>
                     <div class="tab-pane fade show active" id="credits" role="tabpanel">
                         <div class="card" style="width: 100%;">
                             <div class="card-header">
-                                Add Credits
+                                <i class="fas fa-credit-card" style="padding-right:10px;"></i> Add Credits
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
@@ -138,7 +137,7 @@
                     </div>
                     <div class="tab-pane fade" id="invoices" role="tabpanel">
                         <div class="card">
-                            <div class="card-header">Transactions</div>
+                            <div class="card-header"><i class="fas fa-shopping-cart" style="padding-right:10px;"></i> Transactions</div>
                             <div class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
