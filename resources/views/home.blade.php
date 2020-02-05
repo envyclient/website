@@ -376,10 +376,82 @@
                             <div class="card-body">
                                 <div class="card">
                                     <div class="card-header">
-                                        <i class="fas fa-users-cog" style="padding-right:10px;"></i> Users
+                                        <div class="row">
+                                            <div class="col">
+                                                <i class="fas fa-users-cog" style="padding-right:10px;"></i> Users
+                                            </div>
+                                            <div class="row">
+                                                <form class="form-inline">
+                                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                                    <input class="form-control form-control-sm ml-3 w-75" type="text"
+                                                           placeholder="Search"
+                                                           aria-label="Search">
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
-                                        
+                                        <table class="table table-striped text-center">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-success d-inline-block text-white">
+                                                        <i class="fas fa-coins"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn-info d-inline-block text-white">
+                                                        <i class="far fa-address-card"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-success d-inline-block text-white">
+                                                        <i class="fas fa-coins"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn-info d-inline-block text-white">
+                                                        <i class="far fa-address-card"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>Larry</td>
+                                                <td>the Bird</td>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-success d-inline-block text-white">
+                                                        <i class="fas fa-coins"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn-info d-inline-block text-white">
+                                                        <i class="far fa-address-card"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
