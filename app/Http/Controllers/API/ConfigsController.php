@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Config;
 use App\Http\Controllers\Controller;
+use App\Rules\Config as ConfigRule;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -82,6 +83,32 @@ class ConfigsController extends Controller
     public function destroy(Request $request, $id)
     {
         $request->user()->configs()->findOrFail($id)->delete();
+        return response()->json([
+            'message' => '200 OK'
+        ], 200);
+    }
+
+    public function favorite(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'config' => ['required', 'int', new ConfigRule]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        $config = Config::find($request->config);
+        $user = $request->user();
+
+        if ($user->hasFavorited($config)) {
+            $user->unfavorite($config);
+        } else {
+            $user->favorite($config);
+        }
+
         return response()->json([
             'message' => '200 OK'
         ], 200);

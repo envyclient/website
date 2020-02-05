@@ -39,6 +39,7 @@ class NewSubscription extends Notification
      */
     public function toMail($notifiable)
     {
+        // TODO
         return (new MailMessage)
             ->line('The introduction to the notification.')
             ->action('Notification Action', url('/'))

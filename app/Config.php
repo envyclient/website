@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Overtrue\LaravelFollow\Traits\CanBeFavorited;
 
 /**
  * @property string title
@@ -11,8 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Config extends Model
 {
+    use CanBeFavorited;
+
     const LIMIT = 5;
-    
+
     protected $casts = [
         'data' => 'json'
     ];

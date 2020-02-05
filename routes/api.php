@@ -9,6 +9,7 @@ Route::group([
     Route::post('me', 'API\AuthController@me');
 });
 
+Route::put('configs/favorite', 'API\ConfigsController@favorite');
 Route::get('user/configs', 'API\ConfigsController@getCurrentUserConfigs');
 Route::get('configs/user/{name}', 'API\ConfigsController@getConfigsByUser');
 Route::resource('configs', 'API\ConfigsController')->only([
