@@ -43,12 +43,28 @@
                             <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
                             Transactions
                         </a>
+                        @if ($user->admin)
+                            <br>
+                            <h3 class="m-3 font-weight-bold" style="font-size:18px;">
+                                <small class="text-muted ">ADMINISTRATOR</small>
+                            </h3>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#statistics"
+                               style="cursor:pointer;">
+                                <i class="fas fa-balance-scale p-2" style="margin-right:10px;"></i>
+                                Statistics
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
+                               style="cursor:pointer;">
+                                <i class="fas fa-users-cog p-2" style="margin-right:10px;"></i>
+                                Users
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-8">
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                    <div class="tab-pane fade" id="profile" role="tabpanel">
                         <div class="card" style="width:100%;">
                             <div class="card-header">
                                 <i class="fas fa-user-circle" style="padding-right:10px;"></i> Profile
@@ -81,7 +97,7 @@
                                             {!! Form::close() !!}
                                         </div>
                                         <div class="col">
-                                            <h5>AAL Name (you can not change)</h5>
+                                            <h5>AAL Name (Can only be set once)</h5>
                                             @if($user->aal_name !== null)
                                                 <input type="text" class="form-control" value="{{ $user->aal_name }}"
                                                        disabled>
@@ -89,7 +105,7 @@
                                                 {!! Form::open(['action' => 'UsersController@updateAalName', 'method' => 'POST']) !!}
                                                 {{ Form::text('name', $user->aal_name, ['class' => 'form-control', 'required']) }}
                                                 {{ Form::hidden('_method', 'PUT') }}
-                                                {{ Form::submit('Submit', ['class' => 'btn btn-secondary']) }}
+                                                {{ Form::submit('Submit', ['class' => 'btn btn-secondary m-1']) }}
                                                 {!! Form::close() !!}
                                             @endif
                                         </div>
@@ -256,6 +272,104 @@
                             </div>
                         </div>
                     </div>
+                    @if($user->admin)
+                        <div class="tab-pane fade show active" id="statistics" role="tabpanel">
+                            <div class="card-body">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fas fa-dollar-sign" style="padding-right:10px;"></i> Profit
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-center" style="font-size: 25px;">
+                                                            $10</h5>
+                                                    </div>
+                                                    <div
+                                                        class="card-footer bg-transparent text-center font-weight-bold">
+                                                        TODAY
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-center" style="font-size: 25px;">
+                                                            $50</h5>
+                                                    </div>
+                                                    <div
+                                                        class="card-footer bg-transparent text-center font-weight-bold">
+                                                        WEEK
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-center" style="font-size: 25px;">
+                                                            $150</h5>
+                                                    </div>
+                                                    <div
+                                                        class="card-footer bg-transparent text-center font-weight-bold">
+                                                        MONTH
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fas fa-rocket" style="padding-right:10px;"></i> Client Launches
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-center" style="font-size: 25px;">
+                                                            50</h5>
+                                                    </div>
+                                                    <div
+                                                        class="card-footer bg-transparent text-center font-weight-bold">
+                                                        TODAY
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-center" style="font-size: 25px;">
+                                                            250</h5>
+                                                    </div>
+                                                    <div
+                                                        class="card-footer bg-transparent text-center font-weight-bold">
+                                                        WEEK
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-center" style="font-size: 25px;">
+                                                            500</h5>
+                                                    </div>
+                                                    <div
+                                                        class="card-footer bg-transparent text-center font-weight-bold">
+                                                        MONTH
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
