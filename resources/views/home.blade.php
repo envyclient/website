@@ -53,7 +53,7 @@
                                 <i class="fas fa-balance-scale p-2" style="margin-right:10px;"></i>
                                 Statistics
                             </a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#users"
                                style="cursor:pointer;">
                                 <i class="fas fa-users-cog p-2" style="margin-right:10px;"></i>
                                 Users
@@ -160,7 +160,9 @@
                                 <i class="fas fa-redo" style="padding-right:10px;"></i> Update Subscription
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">You are currently subscribed to the Basic (Monthly) plan.
+                                <li class="list-group-item">
+                                    You are currently subscribed to the Basic (Monthly) plan. (next payment in due in 14
+                                    days)
                                 </li>
                                 <li class="list-group-item">
                                     <div class="row" style="line-height:60px;">
@@ -195,7 +197,8 @@
                         <br>
                         <div class="card" style="width: 100%;">
                             <ul class="list-group list-group-flush">
-                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Cancel Subscription
+                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">
+                                    Cancel Subscription
                                 </button>
                             </ul>
                         </div>
@@ -273,7 +276,7 @@
                         </div>
                     </div>
                     @if($user->admin)
-                        <div class="tab-pane fade show active" id="statistics" role="tabpanel">
+                        <div class="tab-pane fade" id="statistics" role="tabpanel">
                             <div class="card-body">
                                 <div class="card">
                                     <div class="card-header">
@@ -365,6 +368,18 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active" id="users" role="tabpanel">
+                            <div class="card-body">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fas fa-users-cog" style="padding-right:10px;"></i> Users
+                                    </div>
+                                    <div class="card-body">
+                                        
                                     </div>
                                 </div>
                             </div>
