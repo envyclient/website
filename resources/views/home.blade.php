@@ -2,106 +2,132 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Dashboard</div>
+        <div class="row">
+            <div class="col-3">
+                <div class="list-group">
+                    <div class="list-group list-group-flush">
+                        <h3 style="margin-bottom: 25px;">
+                            <small class="text-muted">Settings</small>
+                        </h3>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile"
+                            style="cursor:pointer;">
+                            <i class="fas fa-user-circle" style="padding-right:10px;"></i>
+                            Profile
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#security"
+                            style="cursor:pointer;">
+                            <i class="fas fa-lock" style="padding-right:10px;"></i>
+                            Security
+                        </a>
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {!! Form::open(['action' => 'PayPalController@create', 'method' => 'POST']) !!}
-                        {{ Form::number('price', 10, ['min' => 5, 'max' => 100]) }}
-                        {{ Form::submit('Add', ['class' => 'btn btn-secondary', 'style' => 'margin-right: 5px']) }}
-                        {!! Form::close() !!}
-
-                        <hr>
-
-                        <h5>Subscribe</h5>
-                        @foreach($plans as $plan)
-                            {!! Form::open(['action' => 'SubscriptionsController@subscribe', 'method' => 'POST']) !!}
-                            {{ Form::hidden('plan', $plan->id) }}
-                            {{ Form::submit('' . $plan->price . ' / '.$plan->title, ['class' => 'btn btn-secondary']) }}
-                            {!! Form::close() !!}
-                        @endforeach
-                        {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
-                        {{ Form::submit('Cancel', ['class' => 'btn btn-danger']) }}
-                        {!! Form::close() !!}
-
-                        <hr>
-
-                        <h5>AAL Name (you can not change)</h5>
-                        @if($user->aal_name !== null)
-                            <input type="text" class="form-control" value="{{ $user->aal_name }}" disabled>
-                        @else
-                            {!! Form::open(['action' => 'UsersController@updateAalName', 'method' => 'POST']) !!}
-                            {{ Form::text('name', $user->aal_name, ['class' => 'form-control', 'required']) }}
-                            {{ Form::hidden('_method', 'PUT') }}
-                            {{ Form::submit('Submit', ['class' => 'btn btn-secondary']) }}
-                            {!! Form::close() !!}
-                        @endif
-
-                        <hr>
-
-                        <div>
-                            {!! Form::open(['action' => 'UsersController@updateCape', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                            <div class="form-group">
-                                <h5>Cape</h5>
-                                @if($user->cape != null)
-                                    <img src="{{ url('/storage/capes/' . $user->cape) }}"
-                                         alt="cape"
-                                         class="rounded"
-                                         height="197"
-                                         width="256">
-                                @else
-                                    <img src="{{ asset('assets/default-cape.png') }}" alt="no cape" class="rounded"
-                                         height="197"
-                                         width="256">
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                {{ Form::file('file') }}
-                            </div>
-                            {{ Form::hidden('_method', 'PUT') }}
-                            {{ Form::submit('Upload', ['class' => 'btn btn-primary']) }}
-                            {!! Form::close() !!}
-                        </div>
-
-
+                        <h3 style="margin:25px 0;">
+                            <small class="text-muted">Billing</small>
+                        </h3>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#subscription"
+                            style="cursor:pointer;">
+                            <i class="fas fa-redo" style="padding-right:10px;"></i>
+                            Subscription
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#credits"
+                            style="cursor:pointer;">
+                            <i class="fas fa-credit-card" style="padding-right:10px;"></i>
+                            Add Credits
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
+                            style="cursor:pointer;">
+                            <i class="fas fa-shopping-cart" style="padding-right:10px;"></i>
+                            Transactions
+                        </a>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">Transactions</div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Date</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($transactions as $transaction)
-                                <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
-                                    @if($transaction->type == 'deposit')
-                                        <td style="color: green">+{{ $transaction->amount }}</td>
-                                    @else
-                                        <td style="color: red">-{{ $transaction->amount }}</td>
-                                    @endif
-                                    <td>{{ $transaction->meta['description'] }}</td>
-                                    <td>{{ $transaction->created_at->diffForHumans() }}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+            </div>
+            <div class="col-8">
+                <div class="tab-content">
+                    <div class="tab-pane fade" id="profile" role="tabpanel">
+                        profile
+                    </div>
+                    <div class="tab-pane fade" id="security" role="tabpanel">
+                        security
+                    </div>
+                    <div class="tab-pane fade show active" id="subscription" role="tabpanel">
+                        <div class="card" style="width:100%;">
+                            <div class="card-header">
+                                Update Subscription
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">You are currently subscribed to the Basic (Monthly) plan.
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row" style="line-height:60px;">
+                                        <div class="col">
+                                            <input class="form-check-inline" type="radio" name="exampleRadios"
+                                                   id="exampleRadios1" value="option1"> Free
+                                        </div>
+                                        <div class="col">
+                                            <a class="btn btn-light">Features</a>
+                                        </div>
+                                        <div class="col">
+                                            Free
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row" style="line-height:60px;">
+                                        <div class="col">
+                                            <input class="form-check-inline" type="radio" name="exampleRadios"
+                                                   id="exampleRadios1" value="option2" checked> Basic
+                                        </div>
+                                        <div class="col">
+                                            <a class="btn btn-light">Features</a>
+                                        </div>
+                                        <div class="col">
+                                            $10.00 / Monthly
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                        <div class="card" style="width: 100%;">
+                            <ul class="list-group list-group-flush">
+                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Cancel Subscription
+                                </button>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="credits" role="tabpanel">
+                        credits
+                    </div>
+                    <div class="tab-pane fade" id="invoices" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">Transactions</div>
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($transactions as $transaction)
+                                        <tr>
+                                            <th scope="row">{{ $loop->index + 1 }}</th>
+                                            @if($transaction->type == 'deposit')
+                                                <td style="color: green">+{{ $transaction->amount }}</td>
+                                            @else
+                                                <td style="color: red">-{{ $transaction->amount }}</td>
+                                            @endif
+                                            <td>{{ $transaction->meta['description'] }}</td>
+                                            <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
