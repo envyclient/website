@@ -7,7 +7,6 @@
                 <div class="list-group">
                     <div class="card" style="width:100%;">
                         <div class="list-group list-group-flush">
-
                             <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
                                 <small class="text-muted">SETTINGS</small>
                             </h3>
@@ -106,20 +105,20 @@
                                 <i class="fas fa-lock" style="padding-right:10px;"></i> Security
                             </div>
                             <div class="card-body">
-                                <h5 class="font-weight-bold p-1">EMAIL: <p
-                                        class="font-weight-normal m-2" style="padding-left:5px;">{{$user->email}}</p></h5>
-                                <h5 class="font-weight-bold p-1">NAME: <p class="font-weight-normal m-2" style="padding-left:5px;">{{$user->name}}</p>
-                                </h5>
-                                <div class="card-body">
-                                    <div class="container">
-                                        <h6>Password: </h6>
-                                        <input type="password" class="form-control" value="">
-                                        <br>
-                                        <h6>Confirm Password: </h6>
-                                        <input type="password" class="form-control" value="">
-                                        <br>
-                                        <button type="button" class="btn btn-success">Change Password</button>
-                                    </div>
+                                <div class="container">
+                                    <h6>Name: </h6>
+                                    <input type="text" class="form-control" value="{{$user->name}}" disabled>
+                                    <br>
+                                    <h6>Email: </h6>
+                                    <input type="text" class="form-control" value="{{$user->email}}" disabled>
+                                    <br>
+                                    <h6>Password: </h6>
+                                    <input type="password" class="form-control" value="">
+                                    <br>
+                                    <h6>Confirm Password: </h6>
+                                    <input type="password" class="form-control" value="">
+                                    <br>
+                                    <button type="button" class="btn btn-success">Change Password</button>
                                 </div>
                             </div>
                         </div>
