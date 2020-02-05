@@ -11,7 +11,7 @@
                             <h3 class="m-3 font-weight-bold text-center" style="font-size:18px;">
                                 <small class="text-muted">SETTINGS</small>
                             </h3>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile"
+                            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#profile"
                                style="cursor:pointer;">
                                 <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
                                 Profile
