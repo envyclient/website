@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
@@ -49,9 +50,28 @@ class UsersController extends Controller
         return back()->with('success', 'Cape updated');
     }
 
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password_current' => 'required|min:8',
+            'password' => 'required|min:8|confirmed|different:password_current',
+            'password_confirmation' => 'required_with:password|min:8'
+        ]);
+
+        if (Hash::check($request->password, auth()->user()->password)) {
+            return back()->with('error', 'You have entered wrong password');
+        }
+
+        auth()->user()->fill([
+            'password' => Hash::make($request->password)
+        ])->save();
+
+        return back()->with('success', 'Your password has been updated');
+    }
+
     public function destroy(Request $request, $user)
     {
-        $user = User::findOrFail($request->user);
+        $user = User::findOrFail($user);
         if ($user->id !== auth()->id() && !auth()->user()->admin) {
             return back()->with('error', 'You do not have the permission to delete this user');
         }

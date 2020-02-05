@@ -121,19 +121,27 @@
                             </div>
                             <div class="card-body">
                                 <div class="container">
-                                    <h6>Name: </h6>
-                                    <input type="text" class="form-control" value="{{$user->name}}" disabled>
+                                    {!! Form::open(['action' => 'UsersController@updatePassword']) !!}
+                                    {{ Form::hidden('_method', 'PUT') }}
+
+                                    {{ Form::label('name', 'Name: ') }}
+                                    {{ Form::text('name', $user->name, ['class' => 'form-control', 'disabled']) }}
                                     <br>
-                                    <h6>Email: </h6>
-                                    <input type="text" class="form-control" value="{{$user->email}}" disabled>
+                                    {{ Form::label('email', 'Email: ') }}
+                                    {{ Form::text('email', $user->email, ['class' => 'form-control', 'disabled']) }}
                                     <br>
-                                    <h6>Password: </h6>
-                                    <input type="password" class="form-control" value="">
+                                    {{ Form::label('password_current', 'Current password: ') }}
+                                    {{ Form::password('password_current', ['class' => 'form-control', 'required']) }}
                                     <br>
-                                    <h6>Confirm Password: </h6>
-                                    <input type="password" class="form-control" value="">
+                                    {{ Form::label('password', 'New password: ') }}
+                                    {{ Form::password('password', ['class' => 'form-control', 'required']) }}
                                     <br>
-                                    <button type="button" class="btn btn-success">Change Password</button>
+                                    {{ Form::label('password_confirmation', 'New password confrim: ') }}
+                                    {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
+                                    <br>
+                                    {{ Form::submit('Change Password', ['class' => 'btn btn-success']) }}
+
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>
