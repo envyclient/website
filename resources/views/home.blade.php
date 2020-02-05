@@ -140,7 +140,10 @@
                         <br>
                         <div class="card" style="width: 100%;">
                             <ul class="list-group list-group-flush">
-                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">Delete Account</button>
+                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2" data-toggle="modal"
+                                        data-target="#deleteModal">
+                                    Delete Account
+                                </button>
                             </ul>
                         </div>
                     </div>
@@ -457,6 +460,32 @@
                             </div>
                         </div>
                     @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Wooooow! Are you sure there bud?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body" style="color:red;">
+                    By delete your account you will lose access to the client & all of your current balance!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>
