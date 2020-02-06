@@ -421,7 +421,9 @@
                                                     @endif
                                                     <td>
                                                         <button type="button"
-                                                                class="btn btn-success d-inline-block text-white">
+                                                                class="btn btn-success d-inline-block text-white"
+                                                                data-toggle="modal"
+                                                                data-target="#modal-{{$user->name}}">
                                                             <i class="fas fa-coins"></i>
                                                         </button>
                                                         <button type="button"
@@ -430,6 +432,45 @@
                                                         </button>
                                                     </td>
                                                 </tr>
+
+                                                <div class="modal fade" id="modal-{{$user->name}}" tabindex="-1"
+                                                     role="dialog" aria-labelledby=""
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Add
+                                                                    coins to {{$user->name}}'s account.</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="card-body">
+                                                                    {!! Form::open() !!}
+                                                                    <div class="form-group">
+                                                                        {{ Form::label('amount', 'Cash amount: ') }}
+                                                                        {{ Form::select('amount', [
+                                                                            '5' => '$5',
+                                                                            '10' => '$10',
+                                                                            '15' => '$15',
+                                                                            '20' => '$20',
+                                                                        ], '5', ['class' => 'form-control']) }}
+                                                                    </div>
+                                                                    {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
+                                                                    {!! Form::close() !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                    Cancel
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             @endforeach
                                             </tbody>
                                         </table>
