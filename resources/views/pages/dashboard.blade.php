@@ -149,10 +149,10 @@
                         <br>
                         <div class="card" style="width: 100%;">
                             <ul class="list-group list-group-flush">
-                                {!! Form::open(['action' => ['UsersController@destroy', auth()->id()]]) !!}
-                                {{ Form::hidden('_method', 'DELETE') }}
-                                {{ Form::submit('Delete Account', ['class' => 'btn btn-outline-danger w-25 m-sm-2']) }}
-                                {!! Form::close() !!}
+                                <button type="button" class="btn btn-outline-danger m-2 w-25" data-toggle="modal"
+                                        data-target="#deleteModal">
+                                    Delete
+                                </button>
                             </ul>
                         </div>
                     </div>
@@ -503,9 +503,10 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-danger">
-                        Delete
-                    </button>
+                    {!! Form::open(['action' => ['UsersController@destroy', auth()->id()]]) !!}
+                    {{ Form::hidden('_method', 'DELETE') }}
+                    {{ Form::submit('Delete Account', ['class' => 'btn btn-outline-danger m-sm-2']) }}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
