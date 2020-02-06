@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="card bg-white mb-3 p-3"
-                         style="max-width: 18rem;margin:0 auto;border-top:3px solid #2fa360;">
+                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #2fa360;">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold p-1">AlphaAntiLeak</h5>
                             <p class="card-text p-1">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col text-center">
                     <div class="card bg-white mb-3 p-3"
-                         style="max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
+                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold p-1">Cloud</h5>
                             <p class="card-text p-1">
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col text-center">
                     <div class="card bg-white mb-3 p-3"
-                         style="max-width: 18rem;margin:0 auto;border-top:3px solid #227dc7;">
+                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #227dc7;">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold p-1">Design</h5>
                             <p class="card-text p-1">
@@ -77,15 +77,17 @@
     </div>
 
     <div style="width:100%;margin:0 auto;text-align:center;display:block;">
-        <h1 style="padding-bottom:30px;">Videos</h1>
-        <div class="row">
-            <div class="col-sm">
-                <iframe src="https://www.youtube.com/embed/Rh-Fn0zHVi8"
-                        style="width: 50em;height:25em;"></iframe>
+        <h1 style="padding-bottom:30px;">ShowCase</h1>
+        <div class="row" style="margin:0 auto;">
+            <div class="col-sm-6" style="margin:0 auto;">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Rh-Fn0zHVi8"></iframe>
+                </div>
             </div>
-            <div class="col-sm">
-                <iframe src="https://www.youtube.com/embed/zwJRWAB4fM4"
-                        style="width: 50em;height:25em;"></iframe>
+            <div class="col-sm-6" style="margin:0 auto;">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="https://www.youtube.com/embed/zwJRWAB4fM4"></iframe>
+                </div>
             </div>
         </div>
     </div>
