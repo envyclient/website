@@ -36,11 +36,11 @@ class PayPalController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'price' => 'required|int|between:5,100'
+            'amount' => 'required|int|between:5,100'
         ]);
 
         $name = config('app.name') . ': Add Credits';
-        $price = $request->price;
+        $price = $request->amount;
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
@@ -123,7 +123,7 @@ class PayPalController extends Controller
 
             $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => "Deposit of $price credits using PayPal."]);
 
-            $this->notify(new Generic($user, "You have deposited $price credits using PayPal."));
+            $user->notify(new Generic($user, "You have deposited $$price worth of credits using PayPal."));
 
             return redirect(RouteServiceProvider::HOME)->with('success', 'Payment success.');
         }

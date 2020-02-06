@@ -29,8 +29,10 @@ class HomeController extends Controller
     {
         // TODO: do admin check and pass in certain data
 
+        $user = auth()->user();
+
         $moneyToday = Transaction::where('type', 'deposit')
-            ->whereDate('created_at', Carbon::today()->toString())
+            ->whereDate('created_at', Carbon::today())
             ->sum('amount');
 
         $moneyWeek = Transaction::where('type', 'deposit')
@@ -41,14 +43,21 @@ class HomeController extends Controller
             ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
             ->sum('amount');
 
+        $todayTransactions = Transaction::where('type', 'deposit')
+            ->whereDate('created_at', Carbon::today())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('pages.dashboard')->with([
-            'user' => auth()->user(),
-            'transactions' => auth()->user()->wallet->transactions,
+            'user' => $user,
+            'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
             'plans' => Plan::all(),
             'users' => User::all(),
             'moneyToday' => $moneyToday,
             'moneyWeek' => $moneyWeek,
-            'moneyMonth' => $moneyMonth
+            'moneyMonth' => $moneyMonth,
+            'todayTransactions' => $todayTransactions,
+            'nextSubscription' => Carbon::createFromFormat('Y-m-d', $user->subscription->end_date)->diffInDays()
         ]);
     }
 }

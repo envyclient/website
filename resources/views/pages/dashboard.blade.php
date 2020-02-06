@@ -172,7 +172,7 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    You are currently subscribed to the Basic (Monthly) plan. (next payment in due in 14
+                                    You are currently subscribed to the Basic (Monthly) plan. (next payment in due in {{ $nextSubscription }}
                                     days)
                                 </li>
                                 <li class="list-group-item">
@@ -205,14 +205,17 @@
                                 </li>
                             </ul>
                         </div>
-                        <br>
-                        <div class="card" style="width: 100%;">
-                            <ul class="list-group list-group-flush">
-                                <button type="button" class="btn btn-outline-danger w-25 m-sm-2">
-                                    Cancel Subscription
-                                </button>
-                            </ul>
-                        </div>
+                        @if($user->hasSubscription())
+                            <br>
+                            <div class="card" style="width: 100%;">
+                                <ul class="list-group list-group-flush">
+
+                                    <button type="button" class="btn btn-outline-danger w-25 m-sm-2">
+                                        Cancel Subscription
+                                    </button>
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                     <div class="tab-pane fade" id="credits" role="tabpanel">
                         <div class="card" style="width: 100%;">
@@ -237,16 +240,18 @@
                                                     class="fab fa-paypal"></i> PayPal</h5>
                                             <p class="card-text">By purchasing credits you agree to all the terms
                                                 above.</p>
+                                            {!! Form::open(['action' => 'PayPalController@create']) !!}
                                             <div class="form-group">
-                                                <label for="sel1">Cash amount: </label>
-                                                <select class="form-control" id="sel1">
-                                                    <option>$5</option>
-                                                    <option>$10</option>
-                                                    <option>$15</option>
-                                                    <option>$20</option>
-                                                </select>
+                                                {{ Form::label('amount', 'Cash amount: ') }}
+                                                {{ Form::select('amount', [
+                                                    '5' => '$5',
+                                                    '10' => '$10',
+                                                    '15' => '$15',
+                                                    '20' => '$20',
+                                                ], '5', ['class' => 'form-control']) }}
                                             </div>
-                                            <button type="button" class="btn btn-primary">Add Credits</button>
+                                            {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
+                                            {!! Form::close() !!}
                                         </div>
                                     </div>
                                 </li>
@@ -332,6 +337,30 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">User</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Date</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($todayTransactions as $transaction)
+                                                <tr>
+                                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                                    <td>{{ $transaction->wallet->user->name }}</td>
+                                                    <td style="color: green">${{ $transaction->amount }}</td>
+                                                    <td>{{ $transaction->meta['description'] }}</td>
+                                                    <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                 </div>
                             </div>
@@ -355,7 +384,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-sm">
+                                        <table class="table table-sm table-bordered">
                                             <thead>
                                             <tr>
                                                 <th scope="col">#</th>
