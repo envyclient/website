@@ -17,7 +17,7 @@
                         Purchase
                     </a>
                 @else
-                    <a class="btn btn-primary btn-lg" href="/dashboard" role="button">
+                    <a class="btn btn-primary btn-lg" href="/home" role="button">
                         <i class="fas fa-bars"></i>
                         Dashboard
                     </a>
@@ -29,7 +29,7 @@
     <div class="jumbotron jumbotron-fluid text-center" style="background: #fff; border: 1px solid rgba(34,36,38,.15);">
         <div class="container">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <h2 style="font-weight: bold;">Cross-platform compatibility</h2>
                     <p>It is a long established fact that a reader will be distracted by the readable content of a page
                         when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
@@ -37,7 +37,7 @@
                         readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as
                         their default model text, and a search for 'lorem ipsum' will uncover </p>
                 </div>
-                <div class="col-sm">
+                <div class="col">
                     <h2 style="font-weight: bold;">Easy To Use</h2>
                     <p>It is a long established fact that a reader will be distracted by the readable content of a page
                         when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
@@ -51,8 +51,16 @@
 
     <div style="width:100%;margin:0 auto;text-align:center;display:block;">
         <h1 style="padding-bottom:30px;">Videos</h1>
-        <iframe class="responsive" src="https://www.youtube.com/embed/Rh-Fn0zHVi8"></iframe>
-        <iframe class="responsive" src="https://www.youtube.com/embed/zwJRWAB4fM4"></iframe>
+        <div class="row">
+            <div class="col-sm">
+                <iframe src="https://www.youtube.com/embed/Rh-Fn0zHVi8"
+                        style="width: 50em;height:25em;"></iframe>
+            </div>
+            <div class="col-sm">
+                <iframe src="https://www.youtube.com/embed/zwJRWAB4fM4"
+                        style="width: 50em;height:25em;"></iframe>
+            </div>
+        </div>
     </div>
 
     <div class="jumbotron jumbotron-fluid text-center"
@@ -64,7 +72,7 @@
                         <h5 class="card-title" style="color:rgba(192, 57, 43,1.0); font-weight: bold;">Lead
                             Developer</h5>
                         <p class="card-text" style="font-weight: bold;">
-                        <h3>Mat1337</h3></p>
+                        <h3>Mat1337</h3>
                         <a class="footer-icon git" target="_blank" href="https://github.com/Mat1337">
                             <i class="fab fa-github"> </i>
                         </a>
@@ -74,7 +82,7 @@
                     <div class="card-body">
                         <h5 class="card-title" style="color:rgba(41, 128, 185,1.0); font-weight: bold;">Developer</h5>
                         <p class="card-text" style="font-weight: bold;">
-                        <h3>FlyCode</h3></p>
+                        <h3>FlyCode</h3>
                         <a class="footer-icon git" target="_blank" href="https://github.com/FlyC0de">
                             <i class="fab fa-github"> </i>
                         </a>
@@ -92,7 +100,7 @@
                         <h5 class="card-title" style="color:rgba(46, 204, 113,1.0); font-weight: bold;">Web
                             Developer</h5>
                         <p class="card-text" style="font-weight: bold;">
-                        <h3>haq</h3></p>
+                        <h3>haq</h3>
                         <a class="footer-icon git" target="_blank" href="https://github.com/haq">
                             <i class="fab fa-github"> </i>
                         </a>
