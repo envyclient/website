@@ -19,6 +19,139 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        .pricingTable {
+            text-align: center;
+            transition: all 0.5s ease 0s;
+        }
+
+        .pricingTable:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricingTable .pricingTable-header {
+            color: #feffff;
+        }
+
+        .pricingTable .heading {
+            display: block;
+            padding-top: 25px;
+        }
+
+        .pricingTable .heading > h3 {
+            font-size: 20px;
+            margin: 0;
+            text-transform: capitalize;
+        }
+
+        .pricingTable .subtitle {
+            display: block;
+            font-size: 13px;
+            margin-top: 5px;
+            text-transform: capitalize;
+        }
+
+        .pricingTable .price-value {
+            display: block;
+            font-size: 64px;
+            font-weight: 700;
+            padding-bottom: 25px;
+        }
+
+        .pricingTable .price-value span {
+            display: block;
+            font-size: 14px;
+            line-height: 20px;
+            text-transform: uppercase;
+        }
+
+        .pricingTable .pricingContent {
+            text-transform: capitalize;
+            background: #fbfbfb;
+            color: #fefeff;
+        }
+
+        .pricingTable .pricingContent ul {
+            list-style: none;
+            padding: 15px 20px 10px;
+            margin: 0;
+            text-align: left;
+        }
+
+        .pricingTable .pricingContent ul li {
+            font-size: 14px;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e1e1e1;
+            color: #9da1ad;
+        }
+
+        .pricingTable .pricingContent ul li i {
+            font-size: 14px;
+            float: right;
+        }
+
+        .pricingTable .pricingTable-sign-up {
+            padding: 20px 0;
+            background: #fbfbfb;
+            color: #fff;
+            text-transform: capitalize;
+        }
+
+        .pricingTable .btn-block {
+            width: 60%;
+            margin: 0 auto;
+            font-size: 17px;
+            color: #fff;
+            text-transform: capitalize;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            transition: all 0.5s ease 0s;
+        }
+
+        .pricingTable .btn-block:before {
+            content: "\f007";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        .pricingTable.blue .pricingTable-header,
+        .pricingTable.blue .btn-block {
+            background: #727cb6;
+        }
+
+        .pricingTable.pink .pricingTable-header,
+        .pricingTable.pink .btn-block {
+            background: #ed687c;
+        }
+
+        .pricingTable.orange .pricingTable-header,
+        .pricingTable.orange .btn-block {
+            background: #e67e22;
+        }
+
+        .pricingTable.green .pricingTable-header,
+        .pricingTable.green .btn-block {
+            background: #008b8b;
+        }
+
+        .pricingTable.blue .btn-block:hover,
+        .pricingTable.pink .btn-block:hover,
+        .pricingTable.orange .btn-block:hover,
+        .pricingTable.green .btn-block:hover {
+            background: #e6e6e6;
+            color: #939393;
+        }
+
+        @media screen and (max-width: 990px) {
+            .pricingTable {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+
 </head>
 <body>
 <div id="app">
@@ -88,7 +221,7 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <main>
         <div class="container">
             @include('inc.notifications')
         </div>

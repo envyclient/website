@@ -2,8 +2,9 @@
 
 @section('content')
 
-    <div class="jumbotron jumbotron-fluid text-center" style="background:#f9f9f9;">
-        <div class="container-fluid">
+    <!-- Home Section -->
+    <div class="jumbotron jumbotron-fluid text-center" style="background:#fff;margin-bottom:0px;">
+        <div class="container-fluid p-lg-5">
             <h1 class="display-4">{{ config('app.name') }}</h1>
             <p class="lead">
                 Welcome to the {{ config('app.name') }} website. This is a Minecraft 1.8.8 client developed by Mat.
@@ -26,9 +27,14 @@
             </div>
         </div>
     </div>
+    <!-- Home Section -->
 
-    <div class="jumbotron jumbotron-fluid text-center" style="background: #fff; border: 1px solid rgba(34,36,38,.15);">
+    <!-- Features Section -->
+    <div class="jumbotron jumbotron-fluid text-center" style="background: #f9f9f9;border:none;margin-bottom:0;">
         <div class="container">
+            <h1 style="padding-bottom:30px;">Features</h1>
+            <hr class="w-50">
+            <br>
             <div class="row">
                 <div class="col text-center">
                     <div class="card bg-white mb-3 p-3"
@@ -49,7 +55,7 @@
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold p-1">Cloud</h5>
                             <p class="card-text p-1">
-                                All of your settings & configs will be securily saved online.
+                                All of your settings & configs will be safely stored online.
                             </p>
                             <a class="btn btn-info text-white">
                                 Learn More
@@ -75,9 +81,13 @@
             </div>
         </div>
     </div>
+    <!-- Features Section -->
 
-    <div style="width:100%;margin:0 auto;text-align:center;display:block;">
+    <!-- ShowCase Section -->
+    <div class="jumbotron jumbotron-fluid text-center" style="background:#efefef; border:none;margin-bottom:0;">
         <h1 style="padding-bottom:30px;">ShowCase</h1>
+        <hr class="w-50">
+        <br>
         <div class="row" style="margin:0 auto;">
             <div class="col-sm-5" style="margin:0 auto;">
                 <div class="embed-responsive embed-responsive-16by9">
@@ -91,48 +101,88 @@
             </div>
         </div>
     </div>
+    <!-- ShowCase Section End -->
 
-    <div class="jumbotron jumbotron-fluid text-center"
-         style="background: #fff; border-top: 1px solid rgba(34,36,38,.15); margin-bottom:0; margin-top:30px; background:#ecf0f1;">
+    <!-- Pricing Section -->
+    <div class="jumbotron jumbotron-fluid text-center" style="background:#e5e5e5; border:none;margin-bottom:0;">
+        <h1 style="padding-bottom:30px;">Pricing</h1>
+        <hr class="w-50">
+        <br>
         <div class="container">
-            <div class="card-deck">
-                <div class="card" style="border-top:3px solid rgba(192, 57, 43,1.0);">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color:rgba(192, 57, 43,1.0); font-weight: bold;">
-                            Client Developer
-                        </h5>
-                        <p class="card-text" style="font-weight: bold;">
-                        <h3 class="p-4">mat1337</h3>
-                        <a class="footer-icon git p-3" target="_blank" href="https://github.com/Mat1337">
-                            <i class="fab fa-github" style="color:#000;font-size:20px;"> </i>
-                        </a>
+            <div class="row" style="margin:0 auto;">
+                <!-- Client  -->
+                <div class="col-md-5 col-sm-5" style="margin:0 auto;">
+                    <div class="pricingTable green">
+                        <div class="pricingTable-header">
+                                <span class="heading">
+                                    <h3>Envy Client</h3>
+                                </span>
+                            <span class="price-value">$15 <span>monthly</span></span>
+                        </div>
+                        <div class="pricingContent">
+                            <ul class="text-center">
+                                <li>Cloud Storage <i class="fa fa-check" style="color:green;"></i></li>
+                                <li>Clean Design <i class="fa fa-check" style="color:green;"></i></li>
+                                <li>The Altening support <i class="fa fa-check" style="color:green;"></i></li>
+                                <li>Easy to use <i class="fa fa-check" style="color:green;"></i></li>
+                            </ul>
+                        </div>
+                        <div class="pricingTable-sign-up">
+                            @guest
+                                <a href="/login" class="btn btn-block">Login</a>
+                            @else
+                                <a href="/login" class="btn btn-block">Dasboard</a>
+                            @endguest
+                        </div>
                     </div>
                 </div>
-                <div class="card" style="border-top:3px solid rgba(46, 204, 113,1.0);">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color:rgba(46, 204, 113,1.0); font-weight: bold;">
-                            Web Developer
-                        </h5>
-                        <p class="card-text" style="font-weight: bold;">
-                        <h3 class="p-4">haq</h3>
-                        <a class="footer-icon git p-3" target="_blank" href="https://github.com/haq">
-                            <i class="fab fa-github" style="color:#000;font-size:20px;"> </i>
-                        </a>
-                        <a class="footer-icon twitter p-3" target="_blank" href="https://twitter.com/haaaqs">
-                            <i class="fab fa-twitter" style="color:#000;font-size:20px;"> </i>
-                        </a>
-                        <a class="footer-icon youtube p-3" target="_blank"
-                           href="https://www.youtube.com/channel/UCwFRVvetOF3DqNj8z5-4d_A">
-                            <i class="fab fa-youtube" style="color:#000;font-size:20px;"></i>
-                        </a>
-                        <a class="footer-icon mail p-3" target="_blank" href="mailto:me@affanhaq.me">
-                            <i class="fas fa-envelope" style="color:#000;font-size:20px;"> </i>
-                        </a>
-                    </div>
-                </div>
+                <!-- Client End -->
             </div>
         </div>
     </div>
+    <!-- Pricing Section End -->
+
+    <!-- <div class="jumbotron jumbotron-fluid text-center"
+          style="border-top: 1px solid rgba(34,36,38,.15); margin-bottom:0; margin-top:30px; background:#ecf0f1;">
+         <div class="container">
+             <div class="card-deck">
+                 <div class="card" style="border-top:3px solid rgba(192, 57, 43,1.0);">
+                     <div class="card-body">
+                         <h5 class="card-title" style="color:rgba(192, 57, 43,1.0); font-weight: bold;">
+                             Client Developer
+                         </h5>
+                         <p class="card-text" style="font-weight: bold;">
+                         <h3 class="p-4">mat1337</h3>
+                         <a class="footer-icon git p-3" target="_blank" href="https://github.com/Mat1337">
+                             <i class="fab fa-github" style="color:#000;font-size:20px;"> </i>
+                         </a>
+                     </div>
+                 </div>
+                 <div class="card" style="border-top:3px solid rgba(46, 204, 113,1.0);">
+                     <div class="card-body">
+                         <h5 class="card-title" style="color:rgba(46, 204, 113,1.0); font-weight: bold;">
+                             Web Developer
+                         </h5>
+                         <p class="card-text" style="font-weight: bold;">
+                         <h3 class="p-4">haq</h3>
+                         <a class="footer-icon git p-3" target="_blank" href="https://github.com/haq">
+                             <i class="fab fa-github" style="color:#000;font-size:20px;"> </i>
+                         </a>
+                         <a class="footer-icon twitter p-3" target="_blank" href="https://twitter.com/haaaqs">
+                             <i class="fab fa-twitter" style="color:#000;font-size:20px;"> </i>
+                         </a>
+                         <a class="footer-icon youtube p-3" target="_blank"
+                            href="https://www.youtube.com/channel/UCwFRVvetOF3DqNj8z5-4d_A">
+                             <i class="fab fa-youtube" style="color:#000;font-size:20px;"></i>
+                         </a>
+                         <a class="footer-icon mail p-3" target="_blank" href="mailto:me@affanhaq.me">
+                             <i class="fas fa-envelope" style="color:#000;font-size:20px;"> </i>
+                         </a>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>-->
 
 
     <!-- Terms Modal -->
