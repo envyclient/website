@@ -79,12 +79,12 @@
     <div style="width:100%;margin:0 auto;text-align:center;display:block;">
         <h1 style="padding-bottom:30px;">ShowCase</h1>
         <div class="row" style="margin:0 auto;">
-            <div class="col-sm-6" style="margin:0 auto;">
+            <div class="col-sm-5" style="margin:0 auto;">
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Rh-Fn0zHVi8"></iframe>
                 </div>
             </div>
-            <div class="col-sm-6" style="margin:0 auto;">
+            <div class="col-sm-5" style="margin:0 auto;">
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe src="https://www.youtube.com/embed/zwJRWAB4fM4"></iframe>
                 </div>
