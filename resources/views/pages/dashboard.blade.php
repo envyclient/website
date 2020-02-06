@@ -172,8 +172,8 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    You are currently subscribed to the Basic (Monthly) plan. (next payment in due in {{ $nextSubscription }}
-                                    days)
+                                    You are currently subscribed to the Basic (Monthly) plan. (next payment in due
+                                    in {{ $nextSubscription }} days)
                                 </li>
                                 <li class="list-group-item">
                                     <div class="row" style="line-height:60px;">
@@ -338,28 +338,30 @@
                                             </div>
                                         </div>
 
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">User</th>
-                                                <th scope="col">Amount</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Date</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($todayTransactions as $transaction)
+                                        @if(count($todayTransactions) > 0)
+                                            <table class="table table-bordered">
+                                                <thead>
                                                 <tr>
-                                                    <th scope="row">{{ $loop->index + 1 }}</th>
-                                                    <td>{{ $transaction->wallet->user->name }}</td>
-                                                    <td style="color: green">${{ $transaction->amount }}</td>
-                                                    <td>{{ $transaction->meta['description'] }}</td>
-                                                    <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Date</th>
                                                 </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($todayTransactions as $transaction)
+                                                    <tr>
+                                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                                        <td>{{ $transaction->wallet->user->name }}</td>
+                                                        <td style="color: green">${{ $transaction->amount }}</td>
+                                                        <td>{{ $transaction->meta['description'] }}</td>
+                                                        <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endif
 
                                     </div>
                                 </div>

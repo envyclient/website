@@ -57,7 +57,7 @@ class HomeController extends Controller
             'moneyWeek' => $moneyWeek,
             'moneyMonth' => $moneyMonth,
             'todayTransactions' => $todayTransactions,
-            'nextSubscription' => Carbon::createFromFormat('Y-m-d', $user->subscription->end_date)->diffInDays()
+            'nextSubscription' => $user->subscription->end_date->diffInDays()
         ]);
     }
 }

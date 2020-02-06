@@ -10,6 +10,10 @@ class Subscription extends Model
         'user_id', 'plan_id', 'renew', 'end_date'
     ];
 
+    protected $casts = [
+        'end_date' => 'datetime:Y-m-d',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User');
