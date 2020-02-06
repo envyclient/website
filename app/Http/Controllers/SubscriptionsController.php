@@ -33,8 +33,29 @@ class SubscriptionsController extends Controller
         $price = $plan->price;
         if ($user->canWithdraw($price)) {
 
-            //TODO: check return code
-            AAL::addUser($user);
+            $code = AAL::addUser($user);
+            switch ($code) {
+                case 409:
+                {
+                    return back()->with('error', 'You already own the app. Please wait till the end of the day to subscribe again.');
+                    break;
+                }
+                case 404:
+                {
+                    return back()->with('error', 'Your account does not exist on AAL. Please make sure you entered your name correctly.');
+                    break;
+                }
+                case 403:
+                {
+                    return back()->with('error', 'An error has occurred. Please contact support.');
+                    break;
+                }
+                case 400:
+                {
+                    return back()->with('error', 'App user limit has been reached. Please inform staff of this.');
+                    break;
+                }
+            }
 
             // TODO: send email about new subscription
 

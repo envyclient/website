@@ -66,8 +66,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             $this->notify(new Generic($this, 'Your subscription has been renewed.'));
         } else {
 
-            //TODO: check return code
-            AAL::removeUser($this);
+            $code = AAL::removeUser($this);
+            if ($code === 403) {
+                return;
+            }
 
             $this->subscription->end_date = null;
             $this->save();

@@ -49,7 +49,7 @@ class HomeController extends Controller
             ->get();
 
         $nextSubscription = '∞';
-        if ($user->subscription !== null) {
+        if ($user->subscription()->exists() && $user->subscription->end_date !== null) {
             $nextSubscription = $user->subscription->end_date->diffInDays();
         }
 

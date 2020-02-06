@@ -4,7 +4,6 @@ namespace App\Console;
 
 use App\Role;
 use App\Subscription;
-use App\Util\Constants;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -29,7 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $subscriptions = Subscription::where('end_date', Carbon::now()->format(Constants::DATE_FORMAT))->get();
+            $subscriptions = Subscription::whereDate('end_date', '<=', Carbon::today()->format('Y-m-d'))->get();
             foreach ($subscriptions as $subscription) {
                 $subscription->user->renewSubscription();
             }

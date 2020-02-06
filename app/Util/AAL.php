@@ -33,7 +33,7 @@ class AAL
      * 200 OK
      * 403 FORBIDDEN [Insufficient Permissions]
      * 404 NOT FOUND [User doesn't have app]
-     *F
+     *
      * @param User $user
      * @return int
      */

@@ -77,8 +77,10 @@ class UsersController extends Controller
             return back()->with('error', 'You do not have the permission to delete this user');
         }
 
-        // TODO: remove user from aal
-        AAL::removeUser($user);
+        $code = AAL::removeUser($user);
+        if ($code === 403) {
+            return back()->with('error', 'An error occurred while deleting your account. Please contact support.');
+        }
 
         $user->configs()->delete();
         $user->invoices()->delete();
