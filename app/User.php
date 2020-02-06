@@ -29,7 +29,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
+        'client_settings' => 'json'
     ];
 
     public function configs()

@@ -48,6 +48,11 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $nextSubscription = '∞';
+        if ($user->subscription !== null) {
+            $nextSubscription = $user->subscription->end_date->diffInDays();
+        }
+
         return view('pages.dashboard')->with([
             'user' => $user,
             'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
@@ -57,7 +62,7 @@ class HomeController extends Controller
             'moneyWeek' => $moneyWeek,
             'moneyMonth' => $moneyMonth,
             'todayTransactions' => $todayTransactions,
-            'nextSubscription' => $user->subscription->end_date->diffInDays()
+            'nextSubscription' => $nextSubscription
         ]);
     }
 }
