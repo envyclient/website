@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="jumbotron jumbotron-fluid text-center" style="background:#f9f9f9;">
         <div class="container-fluid">
             <h1 class="display-4">{{ config('app.name') }}</h1>
@@ -29,22 +30,48 @@
     <div class="jumbotron jumbotron-fluid text-center" style="background: #fff; border: 1px solid rgba(34,36,38,.15);">
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <h2 style="font-weight: bold;">Cross-platform compatibility</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                        distribution of letters, as opposed to using 'Content here, content here', making it look like
-                        readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as
-                        their default model text, and a search for 'lorem ipsum' will uncover </p>
+                <div class="col text-center">
+                    <div class="card bg-white mb-3 p-3"
+                         style="max-width: 18rem;margin:0 auto;border-top:3px solid #2fa360;">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold p-1">AlphaAntiLeak</h5>
+                            <p class="card-text p-1">
+                                Our Service is using AlphaAntiLeak
+                            </p>
+                            <a class="btn btn-success text-white" href="https://alphaantileak.net/#privacy"
+                               target="_blank">Learn More</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
-                    <h2 style="font-weight: bold;">Easy To Use</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                        distribution of letters, as opposed to using 'Content here, content here', making it look like
-                        readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as
-                        their default model text, and a search for 'lorem ipsum' will uncover </p>
+                <div class="col text-center">
+                    <div class="card bg-white mb-3 p-3"
+                         style="max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold p-1">Cloud</h5>
+                            <p class="card-text p-1">
+                                All of your settings & configs will be securily saved online.
+                            </p>
+                            <a class="btn btn-info text-white">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
                 </div>
+                <div class="col text-center">
+                    <div class="card bg-white mb-3 p-3"
+                         style="max-width: 18rem;margin:0 auto;border-top:3px solid #227dc7;">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold p-1">Design</h5>
+                            <p class="card-text p-1">
+                                Design of the client is simplistic, therefor it's really easy to use.
+                            </p>
+                            <a class="btn btn-primary text-white">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -69,56 +96,42 @@
             <div class="card-deck">
                 <div class="card" style="border-top:3px solid rgba(192, 57, 43,1.0);">
                     <div class="card-body">
-                        <h5 class="card-title" style="color:rgba(192, 57, 43,1.0); font-weight: bold;">Lead
-                            Developer</h5>
+                        <h5 class="card-title" style="color:rgba(192, 57, 43,1.0); font-weight: bold;">
+                            Client Developer
+                        </h5>
                         <p class="card-text" style="font-weight: bold;">
-                        <h3>Mat1337</h3>
-                        <a class="footer-icon git" target="_blank" href="https://github.com/Mat1337">
-                            <i class="fab fa-github"> </i>
-                        </a>
-                    </div>
-                </div>
-                <div class="card" style="border-top:3px solid rgba(41, 128, 185,1.0);">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color:rgba(41, 128, 185,1.0); font-weight: bold;">Developer</h5>
-                        <p class="card-text" style="font-weight: bold;">
-                        <h3>FlyCode</h3>
-                        <a class="footer-icon git" target="_blank" href="https://github.com/FlyC0de">
-                            <i class="fab fa-github"> </i>
-                        </a>
-                        <a class="footer-icon twitter" target="_blank" href="https://twitter.com/FlyCode_">
-                            <i class="fab fa-twitter"> </i>
-                        </a>
-                        <a class="footer-icon youtube" target="_blank"
-                           href="https://www.youtube.com/channel/UCSAbFtcHHHqHyTRn2RSfTqQ">
-                            <i class="fab fa-youtube"></i>
+                        <h3 class="p-4">mat1337</h3>
+                        <a class="footer-icon git p-3" target="_blank" href="https://github.com/Mat1337">
+                            <i class="fab fa-github" style="color:#000;font-size:20px;"> </i>
                         </a>
                     </div>
                 </div>
                 <div class="card" style="border-top:3px solid rgba(46, 204, 113,1.0);">
                     <div class="card-body">
-                        <h5 class="card-title" style="color:rgba(46, 204, 113,1.0); font-weight: bold;">Web
-                            Developer</h5>
+                        <h5 class="card-title" style="color:rgba(46, 204, 113,1.0); font-weight: bold;">
+                            Web Developer
+                        </h5>
                         <p class="card-text" style="font-weight: bold;">
-                        <h3>haq</h3>
-                        <a class="footer-icon git" target="_blank" href="https://github.com/haq">
-                            <i class="fab fa-github"> </i>
+                        <h3 class="p-4">haq</h3>
+                        <a class="footer-icon git p-3" target="_blank" href="https://github.com/haq">
+                            <i class="fab fa-github" style="color:#000;font-size:20px;"> </i>
                         </a>
-                        <a class="footer-icon twitter" target="_blank" href="https://twitter.com/haaaqs">
-                            <i class="fab fa-twitter"> </i>
+                        <a class="footer-icon twitter p-3" target="_blank" href="https://twitter.com/haaaqs">
+                            <i class="fab fa-twitter" style="color:#000;font-size:20px;"> </i>
                         </a>
-                        <a class="footer-icon youtube" target="_blank"
+                        <a class="footer-icon youtube p-3" target="_blank"
                            href="https://www.youtube.com/channel/UCwFRVvetOF3DqNj8z5-4d_A">
-                            <i class="fab fa-youtube"></i>
+                            <i class="fab fa-youtube" style="color:#000;font-size:20px;"></i>
                         </a>
-                        <a class="footer-icon mail" target="_blank" href="mailto:me@affanhaq.me">
-                            <i class="fas fa-envelope"> </i>
+                        <a class="footer-icon mail p-3" target="_blank" href="mailto:me@affanhaq.me">
+                            <i class="fas fa-envelope" style="color:#000;font-size:20px;"> </i>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Terms Modal -->
     <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
