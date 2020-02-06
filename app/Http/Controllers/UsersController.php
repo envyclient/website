@@ -70,9 +70,9 @@ class UsersController extends Controller
         return back()->with('success', 'Your password has been updated');
     }
 
-    public function destroy(Request $request, $user)
+    public function destroy(Request $request, $id)
     {
-        $user = User::findOrFail($user);
+        $user = User::findOrFail($id);
         if ($user->id !== auth()->id() && !auth()->user()->admin) {
             return back()->with('error', 'You do not have the permission to delete this user');
         }
@@ -85,6 +85,8 @@ class UsersController extends Controller
         $user->configs()->delete();
         $user->invoices()->delete();
         $user->subscription()->delete();
+        $user->transactions()->delete();
+        $user->wallet()->delete();
         $user->delete();
 
         return back()->with('success', 'Account deleted');
