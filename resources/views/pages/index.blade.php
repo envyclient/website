@@ -34,43 +34,36 @@
             <h1 style="padding-bottom:30px;">Features</h1>
             <hr class="w-50">
             <br>
-            <div class="row">
-                <div class="col text-center">
-                    <div class="card bg-white mb-2 p-3"
-                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold p-1">Cloud</h5>
-                            <p class="card-text p-1">
-                                All of your settings & configs will be safely stored online.
-                            </p>
-                        </div>
+            <div class="card-deck mb-3 text-center">
+                <div class="card bg-white mb-4 p-3"
+                     style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold p-1">Cloud</h5>
+                        <p class="card-text p-1 mt-4">
+                            All of your settings & configs will be safely stored online.
+                        </p>
                     </div>
                 </div>
-                <div class="col text-center">
-                    <div class="card bg-white mb-3 p-3"
-                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #2fa360;">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold p-1">AlphaAntiLeak</h5>
-                            <p class="card-text p-1">
-                                Our Service is using AlphaAntiLeak
-                            </p>
-                            <a class="btn btn-success text-white" href="https://alphaantileak.net/#privacy"
-                               target="_blank">Learn More</a>
-                        </div>
+                <div class="card bg-white mb-4 p-3"
+                     style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #2fa360;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold p-1">AlphaAntiLeak</h5>
+                        <p class="card-text p-1">
+                            Our Service is using AlphaAntiLeak
+                        </p>
+                        <a class="btn btn-success text-white" href="https://alphaantileak.net/#privacy"
+                           target="_blank">Learn More</a>
                     </div>
                 </div>
-                <div class="col text-center">
-                    <div class="card bg-white mb-3 p-3"
-                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #227dc7;">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold p-1">Design</h5>
-                            <p class="card-text p-1">
-                                Design of the client is simplistic, therefor it's really easy to use.
-                            </p>
-                        </div>
+                <div class="card bg-white mb-4 p-3"
+                     style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #227dc7;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold p-1">Design</h5>
+                        <p class="card-text p-1 mt-4">
+                            Design of the client is simplistic, therefor it's really easy to use.
+                        </p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -102,41 +95,48 @@
         <hr class="w-50">
         <br>
         <div class="container">
-            <div class="row" style="margin:0 auto;">
-                <!-- Client  -->
-                <div class="col-md-5 col-sm-5" style="margin:0 auto;">
-                    <div class="pricingTable green">
-                        <div class="pricingTable-header">
-                                <span class="heading">
-                                    <h3>Envy Client</h3>
-                                </span>
-                            <span class="price-value">$15 <span>monthly</span></span>
-                        </div>
-                        <div class="pricingContent">
-                            <ul class="text-center">
-                                <li>Cloud Storage <i class="fa fa-check" style="color:green;"></i></li>
-                                <li>Clean Design <i class="fa fa-check" style="color:green;"></i></li>
-                                <li>The Altening support <i class="fa fa-check" style="color:green;"></i></li>
-                                <li>Easy to use <i class="fa fa-check" style="color:green;"></i></li>
-                            </ul>
-                        </div>
-                        <div class="pricingTable-sign-up">
-                            @guest
-                                <a href="/login" class="btn btn-block">Login</a>
-                            @else
-                                <a href="/login" class="btn btn-block">Dasboard</a>
-                            @endguest
-                        </div>
+            <div class="card-deck mb-3 text-center" style="max-width: 55em;margin:0 auto;">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Monthly</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$7 <small class="text-muted">/ mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Ability to change capes</li>
+                            <li>5 config slots</li>
+                        </ul>
+                        @guest
+                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/login">Login</a>
+                        @else
+                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/home">Purchase</a>
+                        @endguest
                     </div>
                 </div>
-                <!-- Client End -->
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Lifetime</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$40 <small class="text-muted">/ &infin;</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Ability to change capes</li>
+                            <li>15 config slots</li>
+                        </ul>
+                        @guest
+                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/login">Login</a>
+                        @else
+                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/home">Purchase</a>
+                        @endguest
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- Pricing Section End -->
     <!-- Footer -->
     <footer class="page-footer font-small blue-grey lighten-5" style="background-color:#e0e0e0;">
-
         <div style="background-color: #ffff;">
             <div class="container">
                 <!-- Grid row-->

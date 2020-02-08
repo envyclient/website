@@ -180,7 +180,7 @@
                                             <a class="btn btn-light">Features</a>
                                         </div>
                                         <div class="col">
-                                            $10.00 / Monthly
+                                            $7 / Monthly
                                         </div>
                                     </div>
                                 </li>
@@ -194,7 +194,7 @@
                                             <a class="btn btn-light">Features</a>
                                         </div>
                                         <div class="col">
-                                            $50.00 / &infin;
+                                            40 / &infin;
                                         </div>
                                     </div>
                                 </li>
@@ -239,10 +239,16 @@
                                             <div class="form-group">
                                                 {{ Form::label('amount', 'Cash amount: ') }}
                                                 {{ Form::select('amount', [
+                                                    '1' => '$1',
                                                     '5' => '$5',
+                                                    '7' => '$7',
                                                     '10' => '$10',
                                                     '15' => '$15',
                                                     '20' => '$20',
+                                                    '25' => '$25',
+                                                    '30' => '$30',
+                                                    '35' => '$35',
+                                                    '40' => '$40',
                                                 ], '5', ['class' => 'form-control']) }}
                                             </div>
                                             {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
