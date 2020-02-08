@@ -20,7 +20,7 @@
                             <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                             Security
                         </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#support"
+                        <a class="list-group-item list-group-item-action" href="https://forums.envyclient.com"
                            style="cursor:pointer;">
                             <i class="fas fa-question-circle p-2" style="margin-right:10px;"></i>
                             Support
@@ -39,11 +39,13 @@
                             <i class="fas fa-credit-card p-2" style="margin-right:10px;"></i>
                             Add Credits
                         </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
-                           style="cursor:pointer;">
-                            <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
-                            Transactions
-                        </a>
+                        @if(count($transactions) > 0)
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#invoices"
+                               style="cursor:pointer;">
+                                <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
+                                Transactions
+                            </a>
+                        @endif
                         @if ($user->admin)
                             <br>
                             <h3 class="m-3 font-weight-bold" style="font-size:18px;">
@@ -156,37 +158,29 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="support" role="tabpanel">
-                        <div class="card" style="width:100%;">
-                            <div class="card-header">
-                                <i class="fas fa-question-circle" style="padding-right:10px;"></i> Support
-                            </div>
-                            <ul class="card-body">
-                                <li class="list-group-item">Working progress...</li>
-                            </ul>
-                        </div>
-                    </div>
                     <div class="tab-pane fade" id="subscription" role="tabpanel">
                         <div class="card" style="width:100%;">
                             <div class="card-header">
                                 <i class="fas fa-redo" style="padding-right:10px;"></i> Update Subscription
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    You are currently subscribed to the Basic (Monthly) plan. (next payment in due
-                                    in {{ $nextSubscription }} days)
-                                </li>
+                                @if($user->subscription()->exists())
+                                    <li class="list-group-item">
+                                        You are currently subscribed to the Basic (Monthly) plan. (next payment in due
+                                        in {{ $nextSubscription }} days)
+                                    </li>
+                                @endif
                                 <li class="list-group-item">
                                     <div class="row" style="line-height:60px;">
                                         <div class="col">
                                             <input class="form-check-inline" type="radio" name="exampleRadios"
-                                                   id="exampleRadios1" value="option1"> Free
+                                                   id="exampleRadios1" value="option2"> Monthly
                                         </div>
                                         <div class="col">
                                             <a class="btn btn-light">Features</a>
                                         </div>
                                         <div class="col">
-                                            Free
+                                            $10.00 / Monthly
                                         </div>
                                     </div>
                                 </li>
@@ -194,13 +188,13 @@
                                     <div class="row" style="line-height:60px;">
                                         <div class="col">
                                             <input class="form-check-inline" type="radio" name="exampleRadios"
-                                                   id="exampleRadios1" value="option2" checked> Basic
+                                                   id="exampleRadios1" value="option2"> Lifetime
                                         </div>
                                         <div class="col">
                                             <a class="btn btn-light">Features</a>
                                         </div>
                                         <div class="col">
-                                            $10.00 / Monthly
+                                            $50.00 / &infin;
                                         </div>
                                     </div>
                                 </li>
@@ -259,39 +253,42 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="invoices" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header"><i class="fas fa-shopping-cart" style="padding-right:10px;"></i>
-                                Transactions
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Date</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($transactions as $transaction)
+                    @if(count($transactions) > 0)
+                        <div class="tab-pane fade" id="invoices" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header"><i class="fas fa-shopping-cart"
+                                                            style="padding-right:10px;"></i>
+                                    Transactions
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
                                         <tr>
-                                            <th scope="row">{{ $loop->index + 1 }}</th>
-                                            @if($transaction->type == 'deposit')
-                                                <td style="color: green">+{{ $transaction->amount }}</td>
-                                            @else
-                                                <td style="color: red">-{{ $transaction->amount }}</td>
-                                            @endif
-                                            <td>{{ $transaction->meta['description'] }}</td>
-                                            <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Date</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($transactions as $transaction)
+                                            <tr>
+                                                <th scope="row">{{ $loop->index + 1 }}</th>
+                                                @if($transaction->type == 'deposit')
+                                                    <td style="color: green">+{{ $transaction->amount }}</td>
+                                                @else
+                                                    <td style="color: red">-{{ $transaction->amount }}</td>
+                                                @endif
+                                                <td>{{ $transaction->meta['description'] }}</td>
+                                                <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     @if($user->admin)
                         <div class="tab-pane fade" id="statistics" role="tabpanel">
                             <div class="card-body">

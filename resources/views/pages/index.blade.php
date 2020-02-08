@@ -36,6 +36,17 @@
             <br>
             <div class="row">
                 <div class="col text-center">
+                    <div class="card bg-white mb-2 p-3"
+                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold p-1">Cloud</h5>
+                            <p class="card-text p-1">
+                                All of your settings & configs will be safely stored online.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center">
                     <div class="card bg-white mb-3 p-3"
                          style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #2fa360;">
                         <div class="card-body">
@@ -50,29 +61,12 @@
                 </div>
                 <div class="col text-center">
                     <div class="card bg-white mb-3 p-3"
-                         style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold p-1">Cloud</h5>
-                            <p class="card-text p-1">
-                                All of your settings & configs will be safely stored online.
-                            </p>
-                            <a class="btn btn-info text-white">
-                                Learn More
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col text-center">
-                    <div class="card bg-white mb-3 p-3"
                          style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #227dc7;">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold p-1">Design</h5>
                             <p class="card-text p-1">
                                 Design of the client is simplistic, therefor it's really easy to use.
                             </p>
-                            <a class="btn btn-primary text-white">
-                                Learn More
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -186,71 +180,6 @@
                 <!-- Grid row-->
             </div>
         </div>
-
-        <!-- Footer Links -->
-        <div class="container text-center text-md-left mt-5">
-            <!-- Grid row -->
-            <div class="row mt-3 dark-grey-text">
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-                    <!-- Content -->
-                    <h6 class="text-uppercase font-weight-bold">Envy</h6>
-                    <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                    <p>
-                        Envy is a group of two people that have nothing to do in life, so they make random products and
-                        sell them online.
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase font-weight-bold">Products</h6>
-                    <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                    <p>
-                        <a class="dark-grey-text">Envy Client</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase font-weight-bold">Useful links</h6>
-                    <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                    <p>
-                        <a class="dark-grey-text" href="/home">Dashboard</a>
-                    </p>
-                    <p>
-                        <a class="dark-grey-text" href="https://forums.envyclient.com/">Forums</a>
-                    </p>
-                    <p>
-                        <a class="dark-grey-text" href="#!">Trello</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase font-weight-bold">Contact</h6>
-                    <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                    <p>
-                        <i class="fas fa-envelope mr-3"></i> support@envyclient.com</p>
-                </div>
-                <!-- Grid column -->
-            </div>
-            <!-- Grid row -->
-        </div>
-        <!-- Footer Links -->
-
-        <!-- Copyright -->
-        <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
-            <a class="dark-grey-text"> Envy Client</a>
-        </div>
-        <!-- Copyright -->
-
     </footer>
     <!-- Footer -->
 @endsection
