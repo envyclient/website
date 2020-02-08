@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     public function hasSubscription(): bool
     {
-        return $this->subscription()->exists() && $this->subscription->end_date != null;
+        return $this->subscription()->exists();
     }
 
     public function renewSubscription()
@@ -65,14 +65,12 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             $user->withdraw($price);
             $this->notify(new Generic($this, 'Your subscription has been renewed.'));
         } else {
-
             $code = AAL::removeUser($this);
             if ($code === 403) {
                 return;
             }
 
-            $this->subscription->end_date = null;
-            $this->save();
+            $user->subscription()->delete();
             $this->notify(new Generic($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.'));
         }
     }

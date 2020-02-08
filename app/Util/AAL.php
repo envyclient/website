@@ -66,33 +66,34 @@ class AAL
         Request::verifyPeer(false);
 
         $endpoint = config('aal.endpoint');
-        $app_id = config('all.app_id');
+        $app_id = config('aal.app_id');
         $name = $user->aal_name;
         $api_key = config('aal.api_key');
         $header = [
             'Accept' => 'application/json',
-            'Authorization' => config('aal.session')
+            'Authorization' => config('aal.session'),
+            "Content-Type" => "application/x-www-form-urlencoded"
         ];
 
         $response = null;
         switch ($type) {
             case self::TYPE_ADD:
             {
-                $response = Request::post("$endpoint/apps/$app_id/users/$name?_identity=$api_key", $header);
+                $response = Request::post("$endpoint/apps/$app_id/users/$name?_identity=$api_key", $header, '{}');
                 break;
             }
             case self::TYPE_REMOVE:
             {
-                $response = Request::delete("$endpoint/apps/$app_id/users/$name?_identity=$api_key", $header);
+                $response = Request::delete("$endpoint/apps/$app_id/users/$name?_identity=$api_key", $header, '{}');
                 break;
             }
             case self::TYPE_RESET:
             {
-                $response = Request::put("$endpoint/apps/$app_id/users/$name?_identity=$api_key", $header);
+                $response = Request::put("$endpoint/apps/$app_id/users/$name?_identity=$api_key", $header, '{}');
                 break;
             }
         }
 
-        return $response->code;
+        dd($response->raw_body);
     }
 }

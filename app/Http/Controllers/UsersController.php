@@ -12,7 +12,8 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'auth']);
+        $this->middleware(['verified', 'auth'])->except('addCredits');
+        $this->middleware(['verified', 'auth', 'admin'])->only('addCredits');
     }
 
     public function updateAalName(Request $request)
@@ -59,11 +60,12 @@ class UsersController extends Controller
             'password_confirmation' => 'required_with:password|min:8'
         ]);
 
-        if (Hash::check($request->password, auth()->user()->password)) {
+        $user = auth()->user();
+        if (Hash::check($request->password, $user->password)) {
             return back()->with('error', 'You have entered wrong password');
         }
 
-        auth()->user()->fill([
+        $user->fill([
             'password' => Hash::make($request->password)
         ])->save();
 
@@ -90,5 +92,15 @@ class UsersController extends Controller
         $user->delete();
 
         return back()->with('success', 'Account deleted');
+    }
+
+    public function addCredits(Request $request, User $user)
+    {
+        $request->validate([
+            'amount' => 'required|int'
+        ]);
+
+        $amount = $request->amount;
+        $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "An admin deposited $amount credits into your account."]);
     }
 }

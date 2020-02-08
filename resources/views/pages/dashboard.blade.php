@@ -67,6 +67,8 @@
             </div>
             <div class="col-8">
                 <div class="tab-content">
+
+                    <!-- profile -->
                     <div class="tab-pane fade show active" id="profile" role="tabpanel">
                         <div class="card" style="width:100%;">
                             <div class="card-header">
@@ -117,6 +119,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- security -->
                     <div class="tab-pane fade" id="security" role="tabpanel">
                         <div class="card">
                             <div class="card-header">
@@ -158,7 +162,10 @@
                             </ul>
                         </div>
                     </div>
+
+                    <!-- subscriptions -->
                     <div class="tab-pane fade" id="subscription" role="tabpanel">
+                        {!! Form::open(['action' => 'SubscriptionsController@subscribe', 'method' => 'POST']) !!}
                         <div class="card" style="width:100%;">
                             <div class="card-header">
                                 <i class="fas fa-redo" style="padding-right:10px;"></i> Update Subscription
@@ -170,48 +177,44 @@
                                         in {{ $nextSubscription }} days)
                                     </li>
                                 @endif
-                                <li class="list-group-item">
-                                    <div class="row" style="line-height:60px;">
-                                        <div class="col">
-                                            <input class="form-check-inline" type="radio" name="exampleRadios"
-                                                   id="exampleRadios1" value="option2"> Monthly
+                                @foreach($plans as $plan)
+                                    <li class="list-group-item">
+                                        <div class="row" style="line-height:60px;">
+                                            <div class="col">
+                                                {{ Form::radio('id', $plan->id, $user->subscription()->exists() ? $user->subscription->plan_id === $plan->id : false, ['class' => 'form-check-inline', 'required' ,  $user->subscription()->exists() ? 'disabled' : null]) }}
+                                                {{ $plan->name }}
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-light">Features</a>
+                                            </div>
+                                            <div class="col">
+                                                <b>${{ $plan->price }}</b>
+                                                / {{ $plan->name === 'Lifetime' ? '∞' : "$plan->interval days" }}
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <a class="btn btn-light">Features</a>
-                                        </div>
-                                        <div class="col">
-                                            $7 / Monthly
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row" style="line-height:60px;">
-                                        <div class="col">
-                                            <input class="form-check-inline" type="radio" name="exampleRadios"
-                                                   id="exampleRadios1" value="option2"> Lifetime
-                                        </div>
-                                        <div class="col">
-                                            <a class="btn btn-light">Features</a>
-                                        </div>
-                                        <div class="col">
-                                            40 / &infin;
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
+                        <br>
                         @if($user->hasSubscription())
-                            <br>
                             <div class="card" style="width: 100%;">
                                 <ul class="list-group list-group-flush">
-
-                                    <button type="button" class="btn btn-outline-danger w-25 m-sm-2">
-                                        Cancel Subscription
-                                    </button>
+                                    {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
+                                    {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger w-25 m-sm-2']) }}
+                                    {!! Form::close() !!}
+                                </ul>
+                            </div>
+                        @else
+                            <div class="card" style="width: 100%;">
+                                <ul class="list-group list-group-flush">
+                                    {{ Form::submit('Subscribe', ['class' => 'btn btn-outline-success m-2 w-25']) }}
+                                    {!! Form::close() !!}
                                 </ul>
                             </div>
                         @endif
                     </div>
+
                     <div class="tab-pane fade" id="credits" role="tabpanel">
                         <div class="card" style="width: 100%;">
                             <div class="card-header">
@@ -259,6 +262,7 @@
                             </ul>
                         </div>
                     </div>
+
                     @if(count($transactions) > 0)
                         <div class="tab-pane fade" id="invoices" role="tabpanel">
                             <div class="card">
@@ -295,7 +299,9 @@
                             </div>
                         </div>
                     @endif
+
                     @if($user->admin)
+                    <!-- admin -->
                         <div class="tab-pane fade" id="statistics" role="tabpanel">
                             <div class="card-body">
                                 <div class="card">
@@ -427,7 +433,7 @@
                                                         <button type="button"
                                                                 class="btn btn-success d-inline-block text-white"
                                                                 data-toggle="modal"
-                                                                data-target="#modal-{{$user->name}}">
+                                                                data-target="#modal-{{ $user->name }}">
                                                             <i class="fas fa-coins"></i>
                                                         </button>
                                                         <button type="button"
@@ -437,7 +443,7 @@
                                                     </td>
                                                 </tr>
 
-                                                <div class="modal fade" id="modal-{{$user->name}}" tabindex="-1"
+                                                <div class="modal fade" id="modal-{{ $user->name }}" tabindex="-1"
                                                      role="dialog" aria-labelledby=""
                                                      aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
@@ -452,7 +458,8 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="card-body">
-                                                                    {!! Form::open() !!}
+                                                                    {!! Form::open(['action' => ['UsersController@addCredits', $user->id], 'method' => 'POST']) !!}
+                                                                    {{ Form::hidden('_method', 'PUT') }}
                                                                     <div class="form-group">
                                                                         {{ Form::label('amount', 'Cash amount: ') }}
                                                                         {{ Form::select('amount', [
@@ -487,6 +494,8 @@
             </div>
         </div>
     </div>
+
+    <!-- delete modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">

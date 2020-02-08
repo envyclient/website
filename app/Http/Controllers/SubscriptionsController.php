@@ -20,11 +20,11 @@ class SubscriptionsController extends Controller
     public function subscribe(Request $request)
     {
         $this->validate($request, [
-            'plan' => ['required', 'int', new PlanExists]
+            'id' => ['required', 'int', new PlanExists]
         ]);
 
         $user = auth()->user();
-        $plan = Plan::find($request->plan);
+        $plan = Plan::find($request->id);
 
         if ($user->hasSubscription()) {
             return back()->with('error', 'You are already subscribed to a subscription. You must let that one expire before you subscribe to a new one.');
