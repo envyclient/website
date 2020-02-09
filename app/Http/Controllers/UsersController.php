@@ -102,5 +102,6 @@ class UsersController extends Controller
 
         $amount = $request->amount;
         $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "An admin deposited $amount credits into your account."]);
+        return back()->with('success', 'Added credits.');
     }
 }

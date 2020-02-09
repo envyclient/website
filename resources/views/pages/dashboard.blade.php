@@ -458,7 +458,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="card-body">
-                                                                    {!! Form::open(['action' => ['UsersController@addCredits', $user->id], 'method' => 'POST']) !!}
+                                                                    {!! Form::open(['action' => ['UsersController@addCredits', $user], 'method' => 'POST']) !!}
                                                                     {{ Form::hidden('_method', 'PUT') }}
                                                                     <div class="form-group">
                                                                         {{ Form::label('amount', 'Cash amount: ') }}

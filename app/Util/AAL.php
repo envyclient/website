@@ -93,7 +93,6 @@ class AAL
                 break;
             }
         }
-
-        dd($response->raw_body);
+        return $response->code;
     }
 }
