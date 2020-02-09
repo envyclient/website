@@ -396,6 +396,10 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
+                                        @foreach($users as $user)
+                                            {!! Form::open(['action' => ['UsersController@addCredits', $user], 'method' => 'POST', 'id' => "f-$user->name"]) !!}
+                                            {!! Form::close() !!}
+                                        @endforeach
                                         <table class="table table-sm table-bordered">
                                             <thead>
                                             <tr>
@@ -458,19 +462,17 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="card-body">
-                                                                    {!! Form::open(['action' => ['UsersController@addCredits', $user], 'method' => 'POST']) !!}
-                                                                    {{ Form::hidden('_method', 'PUT') }}
                                                                     <div class="form-group">
-                                                                        {{ Form::label('amount', 'Cash amount: ') }}
+                                                                        {{ Form::hidden('_method', 'PUT', ['form' => "f-$user->name"]) }}
+                                                                        {{ Form::label('amount', 'Cash amount: ', ['form' => "f-$user->name"]) }}
                                                                         {{ Form::select('amount', [
                                                                             '5' => '$5',
                                                                             '10' => '$10',
                                                                             '15' => '$15',
                                                                             '20' => '$20',
-                                                                        ], '5', ['class' => 'form-control']) }}
+                                                                        ], '5', ['class' => 'form-control', 'form' => "f-$user->name"]) }}
                                                                     </div>
-                                                                    {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
-                                                                    {!! Form::close() !!}
+                                                                    {{ Form::submit('Add Credits', ['class' => 'btn btn-primary', 'form' => "f-$user->name", 'method' => 'PUT']) }}
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
