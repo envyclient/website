@@ -104,9 +104,11 @@
                             <li>5 config slots</li>
                         </ul>
                         @guest
-                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/login">Login</a>
+                            <a type="button" class="btn btn-lg btn-block btn-primary"
+                               href="{{ route('login') }}">Login</a>
                         @else
-                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/home">Purchase</a>
+                            <a type="button" class="btn btn-lg btn-block btn-primary"
+                               href="{{ route('dashboard') }}">Purchase</a>
                         @endguest
                     </div>
                 </div>
@@ -122,9 +124,11 @@
                             <li>15 config slots</li>
                         </ul>
                         @guest
-                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/login">Login</a>
+                            <a type="button" class="btn btn-lg btn-block btn-primary"
+                               href="{{ route('login') }}">Login</a>
                         @else
-                            <a type="button" class="btn btn-lg btn-block btn-primary" href="/home">Purchase</a>
+                            <a type="button" class="btn btn-lg btn-block btn-primary"
+                               href="{{ route('dashboard') }}">Purchase</a>
                         @endguest
                     </div>
                 </div>
