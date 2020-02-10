@@ -34,4 +34,4 @@ Route::delete('user/{user}', 'UsersController@destroy');
  * Admin
  */
 Route::put('user/update/credits/{user}', 'UsersController@addCredits');
-Route::put('user/update/ban', 'UsersController@ban');
+Route::put('user/update/ban/{user}', 'UsersController@ban');

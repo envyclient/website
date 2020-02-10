@@ -127,6 +127,10 @@
                                         {!! Form::open(['action' => ['UsersController@addCredits', $user], 'method' => 'POST', 'id' => "f-$user->name"]) !!}
                                         {!! Form::close() !!}
                                     @endforeach
+                                    @foreach($users as $user)
+                                        {!! Form::open(['action' => ['UsersController@ban', $user], 'method' => 'POST', 'id' => "f-ban-$user->name"]) !!}
+                                        {!! Form::close() !!}
+                                    @endforeach
                                     <table class="table table-sm table-bordered">
                                         <thead>
                                         <tr>
@@ -168,8 +172,10 @@
                                                         <i class="fas fa-coins"></i>
                                                     </button>
                                                     <button type="button"
-                                                            class="btn btn-info d-inline-block text-white">
-                                                        <i class="far fa-address-card"></i>
+                                                            class="btn btn-danger d-inline-block text-white"
+                                                            data-toggle="modal"
+                                                            data-target="#modal-ban-{{ $user->name }}">
+                                                        <i class="fas fa-ban"></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -200,6 +206,45 @@
                                                                     ], '5', ['class' => 'form-control', 'form' => "f-$user->name"]) }}
                                                                 </div>
                                                                 {{ Form::submit('Add Credits', ['class' => 'btn btn-primary', 'form' => "f-$user->name", 'method' => 'PUT']) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="modal-ban-{{ $user->name }}" tabindex="-1"
+                                                 role="dialog" aria-labelledby=""
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Ban
+                                                                Interface</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    {{ Form::hidden('_method', 'PUT', ['form' => "f-ban-$user->name"]) }}
+                                                                    {{ Form::label('reason', 'Please specify the ban reason: ', ['form' => "f-ban-$user->name"]) }}
+                                                                    {{ Form::select('comment', [
+                                                                        'Chargeback' => 'Chargeback',
+                                                                        'Abuse of power' => 'Abuse of power',
+                                                                        'Exploiting' => 'Exploiting',
+                                                                        'Account Sharing' => 'Account Sharing',
+                                                                        'Blacklisted' => 'Blacklisted',
+                                                                    ], 'Chargeback', ['class' => 'form-control', 'form' => "f-ban-$user->name"]) }}
+                                                                </div>
+                                                                {{ Form::submit('Ban', ['class' => 'btn btn-danger', 'form' => "f-ban-$user->name", 'method' => 'PUT']) }}
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
