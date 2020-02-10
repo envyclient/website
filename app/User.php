@@ -6,6 +6,8 @@ use App\Notifications\Generic;
 use App\Traits\HasWallet;
 use App\Util\AAL;
 use Carbon\Carbon;
+use Cog\Contracts\Ban\Bannable as BannableContract;
+use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,9 +16,9 @@ use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmail, JWTSubject
+class User extends Authenticatable implements MustVerifyEmail, JWTSubject, BannableContract
 {
-    use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed;
+    use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed, Bannable;
 
     const CAPES_DIRECTORY = 'public/capes';
 
@@ -66,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             $this->notify(new Generic($this, 'Your subscription has been renewed.'));
         } else {
             $code = AAL::removeUser($this);
-            if ($code === 403) {
+            if ($code !== 200 && $code !== 404) {
                 return;
             }
 

@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'auth'])->except('index');
+        $this->middleware(['verified', 'auth', 'forbid-banned-user'])->except('index');
         $this->middleware('admin')->only('admin');
     }
 

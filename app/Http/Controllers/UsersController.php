@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
-use App\Transaction;
 use App\User;
 use App\Util\AAL;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -15,8 +13,8 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'auth'])->except('addCredits');
-        $this->middleware(['verified', 'auth', 'admin'])->only(['addCredits', 'search']);
+        $this->middleware(['verified', 'auth', 'forbid-banned-user']);
+        $this->middleware('admin')->only(['addCredits', 'ban', 'search']);
     }
 
     public function updateAalName(Request $request)
@@ -83,7 +81,7 @@ class UsersController extends Controller
         }
 
         $code = AAL::removeUser($user);
-        if ($code === 403) {
+        if ($code !== 200 && $code !== 404) {
             return back()->with('error', 'An error occurred while deleting your account. Please contact support.');
         }
 
@@ -97,20 +95,43 @@ class UsersController extends Controller
         return back()->with('success', 'Account deleted');
     }
 
+    ///////////// admin
+
     public function addCredits(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        $admin = auth()->user();
         $request->validate([
             'amount' => 'required|int'
         ]);
 
         $amount = $request->amount;
-        $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "An admin deposited $amount credits into your account."]);
-        return back()->with('success', 'Added credits.');
+        $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "Admin {$admin->name} deposited $amount credits into your account."]);
+        return back()->with('success', "Added $amount credits to {$user->name}'s account.");
+    }
+
+    public function ban(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $request->validate([
+            'comment' => 'required|string'
+        ]);
+
+        $code = AAL::removeUser($user);
+        if ($code !== 200 && $code !== 404) {
+            return back()->with('error', 'Could not ban this user due to an AAL error.');
+        }
+
+        $user->ban([
+            'comment' => $request->comment
+        ]);
+
+        return back()->with('success', "User {$user->name} has been banned.");
     }
 
     public function search(Request $request)
     {
+        // TODO: fix
         $request->validate([
             'data' => 'required'
         ]);

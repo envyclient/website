@@ -29,5 +29,10 @@ Route::put('user/update/aal', 'UsersController@updateAalName');
 Route::put('user/update/cape', 'UsersController@updateCape');
 Route::put('user/update/password', 'UsersController@updatePassword');
 Route::delete('user/{user}', 'UsersController@destroy');
+
+/**
+ * Admin
+ */
 Route::put('user/update/credits/{user}', 'UsersController@addCredits');
+Route::put('user/update/ban', 'UsersController@ban');
 Route::any('user/search', 'UsersController@search');
