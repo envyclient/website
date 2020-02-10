@@ -13,12 +13,12 @@
             <p>
             <div class="text-center">
                 @guest
-                    <a class="btn btn-primary btn-lg" href="/login">
+                    <a class="btn btn-primary btn-lg" href="{{ route('login') }}">
                         <i class="fab fa-paypal"></i>
                         Purchase
                     </a>
                 @else
-                    <a class="btn btn-primary btn-lg" href="/home" role="button">
+                    <a class="btn btn-primary btn-lg" href="{{ route('dashboard') }}" role="button">
                         <i class="fas fa-bars"></i>
                         Dashboard
                     </a>
@@ -26,7 +26,6 @@
             </div>
         </div>
     </div>
-    <!-- Home Section -->
 
     <!-- Features Section -->
     <div class="jumbotron jumbotron-fluid text-center" style="background: #f9f9f9;border:none;margin-bottom:0;">
@@ -67,7 +66,6 @@
             </div>
         </div>
     </div>
-    <!-- Features Section -->
 
     <!-- ShowCase Section -->
     <div class="jumbotron jumbotron-fluid text-center" style="background:#efefef; border:none;margin-bottom:0;">
@@ -87,7 +85,6 @@
             </div>
         </div>
     </div>
-    <!-- ShowCase Section End -->
 
     <!-- Pricing Section -->
     <div class="jumbotron jumbotron-fluid text-center" style="background:#e5e5e5; border:none;margin-bottom:0;">
@@ -134,7 +131,7 @@
             </div>
         </div>
     </div>
-    <!-- Pricing Section End -->
+
     <!-- Footer -->
     <footer class="page-footer font-small blue-grey lighten-5" style="background-color:#e0e0e0;">
         <div style="background-color: #ffff;">
@@ -181,5 +178,4 @@
             </div>
         </div>
     </footer>
-    <!-- Footer -->
 @endsection

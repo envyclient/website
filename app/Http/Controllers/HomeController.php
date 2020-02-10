@@ -13,8 +13,14 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware(['verified', 'auth'])->except('index');
+        $this->middleware('admin')->only('admin');
     }
 
+    /**
+     * Show the application landing page.
+     *
+     * @return Renderable
+     */
     public function index()
     {
         return view('pages.index');
@@ -27,44 +33,47 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
-        // TODO: do admin check and pass in certain data
-
         $user = auth()->user();
-
-
-        $moneyToday = [];
-        $moneyWeek = [];
-        $moneyMonth = [];
-        $todayTransactions = [];
-        $nextSubscription = [];
-        if ($user->admin) {
-            $moneyToday = Transaction::where('type', 'deposit')
-                ->whereDate('created_at', Carbon::today())
-                ->sum('amount');
-
-            $moneyWeek = Transaction::where('type', 'deposit')
-                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->sum('amount');
-
-            $moneyMonth = Transaction::where('type', 'deposit')
-                ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
-                ->sum('amount');
-
-            $todayTransactions = Transaction::where('type', 'deposit')
-                ->whereDate('created_at', Carbon::today())
-                ->orderBy('created_at', 'desc')
-                ->get();
-
-            $nextSubscription = '∞';
-            if ($user->subscription()->exists()) {
-                $nextSubscription = $user->subscription->end_date->diffInDays();
-            }
-
-        }
         return view('pages.dashboard')->with([
             'user' => $user,
             'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
-            'plans' => Plan::all(),
+            'plans' => Plan::all()
+        ]);
+    }
+
+    /**
+     * Show the admin dashboard.
+     *
+     * @return Renderable
+     */
+    public function admin()
+    {
+        $user = auth()->user();
+
+        $moneyToday = Transaction::where('type', 'deposit')
+            ->whereDate('created_at', Carbon::today())
+            ->sum('amount');
+
+        $moneyWeek = Transaction::where('type', 'deposit')
+            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->sum('amount');
+
+        $moneyMonth = Transaction::where('type', 'deposit')
+            ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->sum('amount');
+
+        $todayTransactions = Transaction::where('type', 'deposit')
+            ->whereDate('created_at', Carbon::today())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $nextSubscription = '∞';
+        if ($user->subscription()->exists()) {
+            $nextSubscription = $user->subscription->end_date->diffInDays();
+        }
+
+        return view('pages.admin')->with([
+            'user' => $user,
             'users' => User::all(),
             'moneyToday' => $moneyToday,
             'moneyWeek' => $moneyWeek,

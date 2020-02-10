@@ -97,8 +97,9 @@ class UsersController extends Controller
         return back()->with('success', 'Account deleted');
     }
 
-    public function addCredits(Request $request, User $user)
+    public function addCredits(Request $request, $id)
     {
+        $user = User::findOrFail($id);
         $request->validate([
             'amount' => 'required|int'
         ]);
@@ -132,30 +133,6 @@ class UsersController extends Controller
         } else {
             $request->session()->flash('error', null);
             $request->session()->flash('success', "Found $size result(s) matching the query.");
-        }
-
-        if ($user->admin) {
-            $moneyToday = Transaction::where('type', 'deposit')
-                ->whereDate('created_at', Carbon::today())
-                ->sum('amount');
-
-            $moneyWeek = Transaction::where('type', 'deposit')
-                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->sum('amount');
-
-            $moneyMonth = Transaction::where('type', 'deposit')
-                ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
-                ->sum('amount');
-
-            $todayTransactions = Transaction::where('type', 'deposit')
-                ->whereDate('created_at', Carbon::today())
-                ->orderBy('created_at', 'desc')
-                ->get();
-
-            $nextSubscription = '∞';
-            if ($user->subscription()->exists()) {
-                $nextSubscription = $user->subscription->end_date->diffInDays();
-            }
         }
 
         return view('pages.dashboard')->with([
