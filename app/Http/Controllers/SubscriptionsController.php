@@ -55,6 +55,11 @@ class SubscriptionsController extends Controller
                     return back()->with('error', 'App user limit has been reached. Please inform staff of this.');
                     break;
                 }
+                default:
+                {
+                    return back()->with('error', 'An error has occurred. Please contact support.');
+                    break;
+                }
             }
 
             // TODO: send email about new subscription
