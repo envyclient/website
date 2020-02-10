@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Plan;
+use App\Transaction;
 use App\User;
 use App\Util\AAL;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +16,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware(['verified', 'auth'])->except('addCredits');
-        $this->middleware(['verified', 'auth', 'admin'])->only('addCredits');
+        $this->middleware(['verified', 'auth', 'admin'])->only(['addCredits', 'search']);
     }
 
     public function updateAalName(Request $request)
@@ -103,5 +106,69 @@ class UsersController extends Controller
         $amount = $request->amount;
         $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "An admin deposited $amount credits into your account."]);
         return back()->with('success', 'Added credits.');
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'data' => 'required'
+        ]);
+
+        $user = auth()->user();
+        $query = $request->data;
+        $users = User::where('name', 'LIKE', '%' . $query . '%')->orWhere('email', 'LIKE', '%' . $query . '%')->orWhere('aal_name', 'LIKE', '%' . $query . '%')->get();
+        $size = count($users);
+        $moneyToday = [];
+        $moneyWeek = [];
+        $moneyMonth = [];
+        $todayTransactions = [];
+        $nextSubscription = [];
+
+        if (count($users) === 0) {
+            $users = User::all();
+            $request->session()->flash('success', null);
+            $request->session()->flash('error', "Could not find anything for '$query'.");
+            $query = null;
+        } else {
+            $request->session()->flash('error', null);
+            $request->session()->flash('success', "Found $size result(s) matching the query.");
+        }
+
+        if ($user->admin) {
+            $moneyToday = Transaction::where('type', 'deposit')
+                ->whereDate('created_at', Carbon::today())
+                ->sum('amount');
+
+            $moneyWeek = Transaction::where('type', 'deposit')
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->sum('amount');
+
+            $moneyMonth = Transaction::where('type', 'deposit')
+                ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+                ->sum('amount');
+
+            $todayTransactions = Transaction::where('type', 'deposit')
+                ->whereDate('created_at', Carbon::today())
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $nextSubscription = '∞';
+            if ($user->subscription()->exists()) {
+                $nextSubscription = $user->subscription->end_date->diffInDays();
+            }
+        }
+
+        return view('pages.dashboard')->with([
+            'user' => $user,
+            'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
+            'plans' => Plan::all(),
+            'users' => $users,
+            'moneyToday' => $moneyToday,
+            'moneyWeek' => $moneyWeek,
+            'moneyMonth' => $moneyMonth,
+            'todayTransactions' => $todayTransactions,
+            'nextSubscription' => $nextSubscription,
+            'query' => $query
+        ]);
     }
 }

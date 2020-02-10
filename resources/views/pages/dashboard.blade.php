@@ -385,13 +385,11 @@
                                             <div class="col">
                                                 <i class="fas fa-users-cog" style="padding-right:10px;"></i> Users
                                             </div>
-                                            <div class="row">
-                                                <form class="form-inline">
-                                                    <i class="fas fa-search" aria-hidden="true"></i>
-                                                    <input class="form-control form-control-sm ml-3 w-75" type="text"
-                                                           placeholder="Search"
-                                                           aria-label="Search">
-                                                </form>
+                                            <div class="col">
+                                                {!! Form::open(['action' => 'UsersController@search'], ['class' => 'form-inline', 'role' => 'search']) !!}
+                                                {{ Form::submit("Search", ['class' => 'btn-sm btn-primary d-inline-block']) }}
+                                                {{ Form::text('data', '', ['class' => 'form-control form-control-sm ml-3 w-75 d-inline-block float-right', 'placeholder'=>'Search']) }}
+                                                {!! Form::close() !!}
                                             </div>
                                         </div>
                                     </div>
@@ -400,6 +398,10 @@
                                             {!! Form::open(['action' => ['UsersController@addCredits', $user], 'method' => 'POST', 'id' => "f-$user->name"]) !!}
                                             {!! Form::close() !!}
                                         @endforeach
+                                        @if(isset($query))
+                                            <h3><span
+                                                class='badge badge-primary'>Search results for '{{ $query }}':</span></h3>
+                                        @endif
                                         <table class="table table-sm table-bordered">
                                             <thead>
                                             <tr>

@@ -29,3 +29,4 @@ Route::put('user/update/cape', 'UsersController@updateCape');
 Route::put('user/update/password', 'UsersController@updatePassword');
 Route::delete('user/{user}', 'UsersController@destroy');
 Route::put('user/update/credits/{user}', 'UsersController@addCredits');
+Route::any('user/search', 'UsersController@search');
