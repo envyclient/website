@@ -97,6 +97,9 @@
                                                 {{ Form::submit('Submit', ['class' => 'btn btn-secondary m-1']) }}
                                                 {!! Form::close() !!}
                                             @endif
+                                            <br>
+                                            <h5>Configs Used</h5>
+                                            <h7>{{ count($configs) }} / <span class="font-weight-bold">5</span></h7>
                                         </div>
                                     </div>
                                 </div>
