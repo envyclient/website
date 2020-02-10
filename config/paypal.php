@@ -9,7 +9,7 @@ return [
     /**
      * SDK configuration settings
      */
-    'settings' => array(
+    'settings' => [
 
         /**
          * Payment Mode
@@ -38,5 +38,5 @@ return [
          *
          */
         'log.LogLevel' => 'DEBUG'
-    ),
+    ],
 ];

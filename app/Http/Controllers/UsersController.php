@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Plan;
 use App\User;
 use App\Util\AAL;
 use Illuminate\Http\Request;
@@ -127,46 +126,5 @@ class UsersController extends Controller
         ]);
 
         return back()->with('success', "User {$user->name} has been banned.");
-    }
-
-    public function search(Request $request)
-    {
-        // TODO: fix
-        $request->validate([
-            'data' => 'required'
-        ]);
-
-        $user = auth()->user();
-        $query = $request->data;
-        $users = User::where('name', 'LIKE', '%' . $query . '%')->orWhere('email', 'LIKE', '%' . $query . '%')->orWhere('aal_name', 'LIKE', '%' . $query . '%')->get();
-        $size = count($users);
-        $moneyToday = [];
-        $moneyWeek = [];
-        $moneyMonth = [];
-        $todayTransactions = [];
-        $nextSubscription = [];
-
-        if (count($users) === 0) {
-            $users = User::all();
-            $request->session()->flash('success', null);
-            $request->session()->flash('error', "Could not find anything for '$query'.");
-            $query = null;
-        } else {
-            $request->session()->flash('error', null);
-            $request->session()->flash('success', "Found $size result(s) matching the query.");
-        }
-
-        return view('pages.dashboard')->with([
-            'user' => $user,
-            'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
-            'plans' => Plan::all(),
-            'users' => $users,
-            'moneyToday' => $moneyToday,
-            'moneyWeek' => $moneyWeek,
-            'moneyMonth' => $moneyMonth,
-            'todayTransactions' => $todayTransactions,
-            'nextSubscription' => $nextSubscription,
-            'query' => $query
-        ]);
     }
 }

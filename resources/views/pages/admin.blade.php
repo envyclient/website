@@ -116,10 +116,9 @@
                                             <i class="fas fa-users-cog" style="padding-right:10px;"></i> Users
                                         </div>
                                         <div class="col">
-                                            {!! Form::open(['action' => 'UsersController@search'], ['class' => 'form-inline', 'role' => 'search']) !!}
-                                            {{ Form::submit("Search", ['class' => 'btn-sm btn-primary d-inline-block']) }}
-                                            {{ Form::text('data', '', ['class' => 'form-control form-control-sm ml-3 w-75 d-inline-block float-right', 'placeholder'=>'Search']) }}
-                                            {!! Form::close() !!}
+                                            <input type="text" id="search"
+                                                   class="form-control form-control-sm ml-3 w-75 d-inline-block float-right"
+                                                   placeholder="Search">
                                         </div>
                                     </div>
                                 </div>
@@ -128,11 +127,6 @@
                                         {!! Form::open(['action' => ['UsersController@addCredits', $user], 'method' => 'POST', 'id' => "f-$user->name"]) !!}
                                         {!! Form::close() !!}
                                     @endforeach
-                                    @if(isset($query))
-                                        <h3><span
-                                                class='badge badge-primary'>Search results for '{{ $query }}':</span>
-                                        </h3>
-                                    @endif
                                     <table class="table table-sm table-bordered">
                                         <thead>
                                         <tr>
@@ -144,7 +138,7 @@
                                             <th scope="col">Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="users-table">
                                         @foreach($users as $user)
                                             <tr>
                                                 <th scope="row">{{ $loop->index + 1 }}</th>
@@ -230,4 +224,17 @@
 
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                const value = $(this).val().toLowerCase();
+                $("#users-table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 @endsection
