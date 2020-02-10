@@ -30,6 +30,7 @@ trait HasWallet
 
     /**
      * Determine if the user can withdraw the given amount
+     *
      * @param integer $amount
      * @return boolean
      */
@@ -40,6 +41,7 @@ trait HasWallet
 
     /**
      * Move credits to this account
+     *
      * @param integer $amount
      * @param string $type
      * @param array $meta
@@ -65,6 +67,7 @@ trait HasWallet
 
     /**
      * Fail to move credits to this account
+     *
      * @param integer $amount
      * @param string $type
      * @param array $meta
@@ -76,6 +79,7 @@ trait HasWallet
 
     /**
      * Attempt to move credits from this account
+     *
      * @param integer $amount
      * @param string $type
      * @param array $meta
@@ -104,10 +108,10 @@ trait HasWallet
 
     /**
      * Move credits from this account
+     *
      * @param integer $amount
      * @param string $type
      * @param array $meta
-     * @param boolean $shouldAccept
      */
     public function forceWithdraw($amount, $type = 'withdraw', $meta = [])
     {
@@ -117,6 +121,7 @@ trait HasWallet
     /**
      * Returns the actual balance for this wallet.
      * Might be different from the balance property if the database is manipulated
+     *
      * @return float balance
      */
     public function actualBalance()

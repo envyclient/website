@@ -58,12 +58,11 @@ class SubscriptionsController extends Controller
                 return back()->with('error', 'App user limit has been reached. Please inform staff of this.');
                 break;
             }
-            case 200:
+            case 200: // success
             {
-                // success
                 break;
             }
-            default:
+            default: // any other error codes
             {
                 return back()->with('error', 'An unexpected error has occurred. Please contact support.');
                 break;
@@ -77,8 +76,9 @@ class SubscriptionsController extends Controller
         $subscription->end_date = Carbon::now()->addDays($plan->interval);
         $subscription->save();
 
-        $user->withdraw($price, ['plan_id' => $plan->id, 'description' => "Subscribed to plan {$plan->title}."]);
-        return back()->with('success', 'Plan purchased.');
+        $user->withdraw($price, 'withdraw', ['plan_id' => $plan->id, 'description' => "Subscribed to plan {$plan->name}."]);
+
+        return back()->with('success', 'Successfully subscribed to plan.');
     }
 
     public function cancel(Request $request)

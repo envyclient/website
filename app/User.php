@@ -64,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject, Banna
             $user->subscription->end_date = Carbon::now()->addDays($this->subscription->plan->interval);
             $user->subscription()->save();
 
-            $user->withdraw($plan->price, ['plan_id' => $plan->id, 'description' => "Renewal of plan {$plan->title}."]);
+            $user->withdraw($plan->price, 'withdraw', ['plan_id' => $plan->id, 'description' => "Renewal of plan {$plan->title}."]);
             $this->notify(new Generic($this, 'Your subscription has been renewed.'));
         } else {
             $code = AAL::removeUser($this);

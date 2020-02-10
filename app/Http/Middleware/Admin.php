@@ -19,6 +19,6 @@ class Admin
         if (auth()->user()->admin) {
             return $next($request);
         }
-        return back()->with('error', 'You must be an admin');
+        return back();
     }
 }
