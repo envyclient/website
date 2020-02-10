@@ -21,6 +21,6 @@ class Subscription extends Model
 
     public function plan()
     {
-        return $this->hasOne('App\Plan');
+        return $this->hasOne('App\Plan', 'id', 'plan_id');
     }
 }

@@ -20,7 +20,7 @@
                             <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                             Security
                         </a>
-                        <a class="list-group-item list-group-item-action" href="https://forums.envyclient.com"
+                        <a class="list-group-item list-group-item-action" href="https://forums.envyclient.com/t/support"
                            style="cursor:pointer;">
                             <i class="fas fa-question-circle p-2" style="margin-right:10px;"></i>
                             Support
@@ -127,7 +127,7 @@
                                     {{ Form::label('password', 'New password: ') }}
                                     {{ Form::password('password', ['class' => 'form-control', 'required']) }}
                                     <br>
-                                    {{ Form::label('password_confirmation', 'New password confrim: ') }}
+                                    {{ Form::label('password_confirmation', 'New password confirm: ') }}
                                     {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
                                     <br>
                                     {{ Form::submit('Change Password', ['class' => 'btn btn-success']) }}
@@ -157,8 +157,10 @@
                             <ul class="list-group list-group-flush">
                                 @if($user->subscription()->exists())
                                     <li class="list-group-item">
-                                        You are currently subscribed to the Basic (Monthly) plan. (next payment in due
-                                        in {{ $nextSubscription }} days)
+                                        You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
+                                        (next payment in due
+                                        in {{ $user->subscription->plan->name === 'Lifetime' ? '∞' : $nextSubscription }}
+                                        days)
                                     </li>
                                 @endif
                                 @foreach($plans as $plan)
@@ -184,6 +186,7 @@
                         @if($user->hasSubscription())
                             <div class="card" style="width: 100%;">
                                 <ul class="list-group list-group-flush">
+                                    {!! Form::close() !!}
                                     {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
                                     {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger w-25 m-sm-2']) }}
                                     {!! Form::close() !!}

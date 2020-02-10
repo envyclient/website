@@ -42,7 +42,7 @@
                                             <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center" style="font-size: 25px;">
-                                                        ${{ $moneyToday }}</h5>
+                                                        ${{ $stats['moneyToday'] }}</h5>
                                                 </div>
                                                 <div
                                                     class="card-footer bg-transparent text-center font-weight-bold">
@@ -54,7 +54,7 @@
                                             <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center" style="font-size: 25px;">
-                                                        ${{ $moneyWeek }}</h5>
+                                                        ${{ $stats['moneyWeek'] }}</h5>
                                                 </div>
                                                 <div
                                                     class="card-footer bg-transparent text-center font-weight-bold">
@@ -66,7 +66,7 @@
                                             <div class="card bg-light mb-3" style="max-width: 18rem;">
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center" style="font-size: 25px;">
-                                                        ${{ $moneyMonth }}</h5>
+                                                        ${{ $stats['moneyMonth'] }}</h5>
                                                 </div>
                                                 <div
                                                     class="card-footer bg-transparent text-center font-weight-bold">
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
 
-                                    @if(count($todayTransactions) > 0)
+                                    @if(count($stats['todayTransactions']) > 0)
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>
@@ -88,7 +88,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($todayTransactions as $transaction)
+                                            @foreach($stats['todayTransactions'] as $transaction)
                                                 <tr>
                                                     <th scope="row">{{ $loop->index + 1 }}</th>
                                                     <td>{{ $transaction->wallet->user->name }}</td>

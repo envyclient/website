@@ -31,62 +31,69 @@ class SubscriptionsController extends Controller
         }
 
         $price = $plan->price;
-        if ($user->canWithdraw($price)) {
 
-            $code = AAL::addUser($user);
-            switch ($code) {
-                case 409:
-                {
-                    return back()->with('error', 'You already own the app. Please wait till the end of the day to subscribe again.');
-                    break;
-                }
-                case 404:
-                {
-                    return back()->with('error', 'Your account does not exist on AAL. Please make sure you entered your name correctly.');
-                    break;
-                }
-                case 403:
-                {
-                    return back()->with('error', 'An error has occurred. Please contact support.');
-                    break;
-                }
-                case 400:
-                {
-                    return back()->with('error', 'App user limit has been reached. Please inform staff of this.');
-                    break;
-                }
-                default:
-                {
-                    return back()->with('error', 'An error has occurred. Please contact support.');
-                    break;
-                }
-            }
-
-            // TODO: send email about new subscription
-
-            $subscription = Subscription::firstOrNew(['user_id' => $user->id]);
-            $subscription->plan_id = $plan->id;
-            $subscription->end_date = Carbon::now()->addDays($plan->interval);
-            $subscription->save();
-
-            $user->withdraw($price, ['description' => 'Subscribed to plan ' . $plan->title . '.']);
-            return back()->with('success', 'Plan purchased.');
-        } else {
+        if (!$user->canWithdraw($price)) {
             return back()->with('error', 'You do not have enough credits.');
         }
+
+        $code = AAL::addUser($user);
+        switch ($code) {
+            case 409:
+            {
+                return back()->with('error', 'You already own the app. Please wait till the end of the day to subscribe again.');
+                break;
+            }
+            case 404:
+            {
+                return back()->with('error', 'Your account does not exist on AAL. Please make sure you entered your name correctly.');
+                break;
+            }
+            case 403:
+            {
+                return back()->with('error', 'An error has occurred. Please contact support.');
+                break;
+            }
+            case 400:
+            {
+                return back()->with('error', 'App user limit has been reached. Please inform staff of this.');
+                break;
+            }
+            case 200:
+            {
+                // success
+                break;
+            }
+            default:
+            {
+                return back()->with('error', 'An unexpected error has occurred. Please contact support.');
+                break;
+            }
+        }
+
+        // TODO: send email about new subscription
+        $subscription = new Subscription();
+        $subscription->user_id = $user->id;
+        $subscription->plan_id = $plan->id;
+        $subscription->end_date = Carbon::now()->addDays($plan->interval);
+        $subscription->save();
+
+        $user->withdraw($price, ['plan_id' => $plan->id, 'description' => "Subscribed to plan {$plan->title}."]);
+        return back()->with('success', 'Plan purchased.');
     }
 
     public function cancel(Request $request)
     {
         $user = auth()->user();
+
         if (!$user->hasSubscription()) {
             return back()->with('error', 'You must subscribe to a plan first.');
         }
-        $subscription = $user->subscription;
-        $subscription->renew = false;
-        $subscription->save();
 
-        $this->notify(new Generic($user, 'You have cancelled your subscription and it will not renew.'));
+        $user->subscription->fill([
+            'renew' => false
+        ])->save();
+
+        $user->notify(new Generic($user, 'You have cancelled your subscription and it will not renew.'));
 
         return back()->with('success', 'Your subscription has been cancelled and will not renew.');
     }

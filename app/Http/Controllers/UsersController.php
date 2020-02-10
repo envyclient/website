@@ -121,6 +121,10 @@ class UsersController extends Controller
             return back()->with('error', 'Could not ban this user due to an AAL error.');
         }
 
+        $user->subscription->fill([
+            'renew' => false
+        ])->save();
+
         $user->ban([
             'comment' => $request->comment
         ]);

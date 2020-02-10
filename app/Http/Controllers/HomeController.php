@@ -34,10 +34,17 @@ class HomeController extends Controller
     public function dashboard()
     {
         $user = auth()->user();
+
+        $nextSubscription = '∞';
+        if ($user->subscription()->exists()) {
+            $nextSubscription = $user->subscription->end_date->diffInDays();
+        }
+
         return view('pages.dashboard')->with([
             'user' => $user,
             'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
-            'plans' => Plan::all()
+            'plans' => Plan::all(),
+            'nextSubscription' => $nextSubscription
         ]);
     }
 
@@ -50,36 +57,28 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        $moneyToday = Transaction::where('type', 'deposit')
+        $stats = [];
+        $stats['moneyToday'] = Transaction::where('type', 'deposit')
             ->whereDate('created_at', Carbon::today())
             ->sum('amount');
 
-        $moneyWeek = Transaction::where('type', 'deposit')
+        $stats['moneyWeek'] = Transaction::where('type', 'deposit')
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->sum('amount');
 
-        $moneyMonth = Transaction::where('type', 'deposit')
+        $stats['moneyMonth'] = Transaction::where('type', 'deposit')
             ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
             ->sum('amount');
 
-        $todayTransactions = Transaction::where('type', 'deposit')
+        $stats['todayTransactions'] = Transaction::where('type', 'deposit')
             ->whereDate('created_at', Carbon::today())
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $nextSubscription = '∞';
-        if ($user->subscription()->exists()) {
-            $nextSubscription = $user->subscription->end_date->diffInDays();
-        }
-
         return view('pages.admin')->with([
             'user' => $user,
             'users' => User::all(),
-            'moneyToday' => $moneyToday,
-            'moneyWeek' => $moneyWeek,
-            'moneyMonth' => $moneyMonth,
-            'todayTransactions' => $todayTransactions,
-            'nextSubscription' => $nextSubscription
+            'stats' => $stats
         ]);
     }
 }
