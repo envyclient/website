@@ -14,8 +14,6 @@ class Config extends Model
 {
     use CanBeFavorited;
 
-    const LIMIT = 5;
-
     protected $casts = [
         'data' => 'json'
     ];
@@ -24,4 +22,5 @@ class Config extends Model
     {
         return $this->belongsTo('App\User');
     }
+
 }

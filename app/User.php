@@ -96,4 +96,12 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject, Banna
     {
         return [];
     }
+
+    public function getConfigLimit()
+    {
+        if ($this->hasSubscription() && $this->subscription->plan->name === 'Lifetime') {
+            return 15;
+        }
+        return 5;
+    }
 }

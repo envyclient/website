@@ -99,7 +99,11 @@
                                             @endif
                                             <br>
                                             <h5>Configs Used</h5>
-                                            <h7>{{ count($configs) }} / <span class="font-weight-bold">5</span></h7>
+                                            <h7>
+                                                {{ $user->configs()->count() }}
+                                                /
+                                                <span class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
+                                            </h7>
                                         </div>
                                     </div>
                                 </div>

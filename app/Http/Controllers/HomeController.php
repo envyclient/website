@@ -44,8 +44,7 @@ class HomeController extends Controller
             'user' => $user,
             'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
             'plans' => Plan::all(),
-            'nextSubscription' => $nextSubscription,
-            'configs' => $user->configs
+            'nextSubscription' => $nextSubscription
         ]);
     }
 

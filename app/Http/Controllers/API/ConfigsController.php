@@ -62,7 +62,7 @@ class ConfigsController extends Controller
 
         $user = $request->user();
 
-        if ($user->configs()->count() === Config::LIMIT) {
+        if ($user->configs()->count() === $user->getConfigLimit()) {
             return response()->json([
                 'message' => '406 Not Acceptable'
             ], 406);
