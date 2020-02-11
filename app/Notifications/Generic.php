@@ -46,7 +46,6 @@ class Generic extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         // TODO: change email title
-
         return (new MailMessage)
             ->from('noreply@envyclient.com')
             ->greeting('Hello ' . $this->user->name)

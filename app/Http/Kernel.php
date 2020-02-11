@@ -64,8 +64,7 @@ class Kernel extends HttpKernel
 
         'aal_name' => \App\Http\Middleware\AALName::class,
         'admin' => \App\Http\Middleware\Admin::class,
-        'forbid-banned-user' => \Cog\Laravel\Ban\Http\Middleware\ForbidBannedUser::class,
-        'logs-out-banned-user' => \Cog\Laravel\Ban\Http\Middleware\LogsOutBannedUser::class,
+        'forbid-banned-user' => \App\Http\Middleware\Banned::class,
     ];
 
     /**

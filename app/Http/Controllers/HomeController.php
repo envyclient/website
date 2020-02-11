@@ -36,7 +36,7 @@ class HomeController extends Controller
         $user = auth()->user();
 
         $nextSubscription = '∞';
-        if ($user->subscription()->exists()) {
+        if ($user->hasSubscription()) {
             $nextSubscription = $user->subscription->end_date->diffInDays();
         }
 

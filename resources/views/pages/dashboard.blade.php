@@ -162,7 +162,7 @@
                                 <i class="fas fa-redo" style="padding-right:10px;"></i> Update Subscription
                             </div>
                             <ul class="list-group list-group-flush">
-                                @if($user->subscription()->exists())
+                                @if($user->hasSubscription())
                                     <li class="list-group-item">
                                         You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
                                         (next payment in due
@@ -174,7 +174,7 @@
                                     <li class="list-group-item">
                                         <div class="row" style="line-height:60px;">
                                             <div class="col">
-                                                {{ Form::radio('id', $plan->id, $user->subscription()->exists() ? $user->subscription->plan_id === $plan->id : false, ['class' => 'form-check-inline', 'required' ,  $user->subscription()->exists() ? 'disabled' : null]) }}
+                                                {{ Form::radio('id', $plan->id, $user->hasSubscription() ? $user->subscription->plan_id === $plan->id : false, ['class' => 'form-check-inline', 'required' ,  $user->hasSubscription() ? 'disabled' : null]) }}
                                                 {{ $plan->name }}
                                             </div>
                                             <div class="col">

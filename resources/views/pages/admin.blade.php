@@ -236,7 +236,7 @@
                                                                 <div class="form-group">
                                                                     {{ Form::hidden('_method', 'PUT', ['form' => "f-ban-$user->name"]) }}
                                                                     {{ Form::label('reason', 'Please specify the ban reason: ', ['form' => "f-ban-$user->name"]) }}
-                                                                    {{ Form::select('comment', [
+                                                                    {{ Form::select('reason', [
                                                                         'Chargeback' => 'Chargeback',
                                                                         'Abuse of power' => 'Abuse of power',
                                                                         'Exploiting' => 'Exploiting',

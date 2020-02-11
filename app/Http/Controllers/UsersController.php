@@ -112,23 +112,71 @@ class UsersController extends Controller
     public function ban(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $request->validate([
-            'comment' => 'required|string'
-        ]);
 
-        $code = AAL::removeUser($user);
-        if ($code !== 200 && $code !== 404) {
-            return back()->with('error', 'Could not ban this user due to an AAL error.');
+        if ($user->isBanned()) { // this user is currently banned so we unban him
+
+            if ($user->hasSubscription()) {
+                $code = AAL::addUser($user);
+                switch ($code) {
+                    case 409:
+                    {
+                        return back()->with('error', 'This user already owns the app.');
+                        break;
+                    }
+                    case 404:
+                    {
+                        return back()->with('error', 'This user has an invalid AAL name.');
+                        break;
+                    }
+                    case 403:
+                    {
+                        return back()->with('error', 'An error has occurred. Please contact support.');
+                        break;
+                    }
+                    case 400:
+                    {
+                        return back()->with('error', 'App user limit has been reached.');
+                        break;
+                    }
+                    case 200: // success
+                    {
+                        break;
+                    }
+                    default: // any other error codes
+                    {
+                        return back()->with('error', 'An unexpected error has occurred while adding the user back to the client.');
+                        break;
+                    }
+                }
+            }
+
+            $user->fill([
+                'ban_reason' => null
+            ])->save();
+
+            return back()->with('success', "User {$user->name} has been unbanned.");
+        } else { // not banned so we ban the user
+
+            $request->validate([
+                'reason' => 'required|string'
+            ]);
+
+            if ($user->hasSubscription()) {
+                $user->subscription->fill([
+                    'renew' => false
+                ])->save();
+
+                $code = AAL::removeUser($user);
+                if ($code !== 200 && $code !== 404) {
+                    return back()->with('error', "Could not ban {$user->name} due to an AAL error.");
+                }
+            }
+
+            $user->fill([
+                'ban_reason' => $request->reason
+            ])->save();
+
+            return back()->with('success', "User {$user->name} has been banned.");
         }
-
-        $user->subscription->fill([
-            'renew' => false
-        ])->save();
-
-        $user->ban([
-            'comment' => $request->comment
-        ]);
-
-        return back()->with('success', "User {$user->name} has been banned.");
     }
 }
