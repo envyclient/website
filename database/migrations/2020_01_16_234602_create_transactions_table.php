@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->string('hash', 60); // hash is a uniqid for each transaction
             $table->string('type', 30); // type can be anything in your app, by default we use "deposit" and "withdraw"
             $table->boolean('accepted'); // All transactions will be added in the book, some can be refused
-            $table->json('meta')->nullable(); // Add all kind of meta information you need
+            $table->mediumText('meta')->nullable(); // Add all kind of meta information you need, JSON
             $table->timestamps();
             $table->foreign('wallet_id')
                 ->references('id')
