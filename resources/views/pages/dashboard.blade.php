@@ -97,13 +97,15 @@
                                                 {{ Form::submit('Submit', ['class' => 'btn btn-secondary m-1']) }}
                                                 {!! Form::close() !!}
                                             @endif
-                                            <br>
-                                            <h5>Configs Used</h5>
-                                            <h7>
-                                                {{ $user->configs()->count() }}
-                                                /
-                                                <span class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
-                                            </h7>
+                                            @if($user->hasSubscription())
+                                                <br>
+                                                <h5>Configs Used</h5>
+                                                <h7>
+                                                    {{ $user->configs()->count() }}
+                                                    /
+                                                    <span class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
+                                                </h7>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
