@@ -6,7 +6,6 @@ use App\Notifications\Generic;
 use App\Plan;
 use App\Rules\PlanExists;
 use App\Subscription;
-use App\Util\AAL;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -24,49 +23,15 @@ class SubscriptionsController extends Controller
         ]);
 
         $user = auth()->user();
-        $plan = Plan::find($request->id);
-
         if ($user->hasSubscription()) {
             return back()->with('error', 'You are already subscribed to a subscription. You must let that one expire before you subscribe to a new one.');
         }
 
+        $plan = Plan::find($request->id);
         $price = $plan->price;
 
         if (!$user->canWithdraw($price)) {
             return back()->with('error', 'You do not have enough credits.');
-        }
-
-        $code = AAL::addUser($user);
-        switch ($code) {
-            case 409:
-            {
-                return back()->with('error', 'You already own the app. Please wait till the end of the day to subscribe again.');
-                break;
-            }
-            case 404:
-            {
-                return back()->with('error', 'Your account does not exist on AAL. Please make sure you entered your name correctly.');
-                break;
-            }
-            case 403:
-            {
-                return back()->with('error', 'An error has occurred. Please contact support.');
-                break;
-            }
-            case 400:
-            {
-                return back()->with('error', 'App user limit has been reached. Please inform staff of this.');
-                break;
-            }
-            case 200: // success
-            {
-                break;
-            }
-            default: // any other error codes
-            {
-                return back()->with('error', 'An unexpected error has occurred. Please contact support.');
-                break;
-            }
         }
 
         // TODO: send email about new subscription

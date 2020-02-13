@@ -6,8 +6,6 @@ use App\Notifications\Generic;
 use App\Traits\HasWallet;
 use App\Util\AAL;
 use Carbon\Carbon;
-use Cog\Contracts\Ban\Bannable as BannableContract;
-use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,18 +14,19 @@ use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmail, JWTSubject, BannableContract
+class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
-    use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed, Bannable;
+    use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed;
 
     const CAPES_DIRECTORY = 'public/capes';
 
     protected $fillable = [
-        'name', 'email', 'password', 'hwid', 'admin', 'cape'
+        'name', 'email', 'password', 'aal_name', 'admin', 'cape', 'client_settings', 'ban_reason'
     ];
 
+
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at', 'aal_name', 'admin'
+        'password', 'remember_token', 'email_verified_at', 'aal_name', 'admin', 'ban_reason'
     ];
 
     protected $casts = [
@@ -50,9 +49,22 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject, Banna
         return $this->hasOne('App\Subscription');
     }
 
+    public function isBanned()
+    {
+        return $this->ban_reason !== null;
+    }
+
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();
+    }
+
+    public function getConfigLimit()
+    {
+        if ($this->hasSubscription() && $this->subscription->plan->name === 'Lifetime') {
+            return 15;
+        }
+        return 5;
     }
 
     public function renewSubscription()
@@ -97,11 +109,4 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject, Banna
         return [];
     }
 
-    public function getConfigLimit()
-    {
-        if ($this->hasSubscription() && $this->subscription->plan->name === 'Lifetime') {
-            return 15;
-        }
-        return 5;
-    }
 }
