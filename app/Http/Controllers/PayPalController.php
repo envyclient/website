@@ -35,6 +35,7 @@ class PayPalController extends Controller
 
     public function create(Request $request)
     {
+        return back()->with('error', 'Payments are currently disabled, because of testing mode.');
         $this->validate($request, [
             'amount' => 'required|int|between:5,100'
         ]);
