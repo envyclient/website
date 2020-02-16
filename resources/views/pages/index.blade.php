@@ -3,26 +3,34 @@
 @section('content')
 
     <!-- Home Section -->
-    <div class="jumbotron jumbotron-fluid text-center" style="background:#fff;margin-bottom:0px;">
-        <div class="container-fluid p-lg-5">
-            <h1 class="display-4">{{ config('app.name') }}</h1>
-            <br>
-            <p class="lead">
-                Welcome to the {{ config('app.name') }} website. This is a Minecraft 1.8.8 client developed by Mat &
-                Haq.
-            <p>
-            <div class="text-center">
-                @guest
-                    <a class="btn btn-primary btn-lg" href="{{ route('login') }}">
-                        <i class="fab fa-paypal"></i>
-                        Purchase
-                    </a>
-                @else
-                    <a class="btn btn-primary btn-lg" href="{{ route('dashboard') }}" role="button">
-                        <i class="fas fa-bars"></i>
-                        Dashboard
-                    </a>
-                @endguest
+    <div class="jumbotron jumbotron-fluid" style="background:#fff;">
+        <div class="row" style="margin:0 auto;width:fit-content;">
+            <div class="flex-column">
+                <img class="img-fluid" style="min-width:256px;min-height:256px;"
+                     src="{{ asset('/assets/logo_512x512.png') }}" width="512px" height="512px">
+            </div>
+            <div class="col d-flex flex-column">
+                <div class="p-2">
+                    <h1 class="display-4">{{ config('app.name') }}</h1>
+                    <br>
+                    <p class="lead">
+                        Welcome to the {{ config('app.name') }} website. This is a Minecraft 1.8.8 client developed by
+                        Mat &
+                        Haq.
+                    <p>
+                        @guest
+                            <a class="btn btn-primary btn-lg" href="{{ route('login') }}">
+                                <i class="fab fa-paypal"></i>
+                                Purchase
+                            </a>
+                        @else
+                            <a class="btn btn-primary btn-lg" href="{{ route('dashboard') }}" role="button">
+                                <i class="fas fa-bars"></i>
+                                Dashboard
+                            </a>
+                        @endguest
+                    </p>
+                </div>
             </div>
         </div>
     </div>
