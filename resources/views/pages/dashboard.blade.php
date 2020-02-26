@@ -86,17 +86,6 @@
                                             {!! Form::close() !!}
                                         </div>
                                         <div class="col">
-                                            <h5>AAL Name</h5>
-                                            @if($user->aal_name !== null)
-                                                <input type="text" class="form-control" value="{{ $user->aal_name }}"
-                                                       disabled>
-                                            @else
-                                                {!! Form::open(['action' => 'UsersController@updateAalName', 'method' => 'POST']) !!}
-                                                {{ Form::text('name', $user->aal_name, ['class' => 'form-control', 'required', 'placeholder' => 'You can set your name only once']) }}
-                                                {{ Form::hidden('_method', 'PUT') }}
-                                                {{ Form::submit('Submit', ['class' => 'btn btn-secondary m-1']) }}
-                                                {!! Form::close() !!}
-                                            @endif
                                             @if($user->hasSubscription())
                                                 <br>
                                                 <h5>Configs Used</h5>

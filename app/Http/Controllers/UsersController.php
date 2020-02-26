@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Util\AAL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -14,24 +13,6 @@ class UsersController extends Controller
     {
         $this->middleware(['verified', 'auth', 'forbid-banned-user']);
         $this->middleware('admin')->only(['addCredits', 'ban', 'search']);
-    }
-
-    public function updateAalName(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|string|unique:users,aal_name'
-        ]);
-
-        $user = auth()->user();
-
-        if ($user->aal_name !== null) {
-            return back()->with('error', 'Your AAL name has already been set');
-        }
-
-        $user->aal_name = $request->name;
-        $user->save();
-
-        return back()->with('success', 'Your AAL name has been set');
     }
 
     public function updateCape(Request $request)
@@ -79,11 +60,6 @@ class UsersController extends Controller
             return back()->with('error', 'You do not have the permission to delete this user');
         }
 
-        $code = AAL::removeUser($user);
-        if ($code !== 200 && $code !== 404) {
-            return back()->with('error', 'An error occurred while deleting your account. Please contact support.');
-        }
-
         $user->configs()->delete();
         $user->invoices()->delete();
         $user->subscription()->delete();
@@ -114,43 +90,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->isBanned()) { // this user is currently banned so we unban him
-
-            if ($user->hasSubscription()) {
-                $code = AAL::addUser($user);
-                switch ($code) {
-                    case 409:
-                    {
-                        return back()->with('error', 'This user already owns the app.');
-                        break;
-                    }
-                    case 404:
-                    {
-                        return back()->with('error', 'This user has an invalid AAL name.');
-                        break;
-                    }
-                    case 403:
-                    {
-                        return back()->with('error', 'An error has occurred. Please contact support.');
-                        break;
-                    }
-                    case 400:
-                    {
-                        return back()->with('error', 'App user limit has been reached.');
-                        break;
-                    }
-                    case 200: // success
-                    {
-                        break;
-                    }
-                    default: // any other error codes
-                    {
-                        return back()->with('error', 'An unexpected error has occurred while adding the user back to the client.');
-                        break;
-                    }
-                }
-            }
-
-            $user->fill([
+                        $user->fill([
                 'ban_reason' => null
             ])->save();
 
@@ -165,11 +105,6 @@ class UsersController extends Controller
                 $user->subscription->fill([
                     'renew' => false
                 ])->save();
-
-                $code = AAL::removeUser($user);
-                if ($code !== 200 && $code !== 404) {
-                    return back()->with('error', "Could not ban {$user->name} due to an AAL error.");
-                }
             }
 
             $user->fill([
