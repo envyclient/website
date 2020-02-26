@@ -15,8 +15,7 @@
                     <br>
                     <p class="lead">
                         Welcome to the {{ config('app.name') }} website. This is a Minecraft 1.8.8 client developed by
-                        Mat &
-                        Haq.
+                        Mat & Haq.
                     <p>
                         @guest
                             <a class="btn btn-primary btn-lg" href="{{ route('login') }}">

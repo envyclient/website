@@ -157,7 +157,7 @@
                                     <li class="list-group-item">
                                         You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
                                         (next payment in due
-                                        in {{ $user->subscription->plan->name === 'Lifetime' ? '∞' : $nextSubscription }}
+                                        in {{ $user->isLifetime() ? '∞' : $nextSubscription }}
                                         days)
                                     </li>
                                 @endif

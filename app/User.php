@@ -58,9 +58,14 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return $this->subscription()->exists();
     }
 
+    public function isLifetime()
+    {
+        return $this->hasSubscription() && $this->subscription->plan->name === 'Lifetime';
+    }
+
     public function getConfigLimit()
     {
-        if ($this->hasSubscription() && $this->subscription->plan->name === 'Lifetime') {
+        if ($this->isLifetime()) {
             return 15;
         }
         return 5;
@@ -76,11 +81,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             $user->subscription()->save();
 
             $user->withdraw($plan->price, 'withdraw', ['plan_id' => $plan->id, 'description' => "Renewal of plan {$plan->title}."]);
-            $this->notify(new Generic($this, 'Your subscription has been renewed.'));
+            $this->notify(new Generic($this, 'Your subscription has been renewed.', 'Subscription'));
         } else {
-
             $user->subscription()->delete();
-            $this->notify(new Generic($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.'));
+            $this->notify(new Generic($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.', 'Subscription'));
         }
     }
 

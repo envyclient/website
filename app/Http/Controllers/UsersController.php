@@ -90,7 +90,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->isBanned()) { // this user is currently banned so we unban him
-                        $user->fill([
+            $user->fill([
                 'ban_reason' => null
             ])->save();
 

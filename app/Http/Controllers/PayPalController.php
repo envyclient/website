@@ -35,7 +35,7 @@ class PayPalController extends Controller
 
     public function create(Request $request)
     {
-        return back()->with('error', 'Payments are currently disabled, because of testing mode.');
+        //return back()->with('error', 'Payments are currently disabled, because of testing mode.');
         $this->validate($request, [
             'amount' => 'required|int|between:5,100'
         ]);
@@ -124,7 +124,7 @@ class PayPalController extends Controller
 
             $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => "Deposit of $price credits using PayPal."]);
 
-            $user->notify(new Generic($user, "You have deposited $$price worth of credits using PayPal."));
+            $user->notify(new Generic($user, "You have deposited $$price worth of credits using PayPal.", 'Coin Deposit'));
 
             return redirect(RouteServiceProvider::HOME)->with('success', 'Payment success.');
         }

@@ -12,18 +12,20 @@ class Generic extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $user, $message;
+    private $user, $message, $subject;
 
     /**
      * Create a new notification instance.
      *
      * @param User $user
      * @param string $message
+     * @param string $subject
      */
-    public function __construct(User $user, string $message)
+    public function __construct(User $user, string $message, string $subject)
     {
         $this->user = $user;
         $this->message = $message;
+        $this->subject = $subject;
     }
 
     /**
@@ -47,6 +49,7 @@ class Generic extends Notification implements ShouldQueue
     {
         // TODO: change email title
         return (new MailMessage)
+            ->subject($this->subject)
             ->from('noreply@envyclient.com')
             ->greeting('Hello ' . $this->user->name)
             ->line($this->message)
