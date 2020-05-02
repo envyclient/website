@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Banned
+class CheckAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,12 +16,9 @@ class Banned
      */
     public function handle($request, Closure $next)
     {
-        $user = auth()->user();
-        if (!$user->isBanned()) {
+        if (auth()->user()->admin) {
             return $next($request);
         }
-
-        auth()->logout();
-        return redirect()->to('/')->with('error', "You account has been banned for: {$user->ban_reason}");
+        return back();
     }
 }
