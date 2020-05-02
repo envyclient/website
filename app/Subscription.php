@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+// TODO: add soft delete only for subscription else hard delete
 class Subscription extends Model
 {
     protected $fillable = [
