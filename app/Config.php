@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
+
+//TODO: add user purchase check
 /**
  * @property string title
  * @property json data

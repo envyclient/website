@@ -51,6 +51,8 @@ class AuthController extends Controller
 
     private function returnUserObject($user, string $hwid)
     {
+
+        //TODO: fix check
         if ($user->hwid === null) {
             $user->fill([
                 'hwid' => $hwid
