@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -11,25 +13,52 @@ class AuthController extends Controller
         $this->middleware('auth:api')->only('me');
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+            'hwid' => 'required|string|min:40|max:40'
+        ]);
 
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
         }
 
-        return $this->returnUserObject();
+        if (!$token = auth()->attempt(request(['email', 'password']))) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        return $this->returnUserObject(auth()->user(), $request->hwid);
     }
 
-    public function me()
+    public function me(Request $request)
     {
-        return $this->returnUserObject();
+        $validator = Validator::make($request->all(), [
+            'hwid' => 'required|string|min:40|max:40'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        return $this->returnUserObject($request->user(), $request->hwid);
     }
 
-    private function returnUserObject()
+    private function returnUserObject($user, string $hwid)
     {
-        $user = auth()->user();
+        if ($user->hwid === null) {
+            $user->fill([
+                'hwid' => $hwid
+            ])->save();
+        } else if ($user->hwid !== request('hwid')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         return response()->json([
             'name' => $user->name,
             'api_token' => $user->api_token,

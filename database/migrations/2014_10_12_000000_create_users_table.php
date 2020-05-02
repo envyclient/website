@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
 
             $table->boolean('admin')->default(false);
             $table->string('ban_reason')->nullable();
+            $table->string('hwid')->nullable()->unique();
 
             $table->rememberToken();
             $table->timestamps();

@@ -16,24 +16,12 @@ class ConfigsController extends Controller
         $this->middleware('auth:api');
     }
 
+    /**
+     * Get all public configs.
+     */
     public function index()
     {
         return Config::with('user')
-            ->where('public', true)
-            ->get();
-    }
-
-    public function getCurrentUserConfigs(Request $request)
-    {
-        // TODO: return user configs, user favorite configs, and followed users configs
-
-        return $request->user()->configs;
-    }
-
-    public function getConfigsByUser(Request $request, $name)
-    {
-        $user = User::where('name', $name)->firstOrFail();
-        return $user->configs()
             ->where('public', true)
             ->get();
     }
@@ -90,6 +78,26 @@ class ConfigsController extends Controller
         ], 200);
     }
 
+    public function getCurrentUserConfigs(Request $request)
+    {
+        // TODO: return user configs, user favorite configs, and followed users configs
+        return $request->user()->configs;
+    }
+
+    /**
+     * Get config by owners username.
+     */
+    public function getConfigsByUser(Request $request, $name)
+    {
+        $user = User::where('name', $request->name)->firstOrFail();
+        return $user->configs()
+            ->where('public', true)
+            ->get();
+    }
+
+    /**
+     * Favorite a config by its id.
+     */
     public function favorite(Request $request)
     {
         $validator = Validator::make($request->all(), [

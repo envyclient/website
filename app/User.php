@@ -12,17 +12,16 @@ use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 
-// TODO: add api tokens, add hwid, add api user login
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason'
+        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason', 'hwid'
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at', 'admin', 'ban_reason'
+        'password', 'remember_token', 'email_verified_at', 'admin', 'ban_reason', 'hwid'
     ];
 
     protected $casts = [
