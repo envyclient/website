@@ -1,17 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+/** Auth */
+Route::post('auth/login', 'API\AuthController@login');
+Route::get('auth/me', 'API\AuthController@me');
 
-Route::group([
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('login', 'API\AuthController@login');
-    Route::post('logout', 'API\AuthController@logout');
-    Route::post('refresh', 'API\AuthController@refresh');
-    Route::post('me', 'API\AuthController@me');
-});
-
+/** Configs */
 Route::put('configs/favorite', 'API\ConfigsController@favorite');
 Route::get('user/configs', 'API\ConfigsController@getCurrentUserConfigs');
 Route::get('configs/user/{name}', 'API\ConfigsController@getConfigsByUser');

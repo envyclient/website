@@ -11,17 +11,15 @@ use Illuminate\Notifications\Notifiable;
 use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 // TODO: add api tokens, add hwid, add api user login
-class User extends Authenticatable implements MustVerifyEmail, JWTSubject
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed;
 
     protected $fillable = [
         'name', 'email', 'password', 'api_token', 'admin', 'ban_reason'
     ];
-
 
     protected $hidden = [
         'password', 'remember_token', 'email_verified_at', 'admin', 'ban_reason'
@@ -85,25 +83,4 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             $this->notify(new Generic($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.', 'Subscription'));
         }
     }
-
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
 }

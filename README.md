@@ -5,7 +5,6 @@ Official website of the new envy client.
 ```text
 composer install --optimize-autoloader --no-dev
 php artisan key:gen
-php artisan jwt:secret
 php artisan storage:link
 php artisan migrate:fresh
 ```
