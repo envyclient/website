@@ -16,7 +16,7 @@ class Config implements Rule
      */
     public function passes($attribute, $value)
     {
-        return \App\Config::where('id', $value)->exists();
+        return \App\Config::where('id', $value)->exists() && \App\Config::where('id', $value)->public == true;
     }
 
     /**

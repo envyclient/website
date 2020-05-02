@@ -12,6 +12,8 @@ use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 
+
+// TODO: remove user follow package and add new one
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed;

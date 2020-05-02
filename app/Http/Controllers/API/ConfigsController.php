@@ -21,14 +21,14 @@ class ConfigsController extends Controller
      */
     public function index()
     {
-        return Config::with('user')
+        return Config::with('user:id,name')
             ->where('public', true)
             ->get();
     }
 
     public function show(Request $request, $id)
     {
-        return Config::with('user')
+        return Config::with('user:id,name')
             ->where('id', $id)
             ->where('public', true)
             ->firstOrFail();
@@ -49,7 +49,6 @@ class ConfigsController extends Controller
         }
 
         $user = $request->user();
-
         if ($user->configs()->count() === $user->getConfigLimit()) {
             return response()->json([
                 'message' => '406 Not Acceptable'
@@ -81,7 +80,10 @@ class ConfigsController extends Controller
     public function getCurrentUserConfigs(Request $request)
     {
         // TODO: return user configs, user favorite configs, and followed users configs
-        return $request->user()->configs;
+        $data = [];
+        $data['self'] = $request->user()->configs;
+        $data['favorites'] = $request->user()->favorites();
+        return $data;
     }
 
     /**
@@ -101,7 +103,7 @@ class ConfigsController extends Controller
     public function favorite(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'config' => ['required', 'int', new ConfigRule]
+            'config' => ['required', 'int', new ConfigRule] // checks if config exists & is public
         ]);
 
         if ($validator->fails()) {
