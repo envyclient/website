@@ -13,12 +13,13 @@ use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+// TODO: add api tokens, add hwid, add api user login
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed;
 
     protected $fillable = [
-        'name', 'email', 'password', 'admin', 'client_settings', 'ban_reason'
+        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason'
     ];
 
 
@@ -27,8 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'client_settings' => 'json'
+        'email_verified_at' => 'datetime'
     ];
 
     public function configs()
