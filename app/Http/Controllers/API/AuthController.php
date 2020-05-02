@@ -4,10 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-// TODO: handle subscriptions and time
 class AuthController extends Controller
 {
     public function __construct()
@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         return $this->returnUserObject($request->user(), $request->hwid);
     }
-
+    
     private function returnUserObject($user, string $hwid)
     {
         // check for duplicate hwid
@@ -61,7 +61,25 @@ class AuthController extends Controller
 
         // hwid mismatch
         if ($user->hwid !== null && $user->hwid !== $hwid) {
-            return response()->json(['message' => 'Your HWID has already been set.'], 401);
+            return response()->json(['message' => 'User HWID has already been set.'], 401);
+        }
+
+        // subscription check
+        if (!$user->hasSubscription()) {
+            return response()->json(['message' => 'User does not have subscription for the client.'], 401);
+        }
+
+        // TODO: add this exact check to the frontend
+        // expired subscription check
+        if ($user->subscription()->whereDate('end_date', '<=', Carbon::today()->format('Y-m-d'))->exists()) {
+            if (!$user->renewSubscription()) {
+                return response()->json(['message' => "User's subscription has expired."], 401);
+            }
+        }
+
+        // ban check
+        if ($user->isBanned()) {
+            return response()->json(['message' => 'User is banned.'], 401);
         }
 
         // fill users hwid

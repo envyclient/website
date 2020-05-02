@@ -17,7 +17,7 @@ class CreateConfigsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('title');
-            $table->mediumText('data'); // JSON
+            $table->text('data'); // JSON
             $table->boolean('public')->default(false);
             $table->timestamps();
         });

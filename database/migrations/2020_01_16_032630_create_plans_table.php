@@ -20,20 +20,23 @@ class CreatePlansTable extends Migration
             $table->string('description');
             $table->unsignedInteger('price');
             $table->unsignedInteger('interval');
+            $table->unsignedTinyInteger('config_limit');
         });
 
         DB::table('plans')->insert([
             'name' => 'Monthly',
             'description' => 'Get access to the client for 30 days.',
             'price' => 7,
-            'interval' => 30
+            'interval' => 30,
+            'config_limit' => 5
         ]);
 
         DB::table('plans')->insert([
             'name' => 'Lifetime',
             'description' => 'Get access to the client for its lifetime.',
             'price' => 40,
-            'interval' => 3650
+            'interval' => 3650,
+            'config_limit' => 15
         ]);
     }
 
