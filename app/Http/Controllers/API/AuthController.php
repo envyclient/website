@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PayPalController;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -53,13 +54,14 @@ class AuthController extends Controller
     private function returnUserObject($user, string $hwid)
     {
         // check for duplicate hwid
-        if (User::where('hwid', $hwid)->exists()) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+        $userCheck = User::where('hwid', $hwid);
+        if ($userCheck->exists() && $userCheck->first()->id !== $user->id) {
+            return response()->json(['message' => 'Duplicate hwid.'], 401);
         }
 
         // hwid mismatch
-        if ($user->hwid !== $hwid) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+        if ($user->hwid !== null && $user->hwid !== $hwid) {
+            return response()->json(['message' => 'Your HWID has already been set.'], 401);
         }
 
         // fill users hwid
