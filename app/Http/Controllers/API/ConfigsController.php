@@ -80,7 +80,6 @@ class ConfigsController extends Controller
     public function getCurrentUserConfigs(Request $request)
     {
         // TODO: return user configs, user favorite configs, and followed users configs
-        $data = [];
         $data['self'] = $request->user()->configs;
         $data['favorites'] = $request->user()->favorites();
         return $data;

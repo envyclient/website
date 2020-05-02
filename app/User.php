@@ -8,11 +8,12 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 // TODO: remove user follow package and add new one
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasWallet;
+    use Notifiable, HasWallet, Favoriter;
 
     protected $fillable = [
         'name', 'email', 'password', 'api_token', 'admin', 'ban_reason', 'hwid'

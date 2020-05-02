@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
 /**
  * @property string title
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Config extends Model
 {
+    use Favoriteable;
+
     protected $casts = [
         'data' => 'json'
     ];
