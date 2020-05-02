@@ -137,7 +137,6 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Email</th>
-                                            <th scope="col">Cape</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                         </thead>
@@ -147,17 +146,6 @@
                                                 <th scope="row">{{ $loop->index + 1 }}</th>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
-                                                @if($user->cape != null)
-                                                    <td>
-                                                        <img src="{{url('/storage/capes/' . $user->cape) }}"
-                                                             alt="no cape" class="rounded" height="32" width="32">
-                                                    </td>
-                                                @else
-                                                    <td>
-                                                        <img src="{{ asset('assets/default-cape.png') }}"
-                                                             alt="no cape" class="rounded" height="32" width="32">
-                                                    </td>
-                                                @endif
                                                 <td>
                                                     <button type="button"
                                                             class="btn btn-success d-inline-block text-white"

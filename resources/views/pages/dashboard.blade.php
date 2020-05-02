@@ -20,10 +20,10 @@
                             <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                             Security
                         </a>
-                        <a class="list-group-item list-group-item-action" href="https://forums.envyclient.com/t/support"
+                        <a class="list-group-item list-group-item-action" href="https://forums.envyclient.com/"
                            style="cursor:pointer;">
-                            <i class="fas fa-question-circle p-2" style="margin-right:10px;"></i>
-                            Support
+                            <i class="fas fa-ticket-alt p-2" style="margin-right:10px;"></i>
+                            Forums
                         </a>
                         <br>
                         <h3 class="m-3 font-weight-bold" style="font-size:18px;">
@@ -61,30 +61,6 @@
                             <div class="card-body">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col">
-                                            {!! Form::open(['action' => 'UsersController@updateCape', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                                            <div class="form-group">
-                                                <h5>Cape</h5>
-                                                @if($user->cape != null)
-                                                    <img src="{{ url('/storage/capes/' . $user->cape) }}"
-                                                         alt="cape"
-                                                         class="rounded"
-                                                         height="197"
-                                                         width="256">
-                                                @else
-                                                    <img src="{{ asset('assets/default-cape.png') }}" alt="no cape"
-                                                         class="rounded"
-                                                         height="197"
-                                                         width="256">
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                {{ Form::file('file') }}
-                                            </div>
-                                            {{ Form::hidden('_method', 'PUT') }}
-                                            {{ Form::submit('Upload', ['class' => 'btn btn-primary']) }}
-                                            {!! Form::close() !!}
-                                        </div>
                                         <div class="col">
                                             @if($user->hasSubscription())
                                                 <br>
@@ -139,7 +115,7 @@
                             <ul class="list-group list-group-flush">
                                 <button type="button" class="btn btn-outline-danger m-2 w-25" data-toggle="modal"
                                         data-target="#deleteModal">
-                                    Delete
+                                    Delete Account
                                 </button>
                             </ul>
                         </div>

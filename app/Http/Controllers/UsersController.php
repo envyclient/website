@@ -15,24 +15,6 @@ class UsersController extends Controller
         $this->middleware('admin')->only(['addCredits', 'ban', 'search']);
     }
 
-    public function updateCape(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|image|mimes:png|max:280'
-        ]);
-
-        $user = auth()->user();
-
-        $file = $request->file('file');
-        $fileName = md5($user->id) . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs(User::CAPES_DIRECTORY, $file, $fileName);
-
-        $user->cape = $fileName;
-        $user->save();
-
-        return back()->with('success', 'Cape updated');
-    }
-
     public function updatePassword(Request $request)
     {
         $request->validate([

@@ -107,7 +107,6 @@
                     <div class="card-body">
                         <h1 class="card-title pricing-card-title">$7 <small class="text-muted">/ mo</small></h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>Ability to change capes</li>
                             <li>5 config slots</li>
                         </ul>
                         @guest
@@ -127,7 +126,6 @@
                         <h1 class="card-title pricing-card-title">$40 <small class="text-muted">/ &infin;</small>
                         </h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>Ability to change capes</li>
                             <li>15 config slots</li>
                         </ul>
                         @guest

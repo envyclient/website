@@ -17,10 +17,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use Notifiable, HasWallet, CanFollow, CanFavorite, CanBeFollowed;
 
-    const CAPES_DIRECTORY = 'public/capes';
-
     protected $fillable = [
-        'name', 'email', 'password', 'admin', 'cape', 'client_settings', 'ban_reason'
+        'name', 'email', 'password', 'admin', 'client_settings', 'ban_reason'
     ];
 
 
