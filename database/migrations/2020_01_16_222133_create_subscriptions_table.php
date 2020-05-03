@@ -20,6 +20,7 @@ class CreateSubscriptionsTable extends Migration
             $table->boolean('renew')->default(true);
             $table->date("end_date")->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

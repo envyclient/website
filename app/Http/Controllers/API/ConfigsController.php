@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Config;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Config as ConfigResource;
 use App\Rules\Config as ConfigRule;
 use App\User;
 use Illuminate\Http\Request;
@@ -21,17 +22,21 @@ class ConfigsController extends Controller
      */
     public function index()
     {
-        return Config::with('user:id,name')
-            ->where('public', true)
-            ->get();
+        return ConfigResource::collection(
+            Config::with('user:id,name')
+                ->where('public', true)
+                ->paginate(9)
+        );
     }
 
     public function show(Request $request, $id)
     {
-        return Config::with('user:id,name')
-            ->where('id', $id)
-            ->where('public', true)
-            ->firstOrFail();
+        return new ConfigResource(
+            Config::with('user:id,name')
+                ->where('id', $id)
+                ->where('public', true)
+                ->firstOrFail()
+        );
     }
 
     public function store(Request $request)
@@ -91,9 +96,11 @@ class ConfigsController extends Controller
     public function getConfigsByUser(Request $request, $name)
     {
         $user = User::where('name', $request->name)->firstOrFail();
-        return $user->configs()
-            ->where('public', true)
-            ->get();
+        return ConfigResource::collection(
+            $user->configs()
+                ->where('public', true)
+                ->get()
+        );
     }
 
     /**

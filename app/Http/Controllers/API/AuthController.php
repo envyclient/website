@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         return $this->returnUserObject($request->user(), $request->hwid);
     }
-    
+
     private function returnUserObject($user, string $hwid)
     {
         // check for duplicate hwid

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -44,7 +43,8 @@ class UsersController extends Controller
 
         $user->configs()->delete();
         $user->invoices()->delete();
-        $user->subscription()->delete();
+        //$user->subscription()->delete();
+        $user->subscription()->forceDelete();
         $user->transactions()->delete();
         $user->wallet()->delete();
         $user->delete();
