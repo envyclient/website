@@ -51,11 +51,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->subscription()->exists();
     }
 
-    public function isLifetime()
-    {
-        return $this->hasSubscription() && $this->subscription->plan->name === 'Lifetime';
-    }
-
     public function getConfigLimit()
     {
         return $this->subscription->plan->config_limit;

@@ -133,7 +133,7 @@
                                     <li class="list-group-item">
                                         You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
                                         (next payment in due
-                                        in {{ $user->isLifetime() ? '∞' : $nextSubscription }}
+                                        in {{ $nextSubscription }}
                                         days)
                                     </li>
                                 @endif
@@ -149,7 +149,7 @@
                                             </div>
                                             <div class="col">
                                                 <b>${{ $plan->price }}</b>
-                                                / {{ $plan->name === 'Lifetime' ? '∞' : "$plan->interval days" }}
+                                                / {{ "$plan->interval days" }}
                                             </div>
                                         </div>
                                     </li>

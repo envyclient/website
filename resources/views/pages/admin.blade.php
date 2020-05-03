@@ -185,6 +185,9 @@
                                                                         '10' => '$10',
                                                                         '15' => '$15',
                                                                         '20' => '$20',
+                                                                        '30' => '$30',
+                                                                        '40' => '$40',
+                                                                        '50' => '$50',
                                                                     ], '5', ['class' => 'form-control', 'form' => "f-$user->name"]) }}
                                                                 </div>
                                                                 {{ Form::submit('Add Credits', ['class' => 'btn btn-primary', 'form' => "f-$user->name", 'method' => 'PUT']) }}

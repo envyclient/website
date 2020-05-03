@@ -32,10 +32,18 @@ class CreatePlansTable extends Migration
         ]);
 
         DB::table('plans')->insert([
-            'name' => 'Lifetime',
-            'description' => 'Get access to the client for its lifetime.',
-            'price' => 40,
-            'interval' => 3650,
+            'name' => '3 Months',
+            'description' => 'Get access to the client for 90 days.',
+            'price' => 21,
+            'interval' => 90,
+            'config_limit' => 10
+        ]);
+
+        DB::table('plans')->insert([
+            'name' => 'Yearly',
+            'description' => 'Get access to the client for 360 days.',
+            'price' => 70,
+            'interval' => 360,
             'config_limit' => 15
         ]);
     }

@@ -59,6 +59,10 @@ class SubscriptionsController extends Controller
             return back()->with('error', 'You must subscribe to a plan first.');
         }
 
+        if (!$user->subscription->renew) {
+            return back()->with('error', 'You have already cancelled your subscription.');
+        }
+
         $user->subscription->fill([
             'renew' => false
         ])->save();
