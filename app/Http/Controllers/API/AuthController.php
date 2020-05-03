@@ -20,7 +20,8 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'hwid' => 'required|string|min:40|max:40'
+            'hwid' => 'required|string|min:40|max:40',
+            'account_name' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -33,13 +34,14 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return $this->returnUserObject(auth()->user(), $request->hwid);
+        return $this->returnUserObject(auth()->user(), $request->hwid, $request->account_name);
     }
 
     public function me(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'hwid' => 'required|string|min:40|max:40'
+            'hwid' => 'required|string|min:40|max:40',
+            'account_name' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -48,10 +50,10 @@ class AuthController extends Controller
             ], 400);
         }
 
-        return $this->returnUserObject($request->user(), $request->hwid);
+        return $this->returnUserObject($request->user(), $request->hwid, $request->account_name);
     }
 
-    private function returnUserObject($user, string $hwid)
+    private function returnUserObject($user, string $hwid, string $accountName)
     {
         // check for duplicate hwid
         $userCheck = User::where('hwid', $hwid);
@@ -84,7 +86,9 @@ class AuthController extends Controller
 
         // fill users hwid
         $user->fill([
-            'hwid' => $hwid
+            'hwid' => $hwid,
+            'last_launch_user' => $accountName,
+            'last_launch_at' => Carbon::now()
         ])->save();
 
         return response()->json([

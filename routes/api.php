@@ -1,6 +1,10 @@
 <?php
 
 /** Auth */
+
+use App\User;
+use Carbon\Carbon;
+
 Route::post('auth/login', 'API\AuthController@login');
 Route::get('auth/me', 'API\AuthController@me');
 
@@ -12,3 +16,9 @@ Route::get('configs/user/{name}', 'API\ConfigsController@getConfigsByUser');
 Route::resource('configs', 'API\ConfigsController')->only([
     'index', 'show', 'store', 'destroy'
 ]);
+
+/** thingy */
+Route::get('users/active', function () {
+    // check if the user was active in the last 5 mins
+    return User::whereDate('end_date', '>=', Carbon::now()->subtract(5, 'minutes'));
+})->middleware('auth:api');

@@ -124,6 +124,7 @@
         </div>
     </div>
 
+    <!-- todo: remove -->
     <!-- Footer -->
     <footer class="page-footer font-small blue-grey lighten-5" style="background-color:#e0e0e0;">
         <div style="background-color: #ffff;">
