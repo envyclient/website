@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Config;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Config as ConfigResource;
-use App\Rules\Config as ConfigRule;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +21,7 @@ class ConfigsController extends Controller
         return ConfigResource::collection(
             Config::with('user:id,name')
                 ->where('public', true)
-                ->paginate(9)
+                ->paginate(Config::PAGE_LIMIT)
         );
     }
 
@@ -81,9 +80,8 @@ class ConfigsController extends Controller
 
     public function getCurrentUserConfigs(Request $request)
     {
-        // TODO: return user configs, user favorite configs, and followed users configs
-        $data['self'] = $request->user()->configs;
-        $data['favorites'] = $request->user()->favorites();
+        $data['favorites'] = $request->user()->favorites()->paginate(Config::PAGE_LIMIT);
+        $data['self'] = $request->user()->configs()->paginate(Config::PAGE_LIMIT);
         return $data;
     }
 
@@ -93,7 +91,7 @@ class ConfigsController extends Controller
         return ConfigResource::collection(
             $user->configs()
                 ->where('public', true)
-                ->paginate(9)
+                ->paginate(Config::PAGE_LIMIT)
         );
     }
 
@@ -103,26 +101,21 @@ class ConfigsController extends Controller
             Config::where([
                 ['name', 'like', "%$name%"],
                 ['public', '=', true]
-            ])->paginate(9)
+            ])->paginate(Config::PAGE_LIMIT)
         );
     }
 
-    public function favorite(Request $request)
+    public function favorite(Request $request, $id)
     {
-
-        // TODO: find better method
-        $validator = Validator::make($request->all(), [
-            'config' => ['required', 'int', new ConfigRule] // checks if config exists & is public
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
-        $config = Config::find($request->config);
+        $config = Config::findOrFail($id);
         $user = $request->user();
+
+        // can not favorite own config
+        if ($config->user_id === $user->id) {
+            return response()->json([
+                'message' => '409 Conflict'
+            ], 409);
+        }
 
         if ($user->hasFavorited($config)) {
             $user->unfavorite($config);
