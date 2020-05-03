@@ -17,7 +17,7 @@ class Config extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'name' => $this->name,
             'data' => $this->data,
             'favorites' => $this->favorites()->count(),
             'user' => [

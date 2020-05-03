@@ -42,7 +42,7 @@ class ConfigsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
+            'name' => 'required|string',
             'data' => 'required|json',
             'public' => 'nullable|boolean'
         ]);
@@ -62,7 +62,7 @@ class ConfigsController extends Controller
 
         $config = new Config();
         $config->user_id = $user->id;
-        $config->title = $request->title;
+        $config->name = $request->name;
         $config->data = $request->data;
         if ($request->has('public')) {
             $config->public = $request->public;
@@ -99,6 +99,19 @@ class ConfigsController extends Controller
         return ConfigResource::collection(
             $user->configs()
                 ->where('public', true)
+                ->paginate(9)
+        );
+    }
+
+    public function searchConfigByName(Request $request, string $name)
+    {
+        return Config::where([
+            ['name', 'like', "%$name%"],
+            ['public', '=', true]
+        ])->paginate(9);
+        return ConfigResource::collection(
+            Config::where('public', true)
+                ->whereLike('name', $name)
                 ->paginate(9)
         );
     }

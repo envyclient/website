@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
 /**
- * @property string title
+ * @property string name
  * @property json data
  * @property boolean public
  */
