@@ -93,13 +93,13 @@ class ConfigsController extends Controller
     /**
      * Get config by owners username.
      */
-    public function getConfigsByUser(Request $request, $name)
+    public function getConfigsByUser(Request $request, string $name)
     {
-        $user = User::where('name', $request->name)->firstOrFail();
+        $user = User::where('name', $name)->firstOrFail();
         return ConfigResource::collection(
             $user->configs()
                 ->where('public', true)
-                ->get()
+                ->paginate(9)
         );
     }
 

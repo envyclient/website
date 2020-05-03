@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\Generic;
+use App\Notifications\NewSubscription;
 use App\Plan;
 use App\Rules\PlanExists;
 use App\Subscription;
@@ -24,7 +25,7 @@ class SubscriptionsController extends Controller
 
         $user = auth()->user();
         if ($user->hasSubscription()) {
-            return back()->with('error', 'You are already subscribed to a subscription. You must let that one expire before you subscribe to a new one.');
+            return back()->with('error', 'You are already subscribed to a plan. You must let that one expire before you subscribe to a new one.');
         }
 
         $plan = Plan::find($request->id);
@@ -34,7 +35,7 @@ class SubscriptionsController extends Controller
             return back()->with('error', 'You do not have enough credits.');
         }
 
-        // TODO: send email about new subscription
+
         $subscription = new Subscription();
         $subscription->user_id = $user->id;
         $subscription->plan_id = $plan->id;
@@ -42,6 +43,10 @@ class SubscriptionsController extends Controller
         $subscription->save();
 
         $user->withdraw($price, 'withdraw', ['plan_id' => $plan->id, 'description' => "Subscribed to plan {$plan->name}."]);
+
+        // send email
+        // TODO: fix notification not sending
+        $user->notify(new NewSubscription($user));
 
         return back()->with('success', 'Successfully subscribed to plan.');
     }
