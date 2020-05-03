@@ -99,44 +99,27 @@
         <br>
         <div class="container">
             <div class="card-deck mb-3 text-center" style="max-width: 55em;margin:0 auto;">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Monthly</h4>
+                @foreach($plans as $plan)
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">{{ $plan->name }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">${{ $plan->price }}</h1>
+                            <h4><small class="text-muted">/ {{ $plan->interval }} days</small></h4>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>{{ $plan->config_limit }} config slots</li>
+                            </ul>
+                            @guest
+                                <a type="button" class="btn btn-lg btn-block btn-primary"
+                                   href="{{ route('login') }}">Login</a>
+                            @else
+                                <a type="button" class="btn btn-lg btn-block btn-primary"
+                                   href="{{ route('dashboard') }}">Purchase</a>
+                            @endguest
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$7 <small class="text-muted">/ mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>5 config slots</li>
-                        </ul>
-                        @guest
-                            <a type="button" class="btn btn-lg btn-block btn-primary"
-                               href="{{ route('login') }}">Login</a>
-                        @else
-                            <a type="button" class="btn btn-lg btn-block btn-primary"
-                               href="{{ route('dashboard') }}">Purchase</a>
-                        @endguest
-                    </div>
-                </div>
-                <!-- TODO: remove lifetime plan -->
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Lifetime</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$40 <small class="text-muted">/ &infin;</small>
-                        </h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>15 config slots</li>
-                        </ul>
-                        @guest
-                            <a type="button" class="btn btn-lg btn-block btn-primary"
-                               href="{{ route('login') }}">Login</a>
-                        @else
-                            <a type="button" class="btn btn-lg btn-block btn-primary"
-                               href="{{ route('dashboard') }}">Purchase</a>
-                        @endguest
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

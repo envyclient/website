@@ -27,11 +27,11 @@
                         </a>
                         <br>
                         <h3 class="m-3 font-weight-bold" style="font-size:18px;">
-                            <small class="text-muted ">BILLING</small>
+                            <small class="text-muted">BILLING</small>
                         </h3>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#subscription"
                            style="cursor:pointer;">
-                            <i class="fas fa-redo  p-2" style="margin-right:10px;"></i>
+                            <i class="fas fa-redo p-2" style="margin-right:10px;"></i>
                             Subscription
                         </a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#credits"
@@ -63,7 +63,6 @@
                                     <div class="row">
                                         <div class="col">
                                             @if($user->hasSubscription())
-                                                <br>
                                                 <h5>Configs Used</h5>
                                                 <h7>
                                                     {{ $user->configs()->count() }}
@@ -176,6 +175,7 @@
                         @endif
                     </div>
 
+                    <!-- add payment -->
                     <div class="tab-pane fade" id="credits" role="tabpanel">
                         <div class="card" style="width: 100%;">
                             <div class="card-header">

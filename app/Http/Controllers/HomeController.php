@@ -23,7 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.index');
+        $plans = Plan::all();
+        return view('pages.index')->with([
+                'plans' => $plans
+        ]);
     }
 
     /**

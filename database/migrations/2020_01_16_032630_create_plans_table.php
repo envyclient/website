@@ -34,7 +34,7 @@ class CreatePlansTable extends Migration
         DB::table('plans')->insert([
             'name' => '3 Months',
             'description' => 'Get access to the client for 90 days.',
-            'price' => 21,
+            'price' => 18,
             'interval' => 90,
             'config_limit' => 10
         ]);
@@ -42,7 +42,7 @@ class CreatePlansTable extends Migration
         DB::table('plans')->insert([
             'name' => 'Yearly',
             'description' => 'Get access to the client for 360 days.',
-            'price' => 70,
+            'price' => 60,
             'interval' => 360,
             'config_limit' => 15
         ]);
