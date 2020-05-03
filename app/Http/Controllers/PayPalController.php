@@ -124,7 +124,7 @@ class PayPalController extends Controller
 
             $user->deposit($price, 'deposit', ['invoice_id' => $invoice->id, 'description' => "Deposit of $price credits using PayPal."]);
 
-            $user->notify(new Generic($user, "You have deposited $$price worth of credits using PayPal.", 'Coin Deposit'));
+            $user->notify(new Generic($user, "You have deposited $$price worth of credits using PayPal.", 'Deposit'));
 
             return redirect(RouteServiceProvider::HOME)->with('success', 'Payment success.');
         }

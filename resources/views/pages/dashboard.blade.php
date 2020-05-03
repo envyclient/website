@@ -213,7 +213,11 @@
                                                     '30' => '$30',
                                                     '35' => '$35',
                                                     '40' => '$40',
-                                                ], '5', ['class' => 'form-control']) }}
+                                                    '50' => '$50',
+                                                    '60' => '$60',
+                                                    '70' => '$70',
+                                                    '80' => '$80',
+                                                ], '7', ['class' => 'form-control']) }}
                                             </div>
                                             {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
                                             {!! Form::close() !!}

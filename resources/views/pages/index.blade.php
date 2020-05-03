@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <!-- Home Section -->
     <div class="jumbotron jumbotron-fluid" style="background:#fff;">
         <div class="row" style="margin:0 auto;width:fit-content;">

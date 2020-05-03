@@ -5,8 +5,8 @@ Thank you for subscribing to a plan {{ $user->name }}!
 
 @component('mail::table')
 | Plan | Interval | Price |
-| ---- | -------- | ----- |
-| {{ $user->plan()->name }} | {{ $user->plan()->interval }} | {{ $user->plan()->price }} |
+| :--: | :------: | :---: |
+| {{ $user->subscription->plan->name }} | {{ $user->subscription->plan->interval }} | {{ $user->subscription->plan->price }} |
 @endcomponent
 
 @component('mail::button', ['url' => url('/')])

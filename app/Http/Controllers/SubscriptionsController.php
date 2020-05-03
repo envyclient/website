@@ -45,7 +45,6 @@ class SubscriptionsController extends Controller
         $user->withdraw($price, 'withdraw', ['plan_id' => $plan->id, 'description' => "Subscribed to plan {$plan->name}."]);
 
         // send email
-        // TODO: fix notification not sending
         $user->notify(new NewSubscription($user));
 
         return back()->with('success', 'Successfully subscribed to plan.');
