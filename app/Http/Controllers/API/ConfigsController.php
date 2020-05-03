@@ -17,9 +17,6 @@ class ConfigsController extends Controller
         $this->middleware('auth:api');
     }
 
-    /**
-     * Get all public configs.
-     */
     public function index()
     {
         return ConfigResource::collection(
@@ -90,9 +87,6 @@ class ConfigsController extends Controller
         return $data;
     }
 
-    /**
-     * Get config by owners username.
-     */
     public function getConfigsByUser(Request $request, string $name)
     {
         $user = User::where('name', $name)->firstOrFail();
@@ -105,22 +99,18 @@ class ConfigsController extends Controller
 
     public function searchConfigByName(Request $request, string $name)
     {
-        return Config::where([
-            ['name', 'like', "%$name%"],
-            ['public', '=', true]
-        ])->paginate(9);
         return ConfigResource::collection(
-            Config::where('public', true)
-                ->whereLike('name', $name)
-                ->paginate(9)
+            Config::where([
+                ['name', 'like', "%$name%"],
+                ['public', '=', true]
+            ])->paginate(9)
         );
     }
 
-    /**
-     * Favorite a config by its id.
-     */
     public function favorite(Request $request)
     {
+
+        // TODO: find better method
         $validator = Validator::make($request->all(), [
             'config' => ['required', 'int', new ConfigRule] // checks if config exists & is public
         ]);
