@@ -66,7 +66,7 @@ class SubscriptionsController extends Controller
             'renew' => false
         ])->save();
 
-        $user->notify(new Generic($user, 'You have cancelled your subscription and it will not renew.', 'Subscription'));
+        $user->notify(new Generic($user, 'You have successfully cancelled your subscription, you will not be charged at the next billing cycle. ', 'Subscription'));
 
         return back()->with('success', 'Your subscription has been cancelled and will not renew.');
     }

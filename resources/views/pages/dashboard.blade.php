@@ -60,18 +60,18 @@
                             </div>
                             <div class="card-body">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            @if($user->hasSubscription())
-                                                <h5>Configs Used</h5>
-                                                <h7>
-                                                    {{ $user->configs()->count() }}
-                                                    /
-                                                    <span class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
-                                                </h7>
-                                            @endif
-                                        </div>
-                                    </div>
+                                    <label>Member Since:</label>
+                                    <input class="form-control" placeholder="Date" disabled value="{{ $user->created_at->format('Y-m-d') }}">
+                                    <br>
+
+                                    @if($user->hasSubscription())
+                                        <h5>Configs Used</h5>
+                                        <h7>
+                                            {{ $user->configs()->count() }}
+                                            /
+                                            <span class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
+                                        </h7>
+                                    @endif
                                 </div>
                             </div>
                         </div>

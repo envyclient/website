@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <div class="card">
                                 <div class="card-header">
-                                    <i class="fas fa-dollar-sign" style="padding-right:10px;"></i> Profit
+                                    <i class="fas fa-dollar-sign" style="padding-right:10px;"></i> Stats
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -137,6 +137,9 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Email</th>
+                                            <th scope="col">Balance</th>
+                                            <th scope="col">Subscription</th>
+                                            <th scope="col">Expiration</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                         </thead>
@@ -146,6 +149,9 @@
                                                 <th scope="row">{{ $loop->index + 1 }}</th>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
+                                                <td>${{ $user->balance == null ? 0 :  $user->balance }}</td>
+                                                <td>{{ $user->hasSubscription() ? $user->subscription->plan->name : null }}</td>
+                                                <td>{{ $user->hasSubscription() ? $user->subscription->end_date->diffInDays() . ' days' : null }}</td>
                                                 <td>
                                                     <button type="button"
                                                             class="btn btn-success d-inline-block text-white"
