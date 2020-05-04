@@ -14,7 +14,7 @@ class Config extends Model
 {
     use Favoriteable;
 
-    const PAGE_LIMIT = 9;
+    const PAGE_LIMIT = 12;
 
     protected $casts = [
         'data' => 'json'
