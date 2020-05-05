@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $plans = Plan::all();
         return view('pages.index')->with([
-                'plans' => $plans
+            'plans' => $plans
         ]);
     }
 
@@ -78,10 +78,24 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $userStats['today'] = User::whereDate('created_at', '=', Carbon::today())->count();
+        $userStats['month'] = User::whereBetween('created_at', [Carbon::now()->firstOfMonth(), Carbon::now()->lastOfMonth()])->count();
+        $userStats['total'] = User::all()->count();
+
+        // TODO: figure out better option
+        $count = 0;
+        foreach (User::all() as $user) {
+            if ($user->hasSubscription()) {
+                $count++;
+            }
+        }
+        $userStats['subscriptions'] = $count;
+
         return view('pages.admin')->with([
             'user' => $user,
             'users' => User::all(),
-            'stats' => $stats
+            'stats' => $stats,
+            'userStats' => $userStats
         ]);
     }
 }

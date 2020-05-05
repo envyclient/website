@@ -19,7 +19,7 @@
                         </a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#users"
                            style="cursor:pointer;">
-                            <i class="fas fa-users-cog p-2" style="margin-right:10px;"></i>
+                            <i class="fas fa-users p-2" style="margin-right:10px;"></i>
                             Users
                         </a>
                     </div>
@@ -109,7 +109,71 @@
                     <!-- users table -->
                     <div class="tab-pane fade" id="users" role="tabpanel">
                         <div class="card-body">
+
                             <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-users" style="padding-right:10px;"></i>Stats
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center" style="font-size: 25px;">
+                                                        {{ $userStats['today'] }}
+                                                    </h5>
+                                                </div>
+                                                <div
+                                                    class="card-footer bg-transparent text-center font-weight-bold">
+                                                    USERS<br>TODAY
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card bg-light mb-3 mb-3" style="max-width: 18rem;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center" style="font-size: 25px;">
+                                                        {{ $userStats['month'] }}
+                                                    </h5>
+                                                </div>
+                                                <div
+                                                    class="card-footer bg-transparent text-center font-weight-bold">
+                                                    TOTAL<br>MONTH
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center" style="font-size: 25px;">
+                                                        {{ $userStats['subscriptions'] }}</h5>
+                                                </div>
+                                                <div
+                                                    class="card-footer bg-transparent text-center font-weight-bold">
+                                                    PAID<br>USERS
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center" style="font-size: 25px;">
+                                                        {{ $userStats['total'] }}</h5>
+                                                </div>
+                                                <div
+                                                    class="card-footer bg-transparent text-center font-weight-bold">
+                                                    TOTAL<br>USERS
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="card">
+
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col">
