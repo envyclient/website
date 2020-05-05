@@ -35,7 +35,6 @@ class SubscriptionsController extends Controller
             return back()->with('error', 'You do not have enough credits.');
         }
 
-
         $subscription = new Subscription();
         $subscription->user_id = $user->id;
         $subscription->plan_id = $plan->id;

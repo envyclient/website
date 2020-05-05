@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ConfigsController extends Controller
 {
+    // TODO: sort by favorites
     public function __construct()
     {
         $this->middleware('auth:api');
