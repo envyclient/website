@@ -23,9 +23,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-@yield('js')
 
-<!-- Fonts -->
+    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
@@ -35,7 +34,7 @@
 </head>
 <body>
 <div id="app">
-    @include('inc.navbar')
+    @include('inc.navbar.default')
     <main>
         <div class="container">
             @include('inc.notifications')
@@ -43,5 +42,6 @@
         @yield('content')
     </main>
 </div>
+@yield('js')
 </body>
 </html>

@@ -43,7 +43,7 @@ class HomeController extends Controller
             $nextSubscription = $user->subscription->end_date->diffInDays();
         }
 
-        return view('pages.dashboard')->with([
+        return view('pages.dashboard.default')->with([
             'user' => $user,
             'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
             'plans' => Plan::all(),
@@ -91,7 +91,7 @@ class HomeController extends Controller
         }
         $userStats['subscriptions'] = $count;
 
-        return view('pages.admin')->with([
+        return view('pages.dashboard.admin')->with([
             'user' => $user,
             'users' => User::all(),
             'stats' => $stats,

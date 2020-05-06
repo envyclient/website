@@ -124,51 +124,12 @@
         </div>
     </div>
 
-    <!-- todo: remove -->
     <!-- Footer -->
-    <footer class="page-footer font-small blue-grey lighten-5" style="background-color:#e0e0e0;">
-        <div style="background-color: #ffff;">
-            <div class="container">
-                <!-- Grid row-->
-                <div class="row py-4 d-flex align-items-center">
-
-                    <!-- Grid column -->
-                    <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-                        <h6 class="mb-0">Get connected with us on social networks!</h6>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-6 col-lg-7 text-center text-md-right">
-                        <!-- Facebook -->
-                        <a class="fb-ic">
-                            <i class="fab fa-facebook-f white-text mr-4"> </i>
-                        </a>
-
-                        <!-- Twitter -->
-                        <a class="tw-ic">
-                            <i class="fab fa-twitter white-text mr-4"> </i>
-                        </a>
-
-                        <!-- Google +-->
-                        <a class="gplus-ic">
-                            <i class="fab fa-google-plus-g white-text mr-4"> </i>
-                        </a>
-
-                        <!--Linkedin -->
-                        <a class="li-ic">
-                            <i class="fab fa-linkedin-in white-text mr-4"> </i>
-                        </a>
-
-                        <!--Instagram-->
-                        <a class="ins-ic">
-                            <i class="fab fa-instagram white-text"> </i>
-                        </a>
-                    </div>
-                    <!-- Grid column -->
-                </div>
-                <!-- Grid row-->
-            </div>
+    <footer class="page-footer" style="background-color:#ffff;">
+        <div class="text-center">
+            <img class="m-3" src="{{ asset('/assets/logo_512x512.png') }}" alt="envy client logo" width="32"
+                 height="32">
+            &copy; 2020 Envy Client
         </div>
     </footer>
 @endsection

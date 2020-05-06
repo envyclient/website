@@ -57,6 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->subscription->plan->config_limit;
     }
 
+    public function image(): string
+    {
+        return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
+    }
+
     public function renewSubscription(): bool
     {
         $user = auth()->user();

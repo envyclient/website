@@ -23,9 +23,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-@yield('js')
 
-<!-- Fonts -->
+    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
@@ -82,13 +81,13 @@
     }
 
     .container-inner-nav {
-        width:95%;
+        width: 95%;
     }
 
     a.custom-badge {
         color: #fff;
-        background-color:#303030;
-        padding:6px;
+        background-color: #303030;
+        padding: 6px;
     }
 
     a.custom-badge:hover,
@@ -106,7 +105,8 @@
 
 <body>
 <div id="app">
-    @include('inc.dashnav')
+    @include('inc.navbar.dashboard')
 </div>
+@yield('js')
 </body>
 </html>

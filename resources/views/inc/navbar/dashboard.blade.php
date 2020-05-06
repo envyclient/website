@@ -89,7 +89,8 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
                     <a class="navbar-brand text-white" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }} | <span style="color:#888;">{{explode("/", request()->getRequestUri())[1]}}</span>
+                        {{ config('app.name', 'Laravel') }} | <span
+                            style="color:#888;">{{explode("/", request()->getRequestUri())[1]}}</span>
                     </a>
                 </ul>
                 <!-- Right Side Of Navbar -->
@@ -117,28 +118,7 @@
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                    Dashboard
-                                </a>
-                                @if(Auth::user()->admin)
-                                    <a class="dropdown-item" href="{{ route('dashboard.admin') }}">
-                                        Admin
-                                    </a>
-                                @endif
-
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
+                            @include('inc.navbar.components.dropdown')
                         </li>
                     @endguest
                 </ul>
