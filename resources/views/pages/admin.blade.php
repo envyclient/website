@@ -1,31 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.dash')
 
 @section('content')
     <br>
     <div class="container">
         <div class="row">
-
-            <div class="col-3">
-                <div class="list-group">
-                    <div class="list-group list-group-flush">
-                        <br>
-                        <h3 class="m-3 font-weight-bold" style="font-size:18px;">
-                            <small class="text-muted ">ADMINISTRATOR</small>
-                        </h3>
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#statistics"
-                           style="cursor:pointer;">
-                            <i class="fas fa-balance-scale p-2" style="margin-right:10px;"></i>
-                            Statistics
-                        </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#users"
-                           style="cursor:pointer;">
-                            <i class="fas fa-users p-2" style="margin-right:10px;"></i>
-                            Users
-                        </a>
-                    </div>
-                </div>
-            </div>
-
             <div class="col-8">
                 <div class="tab-content">
 
