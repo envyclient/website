@@ -5,8 +5,11 @@
 use App\User;
 use Carbon\Carbon;
 
-Route::post('auth/login', 'API\AuthController@login');
-Route::get('auth/me', 'API\AuthController@me');
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'API\AuthController@login')->name('api.auth.login');
+    Route::get('me', 'API\AuthController@me')->name('api.auth.me');
+});
+
 
 /** Configs */
 Route::get('configs/search/{name}', 'API\ConfigsController@searchConfigByName');
@@ -22,3 +25,9 @@ Route::get('users/active', function () {
     // check if the user was active in the last 5 mins
     return User::whereDate('end_date', '>=', Carbon::now()->subtract(5, 'minutes'));
 })->middleware('auth:api');
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('total-users', 'API\AdminController@totalUsers')->name('api.admin.user-stats');
+});
+

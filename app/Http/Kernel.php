@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
 
         'admin' => \App\Http\Middleware\CheckAdmin::class,
         'forbid-banned-user' => \App\Http\Middleware\CheckBanned::class,
+        'api-admin' => \App\Http\Middleware\API\CheckAdmin::class,
     ];
 
     /**

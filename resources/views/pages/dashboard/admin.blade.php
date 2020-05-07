@@ -13,44 +13,8 @@
                 <div class="alert alert-secondary" role="alert" style="font-size:25px;">
                     Total Users
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Total Users</span>
-                            <div class="card-body">
-                                <h2>{{ $totalUsers['total'] }}</h2>
-                            </div>
-                            <div class="card-footer">
-                                Latest: {{ $latestUser['regular']->name }}
-                                - {{ $latestUser['regular']->created_at->diffForHumans() }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Users Today</span>
-                            <div class="card-body">
-                                <h2>{{ $totalUsers['today'] }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Users This Week</span>
-                            <div class="card-body">
-                                <h2>{{ $totalUsers['week'] }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Users This Month</span>
-                            <div class="card-body">
-                                <h2>{{ $totalUsers['month'] }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <user-stats url="{{ route('api.admin.user-stats') }}" type="total"
+                            api-token="{{ $user->api_token }}"></user-stats>
             </div>
 
             <br>
@@ -60,45 +24,8 @@
                 <div class="alert alert-primary" role="alert" style="font-size:25px;">
                     Premium Users
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Total Users</span>
-                            <div class="card-body">
-                                <h2>{{ $premiumUsers['total'] }}</h2>
-                            </div>
-                            <div class="card-footer">
-                                Latest: {{ $latestUser['premium']->name }}
-                                - {{ $latestUser['premium']->created_at->diffForHumans() }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Users Today</span>
-                            <div class="card-body">
-                                <h2>{{ $premiumUsers['today'] }}</h2>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Users This Week</span>
-                            <div class="card-body">
-                                <h2>{{ $premiumUsers['week'] }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3" style="min-width: 250px;">
-                        <div class="card text-center">
-                            <span class="card-sub-title">Users This Month</span>
-                            <div class="card-body">
-                                <h2>{{ $premiumUsers['month'] }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <user-stats url="{{ route('api.admin.user-stats') }}" type="total"
+                            api-token="{{ $user->api_token }}"></user-stats>
             </div>
 
             <br>

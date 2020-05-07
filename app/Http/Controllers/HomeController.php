@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
-use App\Subscription;
 use App\Transaction;
 use App\User;
 use Carbon\Carbon;
@@ -79,40 +78,10 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $users = User::all();
-        $totalUsers['total'] = $users->count();
-        $totalUsers['today'] = $users->filter(function ($value, $key) {
-            return $value->created_at == Carbon::today();
-        })->count();
-        $totalUsers['week'] = $users->filter(function ($value, $key) {
-            return $value->created_at >= Carbon::now()->startOfWeek() && $value->created_at <= Carbon::now()->endOfWeek();
-        })->count();
-        $totalUsers['month'] = $users->filter(function ($value, $key) {
-            return $value->created_at >= Carbon::now()->firstOfMonth() && $value->created_at <= Carbon::now()->lastOfMonth();
-        })->count();
-
-        $subscriptions = Subscription::all();
-        $premiumUsers['total'] = $subscriptions->count();
-        $premiumUsers['today'] = $subscriptions->filter(function ($value, $key) {
-            return $value->created_at == Carbon::today();
-        })->count();
-        $premiumUsers['week'] = $subscriptions->filter(function ($value, $key) {
-            return $value->created_at >= Carbon::now()->startOfWeek() && $value->created_at <= Carbon::now()->endOfWeek();
-        })->count();
-        $premiumUsers['month'] = $subscriptions->filter(function ($value, $key) {
-            return $value->created_at >= Carbon::now()->firstOfMonth() && $value->created_at <= Carbon::now()->lastOfMonth();
-        })->count();
-
-        $latestUser['regular'] = User::latest()->first();
-        $latestUser['premium'] = Subscription::latest()->first()->user;
-
         return view('pages.dashboard.admin')->with([
             'user' => $user,
-            'users' => $users,
+            'users' => User::all(),
             'stats' => $stats,
-            'totalUsers' => $totalUsers,
-            'premiumUsers' => $premiumUsers,
-            'latestUser' => $latestUser
         ]);
     }
 }
