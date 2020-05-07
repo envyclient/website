@@ -125,7 +125,10 @@
             </div>
         </div>
     </nav>
-    <br>
-    @include('inc.notifications')
-    @yield('content')
+    <div class="dashboard-content">
+        <br>
+        @include('inc.notifications')
+        @yield('content')
+        <br>
+    </div>
 </nav>

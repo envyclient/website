@@ -33,7 +33,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
 </head>
 
-<!-- #0f8c1d --->
 <style type="text/css">
     * {
         margin: 0;
@@ -100,6 +99,69 @@
     a.custom-badge.focus {
         outline: 0;
         box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+    }
+
+    .custom-panel .card {
+        transition: .25s all;
+        margin-top: 10px;
+        -webkit-box-shadow: 0px 0px 0px -200px rgba(209, 209, 209, 1);
+        -moz-box-shadow: 0px 0px 0px -200px rgba(209, 209, 209, 1);
+        box-shadow: 0px 0px 0px -200px rgba(209, 209, 209, 1);
+    }
+
+    .custom-panel .card:hover {
+        transition: .25s all;
+        -webkit-box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
+        -moz-box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
+        box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
+    }
+
+    .custom-panel .card-body {
+        background-color: #fff;
+        border: none;
+        font-weight: bold;
+        color: #303030;
+        text-align: left;
+        font-size: 23px;
+        padding-bottom: 0px;
+    }
+
+    .custom-panel span.card-sub-title {
+        color: #8f8f8f;
+        text-align: left;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 15px 15px 0;
+    }
+
+    .custom-panel .card-footer {
+        border: none;
+        background-color: #fff;
+        text-align: left;
+        font-size: 13px;
+        color: #a8a8a8;
+        font-weight: bold;
+    }
+
+    .dashboard-content {
+        height: calc(100vh - 59px);
+        overflow-y: scroll;
+    }
+
+    a.color-red {
+        color: red;
+    }
+
+    a.color-red:hover {
+        color: #fff;
+    }
+
+    a.color-blue {
+        color: #3490dc;
+    }
+
+    a.color-blue:hover {
+        color: white;
     }
 </style>
 

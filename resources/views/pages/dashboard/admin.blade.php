@@ -1,13 +1,208 @@
 @extends('layouts.dash')
 
-@section('content')
+@section("content")
+    <div class="tab-content" style="width:95%;margin:0 auto">
+        <div class="tab-pane fade show active" id="statistics" role="tabpanel">
+            stats
+        </div>
+        <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
+            <div class="alert alert-secondary" role="alert" style="font-size:25px;">
+                Regular Users
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users Today</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users This Month</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users This Year</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="alert alert-primary" role="alert" style="font-size:25px;">
+                Premium Users
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users Today</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users This Month</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+                <div class="col-3" style="min-width: 250px;">
+                    <div class="card text-center">
+                        <span class="card-sub-title">Total Users This Year</span>
+                        <div class="card-body">
+                            <h2>420</h2>
+                        </div>
+                        <div class="card-footer">Last Signup: Yesterday</div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <h2 class="d-inline-block">User Managment</h2>
+            <button class="btn btn-primary d-inline-block float-right">Search</button>
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            <br>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>email</th>
+                    <th>subscription</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($users as $user)
+                    <tr>
+                        <td>{{$user->id}}</td>
+                        <td>{{$user->email}}</td>
+                        <td>{{$user->subscription->end_date->diffInDays($user->subscription->created_at)}} Days Left
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-primary color-blue" data-toggle="modal"
+                               data-target="#addCoinsModal"><i
+                                    class="fas fa-coins"></i></a>
+                            <a class="btn btn-outline-danger color-red" data-toggle="modal" data-target="#banModal"><i
+                                    class="fas fa-ban"></i></a>
+                            <a class="btn btn-outline-danger color-red" data-toggle="modal"
+                               data-target="#deleteModal"><i
+                                    class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--- TODO:: Make sure to paginate the users --->
+
+    @foreach($users as $user)
+        <!-- Ban Confirmation Modal -->
+        <div class="modal fade" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="banLabel">Warning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure that you want to ban this user
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger">Ban</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteLabel">Warning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure that you want to delete this user
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Coins Modal -->
+        <div class="modal fade" id="addCoinsModal" tabindex="-1" role="dialog" aria-labelledby="addCoinsLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCoinsLabel">Add Coins</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+@endsection
+
+@section('jew')
     <br>
     <div class="container">
         <div class="row">
             <div class="col-8">
                 <div class="tab-content">
-
-                    <!-- stats -->
                     <div class="tab-pane fade show active" id="statistics" role="tabpanel">
                         <div class="card-body">
                             <div class="card">
@@ -84,7 +279,6 @@
                         </div>
                     </div>
 
-                    <!-- users table -->
                     <div class="tab-pane fade" id="users" role="tabpanel">
                         <div class="card-body">
 
