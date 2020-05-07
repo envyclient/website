@@ -27,9 +27,3 @@ Route::get('paypal/cancel', 'PayPalController@cancel')->name('paypal.cancel');
  */
 Route::put('user/update/password', 'UsersController@updatePassword');
 Route::delete('user/{user}', 'UsersController@destroy');
-
-/**
- * Admin
- */
-Route::put('user/update/credits/{user}', 'UsersController@addCredits');
-Route::put('user/update/ban/{user}', 'UsersController@ban');

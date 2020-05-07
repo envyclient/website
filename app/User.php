@@ -15,17 +15,25 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasWallet, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason', 'hwid', 'last_launch_user', 'last_launch_at'
+        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason', 'hwid', 'last_launch_user', 'last_launch_at', 'ban_reason'
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at', 'admin', 'ban_reason', 'hwid'
+        'password', 'remember_token', 'email_verified_at', 'admin'
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_launch_at' => 'datetime'
     ];
+
+    public function scopeName($query, $name)
+    {
+        if (!is_null($name)) {
+            return $query->where('name', 'LIKE', "%$name%");
+        }
+        return $query;
+    }
 
     public function configs()
     {

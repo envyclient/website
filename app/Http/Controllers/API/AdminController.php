@@ -13,12 +13,23 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware(['auth:api', 'api-admin']);
     }
 
     public function users(Request $request)
     {
-        return User::with('subscription')->paginate(20);
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string',
+            'page' => 'required|int'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        return User::with('subscription')->name($request->name)->paginate(20);
     }
 
     public function totalUsers(Request $request)
@@ -52,5 +63,78 @@ class AdminController extends Controller
         ];
 
         return $statsArray;
+    }
+
+    public function credits(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|int',
+            'amount' => 'required|int'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        $user = User::findOrFail($request->user_id);
+        $amount = $request->amount;
+        $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "Admin {$request->user()->name} deposited $amount credits into your account."]);
+
+        return response()->json([
+            'message' => '200 OK'
+        ]);
+        //return back()->with('success', "Added $amount credits to {$user->name}'s account.");
+    }
+
+    public function ban(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|int'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        $user = User::findOrFail($request->user_id);
+        if ($user->isBanned()) { // this user is currently banned so we unban him
+            $user->fill([
+                'ban_reason' => null
+            ])->save();
+
+            return response()->json([
+                'message' => '200 OK'
+            ]);
+        } else { // not banned so we ban the user
+
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required|int',
+                'ban_reason' => 'required|string'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => '400 Bad Request'
+                ], 400);
+            }
+
+            if ($user->hasSubscription()) {
+                $user->subscription->fill([
+                    'renew' => false
+                ])->save();
+            }
+
+            $user->fill([
+                'ban_reason' => $request->reason
+            ])->save();
+
+            return response()->json([
+                'message' => '200 OK'
+            ]);
+        }
     }
 }

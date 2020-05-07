@@ -13,8 +13,10 @@
                 <div class="alert alert-primary" style="font-size:25px;">
                     Total Users
                 </div>
-                <user-stats url="{{ route('api.admin.user-stats') }}" type="total"
-                            api-token="{{ $user->api_token }}"></user-stats>
+                <user-stats url="{{ route('api.admin.users.stats') }}"
+                            type="total"
+                            api-token="{{ $user->api_token }}">
+                </user-stats>
             </div>
 
             <br>
@@ -24,8 +26,10 @@
                 <div class="alert alert-success" style="font-size:25px;">
                     Premium Users
                 </div>
-                <user-stats url="{{ route('api.admin.user-stats') }}" type="total"
-                            api-token="{{ $user->api_token }}"></user-stats>
+                <user-stats url="{{ route('api.admin.users.stats') }}"
+                            type="premium"
+                            api-token="{{ $user->api_token }}">
+                </user-stats>
             </div>
 
             <br>
@@ -35,82 +39,14 @@
                 <div class="alert alert-secondary" style="font-size:25px;">
                     User Management
                 </div>
-                <button class="btn btn-primary d-inline-block float-right">Search</button>
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-                <br>
-                <users-table url="{{ route('api.admin.users')  }}" api-token="{{ $user->api_token }}"></users-table>
+                <users-table url="{{ route('api.admin.users')  }}"
+                             credits-url="{{ route('api.admin.users.credits') }}"
+                             ban-url="{{ route('api.admin.users.ban') }}"
+                             api-token="{{ $user->api_token }}">
+                </users-table>
             </div>
         </div>
     </div>
-
-    <!--- TODO:: Make sure to paginate the users --->
-
-    @foreach($users as $user)
-        <!-- Ban Confirmation Modal -->
-        <div class="modal fade" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="banLabel">Warning</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure that you want to ban this user
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger">Ban</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Delete Confirmation Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteLabel">Warning</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure that you want to delete this user
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Coins Modal -->
-        <div class="modal fade" id="addCoinsModal" tabindex="-1" role="dialog" aria-labelledby="addCoinsLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addCoinsLabel">Add Coins</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
 @endsection
 
 {{--@section('jew')
