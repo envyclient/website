@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
+use App\Subscription;
 use App\Transaction;
 use App\User;
 use Carbon\Carbon;
@@ -78,24 +79,40 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $userStats['today'] = User::whereDate('created_at', '=', Carbon::today())->count();
-        $userStats['month'] = User::whereBetween('created_at', [Carbon::now()->firstOfMonth(), Carbon::now()->lastOfMonth()])->count();
-        $userStats['total'] = User::all()->count();
+        $users = User::all();
+        $totalUsers['total'] = $users->count();
+        $totalUsers['today'] = $users->filter(function ($value, $key) {
+            return $value->created_at == Carbon::today();
+        })->count();
+        $totalUsers['week'] = $users->filter(function ($value, $key) {
+            return $value->created_at >= Carbon::now()->startOfWeek() && $value->created_at <= Carbon::now()->endOfWeek();
+        })->count();
+        $totalUsers['month'] = $users->filter(function ($value, $key) {
+            return $value->created_at >= Carbon::now()->firstOfMonth() && $value->created_at <= Carbon::now()->lastOfMonth();
+        })->count();
 
-        // TODO: figure out better option
-        $count = 0;
-        foreach (User::all() as $user) {
-            if ($user->hasSubscription()) {
-                $count++;
-            }
-        }
-        $userStats['subscriptions'] = $count;
+        $subscriptions = Subscription::all();
+        $premiumUsers['total'] = $subscriptions->count();
+        $premiumUsers['today'] = $subscriptions->filter(function ($value, $key) {
+            return $value->created_at == Carbon::today();
+        })->count();
+        $premiumUsers['week'] = $subscriptions->filter(function ($value, $key) {
+            return $value->created_at >= Carbon::now()->startOfWeek() && $value->created_at <= Carbon::now()->endOfWeek();
+        })->count();
+        $premiumUsers['month'] = $subscriptions->filter(function ($value, $key) {
+            return $value->created_at >= Carbon::now()->firstOfMonth() && $value->created_at <= Carbon::now()->lastOfMonth();
+        })->count();
+
+        $latestUser['regular'] = User::latest()->first();
+        $latestUser['premium'] = Subscription::latest()->first()->user;
 
         return view('pages.dashboard.admin')->with([
             'user' => $user,
-            'users' => User::all(),
+            'users' => $users,
             'stats' => $stats,
-            'userStats' => $userStats
+            'totalUsers' => $totalUsers,
+            'premiumUsers' => $premiumUsers,
+            'latestUser' => $latestUser
         ]);
     }
 }

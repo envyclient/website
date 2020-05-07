@@ -5,125 +5,142 @@
         <div class="tab-pane fade show active" id="statistics" role="tabpanel">
             stats
         </div>
+
         <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
-            <div class="alert alert-secondary" role="alert" style="font-size:25px;">
-                Regular Users
+
+            <!-- total users -->
+            <div>
+                <div class="alert alert-secondary" role="alert" style="font-size:25px;">
+                    Total Users
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Total Users</span>
+                            <div class="card-body">
+                                <h2>{{ $totalUsers['total'] }}</h2>
+                            </div>
+                            <div class="card-footer">
+                                Latest: {{ $latestUser['regular']->name }}
+                                - {{ $latestUser['regular']->created_at->diffForHumans() }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Users Today</span>
+                            <div class="card-body">
+                                <h2>{{ $totalUsers['today'] }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Users This Week</span>
+                            <div class="card-body">
+                                <h2>{{ $totalUsers['week'] }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Users This Month</span>
+                            <div class="card-body">
+                                <h2>{{ $totalUsers['month'] }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users Today</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users This Month</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users This Year</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-            </div>
+
             <br>
-            <div class="alert alert-primary" role="alert" style="font-size:25px;">
-                Premium Users
+
+            <!-- premium users -->
+            <div>
+                <div class="alert alert-primary" role="alert" style="font-size:25px;">
+                    Premium Users
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Total Users</span>
+                            <div class="card-body">
+                                <h2>{{ $premiumUsers['total'] }}</h2>
+                            </div>
+                            <div class="card-footer">
+                                Latest: {{ $latestUser['premium']->name }}
+                                - {{ $latestUser['premium']->created_at->diffForHumans() }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Users Today</span>
+                            <div class="card-body">
+                                <h2>{{ $premiumUsers['today'] }}</h2>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Users This Week</span>
+                            <div class="card-body">
+                                <h2>{{ $premiumUsers['week'] }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3" style="min-width: 250px;">
+                        <div class="card text-center">
+                            <span class="card-sub-title">Users This Month</span>
+                            <div class="card-body">
+                                <h2>{{ $premiumUsers['month'] }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users Today</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users This Month</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-                <div class="col-3" style="min-width: 250px;">
-                    <div class="card text-center">
-                        <span class="card-sub-title">Total Users This Year</span>
-                        <div class="card-body">
-                            <h2>420</h2>
-                        </div>
-                        <div class="card-footer">Last Signup: Yesterday</div>
-                    </div>
-                </div>
-            </div>
-            <br><br>
-            <h2 class="d-inline-block">User Managment</h2>
-            <button class="btn btn-primary d-inline-block float-right">Search</button>
-            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+
             <br>
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>email</th>
-                    <th>subscription</th>
-                    <th>actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($users as $user)
+            <br>
+
+            <!-- users table -->
+            <div>
+                <h2 class="d-inline-block">User Management</h2>
+                <button class="btn btn-primary d-inline-block float-right">Search</button>
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                <br>
+                <table class="table table-striped table-hover">
+                    <thead>
                     <tr>
-                        <td>{{$user->id}}</td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->subscription->end_date->diffInDays($user->subscription->created_at)}} Days Left
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-primary color-blue" data-toggle="modal"
-                               data-target="#addCoinsModal"><i
-                                    class="fas fa-coins"></i></a>
-                            <a class="btn btn-outline-danger color-red" data-toggle="modal" data-target="#banModal"><i
-                                    class="fas fa-ban"></i></a>
-                            <a class="btn btn-outline-danger color-red" data-toggle="modal"
-                               data-target="#deleteModal"><i
-                                    class="fas fa-trash"></i></a>
-                        </td>
+                        <th>id</th>
+                        <th>email</th>
+                        <th>subscription</th>
+                        <th>actions</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($users as $user)
+                        <tr>
+                            <td>{{$user->id}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->subscription->end_date->diffInDays($user->subscription->created_at)}} Days Left
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary color-blue" data-toggle="modal"
+                                   data-target="#addCoinsModal"><i
+                                        class="fas fa-coins"></i></a>
+                                <a class="btn btn-outline-danger color-red" data-toggle="modal" data-target="#banModal"><i
+                                        class="fas fa-ban"></i></a>
+                                <a class="btn btn-outline-danger color-red" data-toggle="modal"
+                                   data-target="#deleteModal"><i
+                                        class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -197,7 +214,7 @@
     @endforeach
 @endsection
 
-@section('jew')
+{{--@section('jew')
     <br>
     <div class="container">
         <div class="row">
@@ -496,7 +513,7 @@
 
         </div>
     </div>
-@endsection
+@endsection--}}
 
 @section('js')
     <script>

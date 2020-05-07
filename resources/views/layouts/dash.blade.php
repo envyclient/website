@@ -102,15 +102,15 @@
     }
 
     .custom-panel .card {
-        transition: .25s all;
+        transition: .05s all;
         margin-top: 10px;
-        -webkit-box-shadow: 0px 0px 0px -200px rgba(209, 209, 209, 1);
-        -moz-box-shadow: 0px 0px 0px -200px rgba(209, 209, 209, 1);
-        box-shadow: 0px 0px 0px -200px rgba(209, 209, 209, 1);
+        -webkit-box-shadow: 0 0 0 -200px rgba(209, 209, 209, 1);
+        -moz-box-shadow: 0 0 0 -200px rgba(209, 209, 209, 1);
+        box-shadow: 0 0 0 -200px rgba(209, 209, 209, 1);
     }
 
     .custom-panel .card:hover {
-        transition: .25s all;
+        transition: .05s all;
         -webkit-box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
         -moz-box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
         box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
@@ -123,7 +123,7 @@
         color: #303030;
         text-align: left;
         font-size: 23px;
-        padding-bottom: 0px;
+        padding-bottom: 0;
     }
 
     .custom-panel span.card-sub-title {
