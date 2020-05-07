@@ -38,36 +38,7 @@
                 <button class="btn btn-primary d-inline-block float-right">Search</button>
                 <input class="form-control" type="text" placeholder="Search" aria-label="Search">
                 <br>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>email</th>
-                        <th>subscription</th>
-                        <th>actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($users as $user)
-                        <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->subscription->end_date->diffInDays($user->subscription->created_at)}} Days Left
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-primary color-blue" data-toggle="modal"
-                                   data-target="#addCoinsModal"><i
-                                        class="fas fa-coins"></i></a>
-                                <a class="btn btn-outline-danger color-red" data-toggle="modal" data-target="#banModal"><i
-                                        class="fas fa-ban"></i></a>
-                                <a class="btn btn-outline-danger color-red" data-toggle="modal"
-                                   data-target="#deleteModal"><i
-                                        class="fas fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                <users-table url="{{ route('api.admin.users')  }}" api-token="{{ $user->api_token }}"></users-table>
             </div>
         </div>
     </div>
@@ -442,16 +413,3 @@
         </div>
     </div>
 @endsection--}}
-
-@section('js')
-    <script>
-        $(document).ready(function () {
-            $("#search").on("keyup", function () {
-                const value = $(this).val().toLowerCase();
-                $("#users-table tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-@endsection

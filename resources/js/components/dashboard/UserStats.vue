@@ -44,7 +44,7 @@
         props: {
             url: {type: String, required: true},
             type: {type: String, required: true},
-            apiToken: {type: String, required: true},
+            apiToken: {type: String, required: true}
         },
         data() {
             return {
@@ -71,7 +71,7 @@
                 this.week = data.week;
                 this.month = data.month;
                 this.latest = data.latest;
-            });
+            }).catch(error => console.log(error));
         }
     }
 </script>

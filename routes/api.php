@@ -28,6 +28,7 @@ Route::get('users/active', function () {
 
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::get('users', 'API\AdminController@users')->name('api.admin.users');
     Route::get('total-users', 'API\AdminController@totalUsers')->name('api.admin.user-stats');
 });
 

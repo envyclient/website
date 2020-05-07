@@ -1,4 +1,5 @@
 @extends('layouts.dash')
+
 @section('content')
     <div class="row">
         <div class="col-5">

@@ -16,6 +16,11 @@ class AdminController extends Controller
         $this->middleware('auth:api');
     }
 
+    public function users(Request $request)
+    {
+        return User::with('subscription')->paginate(20);
+    }
+
     public function totalUsers(Request $request)
     {
         $validator = Validator::make($request->all(), [
