@@ -10,7 +10,7 @@
 
             <!-- total users -->
             <div>
-                <div class="alert alert-secondary" role="alert" style="font-size:25px;">
+                <div class="alert alert-primary" style="font-size:25px;">
                     Total Users
                 </div>
                 <user-stats url="{{ route('api.admin.user-stats') }}" type="total"
@@ -21,7 +21,7 @@
 
             <!-- premium users -->
             <div>
-                <div class="alert alert-primary" role="alert" style="font-size:25px;">
+                <div class="alert alert-success" style="font-size:25px;">
                     Premium Users
                 </div>
                 <user-stats url="{{ route('api.admin.user-stats') }}" type="total"
@@ -29,11 +29,12 @@
             </div>
 
             <br>
-            <br>
 
             <!-- users table -->
             <div>
-                <h2 class="d-inline-block">User Management</h2>
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    User Management
+                </div>
                 <button class="btn btn-primary d-inline-block float-right">Search</button>
                 <input class="form-control" type="text" placeholder="Search" aria-label="Search">
                 <br>
