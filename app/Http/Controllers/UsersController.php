@@ -51,49 +51,4 @@ class UsersController extends Controller
 
         return back()->with('success', 'Account deleted');
     }
-
-    ///////////// admin
-
-    public function addCredits(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $admin = auth()->user();
-        $request->validate([
-            'amount' => 'required|int'
-        ]);
-
-        $amount = $request->amount;
-        $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "Admin {$admin->name} deposited $amount credits into your account."]);
-        return back()->with('success', "Added $amount credits to {$user->name}'s account.");
-    }
-
-    public function ban(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-
-        if ($user->isBanned()) { // this user is currently banned so we unban him
-            $user->fill([
-                'ban_reason' => null
-            ])->save();
-
-            return back()->with('success', "User {$user->name} has been unbanned.");
-        } else { // not banned so we ban the user
-
-            $request->validate([
-                'reason' => 'required|string'
-            ]);
-
-            if ($user->hasSubscription()) {
-                $user->subscription->fill([
-                    'renew' => false
-                ])->save();
-            }
-
-            $user->fill([
-                'ban_reason' => $request->reason
-            ])->save();
-
-            return back()->with('success', "User {$user->name} has been banned.");
-        }
-    }
 }
