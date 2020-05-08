@@ -2179,6 +2179,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2199,6 +2208,10 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true
     },
+    unBanUrl: {
+      type: String,
+      required: true
+    },
     apiToken: {
       type: String,
       required: true
@@ -2210,12 +2223,12 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       selectedUser: null,
       modal: {
-        credits: 5
+        credits: 5,
+        ban: 'Chargeback'
       }
     };
   },
   created: function created() {
-    console.log(this.creditsUrl);
     this.fetchData();
   },
   methods: {
@@ -2252,18 +2265,31 @@ __webpack_require__.r(__webpack_exports__);
         console.log(data);
       })["catch"](function (error) {
         return console.log(error);
-      })["finally"](this.setSelectedUser(null));
+      })["finally"](this.closing);
     },
     banUser: function banUser() {
-      axios.put(this.creditsUrl, {
+      axios.put(this.banUrl, {
         user_id: this.selectedUser.id,
-        amount: this.modal.credits,
         api_token: this.apiToken
       }).then(function (data) {
         console.log(data);
       })["catch"](function (error) {
         return console.log(error);
-      })["finally"](this.setSelectedUser(null));
+      })["finally"](this.closing);
+    },
+    unBanUser: function unBanUser(user) {
+      axios.put(this.unBanUrl, {
+        user_id: user.id,
+        api_token: this.apiToken
+      }).then(function (data) {
+        console.log(data);
+      })["catch"](function (error) {
+        return console.log(error);
+      })["finally"](this.closing);
+    },
+    closing: function closing() {
+      this.setSelectedUser(null);
+      this.fetchData();
     }
   },
   watch: {
@@ -59259,7 +59285,59 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body" }, [
                       _vm._v(
-                        "\n                    Are you sure that you want to ban this user\n                "
+                        "\n                    Are you sure that you want to ban this user?\n                    "
+                      ),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.modal.ban,
+                              expression: "modal.ban"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.modal,
+                                "ban",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "Chargeback" } }, [
+                            _vm._v("Chargeback")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Exploiting" } }, [
+                            _vm._v("Exploiting")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "option",
+                            { attrs: { value: "Account Sharing" } },
+                            [_vm._v("Account Sharing")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Blacklisted" } }, [
+                            _vm._v("Blacklisted")
+                          ])
+                        ]
                       )
                     ]),
                     _vm._v(" "),
@@ -59486,7 +59564,7 @@ var render = function() {
                     _c(
                       "a",
                       {
-                        staticClass: "btn btn-outline-primary color-blue",
+                        staticClass: "btn btn-outline-primary text-primary",
                         attrs: {
                           "data-toggle": "modal",
                           "data-target": "#addCoinsModal"
@@ -59500,22 +59578,35 @@ var render = function() {
                       [_c("i", { staticClass: "fas fa-coins" })]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-outline-danger color-red",
-                        attrs: {
-                          "data-toggle": "modal",
-                          "data-target": "#banModal"
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSelectedUser(user)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-ban" })]
-                    )
+                    user.ban_reason == null
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-outline-danger text-danger",
+                            attrs: {
+                              "data-toggle": "modal",
+                              "data-target": "#banModal"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.setSelectedUser(user)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fas fa-ban" })]
+                        )
+                      : _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-outline-success text-success",
+                            on: {
+                              click: function($event) {
+                                return _vm.unBanUser(user)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fas fa-handshake" })]
+                        )
                   ])
                 ])
               : _vm._e()

@@ -13,7 +13,13 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Are you sure that you want to ban this user
+                        Are you sure that you want to ban this user?
+                        <select class="form-control" v-model="modal.ban">
+                            <option value="Chargeback">Chargeback</option>
+                            <option value="Exploiting">Exploiting</option>
+                            <option value="Account Sharing">Account Sharing</option>
+                            <option value="Blacklisted">Blacklisted</option>
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -25,7 +31,7 @@
             </div>
         </div>
 
-        <!-- Add Coins Modal -->
+        <!-- Add Credits Modal -->
         <div class="modal fade" id="addCoinsModal" tabindex="-1" role="dialog" aria-labelledby="addCoinsLabel"
              aria-hidden="true" v-if="selectedUser != null">
             <div class="modal-dialog" role="document">
@@ -86,13 +92,16 @@
                 <td>{{ calculateDifference(user.subscription.end_date) }} Days Left
                 </td>
                 <td>
-                    <a class="btn btn-outline-primary color-blue" data-toggle="modal"
+                    <a class="btn btn-outline-primary text-primary" data-toggle="modal"
                        data-target="#addCoinsModal" v-on:click="setSelectedUser(user)">
                         <i class="fas fa-coins"></i>
                     </a>
-                    <a class="btn btn-outline-danger color-red" data-toggle="modal" data-target="#banModal"
-                       v-on:click="setSelectedUser(user)">
+                    <a class="btn btn-outline-danger text-danger" data-toggle="modal" data-target="#banModal"
+                       v-on:click="setSelectedUser(user)" v-if="user.ban_reason == null">
                         <i class="fas fa-ban"></i>
+                    </a>
+                    <a class="btn btn-outline-success text-success" v-on:click="unBanUser(user)" v-else>
+                        <i class="fas fa-handshake"></i>
                     </a>
                 </td>
             </tr>
@@ -121,6 +130,7 @@
             url: {type: String, required: true},
             creditsUrl: {type: String, required: true},
             banUrl: {type: String, required: true},
+            unBanUrl: {type: String, required: true},
             apiToken: {type: String, required: true}
         },
         data() {
@@ -129,12 +139,12 @@
                 name: null,
                 selectedUser: null,
                 modal: {
-                    credits: 5
+                    credits: 5,
+                    ban: 'Chargeback'
                 }
             }
         },
         created() {
-            console.log(this.creditsUrl);
             this.fetchData();
         },
         methods: {
@@ -165,17 +175,29 @@
                 }).then(data => {
                     console.log(data);
                 }).catch(error => console.log(error))
-                    .finally(this.setSelectedUser(null));
+                    .finally(this.closing);
             },
             banUser() {
-                axios.put(this.creditsUrl, {
+                axios.put(this.banUrl, {
                     user_id: this.selectedUser.id,
-                    amount: this.modal.credits,
                     api_token: this.apiToken
                 }).then(data => {
                     console.log(data);
                 }).catch(error => console.log(error))
-                    .finally(this.setSelectedUser(null));
+                    .finally(this.closing);
+            },
+            unBanUser(user) {
+                axios.put(this.unBanUrl, {
+                    user_id: user.id,
+                    api_token: this.apiToken
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => console.log(error))
+                    .finally(this.closing);
+            },
+            closing() {
+                this.setSelectedUser(null);
+                this.fetchData();
             }
         },
         watch: {
