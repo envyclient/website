@@ -158,6 +158,7 @@
 
 <body>
 <div id="app">
+    <notifications position="bottom right"></notifications>
     @include('inc.navbar.dashboard')
 </div>
 @yield('js')

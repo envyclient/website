@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
+// TODO: replace with https://github.com/depsimon/laravel-wallet
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, Favoriter;

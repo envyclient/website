@@ -25,7 +25,9 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                 v-on:click="setSelectedUser(null)">Close
                         </button>
-                        <button type="button" class="btn btn-danger" v-on:click="banUser">Ban</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="banUser">
+                            Ban
+                        </button>
                     </div>
                 </div>
             </div>
@@ -80,6 +82,7 @@
                 <th>id</th>
                 <th>name</th>
                 <th>email</th>
+                <th>credits</th>
                 <th>subscription</th>
                 <th>actions</th>
             </tr>
@@ -89,6 +92,7 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
+                <td>${{ user.wallet.balance }}</td>
                 <td>{{ calculateDifference(user.subscription.end_date) }} Days Left
                 </td>
                 <td>
@@ -156,6 +160,7 @@
                         api_token: this.apiToken
                     }
                 }).then(data => {
+                    console.log(data);
                     this.data = data.data;
                 }).catch(error => console.log(error));
             },
@@ -173,18 +178,47 @@
                     amount: this.modal.credits,
                     api_token: this.apiToken
                 }).then(data => {
+                    this.$notify({
+                        type: "success",
+                        title: "Success",
+                        text: `Added ${this.modal.credits} credits to '${this.selectedUser.name}'.`
+                    });
                     console.log(data);
-                }).catch(error => console.log(error))
-                    .finally(this.closing);
+                }).catch(error => {
+                    console.log(error);
+                    this.$notify({
+                        type: "error",
+                        title: "Error",
+                        text: 'Error, please check console.'
+                    });
+                }).finally(() => {
+                    this.modal.credits = 5;
+                    this.closing();
+                });
             },
             banUser() {
                 axios.put(this.banUrl, {
                     user_id: this.selectedUser.id,
+                    ban_reason: this.modal.ban,
                     api_token: this.apiToken
                 }).then(data => {
                     console.log(data);
-                }).catch(error => console.log(error))
-                    .finally(this.closing);
+                    this.$notify({
+                        type: "success",
+                        title: "Success",
+                        text: `'${this.selectedUser.name}' has been banned for '${this.modal.ban}'.`
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    this.$notify({
+                        type: "error",
+                        title: "Error",
+                        text: 'Error, please check console.'
+                    });
+                }).finally(() => {
+                    this.modal.ban = 'Chargeback';
+                    this.closing();
+                });
             },
             unBanUser(user) {
                 axios.put(this.unBanUrl, {
@@ -192,8 +226,19 @@
                     api_token: this.apiToken
                 }).then(data => {
                     console.log(data);
-                }).catch(error => console.log(error))
-                    .finally(this.closing);
+                    this.$notify({
+                        type: "success",
+                        title: "Success",
+                        text: `'${user.name}' has been unbanned.`
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    this.$notify({
+                        type: "error",
+                        title: "Error",
+                        text: 'Error, please check console.'
+                    });
+                }).finally(this.closing);
             },
             closing() {
                 this.setSelectedUser(null);

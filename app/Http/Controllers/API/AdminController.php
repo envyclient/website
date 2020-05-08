@@ -29,7 +29,7 @@ class AdminController extends Controller
             ], 400);
         }
 
-        return User::with('subscription')
+        return User::with(['subscription', 'wallet'])
             ->name($request->name)
             ->paginate(20);
     }
@@ -111,7 +111,7 @@ class AdminController extends Controller
         }
 
         $user->fill([
-            'ban_reason' => $request->reason
+            'ban_reason' => $request->ban_reason
         ])->save();
 
         return response()->json([
