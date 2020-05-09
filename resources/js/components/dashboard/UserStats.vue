@@ -19,22 +19,14 @@
                 </div>
             </div>
         </div>
-        <!--     <div class="col-3" style="min-width: 250px;">
-                 <div class="card text-center">
-                     <span class="card-sub-title">Users This Week</span>
-                     <div class="card-body">
-                         <h2>{{ week }}</h2>
-                     </div>
-                 </div>
-             </div>
-             <div class="col-3" style="min-width: 250px;">
-                 <div class="card text-center">
-                     <span class="card-sub-title">Users This Month</span>
-                     <div class="card-body">
-                         <h2>{{ month }}</h2>
-                     </div>
-                 </div>
-             </div>-->
+        <div class="col-3" style="min-width: 250px;">
+            <div class="card text-center">
+                <span class="card-sub-title">Users This Month</span>
+                <div class="card-body">
+                    <h2>{{ month }}</h2>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

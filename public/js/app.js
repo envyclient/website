@@ -1997,14 +1997,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserStats",
   props: {
@@ -59260,6 +59252,18 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("h2", [_vm._v(_vm._s(_vm.today))])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-3", staticStyle: { "min-width": "250px" } }, [
+      _c("div", { staticClass: "card text-center" }, [
+        _c("span", { staticClass: "card-sub-title" }, [
+          _vm._v("Users This Month")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("h2", [_vm._v(_vm._s(_vm.month))])
         ])
       ])
     ])

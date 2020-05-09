@@ -51,9 +51,6 @@ class AdminController extends Controller
         $statsArray['today'] = $dataArray->filter(function ($value, $key) {
             return $value->created_at == Carbon::today();
         })->count();
-        $statsArray['week'] = $dataArray->filter(function ($value, $key) {
-            return $value->created_at >= Carbon::now()->startOfWeek() && $value->created_at <= Carbon::now()->endOfWeek();
-        })->count();
         $statsArray['month'] = $dataArray->filter(function ($value, $key) {
             return $value->created_at >= Carbon::now()->firstOfMonth() && $value->created_at <= Carbon::now()->lastOfMonth();
         })->count();
