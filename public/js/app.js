@@ -2042,6 +2042,7 @@ __webpack_require__.r(__webpack_exports__);
         api_token: this.apiToken
       }
     }).then(function (data) {
+      console.log(data);
       data = data.data;
       _this.total = data.total;
       _this.today = data.today;
@@ -59239,17 +59240,17 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("h2", [_vm._v(_vm._s(_vm.total))])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-footer" }, [
-          _vm._v(
-            "\n                Latest: " +
-              _vm._s(_vm.latest.name) +
-              " - " +
-              _vm._s(_vm.latest.time) +
-              "\n            "
-          )
         ])
+      ]),
+      _vm._v(" "),
+      _c("small", [
+        _vm._v(
+          "\n            Latest: " +
+            _vm._s(_vm.latest.name) +
+            " - " +
+            _vm._s(_vm.latest.time) +
+            "\n        "
+        )
       ])
     ]),
     _vm._v(" "),
@@ -59259,30 +59260,6 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("h2", [_vm._v(_vm._s(_vm.today))])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-3", staticStyle: { "min-width": "250px" } }, [
-      _c("div", { staticClass: "card text-center" }, [
-        _c("span", { staticClass: "card-sub-title" }, [
-          _vm._v("Users This Week")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("h2", [_vm._v(_vm._s(_vm.week))])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-3", staticStyle: { "min-width": "250px" } }, [
-      _c("div", { staticClass: "card text-center" }, [
-        _c("span", { staticClass: "card-sub-title" }, [
-          _vm._v("Users This Month")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("h2", [_vm._v(_vm._s(_vm.month))])
         ])
       ])
     ])

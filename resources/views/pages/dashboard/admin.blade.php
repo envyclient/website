@@ -8,44 +8,46 @@
 
         <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
 
-            <!-- total users -->
-            <div>
-                <div class="alert alert-primary" style="font-size:25px;">
-                    Total Users
+            <div class="row">
+                <!-- total users -->
+                <div class="col">
+                    <div class="alert alert-primary" style="font-size:25px;">
+                        Total Users
+                    </div>
+                    <user-stats url="{{ route('api.admin.users.stats') }}"
+                                type="total"
+                                api-token="{{ $user->api_token }}">
+                    </user-stats>
                 </div>
-                <user-stats url="{{ route('api.admin.users.stats') }}"
-                            type="total"
-                            api-token="{{ $user->api_token }}">
-                </user-stats>
+
+                <br>
+
+                <!-- premium users -->
+                <div class="col">
+                    <div class="alert alert-success" style="font-size:25px;">
+                        Premium Users
+                    </div>
+                    <user-stats url="{{ route('api.admin.users.stats') }}"
+                                type="premium"
+                                api-token="{{ $user->api_token }}">
+                    </user-stats>
+                </div>
             </div>
 
             <br>
 
-            <!-- premium users -->
-            <div>
-                <div class="alert alert-success" style="font-size:25px;">
-                    Premium Users
-                </div>
-                <user-stats url="{{ route('api.admin.users.stats') }}"
-                            type="premium"
-                            api-token="{{ $user->api_token }}">
-                </user-stats>
-            </div>
-
-            <br>
-
-            <!-- users table -->
-            <div>
-                <div class="alert alert-secondary" style="font-size:25px;">
-                    User Management
-                </div>
-                <users-table url="{{ route('api.admin.users')  }}"
-                             credits-url="{{ route('api.admin.users.credits') }}"
-                             ban-url="{{ route('api.admin.users.ban') }}"
-                             un-ban-url="{{ route('api.admin.users.unban') }}"
-                             api-token="{{ $user->api_token }}">
-                </users-table>
-            </div>
+                  <!-- users table -->
+                  <div>
+                      <div class="alert alert-secondary" style="font-size:25px;">
+                          User Management
+                      </div>
+                      <users-table url="{{ route('api.admin.users')  }}"
+                                   credits-url="{{ route('api.admin.users.credits') }}"
+                                   ban-url="{{ route('api.admin.users.ban') }}"
+                                   un-ban-url="{{ route('api.admin.users.unban') }}"
+                                   api-token="{{ $user->api_token }}">
+                      </users-table>
+                  </div>
         </div>
     </div>
 @endsection

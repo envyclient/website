@@ -60,7 +60,7 @@ class AdminController extends Controller
 
         $latestUser = $dataArray->last();
         $statsArray['latest'] = [
-            'name' => $latestUser->name,
+            'name' => $request->type === 'total' ? $latestUser->name : $latestUser->user->name,
             'time' => $latestUser->created_at->diffForHumans()
         ];
 
