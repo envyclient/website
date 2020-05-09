@@ -58,30 +58,8 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        $user = auth()->user();
-
-        $stats = [];
-        $stats['moneyToday'] = Transaction::where('type', 'deposit')
-            ->whereDate('created_at', Carbon::today())
-            ->sum('amount');
-
-        $stats['moneyWeek'] = Transaction::where('type', 'deposit')
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->sum('amount');
-
-        $stats['moneyMonth'] = Transaction::where('type', 'deposit')
-            ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
-            ->sum('amount');
-
-        $stats['todayTransactions'] = Transaction::where('type', 'deposit')
-            ->whereDate('created_at', Carbon::today())
-            ->orderBy('created_at', 'desc')
-            ->get();
-
         return view('pages.dashboard.admin')->with([
-            'user' => $user,
-            'users' => User::all(),
-            'stats' => $stats,
+            'user' => auth()->user()
         ]);
     }
 }
