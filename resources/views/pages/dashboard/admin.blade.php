@@ -3,11 +3,19 @@
 @section("content")
     <div class="tab-content" style="width:95%;margin:0 auto">
         <div class="tab-pane fade show active" id="statistics" role="tabpanel">
-            stats
+            <!-- total users -->
+            <div class="col">
+                <div class="alert alert-primary" style="font-size:25px;">
+                    Total Users
+                </div>
+                <user-stats url="{{ route('api.admin.users.stats') }}"
+                            type="total"
+                            api-token="{{ $user->api_token }}">
+                </user-stats>
+            </div>
         </div>
 
         <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
-
             <div class="row">
                 <!-- total users -->
                 <div class="col">
@@ -36,18 +44,18 @@
 
             <br>
 
-                  <!-- users table -->
-                  <div>
-                      <div class="alert alert-secondary" style="font-size:25px;">
-                          User Management
-                      </div>
-                      <users-table url="{{ route('api.admin.users')  }}"
-                                   credits-url="{{ route('api.admin.users.credits') }}"
-                                   ban-url="{{ route('api.admin.users.ban') }}"
-                                   un-ban-url="{{ route('api.admin.users.unban') }}"
-                                   api-token="{{ $user->api_token }}">
-                      </users-table>
-                  </div>
+            <!-- users table -->
+            <div>
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    User Management
+                </div>
+                <users-table url="{{ route('api.admin.users')  }}"
+                             credits-url="{{ route('api.admin.users.credits') }}"
+                             ban-url="{{ route('api.admin.users.ban') }}"
+                             un-ban-url="{{ route('api.admin.users.unban') }}"
+                             api-token="{{ $user->api_token }}">
+                </users-table>
+            </div>
         </div>
     </div>
 @endsection
