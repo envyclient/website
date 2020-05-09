@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 RUN composer install --optimize-autoloader --no-dev
-RUN npm run prod
+RUN npm install && npm run prod
 
 CMD php artisan serve --host=0.0.0.0 --port=9191
 EXPOSE 9191
