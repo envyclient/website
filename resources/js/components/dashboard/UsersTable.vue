@@ -88,7 +88,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="user in data.data" v-if="data != null">
+            <tr v-if="loading">
+                Loading...
+            </tr>
+            <tr v-for="user in data.data" v-else>
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
@@ -113,7 +116,7 @@
         </table>
         <br>
         <pagination class="container d-flex justify-content-center"
-                    v-if="data != null"
+                    v-if="!loading"
                     :data="data"
                     :limit="10"
                     @pagination-change-page="fetchData">
@@ -139,7 +142,8 @@
         },
         data() {
             return {
-                data: null,
+                loading: true,
+                data: {},
                 name: null,
                 selectedUser: null,
                 modal: {
@@ -153,6 +157,7 @@
         },
         methods: {
             fetchData(page = 1) {
+                this.loading = true;
                 axios.get(this.url, {
                     params: {
                         name: this.name,
@@ -162,6 +167,7 @@
                 }).then(data => {
                     console.log(data);
                     this.data = data.data;
+                    this.loading = false;
                 }).catch(error => console.log(error));
             },
             calculateDifference(date) {
