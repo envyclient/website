@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
-use App\Transaction;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
@@ -37,17 +34,11 @@ class HomeController extends Controller
     public function dashboard()
     {
         $user = auth()->user();
-
-        $nextSubscription = '∞';
-        if ($user->hasSubscription()) {
-            $nextSubscription = $user->subscription->end_date->diffInDays();
-        }
-
         return view('pages.dashboard.default')->with([
             'user' => $user,
             'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
             'plans' => Plan::all(),
-            'nextSubscription' => $nextSubscription
+            'nextSubscription' => $user->subscription->end_date->diffInDays()
         ]);
     }
 
@@ -58,8 +49,6 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('pages.dashboard.admin')->with([
-            'user' => auth()->user()
-        ]);
+        return view('pages.dashboard.admin')->with('apiToken', auth()->user()->api_token);
     }
 }

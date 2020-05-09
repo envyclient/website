@@ -12,7 +12,7 @@
                     Stats
                 </div>
                 <transaction-stats url="{{ route('api.admin.transactions.stats') }}"
-                                   api-token="{{ $user->api_token }}">
+                                   api-token="{{ $apiToken }}">
                 </transaction-stats>
             </div>
 
@@ -24,7 +24,7 @@
                     Transactions
                 </div>
                 <transactions-table url="{{ route('api.admin.transactions') }}"
-                                    api-token="{{ $user->api_token }}">
+                                    api-token="{{ $apiToken }}">
                 </transactions-table>
             </div>
         </div>
@@ -39,7 +39,7 @@
                     </div>
                     <user-stats url="{{ route('api.admin.users.stats') }}"
                                 type="total"
-                                api-token="{{ $user->api_token }}">
+                                api-token="{{ $apiToken }}">
                     </user-stats>
                 </div>
 
@@ -52,7 +52,7 @@
                     </div>
                     <user-stats url="{{ route('api.admin.users.stats') }}"
                                 type="premium"
-                                api-token="{{ $user->api_token }}">
+                                api-token="{{ $apiToken }}">
                     </user-stats>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                              credits-url="{{ route('api.admin.users.credits') }}"
                              ban-url="{{ route('api.admin.users.ban') }}"
                              un-ban-url="{{ route('api.admin.users.unban') }}"
-                             api-token="{{ $user->api_token }}">
+                             api-token="{{ $apiToken }}">
                 </users-table>
             </div>
         </div>
