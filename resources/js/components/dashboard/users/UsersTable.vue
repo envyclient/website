@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <!-- Ban Confirmation Modal -->
         <div class="modal fade" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-hidden="true"
              v-if="selectedUser != null">
@@ -79,7 +78,7 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>id</th>
+                <th>#</th>
                 <th>name</th>
                 <th>email</th>
                 <th>credits</th>
@@ -92,11 +91,12 @@
                 Loading...
             </tr>
             <tr v-for="user in data.data" v-else>
-                <td>{{ user.id }}</td>
+                <th scope="row">{{ user.id }}</th>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>${{ user.wallet.balance }}</td>
-                <td>{{ calculateDifference(user.subscription.end_date) }} Days Left
+                <td>{{ calculateDifference(user.subscription.end_date) }}
+                    Days Left
                 </td>
                 <td>
                     <a class="btn btn-outline-primary text-primary" data-toggle="modal"

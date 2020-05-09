@@ -66,7 +66,7 @@
                 <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#statistics"
                    style="cursor:pointer;">
                     <i class="fas fa-balance-scale p-2" style="margin-right:10px;"></i>
-                    Statistics
+                    Transactions
                 </a>
                 <a class="list-group-item list-group-item-custom" data-toggle="list" href="#users"
                    style="cursor:pointer;">

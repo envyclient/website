@@ -28,9 +28,14 @@ Route::get('users/active', function () {
 
 
 Route::group(['prefix' => 'admin'], function () {
+
     Route::get('users', 'API\AdminController@users')->name('api.admin.users');
-    Route::get('total-users', 'API\AdminController@totalUsers')->name('api.admin.users.stats');
+    Route::get('users-stats', 'API\AdminController@usersStats')->name('api.admin.users.stats');
+
     Route::put('credits', 'API\AdminController@credits')->name('api.admin.users.credits');
+
+    Route::get('transactions', 'API\AdminController@transactions')->name('api.admin.transactions');
+    Route::get('transaction-stats', 'API\AdminController@transactionsStats')->name('api.admin.transactions.stats');
 
     Route::put('ban', 'API\AdminController@ban')->name('api.admin.users.ban');
     Route::put('un-ban', 'API\AdminController@unBan')->name('api.admin.users.unban');

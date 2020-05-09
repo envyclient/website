@@ -2,40 +2,65 @@
 
 @section("content")
     <div class="tab-content" style="width:95%;margin:0 auto">
-        <div class="tab-pane fade show active" id="statistics" role="tabpanel">
-            stats
-        </div>
 
-        <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
+        <!-- transactions -->
+        <div class="tab-pane fade custom-panel show active" id="statistics" role="tabpanel">
 
-            <!-- total users -->
-            <div>
+            <!-- transaction stats -->
+            <div id="transaction-stats">
                 <div class="alert alert-primary" style="font-size:25px;">
-                    Total Users
+                    Stats
                 </div>
-                <user-stats url="{{ route('api.admin.users.stats') }}"
-                            type="total"
-                            api-token="{{ $user->api_token }}">
-                </user-stats>
+                <transaction-stats url="{{ route('api.admin.transactions.stats') }}"
+                                   api-token="{{ $user->api_token }}">
+                </transaction-stats>
             </div>
 
             <br>
 
-            <!-- premium users -->
-            <div>
-                <div class="alert alert-success" style="font-size:25px;">
-                    Premium Users
+            <!-- transactions table -->
+            <div id="transactions-table">
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    Transactions
                 </div>
-                <user-stats url="{{ route('api.admin.users.stats') }}"
-                            type="premium"
-                            api-token="{{ $user->api_token }}">
-                </user-stats>
+                <transactions-table url="{{ route('api.admin.transactions') }}"
+                                    api-token="{{ $user->api_token }}">
+                </transactions-table>
+            </div>
+        </div>
+
+        <!-- users -->
+        <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
+            <div class="row">
+                <!-- total users -->
+                <div class="col">
+                    <div class="alert alert-primary" style="font-size:25px;">
+                        Total Users
+                    </div>
+                    <user-stats url="{{ route('api.admin.users.stats') }}"
+                                type="total"
+                                api-token="{{ $user->api_token }}">
+                    </user-stats>
+                </div>
+
+                <br>
+
+                <!-- premium users -->
+                <div class="col">
+                    <div class="alert alert-success" style="font-size:25px;">
+                        Premium Users
+                    </div>
+                    <user-stats url="{{ route('api.admin.users.stats') }}"
+                                type="premium"
+                                api-token="{{ $user->api_token }}">
+                    </user-stats>
+                </div>
             </div>
 
             <br>
 
             <!-- users table -->
-            <div>
+            <div id="users-table">
                 <div class="alert alert-secondary" style="font-size:25px;">
                     User Management
                 </div>
