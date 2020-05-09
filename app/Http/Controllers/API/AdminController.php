@@ -184,6 +184,8 @@ class AdminController extends Controller
 
     public function transactionsStats(Request $request)
     {
+        // TODO :: shit broken
+
         $stats['total'] = Transaction::where('type', 'deposit')->sum('amount');
 
         $stats['today'] = Transaction::where('type', 'deposit')
