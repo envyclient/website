@@ -1,5 +1,7 @@
 [![buddy pipeline](https://app.buddy.works/haaaqs/revived-website/pipelines/pipeline/254472/badge.svg?token=b18303429e26f76a17ce9a17b3d4056c1b1b99fa46097bdb41dd0ae275f9799a "buddy pipeline")](https://app.buddy.works/haaaqs/revived-website/pipelines/pipeline/254472)
 
+![Publish Docker](https://github.com/envyclient/revived-website/workflows/Publish%20Docker/badge.svg?branch=master)
+
 # envy
 The official website of the new Envy Client.
 
