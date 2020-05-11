@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Download;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class DownloadsController extends Controller
@@ -13,34 +13,16 @@ class DownloadsController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function create()
+    // TODO: return names of all downloads
+    public function index()
     {
-        return view('downloads.create');
+
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         return Storage::download(
             Download::FILES_DIRECTORY . '/' . Download::findOrFail($id)->file
         );
-    }
-
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|string|max:30',
-            'file' => 'required|file|max:40000'
-        ]);
-
-        $file = $request->file('file');
-        $fileName = bin2hex(openssl_random_pseudo_bytes(30)) . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs(Download::FILES_DIRECTORY, $file, $fileName);
-
-        $download = new Download();
-        $download->name = $request->name;
-        $download->file = $fileName;
-        $download->save();
-
-        return back()->with('success', 'Download created.');
     }
 }

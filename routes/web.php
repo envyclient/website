@@ -27,3 +27,12 @@ Route::get('paypal/cancel', 'PayPalController@cancel')->name('paypal.cancel');
  */
 Route::put('user/update/password', 'UsersController@updatePassword');
 Route::delete('user/{user}', 'UsersController@destroy');
+
+
+/**
+ * Downloads
+ */
+Route::prefix('downloads')->group(function () {
+    Route::get('/create', 'DownloadsController@create');
+    Route::post('/', 'DownloadsController@store');
+});
