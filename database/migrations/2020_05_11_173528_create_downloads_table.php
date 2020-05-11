@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfigsTable extends Migration
+class CreateDownloadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        // TODO: put limit on name
-        Schema::create('configs', function (Blueprint $table) {
+        Schema::create('downloads', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->string('name');
-            $table->text('data'); // JSON
-            $table->boolean('public')->default(false);
+            $table->string('name', 30);
+            $table->string('title');
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configs');
+        Schema::dropIfExists('downloads');
     }
 }

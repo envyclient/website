@@ -10,7 +10,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'auth', 'forbid-banned-user']);
+        $this->middleware(['auth', 'verified', 'forbid-banned-user']);
         $this->middleware('admin')->only(['addCredits', 'ban', 'search']);
     }
 
