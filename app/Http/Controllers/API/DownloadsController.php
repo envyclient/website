@@ -13,10 +13,9 @@ class DownloadsController extends Controller
         $this->middleware('auth:api');
     }
 
-    // TODO: return names of all downloads
     public function index()
     {
-
+        return Download::all('id', 'name');
     }
 
     public function show(int $id)

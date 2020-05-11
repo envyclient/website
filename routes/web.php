@@ -33,6 +33,6 @@ Route::delete('user/{user}', 'UsersController@destroy');
  * Downloads
  */
 Route::prefix('downloads')->group(function () {
-    Route::get('/create', 'DownloadsController@create');
-    Route::post('/', 'DownloadsController@store');
+    Route::get('/create', 'DownloadsController@create')->name('downloads.create');
+    Route::post('/', 'DownloadsController@store')->name('downloads.store');
 });

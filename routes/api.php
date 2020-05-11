@@ -44,6 +44,6 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('downloads')->group(function () {
-    Route::post('/', 'API/DownloadsController@index');
-    Route::get('/{id}', 'API/DownloadsController@show');
+    Route::get('/', 'API\DownloadsController@index');
+    Route::get('/{id}', 'API\DownloadsController@show');
 });
