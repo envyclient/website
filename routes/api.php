@@ -15,9 +15,6 @@ Route::prefix('auth')->group(function () {
  * Configs
  */
 Route::prefix('configs')->group(function () {
-    //TODO: combine search by name and index
-
-    Route::get('search/{name}', 'API\ConfigsController@searchConfigByName');
     Route::put('favorite/{config}', 'API\ConfigsController@favorite');
 
     Route::get('user', 'API\ConfigsController@getCurrentUserConfigs');
@@ -27,7 +24,6 @@ Route::prefix('configs')->group(function () {
     Route::get('{config}', 'API\ConfigsController@show');
     Route::post('/', 'API\ConfigsController@store');
     Route::delete('{config}', 'API\ConfigsController@destroy');
-
 });
 
 /** thingy */
@@ -51,7 +47,6 @@ Route::prefix('admin')->group(function () {
     Route::put('ban', 'API\AdminController@ban')->name('api.admin.users.ban');
     Route::put('un-ban', 'API\AdminController@unBan')->name('api.admin.users.unban');
 });
-
 
 /**
  * Download

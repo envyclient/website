@@ -5,6 +5,8 @@ namespace App\Rules;
 use App\Plan;
 use Illuminate\Contracts\Validation\Rule;
 
+
+// TODO: replace with findOrFail
 class PlanExists implements Rule
 {
     /**

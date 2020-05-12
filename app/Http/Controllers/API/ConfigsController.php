@@ -17,13 +17,28 @@ class ConfigsController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return ConfigResource::collection(
-            Config::with('user:id,name')
-                ->where('public', true)
-                ->paginate(Config::PAGE_LIMIT)
-        );
+        $this->validate($request, [
+            'search' => 'nullable|string'
+        ]);
+
+        if ($request->has('search')) {
+            $name = $request->search;
+            return ConfigResource::collection(
+                Config::with('user:id,name')
+                    ->where([
+                        ['name', 'like', "%$name%"],
+                        ['public', '=', true]
+                    ])->paginate(Config::PAGE_LIMIT)
+            );
+        } else {
+            return ConfigResource::collection(
+                Config::with('user:id,name')
+                    ->where('public', true)
+                    ->paginate(Config::PAGE_LIMIT)
+            );
+        }
     }
 
     public function show(Request $request, $id)
@@ -93,16 +108,6 @@ class ConfigsController extends Controller
             $user->configs()
                 ->where('public', true)
                 ->paginate(Config::PAGE_LIMIT)
-        );
-    }
-
-    public function searchConfigByName(Request $request, string $name)
-    {
-        return ConfigResource::collection(
-            Config::where([
-                ['name', 'like', "%$name%"],
-                ['public', '=', true]
-            ])->paginate(Config::PAGE_LIMIT)
         );
     }
 
