@@ -10,7 +10,7 @@ class DownloadsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'forbid-banned-user', 'admin']);
+        $this->middleware(['auth', 'verified', 'admin']);
     }
 
     public function create()

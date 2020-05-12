@@ -13,7 +13,7 @@ class SubscriptionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'forbid-banned-user']);
+        $this->middleware(['auth', 'verified']);
     }
 
     public function subscribe(Request $request)
