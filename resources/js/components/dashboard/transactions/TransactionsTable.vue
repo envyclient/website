@@ -43,6 +43,7 @@
 </template>
 
 <script>
+    import EventBus from '../../../eventbus'
 
     export default {
         name: "TransactionsTable",
@@ -58,6 +59,9 @@
             }
         },
         created() {
+            EventBus.$on("UPDATE_DATA", () => {
+                this.fetchData();
+            });
             this.fetchData();
         },
         methods: {

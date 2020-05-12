@@ -36,6 +36,8 @@
 </template>
 
 <script>
+    import EventBus from '../../../eventbus'
+
     export default {
         name: "TransactionStats",
         props: {
@@ -51,20 +53,28 @@
             }
         },
         created() {
-            axios.get(this.url, {
-                params: {
-                    api_token: this.apiToken
-                }
-            }).then(data => {
-                console.log(data);
+            EventBus.$on("UPDATE_DATA", () => {
+                this.fetchData();
+            });
+            this.fetchData();
+        },
+        methods: {
+            fetchData() {
+                axios.get(this.url, {
+                    params: {
+                        api_token: this.apiToken
+                    }
+                }).then(data => {
+                    console.log(data);
 
-                data = data.data;
-                this.total = data.total;
-                this.today = data.today;
-                this.week = data.week;
-                this.month = data.month;
+                    data = data.data;
+                    this.total = data.total;
+                    this.today = data.today;
+                    this.week = data.week;
+                    this.month = data.month;
 
-            }).catch(error => console.log(error));
+                }).catch(error => console.log(error));
+            }
         }
     }
 </script>
