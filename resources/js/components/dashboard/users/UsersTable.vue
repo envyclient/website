@@ -114,7 +114,9 @@
             </tr>
             </tbody>
         </table>
+
         <br>
+
         <pagination class="container d-flex justify-content-center"
                     v-if="!loading"
                     :data="data"

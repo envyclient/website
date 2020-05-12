@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Download;
 use App\Plan;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -9,7 +10,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['verified', 'auth', 'forbid-banned-user'])->except('index');
+        $this->middleware(['auth', 'verified', 'forbid-banned-user'])->except('index');
         $this->middleware('admin')->only('admin');
     }
 
@@ -49,6 +50,9 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('pages.dashboard.admin')->with('apiToken', auth()->user()->api_token);
+        return view('pages.dashboard.admin')->with([
+            'apiToken' => auth()->user()->api_token,
+            'downloads' => Download::all()
+        ]);
     }
 }

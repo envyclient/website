@@ -4,7 +4,7 @@
     <div class="tab-content" style="width:95%;margin:0 auto">
 
         <!-- transactions -->
-        <div class="tab-pane fade custom-panel show active" id="statistics" role="tabpanel">
+        <div class="tab-pane fade custom-panel show active" id="transactions" role="tabpanel">
 
             <!-- transaction stats -->
             <div id="transaction-stats">
@@ -70,6 +70,64 @@
                              un-ban-url="{{ route('api.admin.users.unban') }}"
                              api-token="{{ $apiToken }}">
                 </users-table>
+            </div>
+        </div>
+
+
+        <!-- create download -->
+        <div class="tab-pane fade custom-panel" id="downloads" role="tabpanel">
+
+            <div>
+                <div class="alert alert-primary" style="font-size:25px;">
+                    Downloads
+                </div>
+
+                <!-- TODO: convert to vuejs -->
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>name</th>
+                        <th>file</th>
+                        <th>date</th>
+                        <th>action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($downloads as $download)
+                        <tr>
+                            <th scope="row">{{ $loop->index + 1 }}</th>
+                            <td>{{ $download->name }}</td>
+                            <td>{{ $download->file }}</td>
+                            <td>{{ $download->created_at->diffForHumans() }}</td>
+                            <td>
+                                <a class="btn btn-primary"
+                                   href="{{ route('api.downloads.show', $download->id) }}?api_token={{  $apiToken }}"
+                                   role="button">Download</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <br>
+
+            <div>
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    Create Download
+                </div>
+
+                {!! Form::open(['action' => 'DownloadsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                <div class="form-group">
+                    {{ Form::label('name', 'Name') }}
+                    {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required' => 'required']) }}
+                </div>
+                <div class="form-group">
+                    {{ Form::file('file') }}
+                </div>
+                {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
