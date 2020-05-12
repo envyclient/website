@@ -28,6 +28,7 @@ Route::prefix('configs')->group(function () {
 
 /** thingy */
 Route::get('users/active', function () {
+    // TODO: fix
     // check if the user was active in the last 5 mins
     return User::whereDate('end_date', '>=', Carbon::now()->subtract(5, 'minutes'));
 })->middleware('auth:api');
