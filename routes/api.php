@@ -11,15 +11,24 @@ Route::prefix('auth')->group(function () {
     Route::get('me', 'API\AuthController@me')->name('api.auth.me');
 });
 
-// TODO: cleanup
-/** Configs */
-Route::get('configs/search/{name}', 'API\ConfigsController@searchConfigByName');
-Route::put('configs/favorite/{id}', 'API\ConfigsController@favorite');
-Route::get('configs/user', 'API\ConfigsController@getCurrentUserConfigs');
-Route::get('configs/user/{name}', 'API\ConfigsController@getConfigsByUser');
-Route::resource('configs', 'API\ConfigsController')->only([
-    'index', 'show', 'store', 'destroy'
-]);
+/**
+ * Configs
+ */
+Route::prefix('configs')->group(function () {
+    //TODO: combine search by name and index
+
+    Route::get('search/{name}', 'API\ConfigsController@searchConfigByName');
+    Route::put('favorite/{config}', 'API\ConfigsController@favorite');
+
+    Route::get('user', 'API\ConfigsController@getCurrentUserConfigs');
+    Route::get('user/{name}', 'API\ConfigsController@getConfigsByUser');
+
+    Route::get('/', 'API\ConfigsController@index');
+    Route::get('{config}', 'API\ConfigsController@show');
+    Route::post('/', 'API\ConfigsController@store');
+    Route::delete('{config}', 'API\ConfigsController@destroy');
+
+});
 
 /** thingy */
 Route::get('users/active', function () {
@@ -49,5 +58,5 @@ Route::prefix('admin')->group(function () {
  */
 Route::prefix('downloads')->group(function () {
     Route::get('/', 'API\DownloadsController@index')->name('api.downloads.index');
-    Route::get('/{id}', 'API\DownloadsController@show')->name('api.downloads.show');
+    Route::get('{download}', 'API\DownloadsController@show')->name('api.downloads.show');
 });

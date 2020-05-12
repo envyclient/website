@@ -13,7 +13,6 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        // TODO: put limit on name
         Schema::create('configs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
