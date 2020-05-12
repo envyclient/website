@@ -39,7 +39,7 @@ class ConfigsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|max:15',
             'data' => 'required|json',
             'public' => 'nullable|boolean'
         ]);
