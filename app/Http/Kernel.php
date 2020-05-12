@@ -35,6 +35,10 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // custom
+            \App\Http\Middleware\CheckBanned::class,
+            \App\Http\Middleware\CheckDisabled::class,
         ],
 
         'api' => [
@@ -65,7 +69,6 @@ class Kernel extends HttpKernel
 
         // custom
         'admin' => \App\Http\Middleware\CheckAdmin::class,
-        'forbid-banned-user' => \App\Http\Middleware\CheckBanned::class,
         'api-admin' => \App\Http\Middleware\API\CheckAdmin::class,
     ];
 

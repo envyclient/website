@@ -27,15 +27,14 @@ class PayPalController extends Controller
         $this->middleware(['auth', 'verified', 'forbid-banned-user']);
 
         $this->paypal = new ApiContext(new OAuthTokenCredential(
-                config('paypal.client_id'),
-                config('paypal.secret'))
-        );
+            config('paypal.client_id'),
+            config('paypal.secret')
+        ));
         $this->paypal->setConfig(config('paypal.settings'));
     }
 
     public function create(Request $request)
     {
-        //return back()->with('error', 'Payments are currently disabled, because of testing mode.');
         $this->validate($request, [
             'amount' => 'required|integer|between:5,100'
         ]);

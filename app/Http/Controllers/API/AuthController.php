@@ -56,8 +56,8 @@ class AuthController extends Controller
 
     private function returnUserObject($user, string $hwid, string $accountName)
     {
-        // check for duplicate hwid
-        $userCheck = User::where('hwid', $hwid);
+        // check for duplicate api_token
+        $userCheck = User::where('api-token', $hwid);
         if ($userCheck->exists() && $userCheck->first()->id !== $user->id) {
             return response()->json(['message' => 'Duplicate hwid.'], 401);
         }
@@ -76,7 +76,7 @@ class AuthController extends Controller
         // expired subscription check
         if ($user->subscription()->whereDate('end_date', '<=', Carbon::today()->format('Y-m-d'))->exists()) {
             if (!$user->renewSubscription()) {
-                return response()->json(['message' => "User's subscription has expired."], 401);
+                return response()->json(['message' => 'User does not have subscription for the client.'], 401);
             }
         }
 
@@ -85,9 +85,14 @@ class AuthController extends Controller
             return response()->json(['message' => 'User is banned.'], 401);
         }
 
+        // disable check
+        if ($user->disabled) {
+            return response()->json(['message' => 'User has disabled their account.'], 401);
+        }
+
         // fill users hwid
         $user->fill([
-            'hwid' => $hwid,
+            'api_token' => $hwid,
             'last_launch_user' => $accountName,
             'last_launch_at' => Carbon::now()
         ])->save();

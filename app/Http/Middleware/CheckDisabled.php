@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckBanned
+class CheckDisabled
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,9 @@ class CheckBanned
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->isBanned()) {
-            $user = auth()->user();
+        if (auth()->check() && auth()->user()->disabled) {
             auth()->logout();
-            return redirect('/')->with('error', "Account has been banned for: {$user->ban_reason}");
+            return redirect('/')->with('error', "Account has been disabled.");
         }
         return $next($request);
     }

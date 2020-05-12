@@ -25,10 +25,11 @@
                 @if($user->hasSubscription())
                     <div class="text-left">
                         <label>Configs Used:</label>
-                        <h5><span class="badge badge-secondary">{{ $configs->count() }}/<span
-                                    class="font-weight-bold">{{ $user->getConfigLimit() }}</span></span></h5>
-                        <!--- TODO :: Make a display for all of his configs --->
-
+                        <h5>
+                            <span class="badge badge-secondary">{{ $configs->count() }}/<span
+                                    class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
+                            </span>
+                        </h5>
                         @if($configs->count() > 0)
                             <table class="table table-striped table-hover">
                                 <thead>
@@ -51,9 +52,8 @@
                                 </tbody>
                             </table>
                         @endif
-
-                        @endif
                     </div>
+                @endif
             </div>
         </div>
 
@@ -191,37 +191,33 @@
 
         <!-- transactions -->
         <div class="tab-pane fade" id="invoices" role="tabpanel">
-            @if(count($transactions) > 0)
-                <div class="alert alert-secondary" style="font-size:25px;">
-                    <i class="fas fa-shopping-cart" style="padding-right:10px;"></i> Transactions
-                </div>
-                <table class="table table-bordered">
-                    <thead>
+            <div class="alert alert-secondary" style="font-size:25px;">
+                <i class="fas fa-shopping-cart" style="padding-right:10px;"></i> Transactions
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($transactions as $transaction)
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Date</th>
+                        <th scope="row">{{ $loop->index + 1 }}</th>
+                        @if($transaction->type == 'deposit')
+                            <td style="color: green">+{{ $transaction->amount }}</td>
+                        @else
+                            <td style="color: red">-{{ $transaction->amount }}</td>
+                        @endif
+                        <td>{{ $transaction->meta['description'] }}</td>
+                        <td>{{ $transaction->created_at->diffForHumans() }}</td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($transactions as $transaction)
-                        <tr>
-                            <th scope="row">{{ $loop->index + 1 }}</th>
-                            @if($transaction->type == 'deposit')
-                                <td style="color: green">+{{ $transaction->amount }}</td>
-                            @else
-                                <td style="color: red">-{{ $transaction->amount }}</td>
-                            @endif
-                            <td>{{ $transaction->meta['description'] }}</td>
-                            <td>{{ $transaction->created_at->diffForHumans() }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            @else
-                You dont have any transactions
-            @endif
+                @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection

@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
-// TODO: add soft delete to all models
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, Favoriter;
@@ -51,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Subscription');
     }
 
-    public function isBanned()
+    public function isBanned(): bool
     {
         return $this->ban_reason !== null;
     }
@@ -61,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->subscription()->exists();
     }
 
-    public function getConfigLimit()
+    public function getConfigLimit(): int
     {
         return $this->subscription->plan->config_limit;
     }
