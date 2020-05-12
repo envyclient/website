@@ -43,7 +43,11 @@ Route::prefix('admin')->group(function () {
     Route::put('un-ban', 'API\AdminController@unBan')->name('api.admin.users.unban');
 });
 
+
+/**
+ * Download
+ */
 Route::prefix('downloads')->group(function () {
-    Route::get('/', 'API\DownloadsController@index');
-    Route::get('/{id}', 'API\DownloadsController@show');
+    Route::get('/', 'API\DownloadsController@index')->name('api.downloads.index');
+    Route::get('/{id}', 'API\DownloadsController@show')->name('api.downloads.show');
 });

@@ -63,7 +63,7 @@
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;">
                     <small class="text-muted ">ADMINISTRATOR</small>
                 </h3>
-                <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#statistics"
+                <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#transactions"
                    style="cursor:pointer;">
                     <i class="fas fa-balance-scale p-2" style="margin-right:10px;"></i>
                     Transactions
@@ -72,6 +72,11 @@
                    style="cursor:pointer;">
                     <i class="fas fa-users p-2" style="margin-right:10px;"></i>
                     Users
+                </a>
+                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#downloads"
+                   style="cursor:pointer;">
+                    <i class="fas fa-download p-2" style="margin-right:10px;"></i>
+                    Downloads
                 </a>
             </div>
         </div>
