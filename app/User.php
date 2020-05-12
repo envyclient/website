@@ -3,14 +3,14 @@
 namespace App;
 
 use App\Notifications\Generic;
-use App\Traits\HasWallet;
 use Carbon\Carbon;
+use Depsimon\Wallet\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
-// TODO: replace with https://github.com/depsimon/laravel-wallet
+// TODO: add soft delete to all models
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, Favoriter;

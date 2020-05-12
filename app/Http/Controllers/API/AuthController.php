@@ -12,6 +12,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('api')->only('login');
         $this->middleware('auth:api')->only('me');
     }
 

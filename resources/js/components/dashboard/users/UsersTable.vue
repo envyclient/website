@@ -127,6 +127,7 @@
 </template>
 
 <script>
+    import EventBus from '../../../eventbus'
     import pagination from 'laravel-vue-pagination';
     import moment from "moment";
 
@@ -251,11 +252,16 @@
             closing() {
                 this.setSelectedUser(null);
                 this.fetchData();
-            }
+                this.sendEvent();
+            },
+            sendEvent() {
+                EventBus.$emit('UPDATE_DATA');
+            },
         },
         watch: {
             name: function () {
                 this.fetchData();
+                this.sendEvent();
             }
         }
     }

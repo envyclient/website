@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Notifications\Generic;
 use App\Notifications\NewSubscription;
 use App\Plan;
-use App\Rules\PlanExists;
 use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class SubscriptionsController extends Controller
     public function subscribe(Request $request)
     {
         $this->validate($request, [
-            'id' => ['required', 'int', new PlanExists]
+            'id' => 'required|integer'
         ]);
 
         $user = auth()->user();
@@ -28,7 +27,7 @@ class SubscriptionsController extends Controller
             return back()->with('error', 'You are already subscribed to a plan. You must let that one expire before you subscribe to a new one.');
         }
 
-        $plan = Plan::find($request->id);
+        $plan = Plan::findOrFail($request->id);
         $price = $plan->price;
 
         if (!$user->canWithdraw($price)) {

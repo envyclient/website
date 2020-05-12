@@ -32,12 +32,10 @@
             </tr>
             <tr v-for="(transaction, index) in data" v-else>
                 <th scope="row">{{ index + 1 }}</th>
-                <td>{{ transaction.wallet.user.name }}</td>
+                <td>{{ transaction.user.name }}</td>
                 <td style="color: green">${{ transaction.amount }}</td>
                 <td>{{ transaction.meta['description'] }}</td>
-                <td>{{ calculateDifference(transaction.created_at) }}
-                    Days Ago
-                </td>
+                <td>{{ transaction.date }}</td>
             </tr>
             </tbody>
         </table>
@@ -45,7 +43,7 @@
 </template>
 
 <script>
-    import moment from "moment";
+    import EventBus from '../../../eventbus'
 
     export default {
         name: "TransactionsTable",
@@ -61,6 +59,9 @@
             }
         },
         created() {
+            EventBus.$on("UPDATE_DATA", () => {
+                this.fetchData();
+            });
             this.fetchData();
         },
         methods: {
@@ -76,11 +77,6 @@
                     this.data = data.data;
                     this.loading = false;
                 }).catch(error => console.log(error));
-            },
-            calculateDifference(date) {
-                const now = moment();
-                const then = moment(date, "Y-MM-DD");
-                return now.diff(then, "days");
             }
         },
         watch: {

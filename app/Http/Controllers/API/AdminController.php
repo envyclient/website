@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Transaction as TransactionResource;
 use App\Subscription;
-use App\Transaction;
 use App\User;
 use Carbon\Carbon;
+use Depsimon\Wallet\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,7 +22,7 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|string',
-            'page' => 'required|int'
+            'page' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -68,8 +69,8 @@ class AdminController extends Controller
     public function credits(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int',
-            'amount' => 'required|int'
+            'user_id' => 'required|integer',
+            'amount' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -90,8 +91,8 @@ class AdminController extends Controller
     public function ban(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int',
-            'ban_reason' => 'required|string'
+            'user_id' => 'required|integer',
+            'ban_reason' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -120,7 +121,7 @@ class AdminController extends Controller
     public function unBan(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int'
+            'user_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -155,42 +156,54 @@ class AdminController extends Controller
         switch ($request->filter) {
             case 'yesterday':
             {
-                $date = Carbon::yesterday();
+                return TransactionResource::collection(
+                    Transaction::with('wallet.user')
+                        ->where([
+                            ['type', '=', 'deposit'],
+                            ['created_at', '=', Carbon::yesterday()]
+                        ])
+                        ->orderBy('created_at', 'desc')
+                        ->get()
+                );
                 break;
             }
             case 'week':
             {
-                $date = Carbon::now()->startOfWeek();
+                $date = Carbon::now()->subDays(7);
                 break;
             }
             case 'month':
             {
-                $date = Carbon::now()->startOfMonth();
+                $date = Carbon::now()->subDays(30);
                 break;
             }
             case 'lifetime':
             {
-                $date = Carbon::now()->startOfDecade();
+                return TransactionResource::collection(
+                    Transaction::with('wallet.user')
+                        ->orderBy('created_at', 'desc')
+                        ->get()
+                );
                 break;
             }
         }
 
-        return Transaction::with('wallet.user')
-            ->where('type', 'deposit')
-            ->whereBetween('created_at', [$date, Carbon::today()])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return TransactionResource::collection(
+            Transaction::with('wallet.user')
+                ->where('type', 'deposit')
+                ->whereBetween('created_at', [$date, Carbon::now()])
+                ->orderBy('created_at', 'desc')
+                ->get()
+        );
     }
 
     public function transactionsStats(Request $request)
     {
-        // TODO :: shit broken
-
         $stats['total'] = Transaction::where('type', 'deposit')->sum('amount');
 
         $stats['today'] = Transaction::where('type', 'deposit')
             ->whereDate('created_at', Carbon::today())
-                ->sum('amount');
+            ->sum('amount');
 
         $stats['week'] = Transaction::where('type', 'deposit')
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])

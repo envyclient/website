@@ -1932,6 +1932,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
 //
 //
 //
@@ -1969,6 +1970,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TransactionStats",
   props: {
@@ -1992,20 +1994,30 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get(this.url, {
-      params: {
-        api_token: this.apiToken
-      }
-    }).then(function (data) {
-      console.log(data);
-      data = data.data;
-      _this.total = data.total;
-      _this.today = data.today;
-      _this.week = data.week;
-      _this.month = data.month;
-    })["catch"](function (error) {
-      return console.log(error);
+    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_DATA", function () {
+      _this.fetchData();
     });
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this2 = this;
+
+      axios.get(this.url, {
+        params: {
+          api_token: this.apiToken
+        }
+      }).then(function (data) {
+        console.log(data);
+        data = data.data;
+        _this2.total = data.total;
+        _this2.today = data.today;
+        _this2.week = data.week;
+        _this2.month = data.month;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
   }
 });
 
@@ -2020,10 +2032,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
 //
 //
 //
@@ -2089,11 +2098,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    var _this = this;
+
+    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_DATA", function () {
+      _this.fetchData();
+    });
     this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
       axios.get(this.url, {
@@ -2103,16 +2117,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (data) {
         console.log(data);
-        _this.data = data.data;
-        _this.loading = false;
+        _this2.data = data.data;
+        _this2.loading = false;
       })["catch"](function (error) {
         return console.log(error);
       });
-    },
-    calculateDifference: function calculateDifference(date) {
-      var now = moment__WEBPACK_IMPORTED_MODULE_0___default()();
-      var then = moment__WEBPACK_IMPORTED_MODULE_0___default()(date, "Y-MM-DD");
-      return now.diff(then, "days");
     }
   },
   watch: {
@@ -2133,6 +2142,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
 //
 //
 //
@@ -2165,6 +2175,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserStats",
   props: {
@@ -2195,22 +2206,32 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get(this.url, {
-      params: {
-        type: this.type,
-        api_token: this.apiToken
-      }
-    }).then(function (data) {
-      console.log(data);
-      data = data.data;
-      _this.total = data.total;
-      _this.today = data.today;
-      _this.week = data.week;
-      _this.month = data.month;
-      _this.latest = data.latest;
-    })["catch"](function (error) {
-      return console.log(error);
+    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_DATA", function () {
+      _this.fetchData();
     });
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this2 = this;
+
+      axios.get(this.url, {
+        params: {
+          type: this.type,
+          api_token: this.apiToken
+        }
+      }).then(function (data) {
+        console.log(data);
+        data = data.data;
+        _this2.total = data.total;
+        _this2.today = data.today;
+        _this2.week = data.week;
+        _this2.month = data.month;
+        _this2.latest = data.latest;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
   }
 });
 
@@ -2225,10 +2246,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2355,12 +2377,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UsersTable",
   components: {
-    pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default.a
+    pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: {
     url: {
@@ -2420,8 +2445,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     calculateDifference: function calculateDifference(date) {
-      var now = moment__WEBPACK_IMPORTED_MODULE_1___default()();
-      var then = moment__WEBPACK_IMPORTED_MODULE_1___default()(date, "Y-MM-DD");
+      var now = moment__WEBPACK_IMPORTED_MODULE_2___default()();
+      var then = moment__WEBPACK_IMPORTED_MODULE_2___default()(date, "Y-MM-DD");
       return then.diff(now, "days");
     },
     setSelectedUser: function setSelectedUser(user) {
@@ -2512,11 +2537,16 @@ __webpack_require__.r(__webpack_exports__);
     closing: function closing() {
       this.setSelectedUser(null);
       this.fetchData();
+      this.sendEvent();
+    },
+    sendEvent: function sendEvent() {
+      _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('UPDATE_DATA');
     }
   },
   watch: {
     name: function name() {
       this.fetchData();
+      this.sendEvent();
     }
   }
 });
@@ -59469,7 +59499,7 @@ var render = function() {
                     _vm._v(_vm._s(index + 1))
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(transaction.wallet.user.name))]),
+                  _c("td", [_vm._v(_vm._s(transaction.user.name))]),
                   _vm._v(" "),
                   _c("td", { staticStyle: { color: "green" } }, [
                     _vm._v("$" + _vm._s(transaction.amount))
@@ -59477,12 +59507,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(transaction.meta["description"]))]),
                   _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(_vm.calculateDifference(transaction.created_at)) +
-                        "\n                Days Ago\n            "
-                    )
-                  ])
+                  _c("td", [_vm._v(_vm._s(transaction.date))])
                 ])
               })
         ],
@@ -73780,6 +73805,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/eventbus.js":
+/*!**********************************!*\
+  !*** ./resources/js/eventbus.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = (new vue__WEBPACK_IMPORTED_MODULE_0___default.a());
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -73798,8 +73839,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\affan\Documents\GitHub\revived-website\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\affan\Documents\GitHub\revived-website\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\e10117008\Documents\GitHub\envyclient\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\e10117008\Documents\GitHub\envyclient\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -13,11 +13,10 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        // TODO: put limit on name
         Schema::create('configs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('name');
+            $table->string('name', 15);
             $table->text('data'); // JSON
             $table->boolean('public')->default(false);
             $table->timestamps();

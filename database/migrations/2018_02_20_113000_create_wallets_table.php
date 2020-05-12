@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateWalletsTable extends Migration
 {
@@ -13,12 +13,16 @@ class CreateWalletsTable extends Migration
      */
     public function up()
     {
-        $userClass = app('App\User');
+        $userClass = app(config('wallet.user_model', 'App\User'));
+
         Schema::create('wallets', function (Blueprint $table) use ($userClass) {
             $table->increments('id');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger($userClass->getForeignKey())->nullable();
+
             $table->bigInteger('balance')->default(0);
+
             $table->timestamps();
+
             $table->foreign($userClass->getForeignKey())
                 ->references($userClass->getKeyName())
                 ->on($userClass->getTable())
