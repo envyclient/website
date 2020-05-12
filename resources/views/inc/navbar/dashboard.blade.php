@@ -21,7 +21,7 @@
                     <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                     Security
                 </a>
-                <a class="list-group-item list-group-item-custom" href="https://forums.envyclient.com/"
+                <a class="list-group-item list-group-item-custom" href="https://discord.com/invite/kfdEehR"
                    style="cursor:pointer;">
                     <i class="fab fa-discord p-2" style="margin-right:10px;"></i>
                     Discord

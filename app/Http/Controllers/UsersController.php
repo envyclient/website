@@ -11,7 +11,6 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified', 'forbid-banned-user']);
-        $this->middleware('admin')->only(['addCredits', 'ban', 'search']);
     }
 
     public function updatePassword(Request $request)
@@ -22,33 +21,29 @@ class UsersController extends Controller
             'password_confirmation' => 'required_with:password|min:8'
         ]);
 
-        $user = auth()->user();
+        $user = $request->user();
         if (Hash::check($request->password, $user->password)) {
-            return back()->with('error', 'You have entered wrong password');
+            return back()->with('error', 'You have entered wrong password.');
         }
 
         $user->fill([
             'password' => Hash::make($request->password)
         ])->save();
 
-        return back()->with('success', 'Your password has been updated');
+        return back()->with('success', 'Your password has been updated.');
     }
 
-    public function destroy(Request $request, $id)
+    public function disable(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        if ($user->id !== auth()->id() && !auth()->user()->admin) {
-            return back()->with('error', 'You do not have the permission to delete this user');
+        if ($user->id !== $request->user()->id()) {
+            return back()->with('error', 'You do not have the permission to disable this user.');
         }
 
-        $user->configs()->delete();
-        $user->invoices()->delete();
-        //$user->subscription()->delete();
-        $user->subscription()->forceDelete();
-        $user->transactions()->delete();
-        $user->wallet()->delete();
-        $user->delete();
+        $user->fill([
+            'disabled' => true
+        ])->save();
 
-        return back()->with('success', 'Account deleted');
+        return back()->with('success', 'Account disabled.');
     }
 }

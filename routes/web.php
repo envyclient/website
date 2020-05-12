@@ -12,22 +12,27 @@ Route::get('admin', 'HomeController@admin')->name('dashboard.admin');
 /**
  * Subscriptions
  */
-Route::post('subscriptions/subscribe', 'SubscriptionsController@subscribe')->name('subscriptions.subscribe');
-Route::post('subscriptions/cancel', 'SubscriptionsController@cancel')->name('subscriptions.cancel');
+Route::prefix('paypal')->group(function () {
+    Route::post('subscribe', 'SubscriptionsController@subscribe')->name('subscriptions.subscribe');
+    Route::post('cancel', 'SubscriptionsController@cancel')->name('subscriptions.cancel');
+});
 
 /**
  * Payments
  */
-Route::post('paypal/create', 'PayPalController@create')->name('paypal.create');
-Route::get('paypal/success', 'PayPalController@success')->name('paypal.success');
-Route::get('paypal/cancel', 'PayPalController@cancel')->name('paypal.cancel');
+Route::prefix('paypal')->group(function () {
+    Route::post('create', 'PayPalController@create')->name('paypal.create');
+    Route::get('success', 'PayPalController@success')->name('paypal.success');
+    Route::get('cancel', 'PayPalController@cancel')->name('paypal.cancel');
+});
 
 /**
  * Users
  */
-Route::put('user/update/password', 'UsersController@updatePassword');
-Route::delete('user/{user}', 'UsersController@destroy');
-
+Route::prefix('user')->group(function () {
+    Route::put('update/password', 'UsersController@updatePassword')->name('user.update-password');
+    Route::delete('{user}', 'UsersController@disable')->name('user.disable');
+});
 
 /**
  * Downloads
