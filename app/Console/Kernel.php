@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $subscriptions = Subscription::whereDate('end_date', '<=', Carbon::now())->get();
+            $subscriptions = Subscription::where('end_date', '<=', Carbon::now())->get();
             foreach ($subscriptions as $subscription) {
 
                 $user = $subscription->user;

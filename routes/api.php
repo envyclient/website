@@ -54,5 +54,5 @@ Route::prefix('downloads')->group(function () {
  * Get all active users
  */
 Route::get('users/active', function () {
-    return User::whereDate('last_launch_at', '>=', Carbon::now()->subtract(5, 'minutes'))->pluck('last_launch_user');
+    return User::where('last_launch_at', '>=', Carbon::now()->subtract(5, 'minutes'))->pluck('last_launch_user');
 });
