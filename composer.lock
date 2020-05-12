@@ -4,8 +4,66 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41fb799c5f8d26f60072197bce468f3f",
+    "content-hash": "06dba37cea87e2f19d659758670e2363",
     "packages": [
+        {
+            "name": "depsimon/laravel-wallet",
+            "version": "v1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/depsimon/laravel-wallet.git",
+                "reference": "7dbc5041cd45b1473a2d8a2b907b9bfa0b757a6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/depsimon/laravel-wallet/zipball/7dbc5041cd45b1473a2d8a2b907b9bfa0b757a6a",
+                "reference": "7dbc5041cd45b1473a2d8a2b907b9bfa0b757a6a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.6|^6.0|^7.0",
+                "php": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Depsimon\\Wallet\\WalletServiceProvider"
+                    ],
+                    "aliases": {
+                        "Wallet": "Depsimon\\Wallet\\WalletFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Depsimon\\Wallet\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Simon Depelchin",
+                    "email": "simon@webartisan.be",
+                    "homepage": "https://webartisan.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy to use virtual wallet for your app",
+            "homepage": "https://github.com/depsimon/laravel-wallet",
+            "keywords": [
+                "credits",
+                "currency",
+                "depsimon",
+                "laravel-wallet",
+                "virtual",
+                "wallet"
+            ],
+            "time": "2020-03-22T09:13:58+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "v0.1.1",
@@ -3896,7 +3954,6 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
-            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -3943,7 +4000,6 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
-            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {

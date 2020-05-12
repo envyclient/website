@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Subscription;
-use App\Transaction;
 use App\User;
 use Carbon\Carbon;
+use Depsimon\Wallet\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -190,7 +190,7 @@ class AdminController extends Controller
 
         $stats['today'] = Transaction::where('type', 'deposit')
             ->whereDate('created_at', Carbon::today())
-                ->sum('amount');
+            ->sum('amount');
 
         $stats['week'] = Transaction::where('type', 'deposit')
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
