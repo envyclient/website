@@ -20,7 +20,7 @@ class DownloadsController extends Controller
 
     public function show(int $id)
     {
-        return Storage::download(
+        return Storage::disk('minio')->download(
             Download::FILES_DIRECTORY . '/' . Download::findOrFail($id)->file
         );
     }

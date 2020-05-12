@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\MinIOStorageServiceProvider::class,
 
         /*
          * Application Service Providers...
