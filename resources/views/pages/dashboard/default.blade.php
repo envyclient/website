@@ -25,9 +25,33 @@
                 @if($user->hasSubscription())
                     <div class="text-left">
                         <label>Configs Used:</label>
-                        <h5><span class="badge badge-secondary">{{ $user->configs()->count() }}/<span
+                        <h5><span class="badge badge-secondary">{{ $configs->count() }}/<span
                                     class="font-weight-bold">{{ $user->getConfigLimit() }}</span></span></h5>
                         <!--- TODO :: Make a display for all of his configs --->
+
+                        @if($configs->count() > 0)
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>name</th>
+                                    <th>data</th>
+                                    <th>date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($config as $configs)
+                                    <tr>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <td>{{ $config->name }}</td>
+                                        <td>{{ $config->data }}</td>
+                                        <td>{{ $download->created_at->diffForHumans() }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+
                         @endif
                     </div>
             </div>
