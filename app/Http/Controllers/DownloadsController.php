@@ -34,6 +34,6 @@ class DownloadsController extends Controller
         $download->file = $fileName;
         $download->save();
 
-        return back()->with('success', 'Download created.');
+        return redirect('/admin')->with('success', 'Download created.');
     }
 }

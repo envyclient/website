@@ -10,5 +10,10 @@ COPY . /app
 RUN composer install --optimize-autoloader --no-dev
 RUN npm install && npm run prod
 
+CMD php artisan config:cache
+CMD php artisan route:cache
+CMD php artisan view:cache
+CMD php artisan storage:link
+
 CMD php artisan serve --host=0.0.0.0 --port=9191
 EXPOSE 9191
