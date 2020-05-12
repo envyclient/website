@@ -2020,8 +2020,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2066,9 +2064,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TransactionsTable",
   props: {
@@ -2108,11 +2103,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         return console.log(error);
       });
-    },
-    calculateDifference: function calculateDifference(date) {
-      var now = moment__WEBPACK_IMPORTED_MODULE_0___default()();
-      var then = moment__WEBPACK_IMPORTED_MODULE_0___default()(date, "Y-MM-DD");
-      return now.diff(then, "days");
     }
   },
   watch: {
@@ -2229,6 +2219,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
 //
 //
 //
@@ -59469,7 +59461,7 @@ var render = function() {
                     _vm._v(_vm._s(index + 1))
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(transaction.wallet.user.name))]),
+                  _c("td", [_vm._v(_vm._s(transaction.user.name))]),
                   _vm._v(" "),
                   _c("td", { staticStyle: { color: "green" } }, [
                     _vm._v("$" + _vm._s(transaction.amount))
@@ -59477,12 +59469,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(transaction.meta["description"]))]),
                   _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(_vm.calculateDifference(transaction.created_at)) +
-                        "\n                Days Ago\n            "
-                    )
-                  ])
+                  _c("td", [_vm._v(_vm._s(transaction.date))])
                 ])
               })
         ],
@@ -73798,8 +73785,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\affan\Documents\GitHub\revived-website\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\affan\Documents\GitHub\revived-website\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\e10117008\Documents\GitHub\envyclient\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\e10117008\Documents\GitHub\envyclient\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

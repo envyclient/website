@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Transaction as TransactionResource;
 use App\Subscription;
 use App\User;
 use Carbon\Carbon;
@@ -155,37 +156,49 @@ class AdminController extends Controller
         switch ($request->filter) {
             case 'yesterday':
             {
-                $date = Carbon::yesterday();
+                return TransactionResource::collection(
+                    Transaction::with('wallet.user')
+                        ->where([
+                            ['type', '=', 'deposit'],
+                            ['created_at', '=', Carbon::yesterday()]
+                        ])
+                        ->orderBy('created_at', 'desc')
+                        ->get()
+                );
                 break;
             }
             case 'week':
             {
-                $date = Carbon::now()->startOfWeek();
+                $date = Carbon::now()->subDays(7);
                 break;
             }
             case 'month':
             {
-                $date = Carbon::now()->startOfMonth();
+                $date = Carbon::now()->subDays(30);
                 break;
             }
             case 'lifetime':
             {
-                $date = Carbon::now()->startOfDecade();
+                return TransactionResource::collection(
+                    Transaction::with('wallet.user')
+                        ->orderBy('created_at', 'desc')
+                        ->get()
+                );
                 break;
             }
         }
 
-        return Transaction::with('wallet.user')
-            ->where('type', 'deposit')
-            ->whereBetween('created_at', [$date, Carbon::today()])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return TransactionResource::collection(
+            Transaction::with('wallet.user')
+                ->where('type', 'deposit')
+                ->whereBetween('created_at', [$date, Carbon::now()])
+                ->orderBy('created_at', 'desc')
+                ->get()
+        );
     }
 
     public function transactionsStats(Request $request)
     {
-        // TODO :: shit broken
-
         $stats['total'] = Transaction::where('type', 'deposit')->sum('amount');
 
         $stats['today'] = Transaction::where('type', 'deposit')

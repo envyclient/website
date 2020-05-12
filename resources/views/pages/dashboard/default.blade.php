@@ -5,21 +5,31 @@
 
         <!--- Profile Section --->
         <div class="tab-pane fade show active" id="profile" role="tabpanel">
-            <div class="alert alert-secondary" style="font-size:25px;">
-                <i class="fas fa-user-circle" style="padding-right:10px;"></i> Profile
+            <div>
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    <i class="fas fa-user" style="padding-right:10px;"></i> Profile
+                </div>
+
+                <div class="text-left">
+                    <label>Member Since:</label>
+                    <input class="form-control" placeholder="Date" disabled
+                           value="{{ $user->created_at->format('Y-m-d') }}">
+                </div>
             </div>
-            <div class="text-left">
-                <label>Member Since:</label>
-                <input class="form-control" placeholder="Date" disabled
-                       value="{{ $user->created_at->format('Y-m-d') }}">
-                <br>
+            <br>
+            <div>
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    <i class="fas fa-file" style="padding-right:10px;"></i>Configs
+                </div>
 
                 @if($user->hasSubscription())
-                    <label>Configs Used:</label>
-                    <h5><span class="badge badge-secondary">{{ $user->configs()->count() }}/<span
-                                class="font-weight-bold">{{ $user->getConfigLimit() }}</span></span></h5>
-                    <!--- TODO :: Make a display for all of his configs --->
-                @endif
+                    <div class="text-left">
+                        <label>Configs Used:</label>
+                        <h5><span class="badge badge-secondary">{{ $user->configs()->count() }}/<span
+                                    class="font-weight-bold">{{ $user->getConfigLimit() }}</span></span></h5>
+                        <!--- TODO :: Make a display for all of his configs --->
+                        @endif
+                    </div>
             </div>
         </div>
 

@@ -23,8 +23,8 @@
                 </a>
                 <a class="list-group-item list-group-item-custom" href="https://forums.envyclient.com/"
                    style="cursor:pointer;">
-                    <i class="fas fa-ticket-alt p-2" style="margin-right:10px;"></i>
-                    Forums
+                    <i class="fab fa-discord p-2" style="margin-right:10px;"></i>
+                    Discord
                 </a>
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
                     <small class="text-white">BILLING</small>
