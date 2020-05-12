@@ -12,8 +12,6 @@ services:
         container_name: envyclient-panel
         ports:
             - "9191:9191"
-        volumes:
-            - /opt/envyclient/storage:/app/storage
         restart: always
         env_file:
             - .env

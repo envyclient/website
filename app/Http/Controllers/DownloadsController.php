@@ -27,7 +27,7 @@ class DownloadsController extends Controller
 
         $file = $request->file('file');
         $fileName = bin2hex(openssl_random_pseudo_bytes(30)) . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs(Download::FILES_DIRECTORY, $file, $fileName);
+        Storage::disk('minio')->putFileAs(Download::FILES_DIRECTORY, $file, $fileName);
 
         $download = new Download();
         $download->name = $request->name;

@@ -10,5 +10,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Download extends Model
 {
-    const FILES_DIRECTORY = 'private/downloads';
+    const FILES_DIRECTORY = 'downloads';
 }
