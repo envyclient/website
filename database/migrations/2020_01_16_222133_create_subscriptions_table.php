@@ -18,7 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('plan_id');
             $table->boolean('renew')->default(true);
-            $table->date("end_date")->nullable();
+            $table->timestamp('end_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

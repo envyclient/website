@@ -26,12 +26,6 @@ Route::prefix('configs')->group(function () {
     Route::delete('{config}', 'API\ConfigsController@destroy');
 });
 
-/** thingy */
-Route::get('users/active', function () {
-    // check if the user was active in the last 5 mins
-    return User::whereDate('end_date', '>=', Carbon::now()->subtract(5, 'minutes'));
-})->middleware('auth:api');
-
 /**
  * Admin
  */
@@ -54,4 +48,11 @@ Route::prefix('admin')->group(function () {
 Route::prefix('downloads')->group(function () {
     Route::get('/', 'API\DownloadsController@index')->name('api.downloads.index');
     Route::get('{download}', 'API\DownloadsController@show')->name('api.downloads.show');
+});
+
+/**
+ * Get all active users
+ */
+Route::get('users/active', function () {
+    return User::where('last_launch_at', '>=', Carbon::now()->subtract(5, 'minutes'))->pluck('last_launch_user');
 });

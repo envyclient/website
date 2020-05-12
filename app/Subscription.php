@@ -14,7 +14,7 @@ class Subscription extends Model
     ];
 
     protected $casts = [
-        'end_date' => 'datetime:Y-m-d',
+        'end_date' => 'datetime',
     ];
 
     public function user()

@@ -72,14 +72,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'User does not have subscription for the client.'], 401);
         }
 
-        // TODO: add this exact check to the frontend
-        // expired subscription check
-        if ($user->subscription()->whereDate('end_date', '<=', Carbon::today()->format('Y-m-d'))->exists()) {
-            if (!$user->renewSubscription()) {
-                return response()->json(['message' => 'User does not have subscription for the client.'], 401);
-            }
-        }
-
         // ban check
         if ($user->isBanned()) {
             return response()->json(['message' => 'User is banned.'], 401);

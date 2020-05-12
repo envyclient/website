@@ -69,23 +69,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
-
-    public function renewSubscription(): bool
-    {
-        $user = auth()->user();
-        $plan = $this->subscription->plan;
-
-        if ($user->canWithdraw($plan->price) && $this->subscription->renew) {
-            $user->subscription->end_date = Carbon::now()->addDays($this->subscription->plan->interval);
-            $user->subscription->save();
-
-            $user->withdraw($plan->price, 'withdraw', ['plan_id' => $plan->id, 'description' => "Renewal of plan {$plan->title}."]);
-            $this->notify(new Generic($this, 'Your subscription has been renewed.', 'Subscription'));
-            return true;
-        } else {
-            $user->subscription()->delete();
-            $this->notify(new Generic($this, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.', 'Subscription'));
-            return false;
-        }
-    }
 }

@@ -58,6 +58,7 @@ class AdminController extends Controller
         })->count();
 
         $latestUser = $dataArray->last();
+        // TODO: update time to date
         $statsArray['latest'] = [
             'name' => $request->type === 'total' ? $latestUser->name : $latestUser->user->name,
             'time' => $latestUser->created_at->diffForHumans()
