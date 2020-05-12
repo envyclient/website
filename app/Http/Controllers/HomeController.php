@@ -37,10 +37,10 @@ class HomeController extends Controller
         $user = auth()->user();
         return view('pages.dashboard.default')->with([
             'user' => $user,
-            'configs' => $user->configs(),
+            'configs' => $user->configs,
             'plans' => Plan::all(),
             'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
-            'nextSubscription' => $user->subscription->end_date->diffInDays()
+            'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
         ]);
     }
 

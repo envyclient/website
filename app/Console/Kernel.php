@@ -28,7 +28,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $subscriptions = Subscription::where('end_date', '<=', Carbon::now())->get();
+            $subscriptions = Subscription::where([
+                ['renew', '=', true],
+                ['end_date', '<=', Carbon::now()]
+            ])->get();
             foreach ($subscriptions as $subscription) {
 
                 $user = $subscription->user;
@@ -46,7 +49,6 @@ class Kernel extends ConsoleKernel
                     $this->notify(new Generic($user, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.', 'Subscription'));
                     return false;
                 }
-
             }
         })->everyMinute();
     }
