@@ -21,7 +21,7 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|string',
-            'page' => 'required|int'
+            'page' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -68,8 +68,8 @@ class AdminController extends Controller
     public function credits(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int',
-            'amount' => 'required|int'
+            'user_id' => 'required|integer',
+            'amount' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -90,8 +90,8 @@ class AdminController extends Controller
     public function ban(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int',
-            'ban_reason' => 'required|string'
+            'user_id' => 'required|integer',
+            'ban_reason' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -120,7 +120,7 @@ class AdminController extends Controller
     public function unBan(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int'
+            'user_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {

@@ -37,7 +37,7 @@ class PayPalController extends Controller
     {
         //return back()->with('error', 'Payments are currently disabled, because of testing mode.');
         $this->validate($request, [
-            'amount' => 'required|int|between:5,100'
+            'amount' => 'required|integer|between:5,100'
         ]);
 
         $name = config('app.name') . ': Add Credits';
