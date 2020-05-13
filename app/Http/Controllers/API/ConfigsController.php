@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ConfigsController extends Controller
 {
-    // TODO: sort by favorites
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -30,23 +29,29 @@ class ConfigsController extends Controller
                     ->where([
                         ['name', 'like', "%$name%"],
                         ['public', '=', true]
-                    ])->paginate(Config::PAGE_LIMIT)
+                    ])->withCount('favorites')
+                    ->orderBy('favorites_count', 'desc')
+                    ->paginate(Config::PAGE_LIMIT)
             );
         } else {
             return ConfigResource::collection(
                 Config::with('user:id,name')
+                    ->withCount('favorites')
                     ->where('public', true)
+                    ->orderBy('favorites_count', 'desc')
                     ->paginate(Config::PAGE_LIMIT)
             );
         }
     }
 
-    public function show(Request $request, $id)
+    public function show($id)
     {
         return new ConfigResource(
             Config::with('user:id,name')
                 ->where('id', $id)
                 ->where('public', true)
+                ->withCount('favorites')
+                ->orderBy('favorites_count', 'desc')
                 ->firstOrFail()
         );
     }
@@ -68,7 +73,7 @@ class ConfigsController extends Controller
         $user = $request->user();
         if ($user->configs()->count() === $user->getConfigLimit()) {
             return response()->json([
-                'message' => '406 Not Acceptable'
+                'message' => 'Config limit reached'
             ], 406);
         }
 
@@ -96,8 +101,16 @@ class ConfigsController extends Controller
 
     public function getCurrentUserConfigs(Request $request)
     {
-        $data['favorites'] = $request->user()->favorites()->paginate(Config::PAGE_LIMIT);
-        $data['self'] = $request->user()->configs()->paginate(Config::PAGE_LIMIT);
+        $data['favorites'] = $request->user()
+            ->favorites()
+            ->withCount('favorites')
+            ->orderBy('favorites_count', 'desc')
+            ->paginate(Config::PAGE_LIMIT);
+        $data['self'] = $request->user()
+            ->configs()
+            ->withCount('favorites')
+            ->orderBy('favorites_count', 'desc')
+            ->paginate(Config::PAGE_LIMIT);
         return $data;
     }
 
@@ -107,6 +120,8 @@ class ConfigsController extends Controller
         return ConfigResource::collection(
             $user->configs()
                 ->where('public', true)
+                ->withCount('favorites')
+                ->orderBy('favorites_count', 'desc')
                 ->paginate(Config::PAGE_LIMIT)
         );
     }
@@ -119,7 +134,7 @@ class ConfigsController extends Controller
         // can not favorite own config
         if ($config->user_id === $user->id) {
             return response()->json([
-                'message' => '409 Conflict'
+                'message' => 'You can not favorite your own config.'
             ], 409);
         }
 
