@@ -18,11 +18,10 @@
             </div>
             <br>
             <div>
-                <div class="alert alert-secondary" style="font-size:25px;">
-                    <i class="fas fa-file" style="padding-right:10px;"></i>Configs
-                </div>
-
                 @if($user->hasSubscription())
+                    <div class="alert alert-secondary" style="font-size:25px;">
+                        <i class="fas fa-file" style="padding-right:10px;"></i>Configs
+                    </div>
                     <div class="text-left">
                         <label>Configs Used:</label>
                         <h5>
