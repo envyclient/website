@@ -36,17 +36,17 @@
                                 <tr>
                                     <th>#</th>
                                     <th>name</th>
-                                    <th>data</th>
+                                    <th>favorites</th>
                                     <th>date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($config as $configs)
+                                @foreach($configs as $config)
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $config->name }}</td>
-                                        <td>{{ $config->data }}</td>
-                                        <td>{{ $download->created_at->diffForHumans() }}</td>
+                                        <td>{{ $config->favorites()->count() }}</td>
+                                        <td>{{ $config->created_at->diffForHumans() }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

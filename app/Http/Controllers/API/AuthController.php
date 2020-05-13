@@ -21,7 +21,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'hwid' => 'required|string|min:40|max:40',
+            'api_token' => 'required|string|min:40|max:40',
             'account_name' => 'required|string'
         ]);
 
@@ -35,13 +35,12 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return $this->returnUserObject(auth()->user(), $request->hwid, $request->account_name);
+        return $this->returnUserObject(auth()->user(), $request->api_token, $request->account_name);
     }
 
     public function me(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'hwid' => 'required|string|min:40|max:40',
             'account_name' => 'required|string'
         ]);
 
@@ -51,19 +50,20 @@ class AuthController extends Controller
             ], 400);
         }
 
-        return $this->returnUserObject($request->user(), $request->hwid, $request->account_name);
+        $user = $request->user();
+        return $this->returnUserObject($user, $user->api_token, $request->account_name);
     }
 
-    private function returnUserObject($user, string $hwid, string $accountName)
+    private function returnUserObject($user, string $apiToken, string $accountName)
     {
         // check for duplicate api_token
-        $userCheck = User::where('api-token', $hwid);
+        $userCheck = User::where('api_token', $apiToken);
         if ($userCheck->exists() && $userCheck->first()->id !== $user->id) {
             return response()->json(['message' => 'Duplicate hwid.'], 401);
         }
 
         // hwid mismatch
-        if ($user->hwid !== null && $user->hwid !== $hwid) {
+        if ($user->hwid !== null && $user->hwid !== $apiToken) {
             return response()->json(['message' => 'User HWID has already been set.'], 401);
         }
 
@@ -84,7 +84,7 @@ class AuthController extends Controller
 
         // fill users hwid
         $user->fill([
-            'api_token' => $hwid,
+            'api_token' => $apiToken,
             'last_launch_user' => $accountName,
             'last_launch_at' => Carbon::now()
         ])->save();
