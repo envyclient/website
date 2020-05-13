@@ -158,10 +158,8 @@ class AdminController extends Controller
             {
                 return TransactionResource::collection(
                     Transaction::with('wallet.user')
-                        ->where([
-                            ['type', '=', 'deposit'],
-                            ['created_at', '=', Carbon::yesterday()]
-                        ])
+                        ->where('type', '=', 'deposit')
+                        ->whereDate('created_at', Carbon::yesterday())
                         ->orderBy('created_at', 'desc')
                         ->get()
                 );
