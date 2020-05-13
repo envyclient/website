@@ -48,7 +48,7 @@ class SubscriptionsController extends Controller
         return back()->with('success', 'Successfully subscribed to plan.');
     }
 
-    public function cancel(Request $request)
+    public function cancel()
     {
         $user = auth()->user();
 
