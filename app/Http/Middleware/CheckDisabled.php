@@ -18,7 +18,7 @@ class CheckDisabled
     {
         if (auth()->check() && auth()->user()->disabled) {
             auth()->logout();
-            return redirect('/')->with('error', "Account has been disabled.");
+            return redirect('/login')->with('error', "Account has been disabled.");
         }
         return $next($request);
     }

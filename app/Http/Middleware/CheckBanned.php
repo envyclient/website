@@ -19,7 +19,7 @@ class CheckBanned
         if (auth()->check() && auth()->user()->isBanned()) {
             $user = auth()->user();
             auth()->logout();
-            return redirect('/')->with('error', "Account has been banned for: {$user->ban_reason}");
+            return redirect('/login')->with('error', "Account has been banned for: {$user->ban_reason}");
         }
         return $next($request);
     }

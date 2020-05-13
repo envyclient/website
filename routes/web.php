@@ -12,7 +12,7 @@ Route::get('admin', 'HomeController@admin')->name('dashboard.admin');
 /**
  * Subscriptions
  */
-Route::prefix('paypal')->group(function () {
+Route::prefix('subscriptions')->group(function () {
     Route::post('subscribe', 'SubscriptionsController@subscribe')->name('subscriptions.subscribe');
     Route::post('cancel', 'SubscriptionsController@cancel')->name('subscriptions.cancel');
 });
@@ -31,7 +31,7 @@ Route::prefix('paypal')->group(function () {
  */
 Route::prefix('user')->group(function () {
     Route::put('update/password', 'UsersController@updatePassword')->name('user.update-password');
-    Route::delete('{user}', 'UsersController@disable')->name('user.disable');
+    Route::delete('disable', 'UsersController@disable')->name('user.disable');
 });
 
 /**
