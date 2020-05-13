@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\Notifications\Generic;
-use Carbon\Carbon;
 use Depsimon\Wallet\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,7 +13,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasWallet, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason', 'hwid', 'last_launch_user', 'last_launch_at', 'ban_reason'
+        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason', 'last_launch_user', 'last_launch_at', 'disabled'
     ];
 
     protected $hidden = [

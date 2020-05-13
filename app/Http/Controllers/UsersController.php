@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,11 +32,14 @@ class UsersController extends Controller
         return back()->with('success', 'Your password has been updated.');
     }
 
-    public function disable(Request $request, $id)
+    public function disable()
     {
-        $user = User::findOrFail($id);
-        if ($user->id !== $request->user()->id()) {
-            return back()->with('error', 'You do not have the permission to disable this user.');
+        $user = auth()->user();
+
+        if ($user->hasSubscription()) {
+            $user->subscription->fill([
+                'renew' => false
+            ])->save();
         }
 
         $user->fill([

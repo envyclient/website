@@ -62,33 +62,44 @@
             <div class="alert alert-secondary" style="font-size:25px;">
                 <i class="fas fa-lock" style="padding-right:10px;"></i> Security
             </div>
-            {!! Form::open(['action' => 'UsersController@updatePassword']) !!}
-            {{ Form::hidden('_method', 'PUT') }}
+            <div class="card card-body">
+                {!! Form::open(['action' => 'UsersController@updatePassword']) !!}
+                {{ Form::hidden('_method', 'PUT') }}
 
-            {{ Form::label('name', 'Name: ') }}
-            {{ Form::text('name', $user->name, ['class' => 'form-control', 'disabled']) }}
-            <br>
-            {{ Form::label('email', 'Email: ') }}
-            {{ Form::text('email', $user->email, ['class' => 'form-control', 'disabled']) }}
-            <br>
-            {{ Form::label('password_current', 'Current password: ') }}
-            {{ Form::password('password_current', ['class' => 'form-control', 'required']) }}
-            <br>
-            {{ Form::label('password', 'New password: ') }}
-            {{ Form::password('password', ['class' => 'form-control', 'required']) }}
-            <br>
-            {{ Form::label('password_confirmation', 'New password confirm: ') }}
-            {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
-            <br>
-            {{ Form::submit('Change Password', ['class' => 'btn btn-success']) }}
+                {{ Form::label('name', 'Name: ') }}
+                {{ Form::text('name', $user->name, ['class' => 'form-control', 'disabled']) }}
+                <br>
+                {{ Form::label('email', 'Email: ') }}
+                {{ Form::text('email', $user->email, ['class' => 'form-control', 'disabled']) }}
+                <br>
+                {{ Form::label('password_current', 'Current password: ') }}
+                {{ Form::password('password_current', ['class' => 'form-control', 'required']) }}
+                <br>
+                {{ Form::label('password', 'New password: ') }}
+                {{ Form::password('password', ['class' => 'form-control', 'required']) }}
+                <br>
+                {{ Form::label('password_confirmation', 'New password confirm: ') }}
+                {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
+                <br>
+                {{ Form::submit('Change Password', ['class' => 'btn btn-success']) }}
 
-            {!! Form::close() !!}
+                {!! Form::close() !!}
+            </div>
+            <br>
+            <div class="card" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    <button type="button" class="btn btn-outline-danger m-2 w-25" data-toggle="modal"
+                            data-target="#disableAccountModal">
+                        Disable Account
+                    </button>
+                </ul>
+            </div>
         </div>
 
         <!--- Subscriptions Section --->
         <div class="tab-pane fade" id="subscription" role="tabpanel">
             <div class="alert alert-secondary" style="font-size:25px;">
-                <i class="fas fa-redo" style="padding-right:10px;"></i> Update Subscription
+                <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
             </div>
             {!! Form::open(['action' => 'SubscriptionsController@subscribe', 'method' => 'POST']) !!}
             <div class="card" style="width:100%;">
@@ -219,5 +230,33 @@
                 </tbody>
             </table>
         </div>
-    </div>
+
+        <!-- disable account modal -->
+        <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Wooooow! Are you sure there bud?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="color:red;">
+                        By disabling your account you will lose access to your account and if you have a subscription it
+                        will continue till the end date.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        {!! Form::open(['action' => 'UsersController@disable', 'method' => 'DELETE']) !!}
+                        {{ Form::submit('Disable Account', ['class' => 'btn btn-outline-danger m-sm-2']) }}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+
+        </div>
 @endsection

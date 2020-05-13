@@ -64,7 +64,7 @@
                 <div class="alert alert-secondary" style="font-size:25px;">
                     User Management
                 </div>
-                <users-table url="{{ route('api.admin.users')  }}"
+                <users-table url="{{ route('api.admin.users') }}"
                              credits-url="{{ route('api.admin.users.credits') }}"
                              ban-url="{{ route('api.admin.users.ban') }}"
                              un-ban-url="{{ route('api.admin.users.unban') }}"
@@ -82,33 +82,7 @@
                     Downloads
                 </div>
 
-                <!-- TODO: convert to vuejs -->
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>name</th>
-                        <th>file</th>
-                        <th>date</th>
-                        <th>action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($downloads as $download)
-                        <tr>
-                            <th scope="row">{{ $loop->index + 1 }}</th>
-                            <td>{{ $download->name }}</td>
-                            <td>{{ $download->file }}</td>
-                            <td>{{ $download->created_at->diffForHumans() }}</td>
-                            <td>
-                                <a class="btn btn-primary"
-                                   href="{{ route('api.downloads.show', $download->id) }}?api_token={{  $apiToken }}"
-                                   role="button">Download</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                <downloads-table url="{{ route('api.downloads.index') }}" api-token="{{ $apiToken }}"></downloads-table>
             </div>
 
             <br>
