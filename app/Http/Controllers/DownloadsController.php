@@ -20,10 +20,9 @@ class DownloadsController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: increase post & file size
         $this->validate($request, [
             'name' => 'required|string|max:30|unique:downloads',
-            'file' => 'required|file|max:40000|unique:downloads'
+            'file' => 'required|file|max:20000|unique:downloads'
         ]);
 
         $file = $request->file('file');

@@ -37,7 +37,8 @@
                                     <th>#</th>
                                     <th>name</th>
                                     <th>favorites</th>
-                                    <th>date</th>
+                                    <th>created at</th>
+                                    <th>updated at</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -45,8 +46,9 @@
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $config->name }}</td>
-                                        <td>{{ $config->favorites()->count() }}</td>
+                                        <td>{{ $config->favorites_count }}</td>
                                         <td>{{ $config->created_at->diffForHumans() }}</td>
+                                        <td>{{ $config->updated_at->diffForHumans() }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

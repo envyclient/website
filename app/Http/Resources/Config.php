@@ -20,12 +20,12 @@ class Config extends JsonResource
             'name' => $this->name,
             'public' => $this->public,
             'data' => json_decode($this->data),
-            'favorites' => $this->favorites()->count(),
+            'favorites' => $this->favorites_count,
             'user' => [
                 'name' => $this->user->name
             ],
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'created_at' => $this->created_at->diffForHumans(),
+            'updated_at' => $this->updated_at->diffForHumans()
         ];
     }
 }
