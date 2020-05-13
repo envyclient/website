@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Download;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Download as DownloadResource;
 use Illuminate\Support\Facades\Storage;
 
 class DownloadsController extends Controller
@@ -15,7 +16,9 @@ class DownloadsController extends Controller
 
     public function index()
     {
-        return Download::all('id', 'name');
+        return DownloadResource::collection(
+            Download::all()
+        );
     }
 
     public function show(int $id)

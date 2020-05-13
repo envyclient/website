@@ -8,7 +8,7 @@
                 </div>
             </div>
             <small>
-                Latest: {{ latest.name }} - {{ latest.time }}
+                Latest: {{ latest.name }} - {{ latest.date }}
             </small>
         </div>
         <div class="col-3" style="min-width: 250px;">
@@ -47,7 +47,7 @@
                 month: null,
                 latest: {
                     name: null,
-                    time: null,
+                    date: null,
                 }
             }
         },
