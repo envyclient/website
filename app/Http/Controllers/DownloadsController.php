@@ -22,7 +22,7 @@ class DownloadsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:30|unique:downloads',
-            'file' => 'required|file|max:200000|unique:downloads'
+            'file' => 'required|file|max:20000|unique:downloads'
         ]);
 
         $file = $request->file('file');
