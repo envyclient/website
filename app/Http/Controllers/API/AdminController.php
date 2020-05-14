@@ -91,8 +91,7 @@ class AdminController extends Controller
     public function ban(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
-            'ban_reason' => 'required|integer'
+            'user_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -110,7 +109,7 @@ class AdminController extends Controller
         }
 
         $user->fill([
-            'ban_reason' => $request->ban_reason
+            'banned' => true
         ])->save();
 
         return response()->json([
@@ -132,7 +131,7 @@ class AdminController extends Controller
 
         $user = User::findOrFail($request->user_id);
         $user->fill([
-            'ban_reason' => null
+            'banned' => false
         ])->save();
 
         return response()->json([
@@ -140,6 +139,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // TODO: do not include plan subscriptions
     public function transactions(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -158,7 +158,7 @@ class AdminController extends Controller
             {
                 return TransactionResource::collection(
                     Transaction::with('wallet.user')
-                        ->where('type', '=', 'deposit')
+                        ->where('type', 'deposit')
                         ->whereDate('created_at', Carbon::yesterday())
                         ->orderBy('created_at', 'desc')
                         ->get()
@@ -179,6 +179,7 @@ class AdminController extends Controller
             {
                 return TransactionResource::collection(
                     Transaction::with('wallet.user')
+                        ->where('type', 'deposit')
                         ->orderBy('created_at', 'desc')
                         ->get()
                 );

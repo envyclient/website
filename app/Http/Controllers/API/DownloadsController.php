@@ -11,7 +11,7 @@ class DownloadsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except('assets', 'jre');
+        $this->middleware('auth:api');
     }
 
     public function index()
@@ -26,15 +26,5 @@ class DownloadsController extends Controller
         return Storage::disk('minio')->download(
             Download::FILES_DIRECTORY . '/' . Download::findOrFail($id)->file
         );
-    }
-
-    public function assets()
-    {
-        return Storage::disk('minio')->download('public/assets.zip');
-    }
-
-    public function jre()
-    {
-        return Storage::disk('minio')->download('public/jre.zip');
     }
 }
