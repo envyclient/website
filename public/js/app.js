@@ -59675,7 +59675,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-3", staticStyle: { "min-width": "250px" } }, [
       _c("div", { staticClass: "card text-center" }, [
-        _c("span", { staticClass: "card-sub-title" }, [_vm._v("Week")]),
+        _c("span", { staticClass: "card-sub-title" }, [_vm._v("This Week")]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("h2", [_vm._v("$" + _vm._s(_vm.week))])
@@ -59685,7 +59685,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-3", staticStyle: { "min-width": "250px" } }, [
       _c("div", { staticClass: "card text-center" }, [
-        _c("span", { staticClass: "card-sub-title" }, [_vm._v("Month")]),
+        _c("span", { staticClass: "card-sub-title" }, [_vm._v("This Month")]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("h2", [_vm._v("$" + _vm._s(_vm.month))])
