@@ -1,37 +1,5 @@
 <template>
     <div>
-        <!-- Ban Confirmation Modal -->
-        <div class="modal fade" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-hidden="true"
-             v-if="selectedUser != null">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="banLabel">Warning - {{ selectedUser.name}}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure that you want to ban this user?
-                        <select class="form-control" v-model="modal.ban">
-                            <option value="Chargeback">Chargeback</option>
-                            <option value="Exploiting">Exploiting</option>
-                            <option value="Account Sharing">Account Sharing</option>
-                            <option value="Blacklisted">Blacklisted</option>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                v-on:click="setSelectedUser(null)">Close
-                        </button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="banUser">
-                            Ban
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Add Credits Modal -->
         <div class="modal fade" id="addCoinsModal" tabindex="-1" role="dialog" aria-labelledby="addCoinsLabel"
              aria-hidden="true" v-if="selectedUser != null">
@@ -103,12 +71,11 @@
                        data-target="#addCoinsModal" v-on:click="setSelectedUser(user)">
                         <i class="fas fa-coins"></i>
                     </a>
-                    <a class="btn btn-outline-danger text-danger" data-toggle="modal" data-target="#banModal"
-                       v-on:click="setSelectedUser(user)" v-if="user.ban_reason == null">
-                        <i class="fas fa-ban"></i>
-                    </a>
-                    <a class="btn btn-outline-success text-success" v-on:click="unBanUser(user)" v-else>
+                    <a class="btn btn-outline-success text-success" v-on:click="unBanUser(user)" v-if="user.banned">
                         <i class="fas fa-handshake"></i>
+                    </a>
+                    <a class="btn btn-outline-danger text-danger" v-on:click="banUser(user)" v-else>
+                        <i class="fas fa-ban"></i>
                     </a>
                 </td>
             </tr>
@@ -150,8 +117,7 @@
                 name: null,
                 selectedUser: null,
                 modal: {
-                    credits: 5,
-                    ban: 'Chargeback'
+                    credits: 5
                 }
             }
         },
@@ -205,17 +171,16 @@
                     this.closing();
                 });
             },
-            banUser() {
+            banUser(user) {
                 axios.put(this.banUrl, {
-                    user_id: this.selectedUser.id,
-                    ban_reason: this.modal.ban,
+                    user_id: user.id,
                     api_token: this.apiToken
                 }).then(data => {
                     console.log(data);
                     this.$notify({
                         type: "success",
                         title: "Success",
-                        text: `'${this.selectedUser.name}' has been banned for '${this.modal.ban}'.`
+                        text: `'${user.name}' has been banned.`
                     });
                 }).catch(error => {
                     console.log(error);
@@ -224,10 +189,7 @@
                         title: "Error",
                         text: 'Error, please check console.'
                     });
-                }).finally(() => {
-                    this.modal.ban = 'Chargeback';
-                    this.closing();
-                });
+                }).finally(this.closing);
             },
             unBanUser(user) {
                 axios.put(this.unBanUrl, {

@@ -14,7 +14,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasWallet, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin', 'ban_reason', 'last_launch_user', 'last_launch_at', 'disabled'
+        'name', 'email', 'password', 'api_token', 'admin', 'banned', 'disabled', 'last_launch_user', 'last_launch_at'
     ];
 
     protected $hidden = [
@@ -47,11 +47,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscription()
     {
         return $this->hasOne('App\Subscription');
-    }
-
-    public function isBanned(): bool
-    {
-        return $this->ban_reason !== null;
     }
 
     public function hasSubscription(): bool

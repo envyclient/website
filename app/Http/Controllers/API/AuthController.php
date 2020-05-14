@@ -73,7 +73,7 @@ class AuthController extends Controller
         }
 
         // ban check
-        if ($user->isBanned()) {
+        if ($user->banned) {
             return response()->json(['message' => 'Account banned.'], 401);
         }
 
@@ -91,8 +91,7 @@ class AuthController extends Controller
 
         return response()->json([
             'name' => $user->name,
-            'ban_reason' => $user->ban_reason,
-            'created_at' => $user->created_at
+            'date' => $user->created_at->diffForHumans()
         ]);
     }
 }

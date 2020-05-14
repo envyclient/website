@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('api_token', 40)->nullable()->unique();
 
             $table->boolean('admin')->default(false);
+            $table->boolean('banned')->default(false);
             $table->boolean('disabled')->default(false);
-            $table->string('ban_reason')->nullable();
 
             // keep track of envy users
             $table->string('last_launch_user')->nullable();
