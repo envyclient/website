@@ -48,6 +48,8 @@ Route::prefix('admin')->group(function () {
 Route::prefix('downloads')->group(function () {
     Route::get('/', 'API\DownloadsController@index')->name('api.downloads.index');
     Route::get('{download}', 'API\DownloadsController@show')->name('api.downloads.show');
+    Route::get('assets', 'API\DownloadsController@assets')->name('api.downloads.assets');
+    Route::get('jre', 'API\DownloadsController@jre')->name('api.downloads.jre');
 });
 
 /**

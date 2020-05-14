@@ -10,8 +10,8 @@ COPY . /app
 RUN composer install --optimize-autoloader --no-dev
 RUN npm install && npm run prod
 
-RUN echo "upload_max_filesize = 200M\n" \
-         "post_max_size = 200M\n" \
+RUN echo "upload_max_filesize = 20M\n" \
+         "post_max_size = 20M\n" \
          "max_execution_time = 60\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 
