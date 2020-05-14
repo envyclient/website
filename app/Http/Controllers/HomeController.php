@@ -21,6 +21,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // TODO: update showcase & features sections
         $plans = Plan::all();
         return view('pages.index')->with([
             'plans' => $plans
@@ -52,8 +53,7 @@ class HomeController extends Controller
     public function admin()
     {
         return view('pages.dashboard.admin')->with([
-            'apiToken' => auth()->user()->api_token,
-            'downloads' => Download::all()
+            'apiToken' => auth()->user()->api_token
         ]);
     }
 }

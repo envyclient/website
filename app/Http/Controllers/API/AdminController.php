@@ -139,7 +139,6 @@ class AdminController extends Controller
         ]);
     }
 
-    // TODO: do not include plan subscriptions
     public function transactions(Request $request)
     {
         $validator = Validator::make($request->all(), [
