@@ -59,12 +59,12 @@ class AuthController extends Controller
         // check for duplicate api_token
         $userCheck = User::where('api_token', $apiToken);
         if ($userCheck->exists() && $userCheck->first()->id !== $user->id) {
-            return response()->json(['message' => 'Duplicate hwid.'], 401);
+            return response()->json(['message' => 'Duplicate hardware identification.'], 401);
         }
 
         // hwid mismatch
         if ($user->hwid !== null && $user->hwid !== $apiToken) {
-            return response()->json(['message' => 'User HWID has already been set.'], 401);
+            return response()->json(['message' => 'Hardware Identification mismatch.'], 401);
         }
 
         // subscription check
@@ -74,12 +74,12 @@ class AuthController extends Controller
 
         // ban check
         if ($user->isBanned()) {
-            return response()->json(['message' => 'User is banned.'], 401);
+            return response()->json(['message' => 'Account banned.'], 401);
         }
 
         // disable check
         if ($user->disabled) {
-            return response()->json(['message' => 'User has disabled their account.'], 401);
+            return response()->json(['message' => 'Account disabled.'], 401);
         }
 
         // fill users hwid
@@ -91,7 +91,6 @@ class AuthController extends Controller
 
         return response()->json([
             'name' => $user->name,
-            'api_token' => $user->api_token,
             'ban_reason' => $user->ban_reason,
             'created_at' => $user->created_at
         ]);
