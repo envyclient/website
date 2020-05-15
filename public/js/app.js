@@ -2067,16 +2067,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
-    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_DATA", function () {
-      _this.fetchData();
-    });
+    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_TRANSACTIONS", this.fetchData);
     this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get(this.url, {
         params: {
@@ -2085,10 +2081,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (data) {
         console.log(data);
         data = data.data;
-        _this2.total = data.total;
-        _this2.today = data.today;
-        _this2.week = data.week;
-        _this2.month = data.month;
+        _this.total = data.total;
+        _this.today = data.today;
+        _this.week = data.week;
+        _this.month = data.month;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2173,16 +2169,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
-    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_DATA", function () {
-      _this.fetchData();
-    });
+    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_TRANSACTIONS", this.fetchData);
     this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
-      var _this2 = this;
+      var _this = this;
 
       this.loading = true;
       axios.get(this.url, {
@@ -2192,8 +2184,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (data) {
         console.log(data);
-        _this2.data = data.data;
-        _this2.loading = false;
+        _this.data = data.data;
+        _this.loading = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2217,7 +2209,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
 //
 //
 //
@@ -2250,7 +2241,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserStats",
   props: {
@@ -2279,16 +2269,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
-    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_DATA", function () {
-      _this.fetchData();
-    });
     this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get(this.url, {
         params: {
@@ -2298,11 +2283,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (data) {
         console.log(data);
         data = data.data;
-        _this2.total = data.total;
-        _this2.today = data.today;
-        _this2.week = data.week;
-        _this2.month = data.month;
-        _this2.latest = data.latest;
+        _this.total = data.total;
+        _this.today = data.today;
+        _this.week = data.week;
+        _this.month = data.month;
+        _this.latest = data.latest;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2321,10 +2306,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2420,12 +2406,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UsersTable",
   components: {
-    pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default.a
+    pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: {
     url: {
@@ -2472,8 +2459,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     calculateDifference: function calculateDifference(date) {
-      var now = moment__WEBPACK_IMPORTED_MODULE_1___default()();
-      var then = moment__WEBPACK_IMPORTED_MODULE_1___default()(date, "Y-MM-DD");
+      var now = moment__WEBPACK_IMPORTED_MODULE_2___default()();
+      var then = moment__WEBPACK_IMPORTED_MODULE_2___default()(date, "Y-MM-DD");
       return then.diff(now, "days");
     },
     setSelectedUser: function setSelectedUser(user) {
@@ -2487,13 +2474,15 @@ __webpack_require__.r(__webpack_exports__);
         amount: this.modal.credits,
         api_token: this.apiToken
       }).then(function (data) {
+        console.log(data);
+
         _this2.$notify({
           type: "success",
           title: "Success",
           text: "Added ".concat(_this2.modal.credits, " credits to '").concat(_this2.selectedUser.name, "'.")
         });
 
-        console.log(data);
+        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('UPDATE_TRANSACTIONS');
       })["catch"](function (error) {
         console.log(error);
 

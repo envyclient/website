@@ -59,9 +59,7 @@
             }
         },
         created() {
-            EventBus.$on("UPDATE_DATA", () => {
-                this.fetchData();
-            });
+            EventBus.$on("UPDATE_TRANSACTIONS", this.fetchData);
             this.fetchData();
         },
         methods: {

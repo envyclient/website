@@ -94,6 +94,7 @@
 </template>
 
 <script>
+    import EventBus from '../../../eventbus'
     import pagination from 'laravel-vue-pagination';
     import moment from "moment";
 
@@ -149,12 +150,13 @@
                     amount: this.modal.credits,
                     api_token: this.apiToken
                 }).then(data => {
+                    console.log(data);
                     this.$notify({
                         type: "success",
                         title: "Success",
                         text: `Added ${this.modal.credits} credits to '${this.selectedUser.name}'.`
                     });
-                    console.log(data);
+                    EventBus.$emit('UPDATE_TRANSACTIONS');
                 }).catch(error => {
                     console.log(error);
                     this.$notify({
