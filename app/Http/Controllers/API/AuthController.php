@@ -59,27 +59,27 @@ class AuthController extends Controller
         // check for duplicate api_token
         $userCheck = User::where('api_token', $apiToken);
         if ($userCheck->exists() && $userCheck->first()->id !== $user->id) {
-            return response()->json(['message' => 'Duplicate hardware identification.'], 401);
+            return response()->json(['message' => 'Duplicate hardware identification.'], 403);
         }
 
         // hwid mismatch
-        if ($user->hwid !== null && $user->hwid !== $apiToken) {
-            return response()->json(['message' => 'Hardware Identification mismatch.'], 401);
+        if ($user->api_token !== null && $user->api_token !== $apiToken) {
+            return response()->json(['message' => 'Hardware Identification mismatch.'], 403);
         }
 
         // subscription check
         if (!$user->hasSubscription()) {
-            return response()->json(['message' => 'User does not have subscription for the client.'], 401);
+            return response()->json(['message' => 'User does not have subscription for the client.'], 403);
         }
 
         // ban check
         if ($user->banned) {
-            return response()->json(['message' => 'Account banned.'], 401);
+            return response()->json(['message' => 'Account banned.'], 403);
         }
 
         // disable check
         if ($user->disabled) {
-            return response()->json(['message' => 'Account disabled.'], 401);
+            return response()->json(['message' => 'Account disabled.'], 403);
         }
 
         // fill users hwid

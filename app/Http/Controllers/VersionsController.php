@@ -31,4 +31,5 @@ class VersionsController extends Controller
 
         return redirect('/admin')->with('success', 'Version created.');
     }
+
 }

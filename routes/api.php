@@ -48,6 +48,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('versions')->group(function () {
     Route::get('/', 'API\VersionsController@index')->name('api.versions.index');
     Route::get('{version}', 'API\VersionsController@show')->name('api.versions.show');
+    Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
 });
 
 /**

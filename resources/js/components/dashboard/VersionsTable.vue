@@ -20,8 +20,10 @@
             <td>{{ version.date }}</td>
             <td>
                 <a class="btn btn-primary"
-                   :href="`/api/versions/${version.id}?api_token=${apiToken}`"
-                   role="button">Download</a>
+                   :href="`${url}/${version.id}?api_token=${apiToken}`"
+                   role="button"><i class="fas fa-download"></i></a>
+                <a class="btn btn-danger" v-on:click="deleteVersion(version.id)"
+                   role="button"><i class="fas fa-trash text-white"></i></a>
             </td>
         </tr>
         </tbody>
@@ -55,6 +57,16 @@
                     console.log(data);
                     this.data = data.data;
                     this.loading = false;
+                }).catch(error => console.log(error));
+            },
+            deleteVersion(id) {
+                axios.delete(`${this.url}/${id}`, {
+                    data: {
+                        api_token: this.apiToken
+                    }
+                }).then(data => {
+                    console.log(data);
+                    this.fetchData();
                 }).catch(error => console.log(error));
             }
         }
