@@ -13,14 +13,14 @@
         <tr v-if="loading">
             Loading...
         </tr>
-        <tr v-for="(download, index) in data" v-else>
+        <tr v-for="(version, index) in data" v-else>
             <th scope="row">{{ index + 1 }}</th>
-            <td>{{ download.name }}</td>
-            <td>{{ download.file }}</td>
-            <td>{{ download.date }}</td>
+            <td>{{ version.name }}</td>
+            <td>{{ version.file }}</td>
+            <td>{{ version.date }}</td>
             <td>
                 <a class="btn btn-primary"
-                   :href="`/api/downloads/${download.id}?api_token=${apiToken}`"
+                   :href="`/api/versions/${version.id}?api_token=${apiToken}`"
                    role="button">Download</a>
             </td>
         </tr>
@@ -30,7 +30,7 @@
 
 <script>
     export default {
-        name: "DownloadsTable",
+        name: "VersionsTable",
         props: {
             url: {type: String, required: true},
             apiToken: {type: String, required: true}

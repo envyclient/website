@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Download;
+use App\Version;
 use App\Plan;
 use Illuminate\Contracts\Support\Renderable;
 

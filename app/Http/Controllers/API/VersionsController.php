@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Download;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Download as DownloadResource;
+use App\Http\Resources\Version as VersionResource;
+use App\Version;
 use Illuminate\Support\Facades\Storage;
 
-class DownloadsController extends Controller
+class VersionsController extends Controller
 {
     public function __construct()
     {
@@ -16,15 +16,15 @@ class DownloadsController extends Controller
 
     public function index()
     {
-        return DownloadResource::collection(
-            Download::all()
+        return VersionResource::collection(
+            Version::all()
         );
     }
 
     public function show(int $id)
     {
         return Storage::disk('minio')->download(
-            Download::FILES_DIRECTORY . '/' . Download::findOrFail($id)->file
+            Version::FILES_DIRECTORY . '/' . Version::findOrFail($id)->file
         );
     }
 }

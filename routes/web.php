@@ -35,9 +35,9 @@ Route::prefix('user')->group(function () {
 });
 
 /**
- * Downloads
+ * Versions
  */
-Route::prefix('downloads')->group(function () {
-    Route::get('/create', 'DownloadsController@create')->name('downloads.create');
-    Route::post('/', 'DownloadsController@store')->name('downloads.store');
+Route::prefix('versions')->group(function () {
+    Route::get('/create', 'VersionsController@create')->name('versions.create');
+    Route::post('/', 'VersionsController@store')->name('versions.store');
 });

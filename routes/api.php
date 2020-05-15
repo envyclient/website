@@ -43,11 +43,11 @@ Route::prefix('admin')->group(function () {
 });
 
 /**
- * Download
+ * Versions
  */
-Route::prefix('downloads')->group(function () {
-    Route::get('/', 'API\DownloadsController@index')->name('api.downloads.index');
-    Route::get('{download}', 'API\DownloadsController@show')->name('api.downloads.show');
+Route::prefix('versions')->group(function () {
+    Route::get('/', 'API\VersionsController@index')->name('api.versions.index');
+    Route::get('{version}', 'API\VersionsController@show')->name('api.versions.show');
 });
 
 /**

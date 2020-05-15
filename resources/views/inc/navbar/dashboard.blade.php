@@ -73,10 +73,10 @@
                     <i class="fas fa-users p-2" style="margin-right:10px;"></i>
                     Users
                 </a>
-                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#downloads"
+                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#versions"
                    style="cursor:pointer;">
                     <i class="fas fa-download p-2" style="margin-right:10px;"></i>
-                    Downloads
+                    Versions
                 </a>
             </div>
         </div>

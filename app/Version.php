@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property  string file
  */
 // TODO: rename to version, ability to remove version
-class Download extends Model
+class Version extends Model
 {
-    const FILES_DIRECTORY = 'downloads';
+    const FILES_DIRECTORY = 'versions';
 }
