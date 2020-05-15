@@ -65,9 +65,6 @@
                     User Management
                 </div>
                 <users-table url="{{ route('api.admin.users') }}"
-                             credits-url="{{ route('api.admin.users.credits') }}"
-                             ban-url="{{ route('api.admin.users.ban') }}"
-                             un-ban-url="{{ route('api.admin.users.unban') }}"
                              api-token="{{ $apiToken }}">
                 </users-table>
             </div>

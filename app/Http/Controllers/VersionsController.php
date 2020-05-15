@@ -16,7 +16,7 @@ class VersionsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:30|u nique:versions',
+            'name' => 'required|string|max:30|unique:versions',
             'file' => 'required|file|max:20000|unique:versions'
         ]);
 
@@ -29,7 +29,7 @@ class VersionsController extends Controller
         $version->file = $fileName;
         $version->save();
 
-        return redirect('/admin')->with('success', 'Version created.');
+        return back()->with('success', 'Version created.');
     }
 
 }
