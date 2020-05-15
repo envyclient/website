@@ -74,25 +74,25 @@
         </div>
 
 
-        <!-- create download -->
-        <div class="tab-pane fade custom-panel" id="downloads" role="tabpanel">
+        <!-- versions -->
+        <div class="tab-pane fade custom-panel" id="versions" role="tabpanel">
 
             <div>
                 <div class="alert alert-primary" style="font-size:25px;">
-                    Downloads
+                    Versions
                 </div>
 
-                <downloads-table url="{{ route('api.downloads.index') }}" api-token="{{ $apiToken }}"></downloads-table>
+                <versions-table url="{{ route('api.versions.index') }}" api-token="{{ $apiToken }}"></versions-table>
             </div>
 
             <br>
 
             <div>
                 <div class="alert alert-secondary" style="font-size:25px;">
-                    Create Download
+                    Create Version
                 </div>
 
-                {!! Form::open(['action' => 'DownloadsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['action' => 'VersionsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
                     {{ Form::label('name', 'Name') }}
                     {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required' => 'required']) }}

@@ -16,7 +16,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->admin) {
+        if (auth()->check() && auth()->user()->admin) {
             return $next($request);
         }
         return back();
