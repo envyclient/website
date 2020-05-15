@@ -71,7 +71,7 @@
                        data-target="#addCoinsModal" v-on:click="setSelectedUser(user)">
                         <i class="fas fa-coins"></i>
                     </a>
-                    <a class="btn btn-outline-success text-success" v-on:click="unBanUser(user)" v-if="user.banned">
+                    <a class="btn btn-outline-success text-success" v-on:click="banUser(user)" v-if="user.banned">
                         <i class="fas fa-handshake"></i>
                     </a>
                     <a class="btn btn-outline-danger text-danger" v-on:click="banUser(user)" v-else>
@@ -105,9 +105,6 @@
         },
         props: {
             url: {type: String, required: true},
-            creditsUrl: {type: String, required: true},
-            banUrl: {type: String, required: true},
-            unBanUrl: {type: String, required: true},
             apiToken: {type: String, required: true}
         },
         data() {
@@ -148,17 +145,18 @@
                 this.selectedUser = user;
             },
             addCreditsToUser() {
-                axios.put(this.creditsUrl, {
+                axios.put(`${this.url}/credits/${this.selectedUser.id}`, {
                     user_id: this.selectedUser.id,
                     amount: this.modal.credits,
                     api_token: this.apiToken
                 }).then(data => {
+                    console.log(data);
                     this.$notify({
                         type: "success",
                         title: "Success",
                         text: `Added ${this.modal.credits} credits to '${this.selectedUser.name}'.`
                     });
-                    console.log(data);
+                    EventBus.$emit('UPDATE_TRANSACTIONS');
                 }).catch(error => {
                     console.log(error);
                     this.$notify({
@@ -172,7 +170,7 @@
                 });
             },
             banUser(user) {
-                axios.put(this.banUrl, {
+                axios.put(`${this.url}/ban/${user.id}`, {
                     user_id: user.id,
                     api_token: this.apiToken
                 }).then(data => {
@@ -180,27 +178,7 @@
                     this.$notify({
                         type: "success",
                         title: "Success",
-                        text: `'${user.name}' has been banned.`
-                    });
-                }).catch(error => {
-                    console.log(error);
-                    this.$notify({
-                        type: "error",
-                        title: "Error",
-                        text: 'Error, please check console.'
-                    });
-                }).finally(this.closing);
-            },
-            unBanUser(user) {
-                axios.put(this.unBanUrl, {
-                    user_id: user.id,
-                    api_token: this.apiToken
-                }).then(data => {
-                    console.log(data);
-                    this.$notify({
-                        type: "success",
-                        title: "Success",
-                        text: `'${user.name}' has been unbanned.`
+                        text: `'${user.name}' has been banned or unbanned.`
                     });
                 }).catch(error => {
                     console.log(error);
@@ -214,16 +192,11 @@
             closing() {
                 this.setSelectedUser(null);
                 this.fetchData();
-                this.sendEvent();
-            },
-            sendEvent() {
-                EventBus.$emit('UPDATE_DATA');
-            },
+            }
         },
         watch: {
             name: function () {
                 this.fetchData();
-                this.sendEvent();
             }
         }
     }

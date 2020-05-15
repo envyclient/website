@@ -66,10 +66,9 @@ class AdminController extends Controller
         return $statsArray;
     }
 
-    public function credits(Request $request)
+    public function credits(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
             'amount' => 'required|integer'
         ]);
 
@@ -79,7 +78,7 @@ class AdminController extends Controller
             ], 400);
         }
 
-        $user = User::findOrFail($request->user_id);
+        $user = User::findOrFail($id);
         $amount = $request->amount;
         $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "Admin {$request->user()->name} deposited $amount credits into your account."]);
 
@@ -88,50 +87,22 @@ class AdminController extends Controller
         ]);
     }
 
-    public function ban(Request $request)
+    public function ban($id)
     {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
-        $user = User::findOrFail($request->user_id);
-
+        $user = User::findOrFail($id);
         if ($user->hasSubscription()) {
             $user->subscription->fill([
                 'renew' => false
             ])->save();
         }
 
-        $user->fill([
-            'banned' => true
-        ])->save();
-
-        return response()->json([
-            'message' => '200 OK'
-        ]);
-    }
-
-    public function unBan(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+        $banned = true;
+        if ($user->banned) {
+            $banned = false;
         }
 
-        $user = User::findOrFail($request->user_id);
         $user->fill([
-            'banned' => false
+            'banned' => $banned
         ])->save();
 
         return response()->json([

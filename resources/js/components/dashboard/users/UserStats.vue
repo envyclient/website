@@ -31,8 +31,6 @@
 </template>
 
 <script>
-    import EventBus from '../../../eventbus'
-
     export default {
         name: "UserStats",
         props: {
@@ -52,9 +50,6 @@
             }
         },
         created() {
-            EventBus.$on("UPDATE_DATA", () => {
-                this.fetchData();
-            });
             this.fetchData();
         },
         methods: {
@@ -73,7 +68,6 @@
                     this.week = data.week;
                     this.month = data.month;
                     this.latest = data.latest;
-
                 }).catch(error => console.log(error));
             }
         }
