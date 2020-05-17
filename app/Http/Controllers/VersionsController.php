@@ -17,7 +17,7 @@ class VersionsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:30|unique:versions',
-            'file' => 'required|file|max:20000|unique:versions'
+            'file' => 'required|file|max:50000|unique:versions'
         ]);
 
         $file = $request->file('file');

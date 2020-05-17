@@ -27,8 +27,8 @@ RUN n stable
 RUN npm run prod
 
 # Updating PHP config
-RUN echo "upload_max_filesize = 20M\n" \
-         "post_max_size = 20M\n" \
+RUN echo "upload_max_filesize = 50M\n" \
+         "post_max_size = 50M\n" \
          "max_execution_time = 60\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 
