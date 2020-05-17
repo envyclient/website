@@ -37,8 +37,18 @@
             </div>
         </div>
 
-        <!-- search bar -->
-        <input class="form-control" type="text" placeholder="Name" v-model="name">
+        <!-- filters -->
+        <div class="form-row">
+            <div class="col">
+                <input class="form-control" type="text" placeholder="Name" v-model="filter.name">
+            </div>
+            <div class="col">
+                <select class="form-control" v-model="filter.type">
+                    <option value="all">All</option>
+                    <option value="banned">Only Banned</option>
+                </select>
+            </div>
+        </div>
 
         <br>
 
@@ -111,7 +121,10 @@
             return {
                 loading: true,
                 data: {},
-                name: null,
+                filter: {
+                    name: null,
+                    type: 'all'
+                },
                 selectedUser: null,
                 modal: {
                     credits: 5
@@ -126,7 +139,8 @@
                 this.loading = true;
                 axios.get(this.url, {
                     params: {
-                        name: this.name,
+                        name: this.filter.name,
+                        type: this.filter.type,
                         page: page,
                         api_token: this.apiToken
                     }
@@ -195,8 +209,11 @@
             }
         },
         watch: {
-            name: function () {
-                this.fetchData();
+            filter: {
+                handler() {
+                    this.fetchData();
+                },
+                deep: true
             }
         }
     }
