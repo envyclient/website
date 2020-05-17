@@ -113,7 +113,8 @@ class AdminController extends Controller
     public function transactions(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'filter' => 'required|string'
+            'date' => 'required|string',
+            'type' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -122,47 +123,52 @@ class AdminController extends Controller
             ], 400);
         }
 
-        $date = Carbon::today();
-        switch ($request->filter) {
+        $startDate = Carbon::today();
+        $endDate = Carbon::today();
+        switch ($request->date) {
             case 'yesterday':
             {
-                return TransactionResource::collection(
-                    Transaction::with('wallet.user')
-                        ->where('type', 'deposit')
-                        ->whereDate('created_at', Carbon::yesterday())
-                        ->orderBy('created_at', 'desc')
-                        ->get()
-                );
+                $startDate = Carbon::yesterday();
+                $endDate = Carbon::yesterday();
                 break;
             }
             case 'week':
             {
-                $date = Carbon::now()->subDays(7);
+                $startDate = Carbon::today()->subDays(7);
                 break;
             }
             case 'month':
             {
-                $date = Carbon::now()->subDays(30);
+                $startDate = Carbon::today()->subDays(30);
                 break;
             }
             case 'lifetime':
             {
-                return TransactionResource::collection(
-                    Transaction::with('wallet.user')
-                        ->where('type', 'deposit')
-                        ->orderBy('created_at', 'desc')
-                        ->get()
-                );
+                $startDate = Carbon::today()->startOfDecade();
+                break;
+            }
+        }
+
+        $transaction = Transaction::with('wallet.user')
+            ->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)
+            ->orderBy('created_at', 'desc');
+
+        switch ($request->type) {
+            case 'deposit':
+            {
+                $transaction = $transaction->where('type', 'deposit');
+                break;
+            }
+            case 'withdraw':
+            {
+                $transaction = $transaction->where('type', 'withdraw');
                 break;
             }
         }
 
         return TransactionResource::collection(
-            Transaction::with('wallet.user')
-                ->where('type', 'deposit')
-                ->whereBetween('created_at', [$date, Carbon::now()])
-                ->orderBy('created_at', 'desc')
-                ->get()
+            $transaction->get()
         );
     }
 

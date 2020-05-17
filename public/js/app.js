@@ -2148,6 +2148,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TransactionsTable",
@@ -2165,7 +2175,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       data: [],
-      filter: 'today'
+      filter: {
+        date: 'today',
+        type: 'both'
+      }
     };
   },
   created: function created() {
@@ -2179,7 +2192,8 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       axios.get(this.url, {
         params: {
-          filter: this.filter,
+          date: this.filter.date,
+          type: this.filter.type,
           api_token: this.apiToken
         }
       }).then(function (data) {
@@ -2192,8 +2206,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    filter: function filter() {
-      this.fetchData();
+    filter: {
+      handler: function handler() {
+        this.fetchData();
+      },
+      deep: true
     }
   }
 });
@@ -59695,46 +59712,99 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "select",
-      {
-        directives: [
+    _c("div", { staticClass: "form-row" }, [
+      _c("div", { staticClass: "col" }, [
+        _c(
+          "select",
           {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.filter,
-            expression: "filter"
-          }
-        ],
-        staticClass: "form-control",
-        on: {
-          change: function($event) {
-            var $$selectedVal = Array.prototype.filter
-              .call($event.target.options, function(o) {
-                return o.selected
-              })
-              .map(function(o) {
-                var val = "_value" in o ? o._value : o.value
-                return val
-              })
-            _vm.filter = $event.target.multiple
-              ? $$selectedVal
-              : $$selectedVal[0]
-          }
-        }
-      },
-      [
-        _c("option", { attrs: { value: "today" } }, [_vm._v("Today")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "yesterday" } }, [_vm._v("Yesterday")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "week" } }, [_vm._v("7 Days")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "month" } }, [_vm._v("30 Days")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "lifetime" } }, [_vm._v("Lifetime")])
-      ]
-    ),
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filter.date,
+                expression: "filter.date"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.filter,
+                  "date",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "today" } }, [_vm._v("Today")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "yesterday" } }, [
+              _vm._v("Yesterday")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "week" } }, [_vm._v("7 Days")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "month" } }, [_vm._v("30 Days")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "lifetime" } }, [_vm._v("Lifetime")])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filter.type,
+                expression: "filter.type"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.filter,
+                  "type",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "both" } }, [_vm._v("Both")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "deposit" } }, [
+              _vm._v("Only Deposits")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "withdraw" } }, [
+              _vm._v("Only Withdrawals")
+            ])
+          ]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
@@ -73918,15 +73988,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************!*\
   !*** ./resources/js/components/dashboard/users/UsersTable.vue ***!
   \****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UsersTable_vue_vue_type_template_id_6d2955d3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UsersTable.vue?vue&type=template&id=6d2955d3& */ "./resources/js/components/dashboard/users/UsersTable.vue?vue&type=template&id=6d2955d3&");
 /* harmony import */ var _UsersTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UsersTable.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/users/UsersTable.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _UsersTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _UsersTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -73956,7 +74025,7 @@ component.options.__file = "resources/js/components/dashboard/users/UsersTable.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/dashboard/users/UsersTable.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

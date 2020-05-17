@@ -1,14 +1,24 @@
 <template>
     <div>
 
-        <!-- filter bar -->
-        <select class="form-control" v-model="filter">
-            <option value="today">Today</option>
-            <option value="yesterday">Yesterday</option>
-            <option value="week">7 Days</option>
-            <option value="month">30 Days</option>
-            <option value="lifetime">Lifetime</option>
-        </select>
+        <div class="form-row">
+            <div class="col">
+                <select class="form-control" v-model="filter.date">
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="week">7 Days</option>
+                    <option value="month">30 Days</option>
+                    <option value="lifetime">Lifetime</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control" v-model="filter.type">
+                    <option value="both">Both</option>
+                    <option value="deposit">Only Deposits</option>
+                    <option value="withdraw">Only Withdrawals</option>
+                </select>
+            </div>
+        </div>
 
         <br>
 
@@ -55,7 +65,10 @@
             return {
                 loading: true,
                 data: [],
-                filter: 'today'
+                filter: {
+                    date: 'today',
+                    type: 'both',
+                }
             }
         },
         created() {
@@ -67,7 +80,8 @@
                 this.loading = true;
                 axios.get(this.url, {
                     params: {
-                        filter: this.filter,
+                        date: this.filter.date,
+                        type: this.filter.type,
                         api_token: this.apiToken
                     }
                 }).then(data => {
@@ -78,8 +92,11 @@
             }
         },
         watch: {
-            filter: function () {
-                this.fetchData();
+            filter: {
+                handler() {
+                    this.fetchData();
+                },
+                deep: true
             }
         }
     }
