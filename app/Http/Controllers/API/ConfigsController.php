@@ -18,9 +18,15 @@ class ConfigsController extends Controller
 
     public function index(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'search' => 'nullable|string'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
 
         if ($request->has('search')) {
             $name = $request->search;
