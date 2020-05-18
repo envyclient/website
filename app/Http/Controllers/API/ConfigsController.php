@@ -18,9 +18,15 @@ class ConfigsController extends Controller
 
     public function index(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'search' => 'nullable|string'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
 
         if ($request->has('search')) {
             $name = $request->search;
@@ -101,20 +107,24 @@ class ConfigsController extends Controller
 
     public function getCurrentUserConfigs(Request $request)
     {
-        $data['favorites'] = $request->user()
-            ->favorites()
-            ->withCount('favorites')
-            ->orderBy('favorites_count', 'desc')
-            ->paginate(Config::PAGE_LIMIT);
-        $data['self'] = $request->user()
-            ->configs()
-            ->withCount('favorites')
-            ->orderBy('favorites_count', 'desc')
-            ->paginate(Config::PAGE_LIMIT);
+        $data['favorites'] = ConfigResource::collection(
+            $request->user()
+                ->configs()
+                ->withCount('favorites')
+                ->orderBy('favorites_count', 'desc')
+                ->paginate(Config::PAGE_LIMIT)
+        );
+        $data['self'] = ConfigResource::collection(
+            $request->user()
+                ->configs()
+                ->withCount('favorites')
+                ->orderBy('favorites_count', 'desc')
+                ->paginate(Config::PAGE_LIMIT)
+        );
         return $data;
     }
 
-    public function getConfigsByUser(Request $request, string $name)
+    public function getConfigsByUser(string $name)
     {
         $user = User::where('name', $name)->firstOrFail();
         return ConfigResource::collection(

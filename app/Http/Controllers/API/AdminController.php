@@ -22,6 +22,7 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|string',
+            'type' => 'nullable|string|in:all,banned',
             'page' => 'required|integer'
         ]);
 
@@ -31,9 +32,14 @@ class AdminController extends Controller
             ], 400);
         }
 
-        return User::with(['subscription', 'wallet'])
-            ->name($request->name)
-            ->paginate(20);
+        $user = User::with(['subscription', 'wallet'])
+            ->name($request->name);
+
+        if ($request->type === 'banned') {
+            $user->where('banned', true);
+        }
+
+        return $user->paginate(20);
     }
 
     public function usersStats(Request $request)
@@ -113,8 +119,8 @@ class AdminController extends Controller
     public function transactions(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'date' => 'required|string',
-            'type' => 'required|string'
+            'date' => 'required|string|in:today,yesterday,week,month,lifetime',
+            'type' => 'required|string|in:all,deposit,withdraw'
         ]);
 
         if ($validator->fails()) {
@@ -172,7 +178,7 @@ class AdminController extends Controller
         );
     }
 
-    public function transactionsStats(Request $request)
+    public function transactionsStats()
     {
         $stats['total'] = Transaction::where('type', 'deposit')->sum('amount');
 

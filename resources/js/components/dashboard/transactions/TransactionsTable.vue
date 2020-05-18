@@ -13,7 +13,7 @@
             </div>
             <div class="col">
                 <select class="form-control" v-model="filter.type">
-                    <option value="both">Both</option>
+                    <option value="all">All</option>
                     <option value="deposit">Only Deposits</option>
                     <option value="withdraw">Only Withdrawals</option>
                 </select>
@@ -67,7 +67,7 @@
                 data: [],
                 filter: {
                     date: 'today',
-                    type: 'both',
+                    type: 'all',
                 }
             }
         },
