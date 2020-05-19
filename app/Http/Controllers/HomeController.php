@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Plan;
-use App\Subscription;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('index');
+        $this->middleware(['auth', 'verified'])->except('index', 'terms');
         $this->middleware('admin')->only('admin');
     }
 
@@ -28,6 +27,11 @@ class HomeController extends Controller
         return view('pages.index')->with([
             'plans' => $plans
         ]);
+    }
+
+    public function terms()
+    {
+        return view('pages.terms');
     }
 
     /**

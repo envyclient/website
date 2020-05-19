@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "andreasindal/laravel-markdown": "^3.1",
         "consoletvs/charts": "6.*",
         "coraxster/flysystem-aws-s3-v3-minio": "^1.0",
         "depsimon/laravel-wallet": "^1.0",

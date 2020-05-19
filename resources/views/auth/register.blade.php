@@ -72,6 +72,13 @@
                                 </div>
                             </div>
 
+                            <div class="form-group mb-0 text-center">
+                                <p class="text-muted">
+                                    By clicking register you are agreeing to our
+                                    <a href="{{ route('terms') }}">Terms and Conditions.</a>
+                                </p>
+                            </div>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

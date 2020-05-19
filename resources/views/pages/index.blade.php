@@ -126,10 +126,17 @@
 
     <!-- Footer -->
     <footer class="page-footer" style="background-color:#ffff;">
-        <div class="text-center">
-            <img class="m-3" src="{{ asset('/assets/logo_512x512.png') }}" alt="envy client logo" width="32"
-                 height="32">
+        <p class="text-center">
+            <img class="mt-2" src="{{ asset('/assets/logo_512x512.png') }}" alt="envy client logo" width="48"
+                 height="48">
+        </p>
+        <p class="text-center">
             &copy; 2020 Envy Client
-        </div>
+        </p>
+        <p class="text-center">
+            <a href="{{ route('terms') }}" class="text-primary dim no-underline pt-3">
+                Terms Of Service
+            </a>
+        </p>
     </footer>
 @endsection
