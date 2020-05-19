@@ -104,7 +104,7 @@
 </template>
 
 <script>
-    import EventBus from '../../../eventbus'
+    import EventBus from '../../eventbus'
     import pagination from 'laravel-vue-pagination';
     import moment from "moment";
 

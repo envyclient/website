@@ -61,7 +61,7 @@
             <div class="list-group list-group-flush">
                 <br>
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;">
-                    <small class="text-muted ">ADMINISTRATOR</small>
+                    <small class="text-muted">ADMINISTRATOR</small>
                 </h3>
                 <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#transactions"
                    style="cursor:pointer;">

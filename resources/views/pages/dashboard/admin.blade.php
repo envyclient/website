@@ -6,20 +6,20 @@
         <!-- transactions -->
         <div class="tab-pane fade custom-panel show active" id="transactions" role="tabpanel">
 
-            <!-- transaction stats -->
-            <div id="transaction-stats">
+            <!-- transactions chart -->
+            <div>
                 <div class="alert alert-primary" style="font-size:25px;">
                     Stats
                 </div>
-                <transaction-stats url="{{ route('api.admin.transactions.stats') }}"
-                                   api-token="{{ $apiToken }}">
-                </transaction-stats>
+                <div style="height: 300px">
+                    {!! $transactionsChart->container() !!}
+                </div>
             </div>
 
             <br>
 
             <!-- transactions table -->
-            <div id="transactions-table">
+            <div>
                 <div class="alert alert-secondary" style="font-size:25px;">
                     Transactions
                 </div>
@@ -31,29 +31,14 @@
 
         <!-- users -->
         <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
-            <div class="row">
-                <!-- total users -->
-                <div class="col">
-                    <div class="alert alert-primary" style="font-size:25px;">
-                        Total Users
-                    </div>
-                    <user-stats url="{{ route('api.admin.users.stats') }}"
-                                type="total"
-                                api-token="{{ $apiToken }}">
-                    </user-stats>
+
+            <!-- users chart -->
+            <div>
+                <div class="alert alert-primary" style="font-size:25px;">
+                    Stats
                 </div>
-
-                <br>
-
-                <!-- premium users -->
-                <div class="col">
-                    <div class="alert alert-success" style="font-size:25px;">
-                        Premium Users
-                    </div>
-                    <user-stats url="{{ route('api.admin.users.stats') }}"
-                                type="premium"
-                                api-token="{{ $apiToken }}">
-                    </user-stats>
+                <div style="height: 300px">
+                    {!! $usersChart->container() !!}
                 </div>
             </div>
 
@@ -74,16 +59,17 @@
         <!-- versions -->
         <div class="tab-pane fade custom-panel" id="versions" role="tabpanel">
 
+            <!-- versions table -->
             <div>
                 <div class="alert alert-primary" style="font-size:25px;">
                     Versions
                 </div>
-
                 <versions-table url="{{ route('api.versions.index') }}" api-token="{{ $apiToken }}"></versions-table>
             </div>
 
             <br>
 
+            <!-- create version -->
             <div>
                 <div class="alert alert-secondary" style="font-size:25px;">
                     Create Version
@@ -102,4 +88,9 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    {!! $usersChart->script() !!}
+    {!! $transactionsChart->script() !!}
 @endsection
