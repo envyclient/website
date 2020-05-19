@@ -12,4 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 class Version extends Model
 {
     const FILES_DIRECTORY = 'versions';
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'user_downloads', 'version_id', 'user_id');
+    }
 }

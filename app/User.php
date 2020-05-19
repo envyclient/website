@@ -48,6 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Subscription');
     }
 
+    public function downloads()
+    {
+        return $this->belongsToMany('App\Version', 'user_downloads', 'user_id', 'version_id');
+    }
+
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Version as VersionResource;
 use App\Version;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class VersionsController extends Controller
@@ -23,9 +25,20 @@ class VersionsController extends Controller
         );
     }
 
-    public function show(int $id)
+    public function show(Request $request, int $id)
     {
+        $user = $request->user();
         $version = Version::findOrFail($id);
+
+        DB::table('user_downloads')->insert([
+            [
+                'user_id' => $user->id,
+                'version_id' => $version->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        ]);
+
         return Storage::disk('minio')->download(Version::FILES_DIRECTORY . '/' . $version->file);
     }
 
