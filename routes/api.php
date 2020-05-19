@@ -31,13 +31,13 @@ Route::prefix('configs')->group(function () {
  */
 Route::prefix('admin')->group(function () {
     Route::get('users', 'API\AdminController@users')->name('api.admin.users');
-    Route::get('users/stats', 'API\AdminController@usersStats')->name('api.admin.users.stats');
-    
+    Route::get('users/chart', 'API\AdminController@usersChart')->name('api.admin.users.chart');
+
     Route::put('users/ban/{user}', 'API\AdminController@ban')->name('api.admin.users.ban');
     Route::put('users/credits/{user}', 'API\AdminController@credits')->name('api.admin.users.credits');
 
     Route::get('transactions', 'API\AdminController@transactions')->name('api.admin.transactions');
-    Route::get('transactions/stats', 'API\AdminController@transactionsStats')->name('api.admin.transactions.stats');
+    Route::get('transactions/chart', 'API\AdminController@transactionsChart')->name('api.admin.transactions.chart');
 });
 
 /**

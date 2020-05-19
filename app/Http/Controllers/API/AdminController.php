@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Charts\TransactionsChart;
+use App\Charts\UsersChart;
+use App\Config;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Transaction as TransactionResource;
 use App\Subscription;
@@ -13,6 +16,17 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+    const CHART_OPTIONS = [
+        'tooltip' => [
+            'show' => true
+        ],
+        'scales' => [
+            'yAxes' => [
+                ['ticks' => ['precision' => 0]]
+            ]
+        ]
+    ];
+
     public function __construct()
     {
         $this->middleware(['auth:api', 'api-admin']);
@@ -41,37 +55,7 @@ class AdminController extends Controller
 
         return $user->paginate(20);
     }
-
-    public function usersStats(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'type' => 'required|string|in:total,premium'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
-        $dataArray = $request->type === 'total' ? User::all() : Subscription::all();
-        $statsArray['total'] = $dataArray->count();
-        $statsArray['today'] = $dataArray->filter(function ($value, $key) {
-            return $value->created_at == Carbon::today();
-        })->count();
-        $statsArray['month'] = $dataArray->filter(function ($value, $key) {
-            return $value->created_at >= Carbon::now()->firstOfMonth() && $value->created_at <= Carbon::now()->lastOfMonth();
-        })->count();
-
-        $latestUser = $dataArray->last();
-        $statsArray['latest'] = [
-            'name' => $request->type === 'total' ? $latestUser->name : $latestUser->user->name,
-            'date' => $latestUser->created_at->diffForHumans()
-        ];
-
-        return $statsArray;
-    }
-
+    
     public function credits(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -178,22 +162,49 @@ class AdminController extends Controller
         );
     }
 
-    public function transactionsStats()
+    public function usersChart()
     {
-        $stats['total'] = Transaction::where('type', 'deposit')->sum('amount');
+        $chart = new UsersChart();
 
-        $stats['today'] = Transaction::where('type', 'deposit')
-            ->whereDate('created_at', Carbon::today())
-            ->sum('amount');
+        // users
+        $data = [];
+        for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
+            array_push($data, User::whereDate('created_at', today()->subDays($days_backwards))->count());
+        }
+        $chart->dataset('Users', 'line', $data)->backgroundColor('#82c4c3');
 
-        $stats['week'] = Transaction::where('type', 'deposit')
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->sum('amount');
+        // subscriptions
+        $data = [];
+        for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
+            array_push($data, Subscription::whereDate('created_at', today()->subDays($days_backwards))->count());
+        }
+        $chart->dataset('Subscriptions', 'line', $data)->backgroundColor('#50d890');
 
-        $stats['month'] = Transaction::where('type', 'deposit')
-            ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
-            ->sum('amount');
+        // configs
+        $data = [];
+        for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
+            array_push($data, Config::whereDate('created_at', today()->subDays($days_backwards))->count());
+        }
+        $chart->dataset('Configs', 'line', $data)->backgroundColor('#fd5e53');
 
-        return $stats;
+        $chart->options(self::CHART_OPTIONS);
+        return $chart->api();
+    }
+
+    public function transactionsChart()
+    {
+        $data = [];
+        for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
+            array_push($data, Transaction::where('type', 'deposit')
+                ->whereDate('created_at', today()->subDays($days_backwards))
+                ->sum('amount')
+            );
+        }
+
+        $chart = new TransactionsChart();
+        $chart->dataset('Transactions', 'line', $data);
+        $chart->options(self::CHART_OPTIONS);
+
+        return $chart->api();
     }
 }

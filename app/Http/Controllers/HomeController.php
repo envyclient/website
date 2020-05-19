@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Version;
+use App\Charts\TransactionsChart;
+use App\Charts\UsersChart;
 use App\Plan;
+use App\Subscription;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
@@ -52,8 +54,20 @@ class HomeController extends Controller
      */
     public function admin()
     {
+        $apiToken = auth()->user()->api_token;
+
+        $usersChart = new UsersChart();
+        $usersChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+            ->load(route('api.admin.users.chart') . '?api_token=' . $apiToken);
+
+        $transactionsChart = new TransactionsChart();
+        $transactionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+            ->load(route('api.admin.transactions.chart') . '?api_token=' . $apiToken);
+
         return view('pages.dashboard.admin')->with([
-            'apiToken' => auth()->user()->api_token
+            'apiToken' => $apiToken,
+            'usersChart' => $usersChart,
+            'transactionsChart' => $transactionsChart,
         ]);
     }
 }
