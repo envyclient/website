@@ -55,7 +55,7 @@ class AdminController extends Controller
 
         return $user->paginate(20);
     }
-    
+
     public function credits(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -207,4 +207,10 @@ class AdminController extends Controller
 
         return $chart->api();
     }
+
+    public function versionDownloadsChart()
+    {
+        
+    }
+
 }
