@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
+use App\Charts\VersionDownloadsChart;
 use App\Plan;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -68,10 +69,15 @@ class HomeController extends Controller
         $transactionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
             ->load(route('api.admin.transactions.chart') . '?api_token=' . $apiToken);
 
+        $versionsChart = new VersionDownloadsChart();
+        $versionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+            ->load(route('api.admin.versions.chart') . '?api_token=' . $apiToken);
+
         return view('pages.dashboard.admin')->with([
             'apiToken' => $apiToken,
             'usersChart' => $usersChart,
             'transactionsChart' => $transactionsChart,
+            'versionsChart' => $versionsChart
         ]);
     }
 }

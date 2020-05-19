@@ -44,6 +44,7 @@ class VersionsController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        // TODO: delete user_downloads
         $version = Version::findOrFail($id);
         Storage::disk('minio')->delete(Version::FILES_DIRECTORY . '/' . $version->file);
         $version->delete();

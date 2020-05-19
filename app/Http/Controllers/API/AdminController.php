@@ -4,14 +4,17 @@ namespace App\Http\Controllers\API;
 
 use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
+use App\Charts\VersionDownloadsChart;
 use App\Config;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Transaction as TransactionResource;
 use App\Subscription;
 use App\User;
+use App\Version;
 use Carbon\Carbon;
 use Depsimon\Wallet\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -171,21 +174,21 @@ class AdminController extends Controller
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
             array_push($data, User::whereDate('created_at', today()->subDays($days_backwards))->count());
         }
-        $chart->dataset('Users', 'line', $data)->backgroundColor('#82c4c3');
+        $chart->dataset('Users', 'line', $data)->color('#82c4c3')->fill(false);
 
         // subscriptions
         $data = [];
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
             array_push($data, Subscription::whereDate('created_at', today()->subDays($days_backwards))->count());
         }
-        $chart->dataset('Subscriptions', 'line', $data)->backgroundColor('#50d890');
+        $chart->dataset('Subscriptions', 'line', $data)->color('#50d890')->fill(false);;
 
         // configs
         $data = [];
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
             array_push($data, Config::whereDate('created_at', today()->subDays($days_backwards))->count());
         }
-        $chart->dataset('Configs', 'line', $data)->backgroundColor('#fd5e53');
+        $chart->dataset('Configs', 'line', $data)->color('#fd5e53')->fill(false);
 
         $chart->options(self::CHART_OPTIONS);
         return $chart->api();
@@ -210,7 +213,27 @@ class AdminController extends Controller
 
     public function versionDownloadsChart()
     {
-        
+        $chart = new VersionDownloadsChart();
+
+        foreach (Version::all() as $version) {
+            $data = [];
+            for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
+                array_push($data, DB::table('user_downloads')
+                    ->where('version_id', $version->id)
+                    ->whereDate('created_at', today()->subDays($days_backwards))
+                    ->count()
+                );
+            }
+            $chart->dataset($version->name, 'bar', $data)->color(self::randomColor());
+        }
+
+        $chart->options(self::CHART_OPTIONS);
+        return $chart->api();
+    }
+
+    private static function randomColor()
+    {
+        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
     }
 
 }
