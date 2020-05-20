@@ -7,8 +7,7 @@ Auth::routes(['verify' => true]);
  */
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('terms', 'HomeController@terms')->name('terms');
-Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
-Route::get('admin', 'HomeController@admin')->name('dashboard.admin');
+Route::get('admin', 'HomeController@admin')->name('admin');
 
 /**
  * Subscriptions
@@ -41,4 +40,5 @@ Route::prefix('user')->group(function () {
 Route::prefix('versions')->group(function () {
     Route::get('/create', 'VersionsController@create')->name('versions.create');
     Route::post('/', 'VersionsController@store')->name('versions.store');
+    Route::get('launcher', 'VersionsController@downloadLauncher')->name('versions.launcher');
 });

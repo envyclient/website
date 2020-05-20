@@ -26,12 +26,13 @@
 <body>
 <div id="app">
     @include('inc.navbar.default')
-    <main>
+    <div id="main">
+        <!-- notifications -->
         <div class="container">
             @include('inc.notifications')
         </div>
         @yield('content')
-    </main>
+    </div>
 </div>
 @yield('js')
 </body>

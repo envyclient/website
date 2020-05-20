@@ -64,6 +64,7 @@ class ConfigsController extends Controller
 
     public function store(Request $request)
     {
+        // TODO: validate json to only be ARRAY
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:15',
             'data' => 'required|json',

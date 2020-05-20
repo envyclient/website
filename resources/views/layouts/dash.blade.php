@@ -15,7 +15,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -157,11 +157,63 @@
         }
     </style>
 </head>
-
 <body>
 <div id="app">
+    <!-- vuejs notifications -->
     <notifications position="bottom right"></notifications>
+
+    <!-- navbar -->
     @include('inc.navbar.dashboard')
+
+    <div class="container-fluid" style="height:100vh;padding:0;">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background:#242424 !important;">
+            <div class="container-inner-nav text-white m-auto">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <a class="navbar-brand text-white" href="{{ url('/') }}">
+                            {{ config('app.name', 'Laravel') }} | <span
+                                style="color:#888;">{{ request()->is("/") ? 'dashboard' : 'admin' }}</span>
+                        </a>
+                    </ul>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto text-white">
+                        <!-- Authentication Links -->
+                        <div class="m-2">
+                            <a class="badge custom-badge fa-1x" style="color: #fff;">
+                                <i class="fas fa-coins" style="padding-right: 5px;"></i>
+                                {{ Auth::user()->balance == null ? 0 :  Auth::user()->balance }}
+                            </a>
+                        </div>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+                            @include('inc.navbar.components.dropdown')
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="main" class="dashboard-content">
+            <br>
+            <!-- notifications -->
+            <div class="container">
+                @include('inc.notifications')
+            </div>
+
+            <!-- content -->
+            @yield('content')
+        </div>
+    </div>
 </div>
 @yield('js')
 </body>

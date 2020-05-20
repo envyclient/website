@@ -1,142 +1,262 @@
-@extends('layouts.app')
+@extends('layouts.dash')
 
 @section('content')
-    <!-- Home Section -->
-    <div class="jumbotron jumbotron-fluid" style="background:#fff;">
-        <div class="row" style="margin:0 auto;width:fit-content;">
-            <div class="flex-column">
-                <img class="img-fluid" style="min-width:256px;min-height:256px;"
-                     src="{{ asset('/assets/logo_512x512.png') }}" width="512px" height="512px">
-            </div>
-            <div class="col d-flex flex-column">
-                <div class="p-2">
-                    <h1 class="display-4">{{ config('app.name') }}</h1>
-                    <br>
-                    <p class="lead">
-                        Welcome to the {{ config('app.name') }} website. This is a Minecraft 1.8.8 client developed by
-                        Mat & Haq.
-                    <p>
-                        @guest
-                            <a class="btn btn-primary btn-lg" href="{{ route('login') }}">
-                                <i class="fab fa-paypal"></i>
-                                Purchase
-                            </a>
-                        @else
-                            <a class="btn btn-primary btn-lg" href="{{ route('dashboard') }}" role="button">
-                                <i class="fas fa-bars"></i>
-                                Dashboard
-                            </a>
-                        @endguest
-                    </p>
+    <div class="tab-content" style="width:95%;margin:0 auto">
+
+        <!--- Profile Section --->
+        <div class="tab-pane fade show active" id="profile" role="tabpanel">
+            <div>
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    <i class="fas fa-user" style="padding-right:10px;"></i> Profile
+                </div>
+
+                <div class="text-left">
+                    <label>Member Since:</label>
+                    <input class="form-control" placeholder="Date" disabled
+                           value="{{ $user->created_at->format('Y-m-d') }}">
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Features Section -->
-    <div class="jumbotron jumbotron-fluid text-center" style="background: #f9f9f9;border:none;margin-bottom:0;">
-        <div class="container">
-            <h1 style="padding-bottom:30px;">Features</h1>
-            <hr class="w-50">
             <br>
-            <div class="card-deck mb-3 text-center">
-                <div class="card bg-white mb-4 p-3"
-                     style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #4aa0e6;">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold p-1">Cloud</h5>
-                        <p class="card-text p-1 mt-4">
-                            All of your settings & configs will be safely stored online.
-                        </p>
+            <div>
+                @if($user->hasSubscription())
+                    <div class="alert alert-secondary" style="font-size:25px;">
+                        <i class="fas fa-file" style="padding-right:10px;"></i>Configs
                     </div>
-                </div>
-                <div class="card bg-white mb-4 p-3"
-                     style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #2fa360;">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold p-1">AlphaAntiLeak</h5>
-                        <p class="card-text p-1">
-                            Our Service is using AlphaAntiLeak
-                        </p>
-                        <a class="btn btn-success text-white" href="https://alphaantileak.net/#privacy"
-                           target="_blank">Learn More</a>
+                    <div class="text-left">
+                        <label>Configs Used:</label>
+                        <h5>
+                            <span class="badge badge-secondary">{{ $configs->count() }}/<span
+                                    class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
+                            </span>
+                        </h5>
+                        @if(count($configs) > 0)
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>name</th>
+                                    <th>favorites</th>
+                                    <th>created</th>
+                                    <th>last updated</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($configs as $config)
+                                    <tr>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <td>{{ $config->name }}</td>
+                                        <td>{{ $config->favorites_count }}</td>
+                                        <td>{{ $config->created_at->diffForHumans() }}</td>
+                                        <td>{{ $config->updated_at->diffForHumans() }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
-                </div>
-                <div class="card bg-white mb-4 p-3"
-                     style="min-width: 18rem;max-width: 18rem;margin:0 auto;border-top:3px solid #227dc7;">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold p-1">Design</h5>
-                        <p class="card-text p-1 mt-4">
-                            Design of the client is simplistic, therefor it's really easy to use.
-                        </p>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
-    </div>
 
-    <!-- ShowCase Section -->
-    <div class="jumbotron jumbotron-fluid text-center" style="background:#efefef; border:none;margin-bottom:0;">
-        <h1 style="padding-bottom:30px;">ShowCase</h1>
-        <hr class="w-50">
-        <br>
-        <div class="row" style="margin:0 auto;">
-            <div class="col-sm-5" style="margin:0 auto;">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Rh-Fn0zHVi8"></iframe>
-                </div>
+        <!--- Security Section --->
+        <div class="tab-pane fade" id="security" role="tabpanel">
+            <div class="alert alert-secondary" style="font-size:25px;">
+                <i class="fas fa-lock" style="padding-right:10px;"></i> Security
             </div>
-            <div class="col-sm-5" style="margin:0 auto;">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe src="https://www.youtube.com/embed/zwJRWAB4fM4"></iframe>
-                </div>
+            <div class="card card-body">
+                {!! Form::open(['action' => 'UsersController@updatePassword']) !!}
+                {{ Form::hidden('_method', 'PUT') }}
+
+                {{ Form::label('name', 'Name: ') }}
+                {{ Form::text('name', $user->name, ['class' => 'form-control', 'disabled']) }}
+                <br>
+                {{ Form::label('email', 'Email: ') }}
+                {{ Form::text('email', $user->email, ['class' => 'form-control', 'disabled']) }}
+                <br>
+                {{ Form::label('password_current', 'Current password: ') }}
+                {{ Form::password('password_current', ['class' => 'form-control', 'required']) }}
+                <br>
+                {{ Form::label('password', 'New password: ') }}
+                {{ Form::password('password', ['class' => 'form-control', 'required']) }}
+                <br>
+                {{ Form::label('password_confirmation', 'New password confirm: ') }}
+                {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
+                <br>
+                {{ Form::submit('Change Password', ['class' => 'btn btn-success']) }}
+
+                {!! Form::close() !!}
+            </div>
+            <br>
+            <div class="card" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    <button type="button" class="btn btn-outline-danger m-2 w-25" data-toggle="modal"
+                            data-target="#disableAccountModal">
+                        Disable Account
+                    </button>
+                </ul>
             </div>
         </div>
-    </div>
 
-    <!-- Pricing Section -->
-    <div class="jumbotron jumbotron-fluid text-center" style="background:#e5e5e5; border:none;margin-bottom:0;">
-        <h1 style="padding-bottom:30px;">Pricing</h1>
-        <hr class="w-50">
-        <br>
-        <div class="container">
-            <div class="card-deck mb-3 text-center" style="max-width: 55em;margin:0 auto;">
-                @foreach($plans as $plan)
-                    <div class="card mb-4 box-shadow">
-                        <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">{{ $plan->name }}</h4>
-                        </div>
+        <!--- Subscriptions Section --->
+        <div class="tab-pane fade" id="subscription" role="tabpanel">
+            <div class="alert alert-secondary" style="font-size:25px;">
+                <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
+            </div>
+            {!! Form::open(['action' => 'SubscriptionsController@subscribe', 'method' => 'POST']) !!}
+            <div class="card" style="width:100%;">
+                <ul class="list-group list-group-flush">
+                    @if($user->hasSubscription())
+                        <li class="list-group-item">
+                            You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
+                            (next payment in due in {{ $nextSubscription }} days)
+                        </li>
+                    @endif
+                    @foreach($plans as $plan)
+                        <li class="list-group-item">
+                            <div class="row" style="line-height:60px;">
+                                <div class="col">
+                                    {{ Form::radio('id', $plan->id, $user->hasSubscription() ? $user->subscription->plan_id === $plan->id : false, ['class' => 'form-check-inline', 'required' ,  $user->hasSubscription() ? 'disabled' : null]) }}
+                                    {{ $plan->name }}
+                                </div>
+                                <div class="col">
+                                    <b>${{ $plan->price }}</b>
+                                    / {{ "$plan->interval days" }}
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <br>
+            @if($user->hasSubscription())
+                <div class="card" style="width: 100%;">
+                    <ul class="list-group list-group-flush">
+                        {!! Form::close() !!}
+                        {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
+                        {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger w-25 m-sm-2']) }}
+                        {!! Form::close() !!}
+                    </ul>
+                </div>
+            @else
+                <div class="card" style="width: 100%;">
+                    <ul class="list-group list-group-flush">
+                        {{ Form::submit('Subscribe', ['class' => 'btn btn-outline-success m-2 w-25']) }}
+                        {!! Form::close() !!}
+                    </ul>
+                </div>
+            @endif
+        </div>
+
+        <!-- add payment -->
+        <div class="tab-pane fade" id="credits" role="tabpanel">
+            <div class="alert alert-secondary" style="font-size:25px;">
+                <i class="fas fa-credit-card" style="padding-right:10px;"></i> Add Credits
+            </div>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h5 class="font-weight-bold">Payment methods</h5>
+                    <h7>Currently we are only supporting PayPal payments</h7>
+                    <div class="container m-3 font-weight-bold">
+                        <p>Terms and Conditions</p>
+                        <ul class="font-weight-normal">
+                            <li>
+                                By adding credits you are agreeing to our
+                                <a href="{{ route('terms') }}">Terms and Conditions.</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card" style="width: 100%;margin-top:10px;">
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">${{ $plan->price }}</h1>
-                            <h4><small class="text-muted">/ {{ $plan->interval }} days</small></h4>
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li>{{ $plan->config_limit }} config slots</li>
-                            </ul>
-                            @guest
-                                <a type="button" class="btn btn-lg btn-block btn-primary"
-                                   href="{{ route('login') }}">Login</a>
-                            @else
-                                <a type="button" class="btn btn-lg btn-block btn-primary"
-                                   href="{{ route('dashboard') }}">Purchase</a>
-                            @endguest
+                            <h5 class="card-title" style="font-weight: bold;"><i
+                                    class="fab fa-paypal"></i> PayPal</h5>
+                            <p class="card-text">By purchasing credits you agree to all the terms
+                                above.</p>
+                            {!! Form::open(['action' => 'PayPalController@create']) !!}
+                            <div class="form-group">
+                                {{ Form::label('amount', 'Cash amount: ') }}
+                                {{ Form::select('amount', [
+                                    '1' => '$1',
+                                    '5' => '$5',
+                                    '7' => '$7',
+                                    '10' => '$10',
+                                    '15' => '$15',
+                                    '20' => '$20',
+                                    '25' => '$25',
+                                    '30' => '$30',
+                                    '35' => '$35',
+                                    '40' => '$40',
+                                    '50' => '$50',
+                                    '60' => '$60',
+                                    '70' => '$70',
+                                    '80' => '$80',
+                                ], '7', ['class' => 'form-control']) }}
+                            </div>
+                            {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </li>
+            </ul>
         </div>
-    </div>
 
-    <!-- Footer -->
-    <footer class="page-footer" style="background-color:#ffff;">
-        <p class="text-center">
-            <img class="mt-2" src="{{ asset('/assets/logo_512x512.png') }}" alt="envy client logo" width="48"
-                 height="48">
-        </p>
-        <p class="text-center">
-            &copy; 2020 Envy Client
-        </p>
-        <p class="text-center">
-            <a href="{{ route('terms') }}" class="text-primary dim no-underline pt-3">
-                Terms Of Service
-            </a>
-        </p>
-    </footer>
+        <!-- transactions -->
+        <div class="tab-pane fade" id="invoices" role="tabpanel">
+            <div class="alert alert-secondary" style="font-size:25px;">
+                <i class="fas fa-shopping-cart" style="padding-right:10px;"></i> Transactions
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($transactions as $transaction)
+                    <tr>
+                        <th scope="row">{{ $loop->index + 1 }}</th>
+                        @if($transaction->type == 'deposit')
+                            <td style="color: green">+{{ $transaction->amount }}</td>
+                        @else
+                            <td style="color: red">-{{ $transaction->amount }}</td>
+                        @endif
+                        <td>{{ $transaction->meta['description'] }}</td>
+                        <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <!-- disable account modal -->
+        <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Wooooow! Are you sure there bud?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="color:red;">
+                        By disabling your account you will lose access to your account and if you have a subscription it
+                        will continue till the end date.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        {!! Form::open(['action' => 'UsersController@disable', 'method' => 'DELETE']) !!}
+                        {{ Form::submit('Disable Account', ['class' => 'btn btn-outline-danger m-sm-2']) }}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+
+        </div>
 @endsection

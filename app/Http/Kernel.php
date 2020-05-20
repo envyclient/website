@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         // custom
         'admin' => \App\Http\Middleware\CheckAdmin::class,
         'api-admin' => \App\Http\Middleware\API\CheckAdmin::class,
+        'subscription' => \App\Http\Middleware\CheckSubscription::class,
     ];
 
     /**

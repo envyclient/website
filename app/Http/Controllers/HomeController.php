@@ -6,44 +6,19 @@ use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Plan;
-use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('index', 'terms');
+        $this->middleware(['auth', 'verified'])->except('terms');
         $this->middleware('admin')->only('admin');
     }
 
-    /**
-     * Show the application landing page.
-     *
-     * @return Renderable
-     */
     public function index()
     {
-        // TODO: update showcase & features sections
-        $plans = Plan::all();
-        return view('pages.index')->with([
-            'plans' => $plans
-        ]);
-    }
-
-    public function terms()
-    {
-        return view('pages.terms');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return Renderable
-     */
-    public function dashboard()
-    {
         $user = auth()->user();
-        return view('pages.dashboard.default')->with([
+        return view('pages.index')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
             'plans' => Plan::all(),
@@ -52,11 +27,11 @@ class HomeController extends Controller
         ]);
     }
 
-    /**
-     * Show the admin dashboard.
-     *
-     * @return Renderable
-     */
+    public function terms()
+    {
+        return view('pages.terms');
+    }
+
     public function admin()
     {
         $apiToken = auth()->user()->api_token;
@@ -73,7 +48,7 @@ class HomeController extends Controller
         $versionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
             ->load(route('api.admin.versions.chart') . '?api_token=' . $apiToken);
 
-        return view('pages.dashboard.admin')->with([
+        return view('pages.admin')->with([
             'apiToken' => $apiToken,
             'usersChart' => $usersChart,
             'transactionsChart' => $transactionsChart,
