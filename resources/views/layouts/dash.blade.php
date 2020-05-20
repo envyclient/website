@@ -15,7 +15,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" charset="utf-8"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -157,11 +156,24 @@
         }
     </style>
 </head>
-
 <body>
 <div id="app">
+    <!-- vuejs notifications -->
     <notifications position="bottom right"></notifications>
+
+    <!-- navbar -->
     @include('inc.navbar.dashboard')
+
+    <div id="main" class="dashboard-content">
+
+        <!-- notifications -->
+        <div class="container">
+            @include('inc.notifications')
+        </div>
+
+        <!-- content -->
+        @yield('content')
+    </div>
 </div>
 @yield('js')
 </body>

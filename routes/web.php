@@ -7,8 +7,7 @@ Auth::routes(['verify' => true]);
  */
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('terms', 'HomeController@terms')->name('terms');
-Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
-Route::get('admin', 'HomeController@admin')->name('dashboard.admin');
+Route::get('admin', 'HomeController@admin')->name('admin');
 
 /**
  * Subscriptions

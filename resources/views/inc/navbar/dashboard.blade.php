@@ -1,4 +1,4 @@
-@if(request()->is("dashboard"))
+@if(request()->is("/"))
     <div class="sidebar-menu d-inline-block">
         <div class="list-group">
             <a class="navbar-brand text-white" href="{{ route('home') }}">
@@ -101,41 +101,22 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto text-white">
                     <!-- Authentication Links -->
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <div class="m-2">
-                            <a class="badge custom-badge fa-1x" style="color: #fff;">
-                                <i class="fas fa-coins" style="padding-right: 5px;"></i>
-                                {{ Auth::user()->balance == null ? 0 :  Auth::user()->balance }}
-                            </a>
-                        </div>
+                    <div class="m-2">
+                        <a class="badge custom-badge fa-1x" style="color: #fff;">
+                            <i class="fas fa-coins" style="padding-right: 5px;"></i>
+                            {{ Auth::user()->balance == null ? 0 :  Auth::user()->balance }}
+                        </a>
+                    </div>
 
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-                            @include('inc.navbar.components.dropdown')
-                        </li>
-                    @endguest
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
+                        @include('inc.navbar.components.dropdown')
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="dashboard-content">
-        <br>
-        <div class="container">
-            @include('inc.notifications')
-        </div>
-        @yield('content')
-        <br>
-    </div>
 </nav>
