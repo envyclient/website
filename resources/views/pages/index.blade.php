@@ -36,8 +36,8 @@
                                     <th>#</th>
                                     <th>name</th>
                                     <th>favorites</th>
-                                    <th>created at</th>
-                                    <th>updated at</th>
+                                    <th>created</th>
+                                    <th>last updated</th>
                                 </tr>
                                 </thead>
                                 <tbody>
