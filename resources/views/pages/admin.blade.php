@@ -1,7 +1,7 @@
 @extends('layouts.dash')
 
 @section("content")
-    <div class="tab-content" style="width:95%;margin:0 auto">
+    <div class="tab-content" style="width:90%;margin:0 auto">
 
         <!-- transactions -->
         <div class="tab-pane fade custom-panel show active" id="transactions" role="tabpanel">
