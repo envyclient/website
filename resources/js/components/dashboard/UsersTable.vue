@@ -73,7 +73,8 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>${{ user.wallet.balance }}</td>
-                <td>{{ calculateDifference(user.subscription.end_date) }}
+                <td v-if="user.subscription == null">NULL</td>
+                <td v-else>{{ calculateDifference(user.subscription.end_date) }}
                     Days Left
                 </td>
                 <td>
