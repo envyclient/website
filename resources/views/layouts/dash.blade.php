@@ -178,7 +178,7 @@
                     <ul class="navbar-nav mr-auto">
                         <a class="navbar-brand text-white" href="{{ url('/') }}">
                             {{ config('app.name', 'Laravel') }} | <span
-                                style="color:#888;">{{explode("/", request()->getRequestUri())[1]}}</span>
+                                style="color:#888;">{{ request()->is("/") ? 'dashboard' : 'admin' }}</span>
                         </a>
                     </ul>
                     <!-- Right Side Of Navbar -->

@@ -1,12 +1,12 @@
-@if(request()->is("/"))
-    <div class="sidebar-menu d-inline-block">
-        <div class="list-group">
-            <a class="navbar-brand text-white" href="{{ route('home') }}">
-                <div class="container text-center">
-                    <img src="{{ asset('/assets/logo_512x512.png') }}"
-                         style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
-                </div>
-            </a>
+<div class="sidebar-menu d-inline-block">
+    <div class="list-group">
+        <a class="navbar-brand text-white" href="{{ route('home') }}">
+            <div class="container text-center">
+                <img src="{{ asset('/assets/logo_512x512.png') }}"
+                     style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
+            </div>
+        </a>
+        @if(request()->is("/"))
             <div class="list-group list-group-flush">
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;">
                     <small class="text-white">SETTINGS</small>
@@ -47,17 +47,7 @@
                     </a>
                 @endif
             </div>
-        </div>
-    </div>
-@elseif(request()->is("admin"))
-    <div class="sidebar-menu d-inline-block">
-        <div class="list-group">
-            <a class="navbar-brand text-white" href="{{ route('home') }}">
-                <div class="container text-center">
-                    <img src="{{ asset('/assets/logo_512x512.png') }}"
-                         style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
-                </div>
-            </a>
+        @elseif(request()->is("admin"))
             <div class="list-group list-group-flush">
                 <br>
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;">
@@ -79,6 +69,6 @@
                     Versions
                 </a>
             </div>
-        </div>
+        @endif
     </div>
-@endif
+</div>
