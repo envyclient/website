@@ -29,7 +29,7 @@
                                     class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
                             </span>
                         </h5>
-                        @if($configs->count() > 0)
+                        @if(count($configs) > 0)
                             <table class="table table-striped table-hover">
                                 <thead>
                                 <tr>
@@ -160,8 +160,9 @@
                     <div class="container m-3 font-weight-bold">
                         <p>Terms and Conditions</p>
                         <ul class="font-weight-normal">
-                            <li>Charging back is not allowed and if detected your account will be
-                                terminated.
+                            <li>
+                                By adding credits you are agreeing to our
+                                <a href="{{ route('terms') }}">Terms and Conditions.</a>
                             </li>
                         </ul>
                     </div>

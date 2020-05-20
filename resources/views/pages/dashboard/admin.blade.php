@@ -64,6 +64,10 @@
                 <div class="alert alert-primary" style="font-size:25px;">
                     Versions
                 </div>
+                <div style="height: 300px">
+                    {!! $versionsChart->container() !!}
+                </div>
+
                 <versions-table url="{{ route('api.versions.index') }}" api-token="{{ $apiToken }}"></versions-table>
             </div>
 
@@ -93,4 +97,5 @@
 @section('js')
     {!! $usersChart->script() !!}
     {!! $transactionsChart->script() !!}
+    {!! $versionsChart->script() !!}
 @endsection

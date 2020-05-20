@@ -1,7 +1,7 @@
 @if(request()->is("dashboard"))
     <div class="sidebar-menu d-inline-block">
         <div class="list-group">
-            <a class="navbar-brand text-white" href="{{ url('/') }}">
+            <a class="navbar-brand text-white" href="{{ route('home') }}">
                 <div class="container text-center">
                     <img src="{{ asset('/assets/logo_512x512.png') }}"
                          style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
@@ -23,7 +23,7 @@
                 </a>
                 <a class="list-group-item list-group-item-custom" href="https://forums.envyclient.com/"
                    style="cursor:pointer;">
-                    <i class="fab fa-discord p-2" style="margin-right:10px;"></i>
+                    <i class="fas fa-comments p-2" style="margin-right:10px;"></i>
                     Forums
                 </a>
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
@@ -52,7 +52,7 @@
 @elseif(request()->is("admin"))
     <div class="sidebar-menu d-inline-block">
         <div class="list-group">
-            <a class="navbar-brand text-white" href="{{ url('/') }}">
+            <a class="navbar-brand text-white" href="{{ route('home') }}">
                 <div class="container text-center">
                     <img src="{{ asset('/assets/logo_512x512.png') }}"
                          style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
