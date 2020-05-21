@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property  string name
+ * @property  boolean beta
  * @property  string file
  */
 class Version extends Model

@@ -5,6 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int user_id
+ * @property int plan_id
+ * @property bool renew
+ * @property string end_date
+ */
 class Subscription extends Model
 {
     use SoftDeletes;

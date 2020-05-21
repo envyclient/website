@@ -39,7 +39,7 @@ class PayPalController extends Controller
             'amount' => 'required|integer|between:5,100'
         ]);
 
-        $name = config('app.name') . ': Add Credits';
+        $name = config('app.name') . ': Credits';
         $price = $request->amount;
 
         $payer = new Payer();

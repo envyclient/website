@@ -4,6 +4,7 @@
         <tr>
             <th>#</th>
             <th>name</th>
+            <th>beta</th>
             <th>file</th>
             <th>date</th>
             <th>action</th>
@@ -16,6 +17,7 @@
         <tr v-for="(version, index) in data" v-else>
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ version.name }}</td>
+            <td>{{ version.beta }}</td>
             <td>{{ version.file }}</td>
             <td>{{ version.date }}</td>
             <td>

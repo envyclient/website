@@ -24,6 +24,7 @@ class VersionsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:30|unique:versions',
+            'beta' => 'nullable',
             'file' => 'required|file|max:50000|unique:versions'
         ]);
 
@@ -33,6 +34,9 @@ class VersionsController extends Controller
 
         $version = new Version();
         $version->name = $request->name;
+        if ($request->has('beta')) {
+            $version->beta = true;
+        }
         $version->file = $fileName;
         $version->save();
 

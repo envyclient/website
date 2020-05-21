@@ -36,6 +36,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">name</th>
+                                        <th scope="col">public</th>
                                         <th scope="col">favorites</th>
                                         <th scope="col">created</th>
                                         <th scope="col">last updated</th>
@@ -46,6 +47,7 @@
                                         <tr>
                                             <th scope="row">{{ $loop->index + 1 }}</th>
                                             <td>{{ $config->name }}</td>
+                                            <td>{{ $config->public ? 'true' : 'false' }}</td>
                                             <td>{{ $config->favorites_count }}</td>
                                             <td>{{ $config->created_at->diffForHumans() }}</td>
                                             <td>{{ $config->updated_at->diffForHumans() }}</td>
@@ -58,7 +60,7 @@
                     </div>
                     <br>
                     <a class="btn btn-primary btn-lg btn-block" href="{{ route('versions.launcher') }}">
-                        Download Launcher
+                        <i class="fas fa-download pr-1"></i> Download Launcher
                     </a>
                 @endif
             </div>
@@ -114,7 +116,7 @@
                     @if($user->hasSubscription())
                         <li class="list-group-item">
                             You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
-                            (next payment in due in {{ $nextSubscription }} days)
+                            (next payment due in {{ $nextSubscription }} days)
                         </li>
                     @endif
                     @foreach($plans as $plan)
@@ -174,29 +176,30 @@
                     </div>
                     <div class="card" style="width: 100%;margin-top:10px;">
                         <div class="card-body">
-                            <h5 class="card-title" style="font-weight: bold;"><i
-                                    class="fab fa-paypal"></i> PayPal</h5>
-                            <p class="card-text">By purchasing credits you agree to all the terms
-                                above.</p>
+                            <h5 class="card-title" style="font-weight: bold;">
+                                <i class="fab fa-paypal"></i> PayPal
+                            </h5>
                             {!! Form::open(['action' => 'PayPalController@create']) !!}
                             <div class="form-group">
-                                {{ Form::label('amount', 'Cash amount: ') }}
-                                {{ Form::select('amount', [
-                                    '1' => '$1',
-                                    '5' => '$5',
-                                    '7' => '$7',
-                                    '10' => '$10',
-                                    '15' => '$15',
-                                    '20' => '$20',
-                                    '25' => '$25',
-                                    '30' => '$30',
-                                    '35' => '$35',
-                                    '40' => '$40',
-                                    '50' => '$50',
-                                    '60' => '$60',
-                                    '70' => '$70',
-                                    '80' => '$80',
-                                ], '7', ['class' => 'form-control']) }}
+                                {{ Form::label('amount', 'Amount:') }}
+                                <br>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    @foreach([5, 10, 15, 20, 30] as $amount)
+                                        @if($loop->first)
+                                            <label class="btn btn-secondary active">
+                                                <input type="radio" name="amount" autocomplete="off"
+                                                       value="{{ $amount }}" checked>
+                                                ${{ $amount }}
+                                            </label>
+                                        @else
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="amount" autocomplete="off"
+                                                       value="{{ $amount }}">
+                                                ${{ $amount }}
+                                            </label>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                             {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
