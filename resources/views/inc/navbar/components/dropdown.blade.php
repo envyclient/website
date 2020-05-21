@@ -2,6 +2,9 @@
     <img src="{{ Auth::user()->image() }}" class="rounded mx-auto d-block" alt="user image">
     <hr>
     @if(Auth::user()->admin)
+        <a class="dropdown-item" href="{{ route('home') }}">
+            Dashboard
+        </a>
         <a class="dropdown-item" href="{{ route('admin') }}">
             Admin
         </a>

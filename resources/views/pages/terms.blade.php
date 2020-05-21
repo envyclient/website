@@ -18,16 +18,27 @@
 
         You may not:
         * Reproduce, distribute, or transfer the Software, or portions thereof, to any third party.
-        * Sell, rent, lease, assign, or sublet the Software or portions thereof.
+        * Sell, rent, lease, assign and modify the Software or portions thereof.
         * Grant rights to any other person.
 
+        Any violations of these restrictions are grounds for termination.
+
         ## Refunds
-        Refunds are not offered under any circumstance.
+        We offer refunds provided you contact us with 24 hours of purchase, with a valid reason. We do not offer trials.
+        After these 24 hours, you are no longer eligible for a refund.
 
         ## Data Collection
         We try to collect very minimal data but here is what we collect:
-        * Hardware identification that consists of "PROCESSOR_IDENTIFIER", "COMPUTERNAME", and "USERNAME".
+        * Hardware Identification that can and is used to identify a user's machine.
         * Telemetry data consisting of how the Software is used.
+
+        ## Cookies
+        https://panel.envyclient.com relies on "cookie" technology to allow you to re-access your registered account
+        profile during a web session. This mechanism is employed solely for your convenience and no other purpose.
+
+        ## Contact
+        Questions about the Terms of Service should be sent to us at
+        [contact@envyclient.com](mailto:contact@envyclient.com).
 
         ## Disclaimer Of Warranty
         THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED

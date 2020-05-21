@@ -30,30 +30,36 @@
                             </span>
                         </h5>
                         @if(count($configs) > 0)
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>name</th>
-                                    <th>favorites</th>
-                                    <th>created</th>
-                                    <th>last updated</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($configs as $config)
+                            <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 400px;">
+                                <table class="table table-hover">
+                                    <thead class="thead-light">
                                     <tr>
-                                        <th scope="row">{{ $loop->index + 1 }}</th>
-                                        <td>{{ $config->name }}</td>
-                                        <td>{{ $config->favorites_count }}</td>
-                                        <td>{{ $config->created_at->diffForHumans() }}</td>
-                                        <td>{{ $config->updated_at->diffForHumans() }}</td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">name</th>
+                                        <th scope="col">favorites</th>
+                                        <th scope="col">created</th>
+                                        <th scope="col">last updated</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($configs as $config)
+                                        <tr>
+                                            <th scope="row">{{ $loop->index + 1 }}</th>
+                                            <td>{{ $config->name }}</td>
+                                            <td>{{ $config->favorites_count }}</td>
+                                            <td>{{ $config->created_at->diffForHumans() }}</td>
+                                            <td>{{ $config->updated_at->diffForHumans() }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
                     </div>
+                    <br>
+                    <a class="btn btn-primary btn-lg btn-block" href="{{ route('versions.launcher') }}">
+                        Download Launcher
+                    </a>
                 @endif
             </div>
         </div>
@@ -89,7 +95,7 @@
             <br>
             <div class="card" style="width: 100%;">
                 <ul class="list-group list-group-flush">
-                    <button type="button" class="btn btn-outline-danger m-2 w-25" data-toggle="modal"
+                    <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal"
                             data-target="#disableAccountModal">
                         Disable Account
                     </button>
@@ -133,21 +139,21 @@
                     <ul class="list-group list-group-flush">
                         {!! Form::close() !!}
                         {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
-                        {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger w-25 m-sm-2']) }}
+                        {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
                         {!! Form::close() !!}
                     </ul>
                 </div>
             @else
                 <div class="card" style="width: 100%;">
                     <ul class="list-group list-group-flush">
-                        {{ Form::submit('Subscribe', ['class' => 'btn btn-outline-success m-2 w-25']) }}
+                        {{ Form::submit('Subscribe', ['class' => 'btn btn-outline-success btn-lg btn-block']) }}
                         {!! Form::close() !!}
                     </ul>
                 </div>
             @endif
         </div>
 
-        <!-- add payment -->
+        <!-- Add Credits Section -->
         <div class="tab-pane fade" id="credits" role="tabpanel">
             <div class="alert alert-secondary" style="font-size:25px;">
                 <i class="fas fa-credit-card" style="padding-right:10px;"></i> Add Credits
@@ -156,7 +162,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <h5 class="font-weight-bold">Payment methods</h5>
-                    <h7>Currently we are only supporting PayPal payments</h7>
+                    <h6>Currently we are only supporting PayPal payments</h6>
                     <div class="container m-3 font-weight-bold">
                         <p>Terms and Conditions</p>
                         <ul class="font-weight-normal">
@@ -200,7 +206,7 @@
             </ul>
         </div>
 
-        <!-- transactions -->
+        <!-- Transactions Section -->
         <div class="tab-pane fade" id="invoices" role="tabpanel">
             <div class="alert alert-secondary" style="font-size:25px;">
                 <i class="fas fa-shopping-cart" style="padding-right:10px;"></i> Transactions

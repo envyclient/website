@@ -155,6 +155,11 @@
         a.color-blue:hover {
             color: white;
         }
+
+        .table-sticky thead th {
+            position: sticky;
+            top: 0;
+        }
     </style>
 </head>
 <body>
