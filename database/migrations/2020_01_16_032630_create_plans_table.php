@@ -18,33 +18,28 @@ class CreatePlansTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('description');
-            $table->unsignedInteger('price');
-            $table->unsignedInteger('interval');
+            $table->unsignedTinyInteger('price');
+            $table->unsignedTinyInteger('interval')->default(30);
             $table->unsignedTinyInteger('config_limit');
+            $table->boolean('beta_access')->default(false);
         });
 
         DB::table('plans')->insert([
-            'name' => 'Monthly',
-            'description' => 'Get access to the client for 30 days.',
+            'name' => 'Basic',
+            'description' => 'Get basic access to Envy Client for 30 days.',
+            'price' => 5,
+            'interval' => 30,
+            'config_limit' => 5,
+            'beta_access' => false
+        ]);
+
+        DB::table('plans')->insert([
+            'name' => 'Premium',
+            'description' => 'Get premium access to Envy Client for 30 days.',
             'price' => 7,
             'interval' => 30,
-            'config_limit' => 5
-        ]);
-
-        DB::table('plans')->insert([
-            'name' => '3 Months',
-            'description' => 'Get access to the client for 90 days.',
-            'price' => 18,
-            'interval' => 90,
-            'config_limit' => 10
-        ]);
-
-        DB::table('plans')->insert([
-            'name' => 'Yearly',
-            'description' => 'Get access to the client for 365 days.',
-            'price' => 60,
-            'interval' => 365,
-            'config_limit' => 15
+            'config_limit' => 10,
+            'beta_access' => true
         ]);
     }
 
@@ -55,6 +50,6 @@ class CreatePlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('plans');
     }
 }
