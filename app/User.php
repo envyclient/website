@@ -8,6 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
+/**
+ * @property string name
+ * @property string email
+ * @property string email_verified_at
+ * @property string password
+ * @property string api_token
+ * @property bool admin
+ * @property bool banned
+ * @property bool disabled
+ * @property string last_launch_user
+ * @property string last_launch_at
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, Favoriter;
@@ -61,6 +73,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getConfigLimit(): int
     {
         return $this->subscription->plan->config_limit;
+    }
+
+    public function hasBetaAccess(): bool
+    {
+        return $this->hasSubscription() && $this->subscription->plan->beta_access;
     }
 
     public function image(): string

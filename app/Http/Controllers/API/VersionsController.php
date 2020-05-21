@@ -18,10 +18,11 @@ class VersionsController extends Controller
         $this->middleware('api-admin')->only('destroy');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $user = $request->user();
         return VersionResource::collection(
-            Version::all()
+            $user->hasBetaAccess() ? Version::all() : Version::where('beta', false)
         );
     }
 

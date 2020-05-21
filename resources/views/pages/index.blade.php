@@ -36,6 +36,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">name</th>
+                                        <th scope="col">public</th>
                                         <th scope="col">favorites</th>
                                         <th scope="col">created</th>
                                         <th scope="col">last updated</th>
@@ -46,6 +47,7 @@
                                         <tr>
                                             <th scope="row">{{ $loop->index + 1 }}</th>
                                             <td>{{ $config->name }}</td>
+                                            <td>{{ $config->public ? 'true' : 'false' }}</td>
                                             <td>{{ $config->favorites_count }}</td>
                                             <td>{{ $config->created_at->diffForHumans() }}</td>
                                             <td>{{ $config->updated_at->diffForHumans() }}</td>
@@ -58,7 +60,7 @@
                     </div>
                     <br>
                     <a class="btn btn-primary btn-lg btn-block" href="{{ route('versions.launcher') }}">
-                        Download Launcher
+                        <i class="fas fa-download pr-1"></i> Download Launcher
                     </a>
                 @endif
             </div>

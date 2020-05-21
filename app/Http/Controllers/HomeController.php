@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
+use App\Http\Resources\Version as VersionResource;
 use App\Plan;
+use App\Version;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -15,9 +18,9 @@ class HomeController extends Controller
         $this->middleware('admin')->only('admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
         return view('pages.index')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
@@ -32,9 +35,10 @@ class HomeController extends Controller
         return view('pages.terms');
     }
 
-    public function admin()
+    public function admin(Request $request)
     {
-        $apiToken = auth()->user()->api_token;
+        $user = $request->user();
+        $apiToken = $user->api_token;
 
         $usersChart = new UsersChart();
         $usersChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])

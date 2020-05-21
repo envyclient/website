@@ -82,10 +82,19 @@
                 {!! Form::open(['action' => 'VersionsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
                     {{ Form::label('name', 'Name') }}
-                    {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required' => 'required']) }}
+                    {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name', 'required' => 'required']) }}
                 </div>
                 <div class="form-group">
-                    {{ Form::file('file') }}
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="beta" id="beta">
+                        <label class="custom-control-label" for="beta">Is Beta Version?</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="file" id="file">
+                        <label class="custom-file-label" for="file">Choose file</label>
+                    </div>
                 </div>
                 {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                 {!! Form::close() !!}

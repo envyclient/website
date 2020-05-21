@@ -16,9 +16,10 @@ class CreateVersionsTable extends Migration
         Schema::create('versions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 30)->unique();
+            $table->boolean('beta')->default(false);
             $table->string('file')->unique();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
 /**
+ * @property int user_id
  * @property string name
- * @property json data
+ * @property string data
  * @property boolean public
  */
 class Config extends Model
