@@ -26,10 +26,6 @@ class CreateUsersTable extends Migration
             $table->boolean('banned')->default(false);
             $table->boolean('disabled')->default(false);
 
-            // keep track of envy users
-            $table->string('last_launch_user')->nullable();
-            $table->timestamp('last_launch_at')->nullable();
-
             $table->rememberToken();
             $table->timestamps();
         });
