@@ -174,29 +174,30 @@
                     </div>
                     <div class="card" style="width: 100%;margin-top:10px;">
                         <div class="card-body">
-                            <h5 class="card-title" style="font-weight: bold;"><i
-                                    class="fab fa-paypal"></i> PayPal</h5>
-                            <p class="card-text">By purchasing credits you agree to all the terms
-                                above.</p>
+                            <h5 class="card-title" style="font-weight: bold;">
+                                <i class="fab fa-paypal"></i> PayPal
+                            </h5>
                             {!! Form::open(['action' => 'PayPalController@create']) !!}
                             <div class="form-group">
-                                {{ Form::label('amount', 'Cash amount: ') }}
-                                {{ Form::select('amount', [
-                                    '1' => '$1',
-                                    '5' => '$5',
-                                    '7' => '$7',
-                                    '10' => '$10',
-                                    '15' => '$15',
-                                    '20' => '$20',
-                                    '25' => '$25',
-                                    '30' => '$30',
-                                    '35' => '$35',
-                                    '40' => '$40',
-                                    '50' => '$50',
-                                    '60' => '$60',
-                                    '70' => '$70',
-                                    '80' => '$80',
-                                ], '7', ['class' => 'form-control']) }}
+                                {{ Form::label('amount', 'Amount:') }}
+                                <br>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    @foreach([5, 10, 15, 20, 30] as $amount)
+                                        @if($loop->first)
+                                            <label class="btn btn-secondary active">
+                                                <input type="radio" name="amount" autocomplete="off"
+                                                       value="{{ $amount }}" checked>
+                                                ${{ $amount }}
+                                            </label>
+                                        @else
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="amount" autocomplete="off"
+                                                       value="{{ $amount }}">
+                                                ${{ $amount }}
+                                            </label>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                             {{ Form::submit('Add Credits', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
