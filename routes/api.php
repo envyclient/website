@@ -50,10 +50,3 @@ Route::prefix('versions')->group(function () {
     Route::get('{version}', 'API\VersionsController@show')->name('api.versions.show');
     Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
 });
-
-/**
- * Get all active users
- */
-Route::get('users/active', function () {
-    return User::where('last_launch_at', '>=', Carbon::now()->subtract(5, 'minutes'))->pluck('last_launch_user');
-});

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,8 +20,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'api_token' => 'required|string|min:40|max:40',
-            'account_name' => 'required|string'
+            'api_token' => 'required|string|min:40|max:40'
         ]);
 
         if ($validator->fails()) {
@@ -35,26 +33,16 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return $this->returnUserObject(auth()->user(), $request->api_token, $request->account_name);
+        return $this->returnUserObject(auth()->user(), $request->api_token);
     }
 
     public function me(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'account_name' => 'required|string'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
         $user = $request->user();
-        return $this->returnUserObject($user, $user->api_token, $request->account_name);
+        return $this->returnUserObject($user, $user->api_token);
     }
 
-    private function returnUserObject($user, string $apiToken, string $accountName)
+    private function returnUserObject($user, string $apiToken)
     {
         // check for duplicate api_token
         $userCheck = User::where('api_token', $apiToken);
@@ -84,9 +72,7 @@ class AuthController extends Controller
 
         // fill users hwid
         $user->fill([
-            'api_token' => $apiToken,
-            'last_launch_user' => $accountName,
-            'last_launch_at' => Carbon::now()
+            'api_token' => $apiToken
         ])->save();
 
         return response()->json([
