@@ -114,7 +114,7 @@
                     @if($user->hasSubscription())
                         <li class="list-group-item">
                             You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
-                            (next payment in due in {{ $nextSubscription }} days)
+                            (next payment due in {{ $nextSubscription }} days)
                         </li>
                     @endif
                     @foreach($plans as $plan)
