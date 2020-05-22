@@ -21,17 +21,14 @@
                 @if($user->hasSubscription())
                     <div class="alert alert-secondary" style="font-size:25px;">
                         <i class="fas fa-file" style="padding-right:10px;"></i>Configs
+                        <span class="badge badge-secondary">{{ $configs->count() }}/<span
+                                class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
+                            </span>
                     </div>
                     <div class="text-left">
-                        <label>Configs Used:</label>
-                        <h5>
-                            <span class="badge badge-secondary">{{ $configs->count() }}/<span
-                                    class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
-                            </span>
-                        </h5>
                         @if(count($configs) > 0)
                             <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 400px;">
-                                <table class="table table-hover">
+                                <table class="table table-bordered">
                                     <thead class="thead-light">
                                     <tr>
                                         <th scope="col">#</th>
@@ -214,7 +211,7 @@
             <div class="alert alert-secondary" style="font-size:25px;">
                 <i class="fas fa-shopping-cart" style="padding-right:10px;"></i> Transactions
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped" style="background:white;">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
