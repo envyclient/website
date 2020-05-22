@@ -19,16 +19,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    const CHART_OPTIONS = [
-        'tooltip' => [
-            'show' => true
-        ],
-        'scales' => [
-            'yAxes' => [
-                ['ticks' => ['precision' => 0]]
-            ]
-        ]
-    ];
+
 
     public function __construct()
     {
@@ -190,7 +181,6 @@ class AdminController extends Controller
         }
         $chart->dataset('Configs', 'line', $data)->color('#fd5e53')->fill(false);
 
-        $chart->options(self::CHART_OPTIONS);
         return $chart->api();
     }
 
@@ -206,15 +196,12 @@ class AdminController extends Controller
 
         $chart = new TransactionsChart();
         $chart->dataset('Transactions', 'line', $data);
-        $chart->options(self::CHART_OPTIONS);
-
         return $chart->api();
     }
 
     public function versionDownloadsChart()
     {
         $chart = new VersionDownloadsChart();
-
         foreach (Version::all() as $version) {
             $data = [];
             for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
@@ -224,10 +211,8 @@ class AdminController extends Controller
                     ->count()
                 );
             }
-            $chart->dataset($version->name, 'bar', $data)->color(self::randomColor());
+            $chart->dataset($version->name, 'bar', $data)->backgroundColor(self::randomColor());
         }
-
-        $chart->options(self::CHART_OPTIONS);
         return $chart->api();
     }
 

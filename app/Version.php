@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property  string name
@@ -12,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Version extends Model
 {
-    use SoftDeletes;
-
     const FILES_DIRECTORY = 'versions';
 
     public function users()
