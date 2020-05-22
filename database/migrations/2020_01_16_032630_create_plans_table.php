@@ -26,30 +26,16 @@ class CreatePlansTable extends Migration
         });
 
         DB::table('plans')->insert([
-            'name' => 'Basic',
-            'description' => 'Get basic access to Envy Client for 30 days.',
-            'price' => 5,
-            'interval' => 30,
-            'config_limit' => 5,
-            'beta_access' => false,
-            'capes' => false
-        ]);
-
-        DB::table('plans')->insert([
             'name' => 'Standard',
             'description' => 'Get basic access to Envy Client for 30 days.',
             'price' => 7,
-            'interval' => 30,
-            'config_limit' => 10,
-            'beta_access' => true,
-            'capes' => false
+            'config_limit' => 5
         ]);
 
         DB::table('plans')->insert([
             'name' => 'Premium',
             'description' => 'Get premium access to Envy Client for 30 days.',
             'price' => 10,
-            'interval' => 30,
             'config_limit' => 15,
             'beta_access' => true,
             'capes' => true
