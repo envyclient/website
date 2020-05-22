@@ -18,6 +18,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property bool banned
  * @property bool disabled
  */
+// TODO: add user client settings
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasWallet, Favoriter;

@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
-use App\Http\Resources\Version as VersionResource;
 use App\Plan;
-use App\Version;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    const CHART_OPTIONS = [
+        'tooltip' => [
+            'show' => true
+        ],
+        'scales' => [
+            'yAxes' => [
+                ['ticks' => ['precision' => 0]]
+            ]
+        ]
+    ];
+
     public function __construct()
     {
         $this->middleware(['auth', 'verified'])->except('terms');
@@ -42,14 +51,36 @@ class HomeController extends Controller
 
         $usersChart = new UsersChart();
         $usersChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+            ->options(self::CHART_OPTIONS)
             ->load(route('api.admin.users.chart') . '?api_token=' . $apiToken);
 
         $transactionsChart = new TransactionsChart();
         $transactionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+            ->options(self::CHART_OPTIONS)
             ->load(route('api.admin.transactions.chart') . '?api_token=' . $apiToken);
 
         $versionsChart = new VersionDownloadsChart();
         $versionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+            ->options([
+                'tooltip' => [
+                    'show' => true
+                ],
+                'scales' => [
+                    'xAxes' => [
+                        [
+                            'stacked' => true
+                        ]
+                    ],
+                    'yAxes' => [
+                        [
+                            'stacked' => true,
+                            'ticks' => [
+                                'precision' => 0
+                            ]
+                        ]
+                    ]
+                ]
+            ])
             ->load(route('api.admin.versions.chart') . '?api_token=' . $apiToken);
 
         return view('pages.admin')->with([

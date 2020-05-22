@@ -19,7 +19,6 @@ class CreateVersionsTable extends Migration
             $table->boolean('beta')->default(false);
             $table->string('file')->unique();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
