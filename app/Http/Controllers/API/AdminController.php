@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
 
-
     public function __construct()
     {
         $this->middleware(['auth:api', 'api-admin']);

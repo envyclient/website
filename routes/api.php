@@ -7,8 +7,8 @@
 use Illuminate\Support\Facades\Storage;
 
 Route::prefix('auth')->group(function () {
-    Route::post('login', 'API\AuthController@login')->name('api.auth.login');
-    Route::get('me', 'API\AuthController@me')->name('api.auth.me');
+    Route::post('login', 'API\AuthController@login');
+    Route::get('me', 'API\AuthController@me');
 });
 
 /**
@@ -23,6 +23,7 @@ Route::prefix('configs')->group(function () {
     Route::get('/', 'API\ConfigsController@index');
     Route::get('{config}', 'API\ConfigsController@show');
     Route::post('/', 'API\ConfigsController@store');
+    Route::put('{config}', 'API\ConfigsController@update');
     Route::delete('{config}', 'API\ConfigsController@destroy');
 });
 
