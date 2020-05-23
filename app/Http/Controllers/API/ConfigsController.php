@@ -98,6 +98,34 @@ class ConfigsController extends Controller
         ], 201);
     }
 
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:15',
+            'data' => 'required|json',
+            'public' => 'nullable|boolean'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        $user = $request->user();
+        $config = $user->configs()->findOrFail($id);
+        $config->name = $request->name;
+        $config->data = $request->data;
+        if ($request->has('public')) {
+            $config->public = $request->public;
+        }
+        $config->save();
+
+        return response()->json([
+            'message' => '300 OK'
+        ], 200);
+    }
+
     public function destroy(Request $request, $id)
     {
         $request->user()->configs()->findOrFail($id)->delete();
@@ -146,7 +174,7 @@ class ConfigsController extends Controller
         if ($config->user_id === $user->id) {
             return response()->json([
                 'message' => 'You can not favorite your own config.'
-            ], 409);
+            ], 403);
         }
 
         if ($user->hasFavorited($config)) {

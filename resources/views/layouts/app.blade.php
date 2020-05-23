@@ -26,7 +26,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="app">
+<div>
     @include('inc.navbar.default')
     <div id="main">
         <!-- notifications -->

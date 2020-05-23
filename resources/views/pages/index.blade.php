@@ -124,6 +124,12 @@
                                     {{ $plan->name }}
                                 </div>
                                 <div class="col">
+                                    <button type="button" class="btn btn-light" data-toggle="modal"
+                                            data-target="#{{ $plan->name }}-modal">
+                                        Features
+                                    </button>
+                                </div>
+                                <div class="col">
                                     <b>${{ $plan->price }}</b>
                                     / {{ "$plan->interval days" }}
                                 </div>
@@ -263,6 +269,29 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
+        @foreach($plans as $plan)
+            <div class="modal fade" id="{{ $plan->name }}-modal" tabindex="-1" role="dialog"
+                 aria-labelledby="{{ $plan->name }}-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="{{ $plan->name }}-label">Features - {{ $plan->name }} Plan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ $plan->name }}
+                            {{ $plan->config_limit }} Configs
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    @endforeach
+
 @endsection

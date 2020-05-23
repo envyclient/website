@@ -1,14 +1,14 @@
 <?php
 
-use App\User;
-use Carbon\Carbon;
-
 /**
  * Auth
  */
+
+use Illuminate\Support\Facades\Storage;
+
 Route::prefix('auth')->group(function () {
-    Route::post('login', 'API\AuthController@login')->name('api.auth.login');
-    Route::get('me', 'API\AuthController@me')->name('api.auth.me');
+    Route::post('login', 'API\AuthController@login');
+    Route::get('me', 'API\AuthController@me');
 });
 
 /**
@@ -23,6 +23,7 @@ Route::prefix('configs')->group(function () {
     Route::get('/', 'API\ConfigsController@index');
     Route::get('{config}', 'API\ConfigsController@show');
     Route::post('/', 'API\ConfigsController@store');
+    Route::put('{config}', 'API\ConfigsController@update');
     Route::delete('{config}', 'API\ConfigsController@destroy');
 });
 
@@ -50,3 +51,10 @@ Route::prefix('versions')->group(function () {
     Route::get('{version}', 'API\VersionsController@show')->name('api.versions.show');
     Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
 });
+
+/**
+ * Download a cape
+ */
+Route::middleware('auth:api')->get('capes/{cape}', function ($cape) {
+    return Storage::disk('minio')->download('capes/' . $cape . '.png');
+})->name('capes');

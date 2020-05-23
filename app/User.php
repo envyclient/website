@@ -79,6 +79,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasSubscription() && $this->subscription->plan->beta_access;
     }
 
+    public function hasCapesAccess(): bool
+    {
+        return $this->hasSubscription() && $this->subscription->plan->capes_access;
+    }
+
     public function image(): string
     {
         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
