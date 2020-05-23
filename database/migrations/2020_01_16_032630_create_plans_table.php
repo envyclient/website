@@ -22,7 +22,7 @@ class CreatePlansTable extends Migration
             $table->unsignedTinyInteger('interval')->default(30);
             $table->unsignedTinyInteger('config_limit');
             $table->boolean('beta_access')->default(false);
-            $table->boolean('capes')->default(false);
+            $table->boolean('capes_access')->default(false);
         });
 
         DB::table('plans')->insert([
@@ -38,7 +38,7 @@ class CreatePlansTable extends Migration
             'price' => 10,
             'config_limit' => 15,
             'beta_access' => true,
-            'capes' => true
+            'capes_access' => true
         ]);
     }
 
