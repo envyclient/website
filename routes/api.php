@@ -41,6 +41,8 @@ Route::prefix('admin')->group(function () {
     Route::get('transactions/chart', 'API\AdminController@transactionsChart')->name('api.admin.transactions.chart');
 
     Route::get('versions/chart', 'API\AdminController@versionDownloadsChart')->name('api.admin.versions.chart');
+
+    Route::get('referral-codes', 'API\AdminController@referralCodes')->name('api.admin.referral-codes');
 });
 
 /**

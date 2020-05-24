@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->boolean('disabled')->default(false);
 
             $table->string('cape_selected')->nullable();
+            $table->unsignedInteger('referral_code_id')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

@@ -6,6 +6,7 @@ use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Plan;
+use App\ReferralCode;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

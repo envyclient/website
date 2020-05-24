@@ -29,10 +29,9 @@
 <div>
     @include('inc.navbar.default')
     <div id="main">
-        <!-- notifications -->
-        <div class="container">
-            @include('inc.notifications')
-        </div>
+        {{--        <div class="container">
+                    @include('inc.notifications')
+                </div>--}}
         @yield('content')
     </div>
 </div>

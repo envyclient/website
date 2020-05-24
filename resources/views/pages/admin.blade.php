@@ -100,6 +100,19 @@
                 {!! Form::close() !!}
             </div>
         </div>
+
+
+        <!-- referral codes -->
+        <div class="tab-pane fade custom-panel" id="referral-codes" role="tabpanel">
+            <div>
+                <div class="alert alert-primary" style="font-size:25px;">
+                    Referral Codes
+                </div>
+                <referral-codes-table url="{{ route('api.admin.referral-codes') }}"
+                                      api-token="{{ $apiToken }}"></referral-codes-table>
+            </div>
+        </div>
+
     </div>
 @endsection
 

@@ -27,6 +27,11 @@
                     <i class="fas fa-download p-2" style="margin-right:10px;"></i>
                     Versions
                 </a>
+                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#referral-codes"
+                   style="cursor:pointer;">
+                    <i class="fas fa-user-tag p-2" style="margin-right:10px;"></i>
+                    Referral Codes
+                </a>
             </div>
         @else
             <div class="list-group list-group-flush">
