@@ -68,7 +68,25 @@
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation" required autocomplete="new-password">
+                                           name="password_confirmation" required autocomplete="password-confirm">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="referral-code"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Referral Code') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="referral-code" type="text"
+                                           class="form-control @error('referral_code') is-invalid @enderror"
+                                           name="referral_code"
+                                           required autocomplete="referral-code">
+
+                                    @error('referral_code')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
 

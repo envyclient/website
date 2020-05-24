@@ -9,7 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
-import Notifications from 'vue-notification'
+import Notifications from "vue-notification"
 
 Vue.use(Notifications);
 

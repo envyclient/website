@@ -53,6 +53,14 @@ Route::prefix('versions')->group(function () {
 });
 
 /**
+ * Referrals
+ */
+Route::prefix('referrals')->group(function () {
+    Route::get('/', 'API\ReferralsCodeController@index')->name('api.referrals.index');
+    Route::post('/', 'API\ReferralsCodeController@store')->name('api.referrals.store');
+});
+
+/**
  * Download a cape
  */
 Route::middleware('auth:api')->get('capes/{cape}', function ($cape) {

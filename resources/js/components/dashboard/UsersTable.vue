@@ -105,9 +105,9 @@
 </template>
 
 <script>
-    import EventBus from '../../eventbus'
-    import pagination from 'laravel-vue-pagination';
-    import moment from "moment";
+    import EventBus from "../../eventbus"
+    import pagination from "laravel-vue-pagination"
+    import moment from "moment"
 
     export default {
         name: "UsersTable",
@@ -124,7 +124,7 @@
                 data: {},
                 filter: {
                     name: null,
-                    type: 'all'
+                    type: "all"
                 },
                 selectedUser: null,
                 modal: {
@@ -171,13 +171,13 @@
                         title: "Success",
                         text: `Added ${this.modal.credits} credits to '${this.selectedUser.name}'.`
                     });
-                    EventBus.$emit('UPDATE_TRANSACTIONS');
+                    EventBus.$emit("UPDATE_TRANSACTIONS");
                 }).catch(error => {
                     console.log(error);
                     this.$notify({
                         type: "error",
                         title: "Error",
-                        text: 'Error, please check console.'
+                        text: "Error, please check console."
                     });
                 }).finally(() => {
                     this.modal.credits = 5;
@@ -200,7 +200,7 @@
                     this.$notify({
                         type: "error",
                         title: "Error",
-                        text: 'Error, please check console.'
+                        text: "Error, please check console."
                     });
                 }).finally(this.closing);
             },

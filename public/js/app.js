@@ -2166,7 +2166,7 @@ __webpack_require__.r(__webpack_exports__);
       data: {},
       filter: {
         name: null,
-        type: 'all'
+        type: "all"
       },
       selectedUser: null,
       modal: {
@@ -2222,14 +2222,14 @@ __webpack_require__.r(__webpack_exports__);
           text: "Added ".concat(_this2.modal.credits, " credits to '").concat(_this2.selectedUser.name, "'.")
         });
 
-        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('UPDATE_TRANSACTIONS');
+        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("UPDATE_TRANSACTIONS");
       })["catch"](function (error) {
         console.log(error);
 
         _this2.$notify({
           type: "error",
           title: "Error",
-          text: 'Error, please check console.'
+          text: "Error, please check console."
         });
       })["finally"](function () {
         _this2.modal.credits = 5;
@@ -2257,7 +2257,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.$notify({
           type: "error",
           title: "Error",
-          text: 'Error, please check console.'
+          text: "Error, please check console."
         });
       })["finally"](this.closing);
     },
@@ -2370,6 +2370,189 @@ __webpack_require__.r(__webpack_exports__);
         console.log(data);
 
         _this2.fetchData();
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ReferralCodeCreate",
+  props: {
+    url: {
+      type: String,
+      required: true
+    },
+    apiToken: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      username: null,
+      code: null
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      // validator form
+      if (!this.username || !this.code) {
+        this.$notify({
+          type: "error",
+          title: "Error",
+          text: "Username or Code are invalid."
+        });
+      }
+
+      axios.post(this.url, {
+        username: this.username,
+        code: this.code,
+        api_token: this.apiToken
+      }).then(function (data) {
+        console.log(data);
+
+        _this.$notify({
+          type: "success",
+          title: "Success",
+          text: "Referral Code created."
+        });
+
+        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("UPDATE_REFERRALS_CODE");
+        _this.username = null;
+        _this.code = null;
+      })["catch"](function (error) {
+        console.log(error);
+
+        _this.$notify({
+          type: "error",
+          title: "Error",
+          text: "Error, please check console."
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ReferralCodesTable",
+  props: {
+    url: {
+      type: String,
+      required: true
+    },
+    apiToken: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      loading: true,
+      data: []
+    };
+  },
+  created: function created() {
+    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_REFERRALS_CODE", this.fetchData);
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.loading = true;
+      axios.get(this.url, {
+        params: {
+          api_token: this.apiToken
+        }
+      }).then(function (data) {
+        console.log(data);
+        _this.data = data.data;
+        _this.loading = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -35798,7 +35981,11 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 //! moment.js locale configuration
 //! locale : Arabic (Algeria) [ar-dz]
-//! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
+//! author : Amine Roukh: https://github.com/Amine27
+//! author : Abdel Said: https://github.com/abdelsaid
+//! author : Ahmed Elkhatib
+//! author : forabi https://github.com/forabi
+//! author : Noureddine LOUAHEDJ : https://github.com/noureddinem
 
 ;(function (global, factory) {
     true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
@@ -35807,48 +35994,146 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
     //! moment.js locale configuration
 
+    var pluralForm = function (n) {
+            return n === 0
+                ? 0
+                : n === 1
+                ? 1
+                : n === 2
+                ? 2
+                : n % 100 >= 3 && n % 100 <= 10
+                ? 3
+                : n % 100 >= 11
+                ? 4
+                : 5;
+        },
+        plurals = {
+            s: [
+                'أقل من ثانية',
+                'ثانية واحدة',
+                ['ثانيتان', 'ثانيتين'],
+                '%d ثوان',
+                '%d ثانية',
+                '%d ثانية',
+            ],
+            m: [
+                'أقل من دقيقة',
+                'دقيقة واحدة',
+                ['دقيقتان', 'دقيقتين'],
+                '%d دقائق',
+                '%d دقيقة',
+                '%d دقيقة',
+            ],
+            h: [
+                'أقل من ساعة',
+                'ساعة واحدة',
+                ['ساعتان', 'ساعتين'],
+                '%d ساعات',
+                '%d ساعة',
+                '%d ساعة',
+            ],
+            d: [
+                'أقل من يوم',
+                'يوم واحد',
+                ['يومان', 'يومين'],
+                '%d أيام',
+                '%d يومًا',
+                '%d يوم',
+            ],
+            M: [
+                'أقل من شهر',
+                'شهر واحد',
+                ['شهران', 'شهرين'],
+                '%d أشهر',
+                '%d شهرا',
+                '%d شهر',
+            ],
+            y: [
+                'أقل من عام',
+                'عام واحد',
+                ['عامان', 'عامين'],
+                '%d أعوام',
+                '%d عامًا',
+                '%d عام',
+            ],
+        },
+        pluralize = function (u) {
+            return function (number, withoutSuffix, string, isFuture) {
+                var f = pluralForm(number),
+                    str = plurals[u][pluralForm(number)];
+                if (f === 2) {
+                    str = str[withoutSuffix ? 0 : 1];
+                }
+                return str.replace(/%d/i, number);
+            };
+        },
+        months = [
+            'جانفي',
+            'فيفري',
+            'مارس',
+            'أفريل',
+            'ماي',
+            'جوان',
+            'جويلية',
+            'أوت',
+            'سبتمبر',
+            'أكتوبر',
+            'نوفمبر',
+            'ديسمبر',
+        ];
+
     var arDz = moment.defineLocale('ar-dz', {
-        months: 'جانفي_فيفري_مارس_أفريل_ماي_جوان_جويلية_أوت_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split(
-            '_'
-        ),
-        monthsShort: 'جانفي_فيفري_مارس_أفريل_ماي_جوان_جويلية_أوت_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split(
-            '_'
-        ),
+        months: months,
+        monthsShort: months,
         weekdays: 'الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
-        weekdaysShort: 'احد_اثنين_ثلاثاء_اربعاء_خميس_جمعة_سبت'.split('_'),
-        weekdaysMin: 'أح_إث_ثلا_أر_خم_جم_سب'.split('_'),
+        weekdaysShort: 'أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت'.split('_'),
+        weekdaysMin: 'ح_ن_ث_ر_خ_ج_س'.split('_'),
         weekdaysParseExact: true,
         longDateFormat: {
             LT: 'HH:mm',
             LTS: 'HH:mm:ss',
-            L: 'DD/MM/YYYY',
+            L: 'D/\u200FM/\u200FYYYY',
             LL: 'D MMMM YYYY',
             LLL: 'D MMMM YYYY HH:mm',
             LLLL: 'dddd D MMMM YYYY HH:mm',
         },
+        meridiemParse: /ص|م/,
+        isPM: function (input) {
+            return 'م' === input;
+        },
+        meridiem: function (hour, minute, isLower) {
+            if (hour < 12) {
+                return 'ص';
+            } else {
+                return 'م';
+            }
+        },
         calendar: {
-            sameDay: '[اليوم على الساعة] LT',
-            nextDay: '[غدا على الساعة] LT',
-            nextWeek: 'dddd [على الساعة] LT',
-            lastDay: '[أمس على الساعة] LT',
-            lastWeek: 'dddd [على الساعة] LT',
+            sameDay: '[اليوم عند الساعة] LT',
+            nextDay: '[غدًا عند الساعة] LT',
+            nextWeek: 'dddd [عند الساعة] LT',
+            lastDay: '[أمس عند الساعة] LT',
+            lastWeek: 'dddd [عند الساعة] LT',
             sameElse: 'L',
         },
         relativeTime: {
-            future: 'في %s',
+            future: 'بعد %s',
             past: 'منذ %s',
-            s: 'ثوان',
-            ss: '%d ثانية',
-            m: 'دقيقة',
-            mm: '%d دقائق',
-            h: 'ساعة',
-            hh: '%d ساعات',
-            d: 'يوم',
-            dd: '%d أيام',
-            M: 'شهر',
-            MM: '%d أشهر',
-            y: 'سنة',
-            yy: '%d سنوات',
+            s: pluralize('s'),
+            ss: pluralize('s'),
+            m: pluralize('m'),
+            mm: pluralize('m'),
+            h: pluralize('h'),
+            hh: pluralize('h'),
+            d: pluralize('d'),
+            dd: pluralize('d'),
+            M: pluralize('M'),
+            MM: pluralize('M'),
+            y: pluralize('y'),
+            yy: pluralize('y'),
+        },
+        postformat: function (string) {
+            return string.replace(/,/g, '،');
         },
         week: {
             dow: 0, // Sunday is the first day of the week.
@@ -37410,15 +37695,72 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         return mutationTable[text.charAt(0)] + text.substring(1);
     }
 
+    var monthsParse = [
+            /^gen/i,
+            /^c[ʼ\']hwe/i,
+            /^meu/i,
+            /^ebr/i,
+            /^mae/i,
+            /^(mez|eve)/i,
+            /^gou/i,
+            /^eos/i,
+            /^gwe/i,
+            /^her/i,
+            /^du/i,
+            /^ker/i,
+        ],
+        monthsRegex = /^(genver|c[ʼ\']hwevrer|meurzh|ebrel|mae|mezheven|gouere|eost|gwengolo|here|du|kerzu|gen|c[ʼ\']hwe|meu|ebr|mae|eve|gou|eos|gwe|her|du|ker)/i,
+        monthsStrictRegex = /^(genver|c[ʼ\']hwevrer|meurzh|ebrel|mae|mezheven|gouere|eost|gwengolo|here|du|kerzu)/i,
+        monthsShortStrictRegex = /^(gen|c[ʼ\']hwe|meu|ebr|mae|eve|gou|eos|gwe|her|du|ker)/i,
+        fullWeekdaysParse = [
+            /^sul/i,
+            /^lun/i,
+            /^meurzh/i,
+            /^merc[ʼ\']her/i,
+            /^yaou/i,
+            /^gwener/i,
+            /^sadorn/i,
+        ],
+        shortWeekdaysParse = [
+            /^Sul/i,
+            /^Lun/i,
+            /^Meu/i,
+            /^Mer/i,
+            /^Yao/i,
+            /^Gwe/i,
+            /^Sad/i,
+        ],
+        minWeekdaysParse = [
+            /^Su/i,
+            /^Lu/i,
+            /^Me([^r]|$)/i,
+            /^Mer/i,
+            /^Ya/i,
+            /^Gw/i,
+            /^Sa/i,
+        ];
+
     var br = moment.defineLocale('br', {
-        months: "Genver_C'hwevrer_Meurzh_Ebrel_Mae_Mezheven_Gouere_Eost_Gwengolo_Here_Du_Kerzu".split(
+        months: 'Genver_Cʼhwevrer_Meurzh_Ebrel_Mae_Mezheven_Gouere_Eost_Gwengolo_Here_Du_Kerzu'.split(
             '_'
         ),
-        monthsShort: "Gen_C'hwe_Meu_Ebr_Mae_Eve_Gou_Eos_Gwe_Her_Du_Ker".split('_'),
-        weekdays: "Sul_Lun_Meurzh_Merc'her_Yaou_Gwener_Sadorn".split('_'),
+        monthsShort: 'Gen_Cʼhwe_Meu_Ebr_Mae_Eve_Gou_Eos_Gwe_Her_Du_Ker'.split('_'),
+        weekdays: 'Sul_Lun_Meurzh_Mercʼher_Yaou_Gwener_Sadorn'.split('_'),
         weekdaysShort: 'Sul_Lun_Meu_Mer_Yao_Gwe_Sad'.split('_'),
         weekdaysMin: 'Su_Lu_Me_Mer_Ya_Gw_Sa'.split('_'),
-        weekdaysParseExact: true,
+        weekdaysParse: minWeekdaysParse,
+        fullWeekdaysParse: fullWeekdaysParse,
+        shortWeekdaysParse: shortWeekdaysParse,
+        minWeekdaysParse: minWeekdaysParse,
+
+        monthsRegex: monthsRegex,
+        monthsShortRegex: monthsRegex,
+        monthsStrictRegex: monthsStrictRegex,
+        monthsShortStrictRegex: monthsShortStrictRegex,
+        monthsParse: monthsParse,
+        longMonthsParse: monthsParse,
+        shortMonthsParse: monthsParse,
+
         longDateFormat: {
             LT: 'HH:mm',
             LTS: 'HH:mm:ss',
@@ -37429,15 +37771,15 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         },
         calendar: {
             sameDay: '[Hiziv da] LT',
-            nextDay: "[Warc'hoazh da] LT",
+            nextDay: '[Warcʼhoazh da] LT',
             nextWeek: 'dddd [da] LT',
-            lastDay: "[Dec'h da] LT",
+            lastDay: '[Decʼh da] LT',
             lastWeek: 'dddd [paset da] LT',
             sameElse: 'L',
         },
         relativeTime: {
             future: 'a-benn %s',
-            past: "%s 'zo",
+            past: '%s ʼzo',
             s: 'un nebeud segondennoù',
             ss: '%d eilenn',
             m: 'ur vunutenn',
@@ -37459,6 +37801,13 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         week: {
             dow: 1, // Monday is the first day of the week.
             doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
+        meridiemParse: /a.m.|g.m./, // goude merenn | a-raok merenn
+        isPM: function (token) {
+            return token === 'g.m.';
+        },
+        meridiem: function (hour, minute, isLower) {
+            return hour < 12 ? 'a.m.' : 'g.m.';
         },
     });
 
@@ -38812,7 +39161,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             return number + output;
         },
         week: {
-            dow: 1, // Monday is the first day of the week.
+            dow: 0, // Sunday is the first day of the week.
             doy: 4, // The week that contains Jan 4th is the first week of the year.
         },
     });
@@ -39244,8 +39593,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             return number + output;
         },
         week: {
-            dow: 1, // Monday is the first day of the week.
-            doy: 4, // The week that contains Jan 4th is the first week of the year.
+            dow: 0, // Sunday is the first day of the week.
+            doy: 6, // The week that contains Jan 1st is the first week of the year.
         },
     });
 
@@ -42384,8 +42733,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             yy: '%d tahun',
         },
         week: {
-            dow: 1, // Monday is the first day of the week.
-            doy: 7, // The week that contains Jan 7th is the first week of the year.
+            dow: 0, // Sunday is the first day of the week.
+            doy: 6, // The week that contains Jan 6th is the first week of the year.
         },
     });
 
@@ -46674,7 +47023,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 //! moment.js locale configuration
 //! locale : Russian [ru]
 //! author : Viktorminator : https://github.com/Viktorminator
-//! Author : Menelion Elensúle : https://github.com/Oire
+//! author : Menelion Elensúle : https://github.com/Oire
 //! author : Коренберг Марк : https://github.com/socketpair
 
 ;(function (global, factory) {
@@ -46735,7 +47084,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             ),
         },
         monthsShort: {
-            // по CLDR именно "июл." и "июн.", но какой смысл менять букву на точку ?
+            // по CLDR именно "июл." и "июн.", но какой смысл менять букву на точку?
             format: 'янв._февр._мар._апр._мая_июня_июля_авг._сент._окт._нояб._дек.'.split(
                 '_'
             ),
@@ -46750,7 +47099,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             format: 'воскресенье_понедельник_вторник_среду_четверг_пятницу_субботу'.split(
                 '_'
             ),
-            isFormat: /\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/,
+            isFormat: /\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?] ?dddd/,
         },
         weekdaysShort: 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
         weekdaysMin: 'вс_пн_вт_ср_чт_пт_сб'.split('_'),
@@ -46767,7 +47116,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         // полные названия с падежами
         monthsStrictRegex: /^(январ[яь]|феврал[яь]|марта?|апрел[яь]|ма[яй]|июн[яь]|июл[яь]|августа?|сентябр[яь]|октябр[яь]|ноябр[яь]|декабр[яь])/i,
 
-        // Выражение, которое соотвествует только сокращённым формам
+        // Выражение, которое соответствует только сокращённым формам
         monthsShortStrictRegex: /^(янв\.|февр?\.|мар[т.]|апр\.|ма[яй]|июн[ья.]|июл[ья.]|авг\.|сент?\.|окт\.|нояб?\.|дек\.)/i,
         longDateFormat: {
             LT: 'H:mm',
@@ -48110,7 +48459,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             h: 'saa limoja',
             hh: 'masaa %d',
             d: 'siku moja',
-            dd: 'masiku %d',
+            dd: 'siku %d',
             M: 'mwezi mmoja',
             MM: 'miezi %d',
             y: 'mwaka mmoja',
@@ -48957,6 +49306,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         ),
         weekdaysShort: 'Paz_Pts_Sal_Çar_Per_Cum_Cts'.split('_'),
         weekdaysMin: 'Pz_Pt_Sa_Ça_Pe_Cu_Ct'.split('_'),
+        meridiem: function (hours, minutes, isLower) {
+            if (hours < 12) {
+                return isLower ? 'öö' : 'ÖÖ';
+            } else {
+                return isLower ? 'ös' : 'ÖS';
+            }
+        },
+        meridiemParse: /öö|ÖÖ|ös|ÖS/,
+        isPM: function (input) {
+            return input === 'ös' || input === 'ÖS';
+        },
         longDateFormat: {
             LT: 'HH:mm',
             LTS: 'HH:mm:ss',
@@ -50106,6 +50466,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 //! locale : Chinese (China) [zh-cn]
 //! author : suupic : https://github.com/suupic
 //! author : Zeno Zeng : https://github.com/zenozeng
+//! author : uu109 : https://github.com/uu109
 
 ;(function (global, factory) {
     true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
@@ -50169,9 +50530,21 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         calendar: {
             sameDay: '[今天]LT',
             nextDay: '[明天]LT',
-            nextWeek: '[下]ddddLT',
+            nextWeek: function (now) {
+                if (now.week() !== this.week()) {
+                    return '[下]dddLT';
+                } else {
+                    return '[本]dddLT';
+                }
+            },
             lastDay: '[昨天]LT',
-            lastWeek: '[上]ddddLT',
+            lastWeek: function (now) {
+                if (this.week() !== now.week()) {
+                    return '[上]dddLT';
+                } else {
+                    return '[本]dddLT';
+                }
+            },
             sameElse: 'L',
         },
         dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
@@ -50588,7 +50961,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
-//! version : 2.25.3
+//! version : 2.26.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -53351,8 +53724,6 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             token = tokens[i];
             parsedInput = (string.match(getParseRegexForToken(token, config)) ||
                 [])[0];
-            // console.log('token', token, 'parsedInput', parsedInput,
-            //         'regex', getParseRegexForToken(token, config));
             if (parsedInput) {
                 skipped = string.substr(0, string.indexOf(parsedInput));
                 if (skipped.length > 0) {
@@ -56208,7 +56579,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
     //! moment.js
 
-    hooks.version = '2.25.3';
+    hooks.version = '2.26.0';
 
     setHookCallback(createLocal);
 
@@ -59994,6 +60365,195 @@ var staticRenderFns = [
         _c("th", [_vm._v("date")]),
         _vm._v(" "),
         _c("th", [_vm._v("action")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "user" } }, [_vm._v("Username")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group mb-2 mr-sm-2" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.username,
+              expression: "username"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "user", placeholder: "username" },
+          domProps: { value: _vm.username },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.username = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "code" } }, [_vm._v("Code")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group mb-2 mr-sm-2" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.code,
+              expression: "code"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "code",
+            placeholder: "code",
+            maxlength: "15"
+          },
+          domProps: { value: _vm.code },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.code = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { type: "submit" },
+          on: { click: _vm.submit }
+        },
+        [_vm._v("Submit")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "fas fa-user" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "fas fa-tag" })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("table", { staticClass: "table table-striped table-hover" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "tbody",
+      [
+        _vm.loading
+          ? _c("tr", [_vm._v("\n        Loading...\n    ")])
+          : _vm._l(_vm.data, function(code, index) {
+              return _c("tr", [
+                _c("th", { attrs: { scope: "row" } }, [
+                  _vm._v(_vm._s(index + 1))
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.code))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.uses))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.user.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.date))])
+              ])
+            })
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("code")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("uses")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("user")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("date")])
       ])
     ])
   }
@@ -73339,7 +73899,9 @@ module.exports = function(module) {
 var map = {
 	"./components/dashboard/TransactionsTable.vue": "./resources/js/components/dashboard/TransactionsTable.vue",
 	"./components/dashboard/UsersTable.vue": "./resources/js/components/dashboard/UsersTable.vue",
-	"./components/dashboard/VersionsTable.vue": "./resources/js/components/dashboard/VersionsTable.vue"
+	"./components/dashboard/VersionsTable.vue": "./resources/js/components/dashboard/VersionsTable.vue",
+	"./components/dashboard/referral/ReferralCodeCreate.vue": "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue",
+	"./components/dashboard/referral/ReferralCodesTable.vue": "./resources/js/components/dashboard/referral/ReferralCodesTable.vue"
 };
 
 
@@ -73658,6 +74220,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VersionsTable_vue_vue_type_template_id_6b8e3d1d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VersionsTable_vue_vue_type_template_id_6b8e3d1d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReferralCodeCreate.vue?vue&type=template&id=24f405e2& */ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&");
+/* harmony import */ var _ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReferralCodeCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/dashboard/referral/ReferralCodeCreate.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodeCreate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodeCreate.vue?vue&type=template&id=24f405e2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=template&id=1a6efc61& */ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&");
+/* harmony import */ var _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/dashboard/referral/ReferralCodesTable.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=template&id=1a6efc61& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

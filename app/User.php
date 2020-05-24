@@ -24,7 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasWallet, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin', 'banned', 'disabled'
+        'name', 'email', 'password', 'api_token', 'admin', 'banned', 'disabled', 'cape_selected', 'referral_code_id'
     ];
 
     protected $hidden = [
@@ -62,6 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function downloads()
     {
         return $this->belongsToMany('App\Version', 'user_downloads', 'user_id', 'version_id');
+    }
+
+    public function referralCode()
+    {
+        return $this->hasOne('App\ReferralCode', 'id', 'referral_code_id');
     }
 
     public function hasSubscription(): bool

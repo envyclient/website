@@ -194,7 +194,7 @@ class AdminController extends Controller
         }
 
         $chart = new TransactionsChart();
-        $chart->dataset('Transactions', 'line', $data);
+        $chart->dataset('Amount', 'line', $data);
         return $chart->api();
     }
 
