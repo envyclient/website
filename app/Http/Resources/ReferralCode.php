@@ -18,7 +18,7 @@ class ReferralCode extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'referrals_count' => $this->users()->count(),
+            'uses' => $this->users()->count(),
             'user' => [
                 'name' => $this->user->name
             ],

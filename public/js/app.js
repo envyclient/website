@@ -1899,84 +1899,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ReferralCodesTable",
-  props: {
-    url: {
-      type: String,
-      required: true
-    },
-    apiToken: {
-      type: String,
-      required: true
-    }
-  },
-  data: function data() {
-    return {
-      loading: true,
-      data: []
-    };
-  },
-  created: function created() {
-    this.fetchData();
-  },
-  methods: {
-    fetchData: function fetchData() {
-      var _this = this;
-
-      this.loading = true;
-      axios.get(this.url, {
-        params: {
-          api_token: this.apiToken
-        }
-      }).then(function (data) {
-        console.log(data);
-        _this.data = data.data;
-        _this.loading = false;
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js& ***!
@@ -2244,7 +2166,7 @@ __webpack_require__.r(__webpack_exports__);
       data: {},
       filter: {
         name: null,
-        type: 'all'
+        type: "all"
       },
       selectedUser: null,
       modal: {
@@ -2300,14 +2222,14 @@ __webpack_require__.r(__webpack_exports__);
           text: "Added ".concat(_this2.modal.credits, " credits to '").concat(_this2.selectedUser.name, "'.")
         });
 
-        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('UPDATE_TRANSACTIONS');
+        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("UPDATE_TRANSACTIONS");
       })["catch"](function (error) {
         console.log(error);
 
         _this2.$notify({
           type: "error",
           title: "Error",
-          text: 'Error, please check console.'
+          text: "Error, please check console."
         });
       })["finally"](function () {
         _this2.modal.credits = 5;
@@ -2335,7 +2257,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.$notify({
           type: "error",
           title: "Error",
-          text: 'Error, please check console.'
+          text: "Error, please check console."
         });
       })["finally"](this.closing);
     },
@@ -2448,6 +2370,189 @@ __webpack_require__.r(__webpack_exports__);
         console.log(data);
 
         _this2.fetchData();
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ReferralCodeCreate",
+  props: {
+    url: {
+      type: String,
+      required: true
+    },
+    apiToken: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      username: null,
+      code: null
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      // validator form
+      if (!this.username || !this.code) {
+        this.$notify({
+          type: "error",
+          title: "Error",
+          text: "Username or Code are invalid."
+        });
+      }
+
+      axios.post(this.url, {
+        username: this.username,
+        code: this.code,
+        api_token: this.apiToken
+      }).then(function (data) {
+        console.log(data);
+
+        _this.$notify({
+          type: "success",
+          title: "Success",
+          text: "Referral Code created."
+        });
+
+        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("UPDATE_REFERRALS_CODE");
+        _this.username = null;
+        _this.code = null;
+      })["catch"](function (error) {
+        console.log(error);
+
+        _this.$notify({
+          type: "error",
+          title: "Error",
+          text: "Error, please check console."
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ReferralCodesTable",
+  props: {
+    url: {
+      type: String,
+      required: true
+    },
+    apiToken: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      loading: true,
+      data: []
+    };
+  },
+  created: function created() {
+    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_REFERRALS_CODE", this.fetchData);
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.loading = true;
+      axios.get(this.url, {
+        params: {
+          api_token: this.apiToken
+        }
+      }).then(function (data) {
+        console.log(data);
+        _this.data = data.data;
+        _this.loading = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -59625,75 +59730,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=template&id=ae674fea&":
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=template&id=ae674fea& ***!
-  \*******************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-striped table-hover" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "tbody",
-      [
-        _vm.loading
-          ? _c("tr", [_vm._v("\n        Loading...\n    ")])
-          : _vm._l(_vm.data, function(code, index) {
-              return _c("tr", [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _vm._v(_vm._s(index + 1))
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.code))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.referrals_count))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.user.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.date))])
-              ])
-            })
-      ],
-      2
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("code")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("referrals_count")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("user")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("date")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba& ***!
@@ -60329,6 +60365,195 @@ var staticRenderFns = [
         _c("th", [_vm._v("date")]),
         _vm._v(" "),
         _c("th", [_vm._v("action")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "user" } }, [_vm._v("Username")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group mb-2 mr-sm-2" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.username,
+              expression: "username"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "user", placeholder: "username" },
+          domProps: { value: _vm.username },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.username = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "code" } }, [_vm._v("Code")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group mb-2 mr-sm-2" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.code,
+              expression: "code"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "code",
+            placeholder: "code",
+            maxlength: "15"
+          },
+          domProps: { value: _vm.code },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.code = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { type: "submit" },
+          on: { click: _vm.submit }
+        },
+        [_vm._v("Submit")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "fas fa-user" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "fas fa-tag" })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("table", { staticClass: "table table-striped table-hover" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "tbody",
+      [
+        _vm.loading
+          ? _c("tr", [_vm._v("\n        Loading...\n    ")])
+          : _vm._l(_vm.data, function(code, index) {
+              return _c("tr", [
+                _c("th", { attrs: { scope: "row" } }, [
+                  _vm._v(_vm._s(index + 1))
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.code))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.uses))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.user.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.date))])
+              ])
+            })
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("code")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("uses")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("user")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("date")])
       ])
     ])
   }
@@ -73672,10 +73897,11 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./components/dashboard/ReferralCodesTable.vue": "./resources/js/components/dashboard/ReferralCodesTable.vue",
 	"./components/dashboard/TransactionsTable.vue": "./resources/js/components/dashboard/TransactionsTable.vue",
 	"./components/dashboard/UsersTable.vue": "./resources/js/components/dashboard/UsersTable.vue",
-	"./components/dashboard/VersionsTable.vue": "./resources/js/components/dashboard/VersionsTable.vue"
+	"./components/dashboard/VersionsTable.vue": "./resources/js/components/dashboard/VersionsTable.vue",
+	"./components/dashboard/referral/ReferralCodeCreate.vue": "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue",
+	"./components/dashboard/referral/ReferralCodesTable.vue": "./resources/js/components/dashboard/referral/ReferralCodesTable.vue"
 };
 
 
@@ -73789,75 +74015,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/ReferralCodesTable.vue":
-/*!******************************************************************!*\
-  !*** ./resources/js/components/dashboard/ReferralCodesTable.vue ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ReferralCodesTable_vue_vue_type_template_id_ae674fea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=template&id=ae674fea& */ "./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=template&id=ae674fea&");
-/* harmony import */ var _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ReferralCodesTable_vue_vue_type_template_id_ae674fea___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ReferralCodesTable_vue_vue_type_template_id_ae674fea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/dashboard/ReferralCodesTable.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=template&id=ae674fea&":
-/*!*************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=template&id=ae674fea& ***!
-  \*************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_ae674fea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=template&id=ae674fea& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/ReferralCodesTable.vue?vue&type=template&id=ae674fea&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_ae674fea___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_ae674fea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
 
 /***/ }),
 
@@ -74063,6 +74220,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VersionsTable_vue_vue_type_template_id_6b8e3d1d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VersionsTable_vue_vue_type_template_id_6b8e3d1d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReferralCodeCreate.vue?vue&type=template&id=24f405e2& */ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&");
+/* harmony import */ var _ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReferralCodeCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/dashboard/referral/ReferralCodeCreate.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodeCreate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodeCreate.vue?vue&type=template&id=24f405e2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=template&id=1a6efc61& */ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&");
+/* harmony import */ var _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/dashboard/referral/ReferralCodesTable.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=template&id=1a6efc61& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

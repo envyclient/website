@@ -7,9 +7,7 @@ use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Config;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ReferralCode as ReferralCodeResource;
 use App\Http\Resources\Transaction as TransactionResource;
-use App\ReferralCode;
 use App\Subscription;
 use App\User;
 use App\Version;
@@ -215,13 +213,6 @@ class AdminController extends Controller
             $chart->dataset($version->name, 'bar', $data)->backgroundColor(self::randomColor());
         }
         return $chart->api();
-    }
-
-    public function referralCodes()
-    {
-        return ReferralCodeResource::collection(
-            ReferralCode::with('user')->get()
-        );
     }
 
     private static function randomColor()

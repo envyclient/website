@@ -41,8 +41,6 @@ Route::prefix('admin')->group(function () {
     Route::get('transactions/chart', 'API\AdminController@transactionsChart')->name('api.admin.transactions.chart');
 
     Route::get('versions/chart', 'API\AdminController@versionDownloadsChart')->name('api.admin.versions.chart');
-
-    Route::get('referral-codes', 'API\AdminController@referralCodes')->name('api.admin.referral-codes');
 });
 
 /**
@@ -52,6 +50,14 @@ Route::prefix('versions')->group(function () {
     Route::get('/', 'API\VersionsController@index')->name('api.versions.index');
     Route::get('{version}', 'API\VersionsController@show')->name('api.versions.show');
     Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
+});
+
+/**
+ * Referrals
+ */
+Route::prefix('referrals')->group(function () {
+    Route::get('/', 'API\ReferralsCodeController@index')->name('api.referrals.index');
+    Route::post('/', 'API\ReferralsCodeController@store')->name('api.referrals.store');
 });
 
 /**

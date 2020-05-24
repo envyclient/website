@@ -55,7 +55,6 @@
             </div>
         </div>
 
-
         <!-- versions -->
         <div class="tab-pane fade custom-panel" id="versions" role="tabpanel">
 
@@ -101,18 +100,29 @@
             </div>
         </div>
 
-
         <!-- referral codes -->
         <div class="tab-pane fade custom-panel" id="referral-codes" role="tabpanel">
+
+            <!-- referral codes table -->
             <div>
                 <div class="alert alert-primary" style="font-size:25px;">
                     Referral Codes
                 </div>
-                <referral-codes-table url="{{ route('api.admin.referral-codes') }}"
+                <referral-codes-table url="{{ route('api.referrals.index') }}"
                                       api-token="{{ $apiToken }}"></referral-codes-table>
             </div>
-        </div>
 
+            <br>
+
+            <!-- create referral code -->
+            <div>
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    Create Referral Code
+                </div>
+                <referral-code-create url="{{ route('api.referrals.store') }}"
+                                      api-token="{{ $apiToken }}"></referral-code-create>
+            </div>
+        </div>
     </div>
 @endsection
 

@@ -4,7 +4,7 @@
         <tr>
             <th>#</th>
             <th>code</th>
-            <th>referrals_count</th>
+            <th>uses</th>
             <th>user</th>
             <th>date</th>
         </tr>
@@ -16,7 +16,7 @@
         <tr v-for="(code, index) in data" v-else>
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ code.code }}</td>
-            <td>{{ code.referrals_count }}</td>
+            <td>{{ code.uses }}</td>
             <td>{{ code.user.name }}</td>
             <td>{{ code.date }}</td>
         </tr>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+    import EventBus from "../../../eventbus"
+
     export default {
         name: "ReferralCodesTable",
         props: {
@@ -38,6 +40,7 @@
             }
         },
         created() {
+            EventBus.$on("UPDATE_REFERRALS_CODE", this.fetchData);
             this.fetchData();
         },
         methods: {
