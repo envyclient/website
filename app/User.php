@@ -24,7 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasWallet, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin', 'banned', 'disabled', 'cape_selected', 'referral_code_id'
+        'name', 'email', 'password', 'api_token', 'admin', 'banned', 'disabled', 'referral_code_id'
     ];
 
     protected $hidden = [
@@ -82,11 +82,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasBetaAccess(): bool
     {
         return $this->hasSubscription() && $this->subscription->plan->beta_access;
-    }
-
-    public function hasCapesAccess(): bool
-    {
-        return $this->hasSubscription() && $this->subscription->plan->capes_access;
     }
 
     public function image(): string

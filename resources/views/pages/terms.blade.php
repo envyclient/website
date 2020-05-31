@@ -49,8 +49,7 @@
         * Personal information used to create your account for Envy Client.
 
         Should there be any issue regarding data collection, suspension, or termination of accounts, contact
-        <contact
-        @envyclient.com>.
+        <contact@envyclient.com>.
         Should there be any information you determine to be your right according to Canada’s Personal Information
         Protection and Electronic Documents Act (PIPEDA) or the European Union’s General Data Protection Regulation
         (GDPR), contact us to sort out any inquiries.
@@ -71,8 +70,7 @@
 
         ## Contact Us and Dispute Resolution
         If the above does not pertain to your inquiries, contact us at
-        <contact
-        @envyclient.com>.
+        <contact@envyclient.com>.
 
         Matter of dispute resolution may also be handled by email or even phone correspondence should something
         escalate.
