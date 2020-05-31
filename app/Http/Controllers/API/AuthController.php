@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -86,28 +85,10 @@ class AuthController extends Controller
             'api_token' => $apiToken
         ])->save();
 
-        if ($user->hasCapesAccess()) {
-            return response()->json([
-                'name' => $user->name,
-                'date' => $user->created_at->diffForHumans(),
-                'cape_selected' => $user->cape_selected,
-                'capes' => self::getAllConfigNames()
-            ]);
-        } else {
-            return response()->json([
-                'name' => $user->name,
-                'date' => $user->created_at->diffForHumans()
-            ]);
-        }
+        return response()->json([
+            'name' => $user->name,
+            'date' => $user->created_at->diffForHumans()
+        ]);
     }
 
-    private static function getAllConfigNames(): array
-    {
-        $capes = [];
-        foreach (Storage::disk('minio')->allFiles('capes') as $cape) {
-            $filename = pathinfo(substr($cape, 6), PATHINFO_FILENAME);
-            array_push($capes, $filename);
-        }
-        return $capes;
-    }
 }
