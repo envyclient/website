@@ -42,3 +42,7 @@ Route::prefix('versions')->group(function () {
     Route::post('/', 'VersionsController@store')->name('versions.store');
     Route::get('launcher', 'VersionsController@downloadLauncher')->name('versions.launcher');
 });
+
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});

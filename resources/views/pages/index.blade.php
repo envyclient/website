@@ -291,8 +291,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            {{ $plan->name }}
-                            {{ $plan->config_limit }} Configs
+                            <p>{{ $plan->name }}</p>
+                            <p>{{ $plan->config_limit }} Configs</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
