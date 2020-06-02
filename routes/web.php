@@ -27,6 +27,7 @@ Route::prefix('paypal')->group(function () {
 });
 
 /**
+ *
  * Users
  */
 Route::prefix('user')->group(function () {
@@ -38,11 +39,6 @@ Route::prefix('user')->group(function () {
  * Versions
  */
 Route::prefix('versions')->group(function () {
-    Route::get('/create', 'VersionsController@create')->name('versions.create');
     Route::post('/', 'VersionsController@store')->name('versions.store');
     Route::get('launcher', 'VersionsController@downloadLauncher')->name('versions.launcher');
-});
-
-Route::get('/debug-sentry', function () {
-    throw new Exception('My first Sentry error!');
 });

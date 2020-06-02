@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\GameSession;
 use App\Http\Controllers\Controller;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -85,9 +87,15 @@ class AuthController extends Controller
             'api_token' => $apiToken
         ])->save();
 
+        // get or create session
+        $session = GameSession::where('user_id', $user->id)
+            ->whereDate('created_at', Carbon::today())
+            ->firstOrCreate(['user_id' => $user->id]);
+
         return response()->json([
             'name' => $user->name,
-            'date' => $user->created_at->diffForHumans()
+            'date' => $user->created_at->diffForHumans(),
+            'session' => $session->id
         ]);
     }
 

@@ -69,6 +69,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\ReferralCode', 'id', 'referral_code_id');
     }
 
+    public function gameSessions()
+    {
+        return $this->hasMany('App\GameSession');
+    }
+
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();

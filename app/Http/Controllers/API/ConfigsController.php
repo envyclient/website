@@ -113,6 +113,8 @@ class ConfigsController extends Controller
         }
 
         $user = $request->user();
+
+        // update config
         $config = $user->configs()->findOrFail($id);
         $config->name = $request->name;
         $config->data = $request->data;
@@ -122,7 +124,7 @@ class ConfigsController extends Controller
         $config->save();
 
         return response()->json([
-            'message' => '300 OK'
+            'message' => '200 OK'
         ], 200);
     }
 

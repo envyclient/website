@@ -56,8 +56,15 @@ Route::prefix('versions')->group(function () {
  * Referrals
  */
 Route::prefix('referrals')->group(function () {
-    Route::get('/', 'API\ReferralsCodeController@index')->name('api.referrals.index');
-    Route::post('/', 'API\ReferralsCodeController@store')->name('api.referrals.store');
+    Route::get('/', 'API\ReferralCodesController@index')->name('api.referrals.index');
+    Route::post('/', 'API\ReferralCodesController@store')->name('api.referrals.store');
+});
+
+/**
+ * Game Sessions
+ */
+Route::prefix('sessions')->group(function () {
+    Route::put('{session}', 'API\GameSessionsController@update');
 });
 
 /**
