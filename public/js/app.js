@@ -2517,6 +2517,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReferralCodesTable",
@@ -60526,7 +60528,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(code.code))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.uses))]),
+                _c("td", [_vm._v(_vm._s(code.uses.total))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(code.uses.today))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(code.user.name))]),
                 _vm._v(" "),
@@ -60549,7 +60553,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("code")]),
         _vm._v(" "),
-        _c("th", [_vm._v("uses")]),
+        _c("th", [_vm._v("total uses")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("today uses")]),
         _vm._v(" "),
         _c("th", [_vm._v("user")]),
         _vm._v(" "),

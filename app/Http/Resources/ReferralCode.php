@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,10 @@ class ReferralCode extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'uses' => $this->users()->count(),
+            'uses' => [
+                'total' => $this->users()->count(),
+                'today' => $this->users()->whereDate('created_at', Carbon::today())->count(),
+            ],
             'user' => [
                 'name' => $this->user->name
             ],
