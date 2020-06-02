@@ -9,7 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ReferralsCodeController extends Controller
+class ReferralCodesController extends Controller
 {
     public function __construct()
     {
