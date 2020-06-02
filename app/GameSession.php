@@ -14,6 +14,10 @@ class GameSession extends Model
         'user_id', 'data'
     ];
 
+    protected $casts = [
+        'data' => 'json'
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User');
