@@ -4,7 +4,8 @@
         <tr>
             <th>#</th>
             <th>code</th>
-            <th>uses</th>
+            <th>total uses</th>
+            <th>today uses</th>
             <th>user</th>
             <th>date</th>
         </tr>
@@ -16,7 +17,8 @@
         <tr v-for="(code, index) in data" v-else>
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ code.code }}</td>
-            <td>{{ code.uses }}</td>
+            <td>{{ code.uses.total }}</td>
+            <td>{{ code.uses.today }}</td>
             <td>{{ code.user.name }}</td>
             <td>{{ code.date }}</td>
         </tr>

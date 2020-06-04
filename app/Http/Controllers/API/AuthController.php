@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\GameSession;
 use App\Http\Controllers\Controller;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,21 +39,11 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'account_name' => 'nullable|string'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
         $user = $request->user();
-        return $this->returnUserObject($user, $user->api_token);
+        return $this->returnUserObject($user, $user->api_token, true);
     }
 
-    private function returnUserObject($user, string $apiToken)
+    private function returnUserObject($user, string $apiToken, bool $makeSession = false)
     {
         // check for duplicate api_token
         $userCheck = User::where('api_token', $apiToken);
@@ -87,15 +76,20 @@ class AuthController extends Controller
             'api_token' => $apiToken
         ])->save();
 
-        // get or create session
-        $session = GameSession::where('user_id', $user->id)
-            ->whereDate('created_at', Carbon::today())
-            ->firstOrCreate(['user_id' => $user->id]);
+        if ($makeSession) {
+            $session = GameSession::create([
+                'user_id' => $user->id
+            ]);
+            return response()->json([
+                'name' => $user->name,
+                'date' => $user->created_at->diffForHumans(),
+                'session' => $session->id
+            ]);
+        }
 
         return response()->json([
             'name' => $user->name,
-            'date' => $user->created_at->diffForHumans(),
-            'session' => $session->id
+            'date' => $user->created_at->diffForHumans()
         ]);
     }
 

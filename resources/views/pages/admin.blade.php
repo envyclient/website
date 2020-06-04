@@ -123,6 +123,14 @@
                                       api-token="{{ $apiToken }}"></referral-code-create>
             </div>
         </div>
+
+        <!-- game sessions -->
+        <div class="tab-pane fade custom-panel" id="game-sessions" role="tabpanel">
+
+            <div class="alert alert-primary" style="font-size:25px;">
+                Game Sessions
+            </div>
+        </div>
     </div>
 @endsection
 
