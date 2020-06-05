@@ -18,7 +18,7 @@ class Config extends Model
     const PAGE_LIMIT = 12;
 
     protected $casts = [
-        'data' => 'json'
+        'data' => 'array'
     ];
 
     public function user()

@@ -15,7 +15,7 @@ class GameSession extends Model
     ];
 
     protected $casts = [
-        'data' => 'json'
+        'data' => 'array'
     ];
 
     public function user()

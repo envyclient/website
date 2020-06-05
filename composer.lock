@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db7ead7952b4167f6950efd4b54d8979",
+    "content-hash": "1470b1a136f2d348d25cc5d64fc70690",
     "packages": [
         {
             "name": "andreasindal/laravel-markdown",
@@ -1447,6 +1447,46 @@
                 "rest"
             ],
             "time": "2016-08-11T17:49:21+00:00"
+        },
+        {
+            "name": "mistic100/randomcolor",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mistic100/RandomColor.php.git",
+                "reference": "394b2a6f87b7cdc2ae0bfb02dd59b9e35fd08d8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mistic100/RandomColor.php/zipball/394b2a6f87b7cdc2ae0bfb02dd59b9e35fd08d8a",
+                "reference": "394b2a6f87b7cdc2ae0bfb02dd59b9e35fd08d8a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Colors\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Damien \"Mistic\" Sorel",
+                    "email": "contact@git.strangeplanet.fr",
+                    "homepage": "http://www.strangeplanet.fr"
+                }
+            ],
+            "description": "Generate attractive random colors",
+            "homepage": "https://github.com/mistic100/RandomColor.php",
+            "keywords": [
+                "color",
+                "generator",
+                "random"
+            ],
+            "time": "2018-04-16T19:31:57+00:00"
         },
         {
             "name": "monolog/monolog",
