@@ -126,9 +126,16 @@
 
         <!-- game sessions -->
         <div class="tab-pane fade custom-panel" id="game-sessions" role="tabpanel">
-
             <div class="alert alert-primary" style="font-size:25px;">
                 Game Sessions
+            </div>
+            <div class="row">
+                <div class="col" style="height: 700px">
+                    {!! $gameSessionsChart->container() !!}
+                </div>
+                <div class="col" style="height: 700px">
+                    {!! $gameSessionsToggleChart->container() !!}
+                </div>
             </div>
         </div>
     </div>
@@ -138,4 +145,6 @@
     {!! $usersChart->script() !!}
     {!! $transactionsChart->script() !!}
     {!! $versionsChart->script() !!}
+    {!! $gameSessionsChart->script() !!}
+    {!! $gameSessionsToggleChart->script() !!}
 @endsection

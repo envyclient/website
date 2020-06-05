@@ -31,16 +31,25 @@ Route::prefix('configs')->group(function () {
  * Admin
  */
 Route::prefix('admin')->group(function () {
+    Route::get('transactions', 'API\AdminController@transactions')->name('api.admin.transactions');
     Route::get('users', 'API\AdminController@users')->name('api.admin.users');
-    Route::get('users/chart', 'API\AdminController@usersChart')->name('api.admin.users.chart');
 
     Route::put('users/ban/{user}', 'API\AdminController@ban')->name('api.admin.users.ban');
     Route::put('users/credits/{user}', 'API\AdminController@credits')->name('api.admin.users.credits');
+});
 
-    Route::get('transactions', 'API\AdminController@transactions')->name('api.admin.transactions');
-    Route::get('transactions/chart', 'API\AdminController@transactionsChart')->name('api.admin.transactions.chart');
+/**
+ * Charts
+ */
+Route::prefix('charts')->group(function () {
+    Route::get('users', 'API\ChartsController@users')->name('api.charts.users');
+    Route::get('transactions', 'API\ChartsController@transactions')->name('api.charts.transactions');
+    Route::get('versions', 'API\ChartsController@versions')->name('api.charts.versions');
 
-    Route::get('versions/chart', 'API\AdminController@versionDownloadsChart')->name('api.admin.versions.chart');
+    Route::prefix('sessions')->group(function () {
+        Route::get('onTime', 'API\ChartsController@ontime')->name('api.charts.sessions.ontime');
+        Route::get('toggles', 'API\ChartsController@toggles')->name('api.charts.sessions.toggles');
+    });
 });
 
 /**
