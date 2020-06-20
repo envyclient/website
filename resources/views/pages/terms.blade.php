@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-4">
         @markdown
         # Terms of Service
         This license is a legal agreement between you and Haq Development (“we”) for the use of Envy Client (the
