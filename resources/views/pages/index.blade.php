@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="text-left">
-                    <label>Member Since:</label>
+                    <label class="form-label">Member Since</label>
                     <input class="form-control" placeholder="Date" disabled
                            value="{{ $user->created_at->format('Y-m-d') }}">
                 </div>
@@ -63,8 +63,7 @@
                             </div>
                         @endif
                     </div>
-                    <br>
-                    <a class="btn btn-primary btn-lg btn-block" href="{{ route('versions.launcher') }}">
+                    <a class="btn btn-primary btn-lg btn-block mt-3" href="{{ route('versions.launcher') }}">
                         <i class="fas fa-download pr-1"></i> Download Launcher
                     </a>
                 @endif
@@ -76,31 +75,41 @@
             <div class="alert alert-secondary" style="font-size:25px;">
                 <i class="fas fa-lock" style="padding-right:10px;"></i> Security
             </div>
-            <div class="card card-body">
-                {!! Form::open(['action' => 'UsersController@updatePassword']) !!}
-                {{ Form::hidden('_method', 'PUT') }}
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('user.update-password') }}" accept-charset="UTF-8">
+                        @csrf
+                        <input name="_method" type="hidden" value="PUT">
 
-                {{ Form::label('name', 'Name: ') }}
-                {{ Form::text('name', $user->name, ['class' => 'form-control', 'disabled']) }}
-                <br>
-                {{ Form::label('email', 'Email: ') }}
-                {{ Form::text('email', $user->email, ['class' => 'form-control', 'disabled']) }}
-                <br>
-                {{ Form::label('password_current', 'Current password: ') }}
-                {{ Form::password('password_current', ['class' => 'form-control', 'required']) }}
-                <br>
-                {{ Form::label('password', 'New password: ') }}
-                {{ Form::password('password', ['class' => 'form-control', 'required']) }}
-                <br>
-                {{ Form::label('password_confirmation', 'New password confirm: ') }}
-                {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
-                <br>
-                {{ Form::submit('Change Password', ['class' => 'btn btn-success']) }}
-
-                {!! Form::close() !!}
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input class="form-control" disabled name="name" type="text" value="{{ $user->name }}"
+                                   id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input class="form-control" disabled name="email" type="text" value="{{ $user->email }}"
+                                   id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_current" class="form-label">Current Password</label>
+                            <input class="form-control" required name="password_current" type="password"
+                                   id="password_current">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">New password</label>
+                            <input class="form-control" required name="password" type="password" id="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation" class="form-label">New Password Confirm</label>
+                            <input class="form-control" required name="password_confirmation" type="password"
+                                   id="password_confirmation">
+                        </div>
+                        <input class="btn btn-success" type="submit" value="Change Password">
+                    </form>
+                </div>
             </div>
-            <br>
-            <div class="card" style="width: 100%;">
+            <div class="card mt-3" style="width: 100%;">
                 <ul class="list-group list-group-flush">
                     <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal"
                             data-target="#disableAccountModal">
@@ -198,13 +207,13 @@
                                     @foreach([5, 10, 15, 20, 30] as $amount)
                                         @if($loop->first)
                                             <label class="btn btn-secondary active">
-                                                <input type="radio" name="amount" autocomplete="off"
+                                                <input type="radio" name="amount" id="{{ $amount }}"
                                                        value="{{ $amount }}" checked>
                                                 ${{ $amount }}
                                             </label>
                                         @else
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="amount" autocomplete="off"
+                                                <input type="radio" name="amount" id="{{ $amount }}"
                                                        value="{{ $amount }}">
                                                 ${{ $amount }}
                                             </label>
@@ -238,7 +247,7 @@
                 @foreach($transactions as $transaction)
                     <tr>
                         <th scope="row">{{ $loop->index + 1 }}</th>
-                        @if($transaction->type == 'deposit')
+                        @if($transaction->type === 'deposit')
                             <td style="color: green">+{{ $transaction->amount }}</td>
                         @else
                             <td style="color: red">-{{ $transaction->amount }}</td>
@@ -265,7 +274,7 @@
                     </div>
                     <div class="modal-body" style="color:red;">
                         By disabling your account you will lose access to your account and if you have a subscription it
-                        will continue till the end date.
+                        will continue until the expire date.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -279,6 +288,7 @@
             </div>
         </div>
 
+        <!-- TODO: use js to set dynamic data -->
         @foreach($plans as $plan)
             <div class="modal fade" id="{{ $plan->name }}-modal" tabindex="-1" role="dialog"
                  aria-labelledby="{{ $plan->name }}-label" aria-hidden="true">
