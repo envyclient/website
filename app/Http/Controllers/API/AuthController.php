@@ -12,8 +12,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('api')->only('login');
-        $this->middleware('auth:api')->only('me');
+        $this->middleware('api');
     }
 
     public function login(Request $request)
@@ -39,6 +38,16 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'api_token' => 'required|string|min:40|max:40'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
         $user = $request->user();
         return $this->returnUserObject($user, $user->api_token, true);
     }
