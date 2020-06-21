@@ -168,7 +168,7 @@
 <body>
 <div id="app">
     <!-- vuejs notifications -->
-    <notifications position="bottom right"></notifications>
+    <notification></notification>
 
     <!-- navbar -->
     @include('inc.navbar.dashboard')
