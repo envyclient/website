@@ -79,7 +79,7 @@
                                     <input id="referral-code" type="text"
                                            class="form-control @error('referral_code') is-invalid @enderror"
                                            name="referral_code"
-                                           required autocomplete="referral-code">
+                                           autocomplete="referral-code">
 
                                     @error('referral_code')
                                     <span class="invalid-feedback" role="alert">

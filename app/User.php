@@ -14,6 +14,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string email_verified_at
  * @property string password
  * @property string api_token
+ * @property string hwid
  * @property bool admin
  * @property bool banned
  * @property bool disabled

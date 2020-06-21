@@ -20,7 +20,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'api_token' => 'required|string|min:40|max:40'
+            'hwid' => 'required|string|min:40|max:40'
         ]);
 
         if ($validator->fails()) {
@@ -33,13 +33,13 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        return $this->returnUserObject(auth()->user(), $request->api_token);
+        return $this->returnUserObject(auth()->user(), $request->hwid);
     }
 
     public function me(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'api_token' => 'required|string|min:40|max:40'
+            'hwid' => 'required|string|min:40|max:40'
         ]);
 
         if ($validator->fails()) {
@@ -48,20 +48,20 @@ class AuthController extends Controller
             ], 400);
         }
 
-        $user = $request->user();
-        return $this->returnUserObject($user, $user->api_token, true);
+        $user = User::where('hwid', $request->hwid)->firstOrFail();
+        return $this->returnUserObject($user, $user->hwid, true);
     }
 
-    private function returnUserObject($user, string $apiToken, bool $makeSession = false)
+    private function returnUserObject($user, string $hwid, bool $makeSession = false)
     {
-        // check for duplicate api_token
-        $userCheck = User::where('api_token', $apiToken);
-        if ($userCheck->exists() && $userCheck->first()->id !== $user->id) {
+        // check for duplicate hwid
+        $userCheck = User::where('hwid', $hwid)->where('id', '<>', $user->id);
+        if ($userCheck->exists()) {
             return response()->json(['message' => 'Duplicate hardware identification.'], 403);
         }
 
         // hwid mismatch
-        if ($user->api_token !== null && $user->api_token !== $apiToken) {
+        if ($user->hwid !== null && $user->hwid !== $hwid) {
             return response()->json(['message' => 'Hardware Identification mismatch.'], 403);
         }
 
@@ -82,7 +82,7 @@ class AuthController extends Controller
 
         // fill users hwid
         $user->fill([
-            'api_token' => $apiToken
+            'hwid' => $hwid
         ])->save();
 
         if ($makeSession) {
@@ -91,6 +91,7 @@ class AuthController extends Controller
             ]);
             return response()->json([
                 'name' => $user->name,
+                'api_token' => $user->api_token,
                 'date' => $user->created_at->diffForHumans(),
                 'session' => $session->id
             ]);
@@ -98,6 +99,7 @@ class AuthController extends Controller
 
         return response()->json([
             'name' => $user->name,
+            'api_token' => $user->api_token,
             'date' => $user->created_at->diffForHumans()
         ]);
     }
