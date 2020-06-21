@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            $table->string('api_token', 40)->nullable()->unique();
+            $table->string('api_token', 60)->nullable()->unique();
+            $table->string('hwid', 40)->nullable()->unique();
 
             $table->boolean('admin')->default(false);
             $table->boolean('banned')->default(false);

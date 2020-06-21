@@ -14,6 +14,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string email_verified_at
  * @property string password
  * @property string api_token
+ * @property string hwid
  * @property bool admin
  * @property bool banned
  * @property bool disabled
@@ -24,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasWallet, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin', 'banned', 'disabled', 'referral_code_id'
+        'name', 'email', 'password', 'api_token', 'hwid', 'admin', 'banned', 'disabled', 'referral_code_id'
     ];
 
     protected $hidden = [

@@ -125,6 +125,11 @@ class HomeController extends Controller
     {
         $moduleNames = [];
         $session = GameSession::where('data', '<>', null)->latest()->first();
+
+        if ($session == null) {
+            return $moduleNames;
+        }
+
         foreach (json_decode($session->data) as $module) {
             array_push($moduleNames, $module->name);
         }

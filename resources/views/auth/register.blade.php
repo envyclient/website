@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <br>
-    <div class="container">
+    <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -80,7 +79,7 @@
                                     <input id="referral-code" type="text"
                                            class="form-control @error('referral_code') is-invalid @enderror"
                                            name="referral_code"
-                                           required autocomplete="referral-code">
+                                           autocomplete="referral-code">
 
                                     @error('referral_code')
                                     <span class="invalid-feedback" role="alert">
