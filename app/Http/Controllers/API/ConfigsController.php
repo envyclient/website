@@ -94,7 +94,8 @@ class ConfigsController extends Controller
         $config->save();
 
         return response()->json([
-            'message' => '201 Created'
+            'message' => '201 Created',
+            'id' => $config->id
         ], 201);
     }
 

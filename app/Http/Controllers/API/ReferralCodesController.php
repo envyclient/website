@@ -46,7 +46,8 @@ class ReferralCodesController extends Controller
         $referralCode->save();
 
         return response()->json([
-            'message' => '201 Created'
+            'message' => '201 Created',
+            'id' => $referralCode->id
         ], 201);
     }
 }
