@@ -73,6 +73,7 @@ Route::prefix('referrals')->group(function () {
  * Game Sessions
  */
 Route::prefix('sessions')->group(function () {
+    Route::post('/', 'API\GameSessionsController@store');
     Route::put('{session}', 'API\GameSessionsController@update');
 });
 

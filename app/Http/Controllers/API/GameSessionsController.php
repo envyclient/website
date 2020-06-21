@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\GameSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,18 @@ class GameSessionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
+    }
+
+    public function store(Request $request)
+    {
+        $session = GameSession::create([
+            'user_id' => $request->user()->id
+        ]);
+
+        return response()->json([
+            'message' => '201 Created',
+            'id' => $session->id
+        ], 201);
     }
 
     public function update(Request $request, $id)

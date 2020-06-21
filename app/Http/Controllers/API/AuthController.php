@@ -49,10 +49,10 @@ class AuthController extends Controller
         }
 
         $user = User::where('hwid', $request->hwid)->firstOrFail();
-        return $this->returnUserObject($user, $user->hwid, true);
+        return $this->returnUserObject($user, $user->hwid);
     }
 
-    private function returnUserObject($user, string $hwid, bool $makeSession = false)
+    private function returnUserObject($user, string $hwid)
     {
         // check for duplicate hwid
         $userCheck = User::where('hwid', $hwid)->where('id', '<>', $user->id);
@@ -84,18 +84,6 @@ class AuthController extends Controller
         $user->fill([
             'hwid' => $hwid
         ])->save();
-
-        if ($makeSession) {
-            $session = GameSession::create([
-                'user_id' => $user->id
-            ]);
-            return response()->json([
-                'name' => $user->name,
-                'api_token' => $user->api_token,
-                'date' => $user->created_at->diffForHumans(),
-                'session' => $session->id
-            ]);
-        }
 
         return response()->json([
             'name' => $user->name,
