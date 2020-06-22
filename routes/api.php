@@ -61,6 +61,8 @@ Route::prefix('versions')->group(function () {
     Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
 });
 
+Route::get('assets', 'API\VersionsController@assets');
+
 /**
  * Referrals
  */

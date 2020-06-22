@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class VersionsController extends Controller
 {
@@ -16,6 +17,22 @@ class VersionsController extends Controller
     {
         $this->middleware('auth:api');
         $this->middleware('api-admin')->only('destroy');
+    }
+
+    // used to download JRE or ASSETS
+    public function assets(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file_name' => 'required|string|in:jre.zip,assets.zip',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        return Storage::disk('minio')->download($request->file_name);
     }
 
     public function index(Request $request)
