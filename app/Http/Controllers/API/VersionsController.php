@@ -19,11 +19,11 @@ class VersionsController extends Controller
         $this->middleware('api-admin')->only('destroy');
     }
 
-    // used to download JRE or ASSETS
+    // used to download JRE, ASSETS, or CLIENT ASSETS
     public function assets(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file_name' => 'required|string|in:jre.zip,assets.zip',
+            'file_name' => 'required|string|in:jre.zip,assets.zip,client-assets.jar',
         ]);
 
         if ($validator->fails()) {
