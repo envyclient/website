@@ -46,7 +46,7 @@ class PayPalController extends Controller
         $paymentDefinition = new PaymentDefinition();
         $paymentDefinition->setName('Regular Payments')
             ->setType('REGULAR')
-            ->setFrequency('Month')
+            ->setFrequency('MONTH')
             ->setFrequencyInterval('1')
             //->setCycles('12')
             ->setAmount(new Currency([
@@ -72,26 +72,18 @@ class PayPalController extends Controller
         try {
             $createdPlan = $plan->create($this->paypal);
 
-            try {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
-                $patch->setOp('replace')
-                    ->setPath('/')
-                    ->setValue($value);
-                $patchRequest = new PatchRequest();
-                $patchRequest->addPatch($patch);
-                $createdPlan->update($patchRequest, $this->paypal);
-                $plan = Plan::get($createdPlan->getId(), $this->paypal);
+            $patch = new Patch();
+            $value = new PayPalModel('{"state":"ACTIVE"}');
+            $patch->setOp('replace')
+                ->setPath('/')
+                ->setValue($value);
+            $patchRequest = new PatchRequest();
+            $patchRequest->addPatch($patch);
+            $createdPlan->update($patchRequest, $this->paypal);
+            $plan = Plan::get($createdPlan->getId(), $this->paypal);
 
-                dd($plan);
+            dd($plan);
 
-            } catch (PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
-            } catch (Exception $ex) {
-                die($ex);
-            }
         } catch (PayPalConnectionException $ex) {
             echo $ex->getCode();
             echo $ex->getData();
@@ -120,37 +112,40 @@ class PayPalController extends Controller
         $agreement->setPayer($payer);
 
         try {
-            // Create agreement
             $agreement = $agreement->create($this->paypal);
-
-            return redirect()->away($agreement->getApprovalLink());
-        } catch (Exception $ex) {
-            dd($ex);
+        } catch (Exception $e) {
+            die($e);
+            //return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
+
+        return redirect()->away($agreement->getApprovalLink());
     }
 
     public function executeBillingAgreement(Request $request)
     {
         if (!$request->has('token')) {
-            return redirect(RouteServiceProvider::HOME)->with('error', 'Payment failed.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
         $token = $request->token;
         $agreement = new Agreement();
 
         try {
-            // Execute agreement
             $result = $agreement->execute($token, $this->paypal);
-
-            dd($result);
-
-        } catch (PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        } catch (Exception $ex) {
-            die($ex);
+        } catch (Exception $e) {
+            die($e);
+            //return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
+
+        dd($result);
+
+        $agreement = Agreement::get($result->getId(), $apiContext);
+
+        $details = $agreement->getAgreementDetails();
+        $payer = $agreement->getPayer();
+        $payerInfo = $payer->getPayerInfo();
+        $plan = $agreement->getPlan();
+        $payment = $plan->getPaymentDefinitions()[0];
 
     }
 
