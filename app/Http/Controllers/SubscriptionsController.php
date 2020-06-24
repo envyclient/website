@@ -22,7 +22,7 @@ class SubscriptionsController extends Controller
             'id' => 'required|integer'
         ]);
 
-        $user = auth()->user();
+        $user = $request->user();
         if ($user->hasSubscription()) {
             return back()->with('error', 'You are already subscribed to a plan. You must let that one expire before you subscribe to a new one.');
         }
@@ -48,9 +48,9 @@ class SubscriptionsController extends Controller
         return back()->with('success', 'Successfully subscribed to plan.');
     }
 
-    public function cancel()
+    public function cancel(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
 
         if (!$user->hasSubscription()) {
             return back()->with('error', 'You must subscribe to a plan first.');

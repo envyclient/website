@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BillingAgreement;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Exception;
@@ -16,7 +17,6 @@ use PayPal\Api\PaymentDefinition;
 use PayPal\Api\Plan;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Common\PayPalModel;
-use PayPal\Exception\PayPalConnectionException;
 use PayPal\Rest\ApiContext;
 
 class PayPalController extends Controller
@@ -26,6 +26,7 @@ class PayPalController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+        $this->middleware('admin')->only('createBillingPlan');
 
         $this->paypal = new ApiContext(new OAuthTokenCredential(
             config('paypal.client_id'),
@@ -66,35 +67,41 @@ class PayPalController extends Controller
                 'currency' => 'USD'
             ]));
 
-        $plan->setPaymentDefinitions(array($paymentDefinition));
+        $plan->setPaymentDefinitions([$paymentDefinition]);
         $plan->setMerchantPreferences($merchantPreferences);
 
         try {
             $createdPlan = $plan->create($this->paypal);
-
-            $patch = new Patch();
-            $value = new PayPalModel('{"state":"ACTIVE"}');
-            $patch->setOp('replace')
-                ->setPath('/')
-                ->setValue($value);
-            $patchRequest = new PatchRequest();
-            $patchRequest->addPatch($patch);
-            $createdPlan->update($patchRequest, $this->paypal);
-            $plan = Plan::get($createdPlan->getId(), $this->paypal);
-
-            dd($plan);
-
-        } catch (PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
         } catch (Exception $ex) {
             die($ex);
         }
+
+        $patch = new Patch();
+        $patch->setOp('replace')
+            ->setPath('/')
+            ->setValue(new PayPalModel('{"state":"ACTIVE"}'));
+
+        $patchRequest = new PatchRequest();
+        $patchRequest->addPatch($patch);
+        $createdPlan->update($patchRequest, $this->paypal);
+
+        $plan = Plan::get($createdPlan->getId(), $this->paypal);
+        dd($plan);
     }
 
-    public function processAgreement()
+    public function processAgreement(Request $request)
     {
+        $this->validate($request, [
+            'id' => 'required|integer'
+        ]);
+
+        // 'P-2XF851689H528853W3UZLKOA'
+
+        $user = $request->user();
+        if ($user->hasSubscription()) {
+            return back()->with('error', 'You already have a active subscription.');
+        }
+
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Base Agreement')
@@ -103,7 +110,7 @@ class PayPalController extends Controller
 
         // Set plan id
         $plan = new Plan();
-        $plan->setId('P-2XF851689H528853W3UZLKOA');
+        $plan->setId($request->id);
         $agreement->setPlan($plan);
 
         // Add payer type
@@ -115,8 +122,11 @@ class PayPalController extends Controller
             $agreement = $agreement->create($this->paypal);
         } catch (Exception $e) {
             die($e);
-            //return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
+
+        // storing the plan id so we can retrieve it when the user returns
+        session('plan_id', $request->id);
 
         return redirect()->away($agreement->getApprovalLink());
     }
@@ -127,26 +137,36 @@ class PayPalController extends Controller
             return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
-        $token = $request->token;
+        $user = $request->user();
+        if ($user->hasSubscription()) {
+            return back()->with('error', 'You already have a active subscription.');
+        }
+
+        // getting the plan id from the session
+        $planId = session('plan_id');
+        session()->forget('plan_id');
+
         $agreement = new Agreement();
 
         try {
-            $result = $agreement->execute($token, $this->paypal);
+            $result = $agreement->execute($request->token, $this->paypal);
+            //dd($result);
         } catch (Exception $e) {
             die($e);
-            //return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
-        dd($result);
+        if ($agreement->getState() !== 'Active') {
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
+        }
 
-        $agreement = Agreement::get($result->getId(), $apiContext);
+        $billingAgreement = new BillingAgreement();
+        $billingAgreement->billing_agreement_id = $agreement->getId();
+        $billingAgreement->user_id = $request->user()->id;
+        $billingAgreement->plan_id = $planId;
+        $billingAgreement->save();
 
-        $details = $agreement->getAgreementDetails();
-        $payer = $agreement->getPayer();
-        $payerInfo = $payer->getPayerInfo();
-        $plan = $agreement->getPlan();
-        $payment = $plan->getPaymentDefinitions()[0];
-
+        return redirect(RouteServiceProvider::HOME)->with('success', 'Subscription successful.');
     }
 
     public function create(Request $request)

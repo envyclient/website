@@ -75,6 +75,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\GameSession');
     }
 
+    public function billingAgreement()
+    {
+        return $this->hasOne('App\BillingAgreement');
+    }
+
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();

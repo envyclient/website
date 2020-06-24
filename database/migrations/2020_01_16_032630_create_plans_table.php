@@ -19,7 +19,7 @@ class CreatePlansTable extends Migration
             $table->string('name')->unique();
             $table->string('description');
             $table->unsignedTinyInteger('price');
-            $table->unsignedTinyInteger('interval')->default(30);
+            $table->string('paypal_id')->unique();
             $table->unsignedTinyInteger('config_limit');
             $table->boolean('beta_access')->default(false);
             $table->boolean('capes_access')->default(false);

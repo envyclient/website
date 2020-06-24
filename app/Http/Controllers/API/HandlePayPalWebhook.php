@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\BillingAgreement;
 use App\Http\Controllers\Controller;
 use App\Subscription;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,31 +32,29 @@ class HandlePayPalWebhook extends Controller
         }
 
         switch (strtolower($request->event_type)) {
-            case 'PAYMENT.SALE.COMPLETED':
+            case 'PAYMENT.SALE.COMPLETED': // received payment so we extend or create subscription
             {
-                // received payment so we extend or create subscription
-
                 // get the user that this billing id belongs to
-                $user = User::where('', $request->resource->billing_agreement_id)->firstOrFail();
+                $billingAgreement = BillingAgreement::where('billing_agreement_id', $request->resource->billing_agreement_id)->firstOrFail();
+                $user = $billingAgreement->user;
+
+                // TODO: handle plan switching
 
                 if ($user->hasSubscription()) {
-                    return back()->with('error', 'You are already subscribed to a plan. You must let that one expire before you subscribe to a new one.');
+                    $user->subscription->end_date = $user->subscription->end_date->addDays(30);
+                    $user->subscription->save();
+                } else {
+                    $subscription = new Subscription();
+                    $subscription->user_id = $user->id;
+                    $subscription->plan_id = $billingAgreement->plan_id;
+                    $subscription->end_date = Carbon::now()->addDays(30);
+                    $subscription->save();
                 }
-
-                $subscription = new Subscription();
-                $subscription->user_id = $user->id;
-                $subscription->plan_id = $plan->id;
-                $subscription->end_date = Carbon::now()->addDays($plan->interval);
-                $subscription->save();
-
-                $user->subscription->end_date = Carbon::now()->addDays(30);
-                $user->subscription->save();
 
                 break;
             }
-            case 'BILLING.SUBSCRIPTION.CANCELLED':
+            case 'BILLING.SUBSCRIPTION.CANCELLED': // user has cancelled their subscription
             {
-                // user has cancelled their subscription
                 break;
             }
         }
