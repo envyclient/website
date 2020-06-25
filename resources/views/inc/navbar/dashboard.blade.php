@@ -66,18 +66,6 @@
                     <i class="fas fa-redo p-2" style="margin-right:10px;"></i>
                     Subscription
                 </a>
-           {{--     <a class="list-group-item list-group-item-custom" data-toggle="list" href="#credits"
-                   style="cursor:pointer;">
-                    <i class="fas fa-credit-card p-2" style="margin-right:10px;"></i>
-                    Add Credits
-                </a>
-                @if(count($transactions) > 0)
-                    <a class="list-group-item list-group-item-custom" data-toggle="list" href="#invoices"
-                       style="cursor:pointer;">
-                        <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
-                        Transactions
-                    </a>
-                @endif--}}
             </div>
         @endif
     </div>

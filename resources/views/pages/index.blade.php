@@ -4,15 +4,13 @@
     <div class="tab-content" style="width:95%;margin:0 auto">
 
         <!-- settings -->
-        @include('pages.tabs.profile')
-        @include('pages.tabs.security')
+    @include('pages.tabs.profile')
+    @include('pages.tabs.security')
 
-        <!-- billing -->
-        @include('pages.tabs.subscriptions')
-       {{-- @include('pages.tabs.credits')
-        @include('pages.tabs.transactions')--}}
+    <!-- billing -->
+    @include('pages.tabs.subscriptions')
 
-        <!-- disable account modal -->
+    <!-- disable account modal -->
         <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

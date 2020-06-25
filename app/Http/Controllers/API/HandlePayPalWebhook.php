@@ -4,10 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\BillingAgreement;
 use App\Http\Controllers\Controller;
+use App\Notifications\NewSubscription;
 use App\Subscription;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PayPal\Api\Agreement;
 use PayPal\Api\AgreementStateDescriptor;
@@ -29,12 +29,6 @@ class HandlePayPalWebhook extends Controller
         $this->paypal->setConfig(config('paypal.settings'));
     }
 
-    /**
-     * Handle the incoming request.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function __invoke(Request $request)
     {
         // TODO: handle webhook
@@ -57,6 +51,8 @@ class HandlePayPalWebhook extends Controller
                     // extended the subscription
                     $user->subscription->end_date = $user->subscription->end_date->addDays(30);
                     $user->subscription->save();
+
+                    // TODO: notify user about renewal
                 } else {
                     // creating a new subscription for the user
                     $subscription = new Subscription();
@@ -66,7 +62,7 @@ class HandlePayPalWebhook extends Controller
                     $subscription->end_date = Carbon::now()->addDays(30);
                     $subscription->save();
 
-                    // TODO: notify user about subscription
+                    $user->notify(new NewSubscription($user));
                 }
 
                 break;

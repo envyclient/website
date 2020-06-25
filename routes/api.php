@@ -3,9 +3,6 @@
 /**
  * Auth
  */
-
-use Illuminate\Support\Facades\Storage;
-
 Route::prefix('auth')->group(function () {
     Route::post('login', 'API\AuthController@login');
     Route::get('me', 'API\AuthController@me');
@@ -78,10 +75,3 @@ Route::prefix('sessions')->group(function () {
     Route::post('/', 'API\GameSessionsController@store');
     Route::put('{session}', 'API\GameSessionsController@update');
 });
-
-/**
- * Download a cape
- */
-Route::middleware('auth:api')->get('capes/{cape}', function ($cape) {
-    return Storage::disk('minio')->download('capes/' . $cape . '.png');
-})->name('capes');
