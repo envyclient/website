@@ -21,8 +21,10 @@ Route::prefix('subscriptions')->group(function () {
  * Payments
  */
 Route::prefix('paypal')->group(function () {
+    // admin
     Route::get('createBillingPlan', 'PayPalController@createBillingPlan')->name('paypal.createBillingPlan');
-    Route::get('processAgreement', 'PayPalController@processAgreement')->name('paypal.processAgreement');
+
+    Route::post('processAgreement', 'PayPalController@processAgreement')->name('paypal.processAgreement');
     Route::get('executeBillingAgreement', 'PayPalController@executeBillingAgreement')->name('paypal.executeBillingAgreement');
 
     Route::post('create', 'PayPalController@create')->name('paypal.create');

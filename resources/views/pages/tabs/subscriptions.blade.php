@@ -3,7 +3,7 @@
     <div class="alert alert-secondary" style="font-size:25px;">
         <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
     </div>
-    {!! Form::open(['action' => 'SubscriptionsController@subscribe', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'PayPalController@processAgreement', 'method' => 'POST']) !!}
     <div class="card" style="width:100%;">
         <ul class="list-group list-group-flush">
             @if($user->hasSubscription())

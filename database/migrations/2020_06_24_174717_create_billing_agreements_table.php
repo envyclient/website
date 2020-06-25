@@ -18,7 +18,9 @@ class CreateBillingAgreementsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('plan_id');
             $table->string('billing_agreement_id')->unique();
+            $table->string('state', 10);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

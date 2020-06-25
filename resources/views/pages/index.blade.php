@@ -9,8 +9,8 @@
 
         <!-- billing -->
         @include('pages.tabs.subscriptions')
-        @include('pages.tabs.credits')
-        @include('pages.tabs.transactions')
+       {{-- @include('pages.tabs.credits')
+        @include('pages.tabs.transactions')--}}
 
         <!-- disable account modal -->
         <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
