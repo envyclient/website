@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Depsimon\Wallet\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +21,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
 // TODO: add user client settings
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasWallet, Favoriter;
+    use Notifiable, Favoriter;
 
     protected $fillable = [
         'name', 'email', 'password', 'api_token', 'hwid', 'admin', 'banned', 'disabled', 'referral_code_id'
