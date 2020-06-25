@@ -44,6 +44,15 @@
                 {!! Form::close() !!}
             </ul>
         </div>
+    @elseif($user->hasBillingAgreement())
+        <div class="card" style="width: 100%;">
+            <ul class="list-group list-group-flush">
+                {!! Form::close() !!}
+                <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
+                    Subscription in progress.
+                </button>
+            </ul>
+        </div>
     @else
         <div class="card" style="width: 100%;">
             <ul class="list-group list-group-flush">

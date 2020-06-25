@@ -98,7 +98,7 @@ class PayPalController extends Controller
         // 'P-2XF851689H528853W3UZLKOA'
 
         $user = $request->user();
-        if ($user->hasSubscription()) {
+        if ($user->hasBillingAgreement()) {
             return back()->with('error', 'You already have a active subscription.');
         }
 
@@ -106,7 +106,7 @@ class PayPalController extends Controller
         $agreement = new Agreement();
         $agreement->setName('Base Agreement')
             ->setDescription('Basic Agreement')
-            ->setStartDate(Carbon::now()->addMinutes(1)->toIso8601String());
+            ->setStartDate(Carbon::today()->addMonth()->toIso8601String());
 
         // Set plan id
         $plan = new Plan();

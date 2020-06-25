@@ -77,6 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasSubscription(): bool
     {
+        return $this->subscription()->exists();
+    }
+
+    public function hasBillingAgreement(): bool
+    {
         return $this->billingAgreement()->exists();
     }
 
