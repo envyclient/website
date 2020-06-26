@@ -26,8 +26,7 @@
                             </button>
                         </div>
                         <div class="col">
-                            <b>${{ $plan->price }}</b>
-                            / {{ "$plan->interval days" }}
+                            <b>${{ $plan->price }}</b> / 30 days
                         </div>
                     </div>
                 </li>
@@ -39,7 +38,7 @@
         <div class="card" style="width: 100%;">
             <ul class="list-group list-group-flush">
                 {!! Form::close() !!}
-                {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'CancelSubscription', 'method' => 'POST']) !!}
                 {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
                 {!! Form::close() !!}
             </ul>

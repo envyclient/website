@@ -26,6 +26,17 @@ class CreatePlansTable extends Migration
         });
 
         DB::table('plans')->insert([
+            'name' => 'Free',
+            'description' => 'Get free access to Envy Client for 30 days.',
+            'price' => 0,
+            'paypal_id' => 'asd1',
+            'config_limit' => 15,
+            'beta_access' => true,
+            'capes_access' => true
+        ]);
+
+
+        DB::table('plans')->insert([
             'name' => 'Standard',
             'description' => 'Get basic access to Envy Client for 30 days.',
             'price' => 7,
@@ -37,7 +48,7 @@ class CreatePlansTable extends Migration
             'name' => 'Premium',
             'description' => 'Get premium access to Envy Client for 30 days.',
             'price' => 10,
-            'paypal_id' => 'asd1',
+            'paypal_id' => 'P-2XF851689H528853W3UZLKOA',
             'config_limit' => 15,
             'beta_access' => true,
             'capes_access' => true

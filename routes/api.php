@@ -58,8 +58,6 @@ Route::prefix('versions')->group(function () {
     Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
 });
 
-Route::get('assets', 'API\VersionsController@assets');
-
 /**
  * Referrals
  */
@@ -75,3 +73,9 @@ Route::prefix('sessions')->group(function () {
     Route::post('/', 'API\GameSessionsController@store');
     Route::put('{session}', 'API\GameSessionsController@update');
 });
+
+/**
+ * Extra
+ */
+Route::get('assets', 'API\VersionsController@assets');
+Route::post('paypal', 'API\HandlePayPalWebhook');

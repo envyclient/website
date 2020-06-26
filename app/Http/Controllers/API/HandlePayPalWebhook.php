@@ -31,18 +31,26 @@ class HandlePayPalWebhook extends Controller
 
     public function __invoke(Request $request)
     {
-        // TODO: handle webhook
-        if (!$request->has('event_type')) {
+        if (empty($request->getContent())) {
             return response()->json([
                 'message' => '400 Bad Request'
             ], 400);
         }
 
-        switch (strtolower($request->event_type)) {
+        $data = json_decode($request->getContent());
+
+        // TODO: handle webhook
+        if (!isset($data->event_type)) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        switch ($data->event_type) {
             case 'PAYMENT.SALE.COMPLETED': // received payment so we extend or create subscription
             {
                 // get the user that this billing id belongs to
-                $billingAgreement = BillingAgreement::where('billing_agreement_id', $request->resource->billing_agreement_id)->firstOrFail();
+                $billingAgreement = BillingAgreement::where('billing_agreement_id', $data->resource->billing_agreement_id)->firstOrFail();
                 $user = $billingAgreement->user;
 
                 // TODO: handle plan switching
@@ -58,7 +66,7 @@ class HandlePayPalWebhook extends Controller
                     $subscription = new Subscription();
                     $subscription->user_id = $user->id;
                     $subscription->plan_id = $billingAgreement->plan_id;
-                    $subscription->billing_agreement_id = $billingAgreement->plan_id;
+                    $subscription->billing_agreement_id = $billingAgreement->id;
                     $subscription->end_date = Carbon::now()->addDays(30);
                     $subscription->save();
 
@@ -70,10 +78,10 @@ class HandlePayPalWebhook extends Controller
             case 'BILLING.SUBSCRIPTION.CANCELLED': // user has cancelled their subscription
             {
                 // get billing agreement
-                $billingAgreement = BillingAgreement::where('billing_agreement_id', $request->resource->id)->firstOrFail();
+                $billingAgreement = BillingAgreement::where('billing_agreement_id', $data->resource->id)->firstOrFail();
 
                 // cancel billing agreement
-                $billingAgreement->state = $request->resource->state;
+                $billingAgreement->state = $data->resource->state;
                 $billingAgreement->save();
 
                 break;
@@ -84,7 +92,7 @@ class HandlePayPalWebhook extends Controller
                 $agreementStateDescriptor->setNote("Cancelling agreement due to payment fail.");
 
                 try {
-                    $agreement = Agreement::get($request->resource->id, $this->paypal);
+                    $agreement = Agreement::get($data->resource->id, $this->paypal);
                     $agreement->cancel($agreementStateDescriptor, $this->paypal);
                 } catch (Exception $e) {
                     die($e);
