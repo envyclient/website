@@ -3,7 +3,7 @@
     <div class="alert alert-secondary" style="font-size:25px;">
         <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
     </div>
-    {!! Form::open(['action' => 'SubscriptionsController@subscribe', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'PayPalController@process', 'method' => 'POST']) !!}
     <div class="card" style="width:100%;">
         <ul class="list-group list-group-flush">
             @if($user->hasSubscription())
@@ -26,8 +26,7 @@
                             </button>
                         </div>
                         <div class="col">
-                            <b>${{ $plan->price }}</b>
-                            / {{ "$plan->interval days" }}
+                            <b>${{ $plan->price }}</b> / 30 days
                         </div>
                     </div>
                 </li>
@@ -39,9 +38,18 @@
         <div class="card" style="width: 100%;">
             <ul class="list-group list-group-flush">
                 {!! Form::close() !!}
-                {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'CancelSubscription', 'method' => 'POST']) !!}
                 {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
                 {!! Form::close() !!}
+            </ul>
+        </div>
+    @elseif($user->hasBillingAgreement())
+        <div class="card" style="width: 100%;">
+            <ul class="list-group list-group-flush">
+                {!! Form::close() !!}
+                <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
+                    Subscription in progress.
+                </button>
             </ul>
         </div>
     @else

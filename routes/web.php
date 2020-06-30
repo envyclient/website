@@ -13,20 +13,18 @@ Route::get('admin', 'HomeController@admin')->name('admin');
  * Subscriptions
  */
 Route::prefix('subscriptions')->group(function () {
-    Route::post('subscribe', 'SubscriptionsController@subscribe')->name('subscriptions.subscribe');
-    Route::post('cancel', 'SubscriptionsController@cancel')->name('subscriptions.cancel');
+    Route::post('cancel', 'CancelSubscription')->name('subscriptions.cancel');
 });
 
 /**
  * Payments
  */
 Route::prefix('paypal')->group(function () {
+    // admin
     Route::get('createBillingPlan', 'PayPalController@createBillingPlan')->name('paypal.createBillingPlan');
-    Route::get('processAgreement', 'PayPalController@processAgreement')->name('paypal.processAgreement');
-    Route::get('executeBillingAgreement', 'PayPalController@executeBillingAgreement')->name('paypal.executeBillingAgreement');
 
-    Route::post('create', 'PayPalController@create')->name('paypal.create');
-    Route::get('success', 'PayPalController@success')->name('paypal.success');
+    Route::post('process', 'PayPalController@process')->name('paypal.process');
+    Route::get('execute', 'PayPalController@execute')->name('paypal.execute');
     Route::get('cancel', 'PayPalController@cancel')->name('paypal.cancel');
 });
 

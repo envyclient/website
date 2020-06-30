@@ -29,14 +29,13 @@ class HomeController extends Controller
         $this->middleware('admin')->only('admin');
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $user = $request->user();
+        $user = auth()->user();
         return view('pages.index')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
-            'plans' => Plan::all(),
-            'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
+            'plans' => $user->access_free_plan ? Plan::all() : Plan::where('price', '<>', 0)->get(),
             'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
         ]);
     }
@@ -46,9 +45,9 @@ class HomeController extends Controller
         return view('pages.terms');
     }
 
-    public function admin(Request $request)
+    public function admin()
     {
-        $user = $request->user();
+        $user = auth()->user();
         $apiToken = $user->api_token;
 
         $usersChart = new UsersChart();

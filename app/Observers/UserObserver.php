@@ -13,7 +13,7 @@ class UserObserver
 
     public function created(User $user)
     {
-        $user->wallet()->create();
+        //$user->wallet()->create();
         if ($user->referralCode()->exists()) {
             $referralCode = $user->referralCode;
             $user->deposit(2, 'deposit', ['referral_code_id' => $referralCode->id, 'description' => "Used referral code '{$referralCode->name}'."]);

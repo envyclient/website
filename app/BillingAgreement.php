@@ -6,18 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property string billing_agreement_id
  * @property int user_id
  * @property int plan_id
- * @property int billing_agreement_id
- * @property string end_date
+ * @property string state
  */
-class Subscription extends Model
+class BillingAgreement extends Model
 {
     use SoftDeletes;
-
-    protected $casts = [
-        'end_date' => 'datetime'
-    ];
 
     public function user()
     {
@@ -29,8 +25,8 @@ class Subscription extends Model
         return $this->belongsTo('App\Plan');
     }
 
-    public function billingAgreement()
+    public function subscription()
     {
-        return $this->belongsTo('App\BillingAgreement', 'id', 'billing_agreement_id');
+        return $this->hasOne('App\Subscription', 'billing_agreement_id');
     }
 }

@@ -192,14 +192,6 @@
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto text-white">
-                        <!-- Authentication Links -->
-                        <div class="m-2">
-                            <a class="badge custom-badge fa-1x" style="color: #fff;">
-                                <i class="fas fa-coins" style="padding-right: 5px;"></i>
-                                {{ Auth::user()->balance == null ? 0 :  Auth::user()->balance }}
-                            </a>
-                        </div>
-
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
