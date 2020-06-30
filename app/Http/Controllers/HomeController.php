@@ -29,9 +29,9 @@ class HomeController extends Controller
         $this->middleware('admin')->only('admin');
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $user = $request->user();
+        $user = auth()->user();
         return view('pages.index')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
@@ -45,9 +45,9 @@ class HomeController extends Controller
         return view('pages.terms');
     }
 
-    public function admin(Request $request)
+    public function admin()
     {
-        $user = $request->user();
+        $user = auth()->user();
         $apiToken = $user->api_token;
 
         $usersChart = new UsersChart();
