@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\BillingAgreement;
 use App\Http\Controllers\Controller;
+use App\Notifications\Generic;
 use App\Notifications\NewSubscription;
 use App\Subscription;
 use Carbon\Carbon;
@@ -79,10 +80,14 @@ class HandlePayPalWebhook extends Controller
             {
                 // get billing agreement
                 $billingAgreement = BillingAgreement::where('billing_agreement_id', $data->resource->id)->firstOrFail();
+                $user = $billingAgreement->user;
 
                 // cancel billing agreement by updating the state
                 $billingAgreement->state = $data->resource->state;
                 $billingAgreement->save();
+
+                // email user about subscription cancellation
+                $user->notify(new Generic($user, 'Your subscription has been cancelled. You will not be charged at the next billing cycle.', 'Subscription'));
 
                 break;
             }

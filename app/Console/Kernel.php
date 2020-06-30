@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
                 // delete the subscription and notify the user
                 $user->subscription()->delete();
                 $user->billingAgreement()->delete();
-                $this->notify(new Generic($user, 'Your subscription has expired. Please renew it you wish to continue using the client.', 'Subscription'));
+                //$this->notify(new Generic($user, 'Your subscription has expired. Please renew it you wish to continue using the client.', 'Subscription'));
             }
 
         })->everyMinute();

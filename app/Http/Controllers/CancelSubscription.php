@@ -48,9 +48,6 @@ class CancelSubscription extends Controller
             die($e);
         }
 
-        // email user about subscription cancellation
-        $user->notify(new Generic($user, 'You have successfully cancelled your subscription, you will not be charged at the next billing cycle.', 'Subscription'));
-
-        return back()->with('success', 'Your subscription has been cancelled and will not renew.');
+        return back()->with('success', 'Your subscription has been queued to cancel and will not renew at the end of billing period.');
     }
 }
