@@ -3,9 +3,6 @@
 /**
  * Auth
  */
-
-use Illuminate\Support\Facades\Storage;
-
 Route::prefix('auth')->group(function () {
     Route::post('login', 'API\AuthController@login');
     Route::get('me', 'API\AuthController@me');
@@ -43,7 +40,6 @@ Route::prefix('admin')->group(function () {
  */
 Route::prefix('charts')->group(function () {
     Route::get('users', 'API\ChartsController@users')->name('api.charts.users');
-    Route::get('transactions', 'API\ChartsController@transactions')->name('api.charts.transactions');
     Route::get('versions', 'API\ChartsController@versions')->name('api.charts.versions');
 
     Route::prefix('sessions')->group(function () {
@@ -60,8 +56,6 @@ Route::prefix('versions')->group(function () {
     Route::get('{version}', 'API\VersionsController@show')->name('api.versions.show');
     Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
 });
-
-Route::get('assets', 'API\VersionsController@assets');
 
 /**
  * Referrals
@@ -80,8 +74,7 @@ Route::prefix('sessions')->group(function () {
 });
 
 /**
- * Download a cape
+ * Extra
  */
-Route::middleware('auth:api')->get('capes/{cape}', function ($cape) {
-    return Storage::disk('minio')->download('capes/' . $cape . '.png');
-})->name('capes');
+Route::get('assets', 'API\VersionsController@assets');
+Route::post('paypal', 'API\HandlePayPalWebhook');

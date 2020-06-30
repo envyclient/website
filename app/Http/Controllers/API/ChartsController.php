@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Charts\GameSessionsChart;
-use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Config;
@@ -13,7 +12,6 @@ use App\Subscription;
 use App\User;
 use App\Version;
 use Carbon\Carbon;
-use Depsimon\Wallet\Transaction;
 use Illuminate\Support\Facades\DB;
 use Colors\RandomColor;
 
@@ -49,21 +47,6 @@ class ChartsController extends Controller
         }
         $chart->dataset('Configs', 'line', $data)->color('#fd5e53')->fill(false);
 
-        return $chart->api();
-    }
-
-    public function transactions()
-    {
-        $data = [];
-        for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
-            array_push($data, Transaction::where('type', 'deposit')
-                ->whereDate('created_at', today()->subDays($days_backwards))
-                ->sum('amount')
-            );
-        }
-
-        $chart = new TransactionsChart();
-        $chart->dataset('Amount', 'line', $data);
         return $chart->api();
     }
 

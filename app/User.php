@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Depsimon\Wallet\HasWallet;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +21,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
 // TODO: add user client settings
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasWallet, Favoriter;
+    use Notifiable, Favoriter;
 
     protected $fillable = [
         'name', 'email', 'password', 'api_token', 'hwid', 'admin', 'banned', 'disabled', 'referral_code_id'
@@ -50,14 +49,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Config');
     }
 
-    public function invoices()
-    {
-        return $this->hasMany('App\Invoice');
-    }
-
     public function subscription()
     {
         return $this->hasOne('App\Subscription');
+    }
+
+    public function billingAgreement()
+    {
+        return $this->hasOne('App\BillingAgreement');
     }
 
     public function downloads()
@@ -78,6 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();
+    }
+
+    public function hasBillingAgreement(): bool
+    {
+        return $this->billingAgreement()->exists();
     }
 
     public function getConfigLimit(): int

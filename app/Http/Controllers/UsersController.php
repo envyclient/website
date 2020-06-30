@@ -37,9 +37,7 @@ class UsersController extends Controller
         $user = auth()->user();
 
         if ($user->hasSubscription()) {
-            $user->subscription->fill([
-                'renew' => false
-            ])->save();
+            return back()->with('error', 'You must wait until your subscription has ended before disabling your account.');
         }
 
         $user->fill([

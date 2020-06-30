@@ -71,24 +71,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="referral-code"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Referral Code') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="referral-code" type="text"
-                                           class="form-control @error('referral_code') is-invalid @enderror"
-                                           name="referral_code"
-                                           autocomplete="referral-code">
-
-                                    @error('referral_code')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
                             <div class="form-group mb-0 text-center">
                                 <p class="text-muted">
                                     By clicking register you are agreeing to our

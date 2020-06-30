@@ -12,12 +12,7 @@
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;">
                     <small class="text-muted">ADMINISTRATOR</small>
                 </h3>
-                <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#transactions"
-                   style="cursor:pointer;">
-                    <i class="fas fa-balance-scale p-2" style="margin-right:10px;"></i>
-                    Transactions
-                </a>
-                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#users"
+                <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#users"
                    style="cursor:pointer;">
                     <i class="fas fa-users p-2" style="margin-right:10px;"></i>
                     Users
@@ -26,11 +21,6 @@
                    style="cursor:pointer;">
                     <i class="fas fa-download p-2" style="margin-right:10px;"></i>
                     Versions
-                </a>
-                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#referral-codes"
-                   style="cursor:pointer;">
-                    <i class="fas fa-user-tag p-2" style="margin-right:10px;"></i>
-                    Referral Codes
                 </a>
                 <a class="list-group-item list-group-item-custom" data-toggle="list" href="#game-sessions"
                    style="cursor:pointer;">
@@ -66,18 +56,6 @@
                     <i class="fas fa-redo p-2" style="margin-right:10px;"></i>
                     Subscription
                 </a>
-                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#credits"
-                   style="cursor:pointer;">
-                    <i class="fas fa-credit-card p-2" style="margin-right:10px;"></i>
-                    Add Credits
-                </a>
-                @if(count($transactions) > 0)
-                    <a class="list-group-item list-group-item-custom" data-toggle="list" href="#invoices"
-                       style="cursor:pointer;">
-                        <i class="fas fa-shopping-cart p-2" style="margin-right:10px;"></i>
-                        Transactions
-                    </a>
-                @endif
             </div>
         @endif
     </div>

@@ -3,34 +3,8 @@
 @section("content")
     <div class="tab-content" style="width:95%;margin:0 auto">
 
-        <!-- transactions -->
-        <div class="tab-pane fade custom-panel show active" id="transactions" role="tabpanel">
-
-            <!-- transactions chart -->
-            <div>
-                <div class="alert alert-primary" style="font-size:25px;">
-                    Stats
-                </div>
-                <div style="height: 300px">
-                    {!! $transactionsChart->container() !!}
-                </div>
-            </div>
-
-            <br>
-
-            <!-- transactions table -->
-            <div>
-                <div class="alert alert-secondary" style="font-size:25px;">
-                    Transactions
-                </div>
-                <transactions-table url="{{ route('api.admin.transactions') }}"
-                                    api-token="{{ $apiToken }}">
-                </transactions-table>
-            </div>
-        </div>
-
         <!-- users -->
-        <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
+        <div class="tab-pane fade custom-panel show active" id="users" role="tabpanel">
 
             <!-- users chart -->
             <div>
@@ -100,30 +74,6 @@
             </div>
         </div>
 
-        <!-- referral codes -->
-        <div class="tab-pane fade custom-panel" id="referral-codes" role="tabpanel">
-
-            <!-- referral codes table -->
-            <div>
-                <div class="alert alert-primary" style="font-size:25px;">
-                    Referral Codes
-                </div>
-                <referral-codes-table url="{{ route('api.referrals.index') }}"
-                                      api-token="{{ $apiToken }}"></referral-codes-table>
-            </div>
-
-            <br>
-
-            <!-- create referral code -->
-            <div>
-                <div class="alert alert-secondary" style="font-size:25px;">
-                    Create Referral Code
-                </div>
-                <referral-code-create url="{{ route('api.referrals.store') }}"
-                                      api-token="{{ $apiToken }}"></referral-code-create>
-            </div>
-        </div>
-
         <!-- game sessions -->
         <div class="tab-pane fade custom-panel" id="game-sessions" role="tabpanel">
             <div class="alert alert-primary" style="font-size:25px;">
@@ -143,7 +93,6 @@
 
 @section('js')
     {!! $usersChart->script() !!}
-    {!! $transactionsChart->script() !!}
     {!! $versionsChart->script() !!}
     {!! $gameSessionsChart->script() !!}
     {!! $gameSessionsToggleChart->script() !!}

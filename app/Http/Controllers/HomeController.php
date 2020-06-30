@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Charts\GameSessionsChart;
-use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\GameSession;
 use App\Plan;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -29,14 +27,13 @@ class HomeController extends Controller
         $this->middleware('admin')->only('admin');
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $user = $request->user();
+        $user = auth()->user();
         return view('pages.index')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
-            'plans' => Plan::all(),
-            'transactions' => $user->wallet->transactions()->orderBy('created_at', 'desc')->get(),
+            'plans' => $user->access_free_plan ? Plan::all() : Plan::where('price', '<>', 0)->get(),
             'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
         ]);
     }
@@ -46,20 +43,15 @@ class HomeController extends Controller
         return view('pages.terms');
     }
 
-    public function admin(Request $request)
+    public function admin()
     {
-        $user = $request->user();
+        $user = auth()->user();
         $apiToken = $user->api_token;
 
         $usersChart = new UsersChart();
         $usersChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
             ->options(self::CHART_OPTIONS)
             ->load(route('api.charts.users') . "?api_token=$apiToken");
-
-        $transactionsChart = new TransactionsChart();
-        $transactionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
-            ->options(self::CHART_OPTIONS)
-            ->load(route('api.charts.transactions') . "?api_token=$apiToken");
 
         $versionsChart = new VersionDownloadsChart();
         $versionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
@@ -114,7 +106,6 @@ class HomeController extends Controller
         return view('pages.admin')->with([
             'apiToken' => $apiToken,
             'usersChart' => $usersChart,
-            'transactionsChart' => $transactionsChart,
             'versionsChart' => $versionsChart,
             'gameSessionsChart' => $gameSessionsChart,
             'gameSessionsToggleChart' => $gameSessionsToggleChart
