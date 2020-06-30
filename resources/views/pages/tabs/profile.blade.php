@@ -10,14 +10,6 @@
             <input class="form-control" placeholder="Date" readonly
                    value="{{ $user->created_at->format('Y-m-d') }}">
         </div>
-
-        @if($user->referralCode !== null)
-            <div class="text-left pt-3">
-                <label>Referral Code</label>
-                <input class="form-control" placeholder="code" readonly
-                       value="{{ $user->referralCode->code }}">
-            </div>
-        @endif
     </div>
     <br>
     <div>
