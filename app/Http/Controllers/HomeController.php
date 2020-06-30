@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Charts\GameSessionsChart;
-use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\GameSession;
 use App\Plan;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -54,11 +52,6 @@ class HomeController extends Controller
         $usersChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
             ->options(self::CHART_OPTIONS)
             ->load(route('api.charts.users') . "?api_token=$apiToken");
-
-        $transactionsChart = new TransactionsChart();
-        $transactionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
-            ->options(self::CHART_OPTIONS)
-            ->load(route('api.charts.transactions') . "?api_token=$apiToken");
 
         $versionsChart = new VersionDownloadsChart();
         $versionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
@@ -113,7 +106,6 @@ class HomeController extends Controller
         return view('pages.admin')->with([
             'apiToken' => $apiToken,
             'usersChart' => $usersChart,
-            'transactionsChart' => $transactionsChart,
             'versionsChart' => $versionsChart,
             'gameSessionsChart' => $gameSessionsChart,
             'gameSessionsToggleChart' => $gameSessionsToggleChart

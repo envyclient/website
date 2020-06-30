@@ -3,34 +3,8 @@
 @section("content")
     <div class="tab-content" style="width:95%;margin:0 auto">
 
-        <!-- transactions -->
-        <div class="tab-pane fade custom-panel show active" id="transactions" role="tabpanel">
-
-            <!-- transactions chart -->
-            <div>
-                <div class="alert alert-primary" style="font-size:25px;">
-                    Stats
-                </div>
-                <div style="height: 300px">
-                    {!! $transactionsChart->container() !!}
-                </div>
-            </div>
-
-            <br>
-
-            <!-- transactions table -->
-            <div>
-                <div class="alert alert-secondary" style="font-size:25px;">
-                    Transactions
-                </div>
-                <transactions-table url="{{ route('api.admin.transactions') }}"
-                                    api-token="{{ $apiToken }}">
-                </transactions-table>
-            </div>
-        </div>
-
         <!-- users -->
-        <div class="tab-pane fade custom-panel" id="users" role="tabpanel">
+        <div class="tab-pane fade custom-panel show active" id="users" role="tabpanel">
 
             <!-- users chart -->
             <div>
@@ -119,7 +93,6 @@
 
 @section('js')
     {!! $usersChart->script() !!}
-    {!! $transactionsChart->script() !!}
     {!! $versionsChart->script() !!}
     {!! $gameSessionsChart->script() !!}
     {!! $gameSessionsToggleChart->script() !!}

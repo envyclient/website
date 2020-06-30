@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Charts\TransactionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Config;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Transaction as TransactionResource;
 use App\Subscription;
 use App\User;
 use App\Version;
 use Carbon\Carbon;
-use Depsimon\Wallet\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -90,67 +87,5 @@ class AdminController extends Controller
         return response()->json([
             'message' => '200 OK'
         ]);
-    }
-
-    public function transactions(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'date' => 'required|string|in:today,yesterday,week,month,lifetime',
-            'type' => 'required|string|in:all,deposit,withdraw'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
-        $startDate = Carbon::today();
-        $endDate = Carbon::today();
-        switch ($request->date) {
-            case 'yesterday':
-            {
-                $startDate = Carbon::yesterday();
-                $endDate = Carbon::yesterday();
-                break;
-            }
-            case 'week':
-            {
-                $startDate = Carbon::today()->subDays(7);
-                break;
-            }
-            case 'month':
-            {
-                $startDate = Carbon::today()->subDays(30);
-                break;
-            }
-            case 'lifetime':
-            {
-                $startDate = Carbon::today()->startOfDecade();
-                break;
-            }
-        }
-
-        $transaction = Transaction::with('wallet.user')
-            ->whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)
-            ->orderBy('created_at', 'desc');
-
-        switch ($request->type) {
-            case 'deposit':
-            {
-                $transaction = $transaction->where('type', 'deposit');
-                break;
-            }
-            case 'withdraw':
-            {
-                $transaction = $transaction->where('type', 'withdraw');
-                break;
-            }
-        }
-
-        return TransactionResource::collection(
-            $transaction->get()
-        );
     }
 }

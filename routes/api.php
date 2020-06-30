@@ -40,7 +40,6 @@ Route::prefix('admin')->group(function () {
  */
 Route::prefix('charts')->group(function () {
     Route::get('users', 'API\ChartsController@users')->name('api.charts.users');
-    Route::get('transactions', 'API\ChartsController@transactions')->name('api.charts.transactions');
     Route::get('versions', 'API\ChartsController@versions')->name('api.charts.versions');
 
     Route::prefix('sessions')->group(function () {
