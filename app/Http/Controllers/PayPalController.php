@@ -57,7 +57,7 @@ class PayPalController extends Controller
 
         // Set merchant preferences
         $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl(route('paypal.executeBillingAgreement'))
+        $merchantPreferences->setReturnUrl(route('paypal.execute'))
             ->setCancelUrl(route('paypal.cancel'))
             ->setAutoBillAmount('YES')
             ->setInitialFailAmountAction('CANCEL')
@@ -89,7 +89,7 @@ class PayPalController extends Controller
         dd($plan);
     }
 
-    public function processAgreement(Request $request)
+    public function process(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|integer'
@@ -133,7 +133,7 @@ class PayPalController extends Controller
         return redirect()->away($agreement->getApprovalLink());
     }
 
-    public function executeBillingAgreement(Request $request)
+    public function execute(Request $request)
     {
         // getting the plan id from the session
         $planId = session('plan_id');

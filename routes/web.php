@@ -23,8 +23,8 @@ Route::prefix('paypal')->group(function () {
     // admin
     Route::get('createBillingPlan', 'PayPalController@createBillingPlan')->name('paypal.createBillingPlan');
 
-    Route::post('processAgreement', 'PayPalController@processAgreement')->name('paypal.processAgreement');
-    Route::get('executeBillingAgreement', 'PayPalController@executeBillingAgreement')->name('paypal.executeBillingAgreement');
+    Route::post('process', 'PayPalController@process')->name('paypal.process');
+    Route::get('execute', 'PayPalController@execute')->name('paypal.execute');
     Route::get('cancel', 'PayPalController@cancel')->name('paypal.cancel');
 });
 

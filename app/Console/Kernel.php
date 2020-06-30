@@ -27,30 +27,26 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        /*        $schedule->call(function () {
-                    $subscriptions = Subscription::where([
-                        ['renew', '=', true],
-                        ['end_date', '<=', Carbon::now()]
-                    ])->get();
-                    foreach ($subscriptions as $subscription) {
+        $schedule->call(function () {
+            $subscriptions = Subscription::where('end_date', '<=', Carbon::now())->get();
 
-                        $user = $subscription->user;
-                        $plan = $user->subscription->plan;
+            foreach ($subscriptions as $subscription) {
 
-                        if ($user->canWithdraw($plan->price) && $user->subscription->renew) {
-                            $user->subscription->end_date = Carbon::now()->addDays($user->subscription->plan->interval);
-                            $user->subscription->save();
+                $user = $subscription->user;
+                $billingAgreement = $subscription->billingAgreement;
 
-                            $user->withdraw($plan->price, 'withdraw', ['plan_id' => $plan->id, 'description' => "Renewal of plan {$plan->title}."]);
-                            $this->notify(new Generic($user, 'Your subscription has been renewed.', 'Subscription'));
-                            return true;
-                        } else {
-                            $user->subscription()->delete();
-                            $this->notify(new Generic($user, 'Your subscription has failed to renew due to lack of credits. Please renew it you wish to continue using the client.', 'Subscription'));
-                            return false;
-                        }
-                    }
-                })->everyMinute();*/
+                // skip deleting if billing plan is active
+                if ($billingAgreement->state !== 'Cancelled') {
+                    continue;
+                }
+
+                // delete the subscription and notify the user
+                $user->subscription()->delete();
+                $user->billingAgreement()->delete();
+                $this->notify(new Generic($user, 'Your subscription has expired. Please renew it you wish to continue using the client.', 'Subscription'));
+            }
+
+        })->everyMinute();
     }
 
     /**
