@@ -41,7 +41,7 @@
         <div class="card" style="width: 100%;">
             <ul class="list-group list-group-flush">
                 {!! Form::close() !!}
-                {!! Form::open(['action' => 'CancelSubscription', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
                 {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
                 {!! Form::close() !!}
             </ul>

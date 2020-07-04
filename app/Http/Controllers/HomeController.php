@@ -33,7 +33,7 @@ class HomeController extends Controller
         return view('pages.index')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
-            'plans' => $user->access_free_plan ? Plan::all() : Plan::where('price', '<>', 0)->get(),
+            'plans' =>  Plan::all(),
             'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
         ]);
     }

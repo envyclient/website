@@ -13,7 +13,8 @@ Route::get('admin', 'HomeController@admin')->name('admin');
  * Subscriptions
  */
 Route::prefix('subscriptions')->group(function () {
-    Route::post('cancel', 'CancelSubscription')->name('subscriptions.cancel');
+    Route::post('free', 'SubscriptionsController@free')->name('subscriptions.free');
+    Route::post('cancel', 'SubscriptionsController@cancel')->name('subscriptions.cancel');
 });
 
 /**
