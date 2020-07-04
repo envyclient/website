@@ -17,6 +17,7 @@ use PayPal\Api\PaymentDefinition;
 use PayPal\Api\Plan;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Common\PayPalModel;
+use PayPal\Exception\PayPalConnectionException;
 use PayPal\Rest\ApiContext;
 
 class PayPalController extends Controller
@@ -39,7 +40,7 @@ class PayPalController extends Controller
     {
         // Create a new billing plan
         $plan = new Plan();
-        $plan->setName('Premium')
+        $plan->setName('Free')
             ->setDescription('1 month of recurring Envy Client')
             ->setType('INFINITE');
 
@@ -51,7 +52,7 @@ class PayPalController extends Controller
             ->setFrequencyInterval('1')
             //->setCycles('12')
             ->setAmount(new Currency([
-                'value' => 10,
+                'value' => 0,
                 'currency' => 'USD'
             ]));
 
@@ -63,7 +64,7 @@ class PayPalController extends Controller
             ->setInitialFailAmountAction('CANCEL')
             ->setMaxFailAttempts('0')
             ->setSetupFee(new Currency([
-                'value' => 10,
+                'value' => 0,
                 'currency' => 'USD'
             ]));
 
@@ -72,7 +73,9 @@ class PayPalController extends Controller
 
         try {
             $createdPlan = $plan->create($this->paypal);
-        } catch (Exception $ex) {
+        } catch (PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
             die($ex);
         }
 

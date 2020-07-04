@@ -16,8 +16,8 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('plan_id');
-            $table->unsignedInteger('billing_agreement_id');
+            $table->unsignedInteger('plan_id')->nullable();
+            $table->unsignedInteger('billing_agreement_id')->nullable();
             $table->boolean('renew')->default(true);
             $table->timestamp('end_date')->nullable();
             $table->timestamps();
