@@ -17,6 +17,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property bool admin
  * @property bool banned
  * @property bool disabled
+ * @property bool access_free_plan
  */
 // TODO: add user client settings
 class User extends Authenticatable implements MustVerifyEmail
@@ -24,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'hwid', 'admin', 'banned', 'disabled', 'referral_code_id'
+        'name', 'email', 'password', 'api_token', 'hwid', 'admin', 'banned', 'disabled', 'access_free_plan'
     ];
 
     protected $hidden = [
@@ -82,6 +83,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasBillingAgreement(): bool
     {
         return $this->billingAgreement()->exists();
+    }
+
+    public function subscribedToFreePlan(): bool
+    {
+        return $this->subscription()->exists() && $this->subscription->plan_id === 1;
     }
 
     public function getConfigLimit(): int

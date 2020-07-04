@@ -19,7 +19,7 @@ class CreatePlansTable extends Migration
             $table->string('name')->unique();
             $table->string('description');
             $table->unsignedTinyInteger('price');
-            $table->string('paypal_id')->unique();
+            $table->string('paypal_id')->unique()->nullable();
             $table->unsignedTinyInteger('config_limit');
             $table->boolean('beta_access')->default(false);
             $table->boolean('capes_access')->default(false);
@@ -29,12 +29,10 @@ class CreatePlansTable extends Migration
             'name' => 'Free',
             'description' => 'Get free access to Envy Client for 30 days.',
             'price' => 0,
-            'paypal_id' => 'asd1',
             'config_limit' => 15,
             'beta_access' => true,
             'capes_access' => true
         ]);
-
 
         DB::table('plans')->insert([
             'name' => 'Standard',

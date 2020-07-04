@@ -37,12 +37,10 @@ class SubscriptionsController extends Controller
             return back()->with('error', 'You already have a subscription.');
         }
 
-        // creating a new subscription for the user
         $subscription = new Subscription();
         $subscription->user_id = $user->id;
-        $subscription->plan_id = null;
-        $subscription->billing_agreement_id = null;
-        $subscription->end_date = Carbon::now()->addCenturies(1);
+        $subscription->plan_id = 1;
+        $subscription->end_date = Carbon::now()->addDecade();
         $subscription->save();
 
         return back()->with('success', 'Subscribed to the free plan.');

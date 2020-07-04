@@ -5,13 +5,13 @@
     </div>
     {!! Form::open(['action' => 'PayPalController@process', 'method' => 'POST']) !!}
     <div class="card" style="width:100%;">
+        @if($user->hasSubscription())
+            <div class="card-header">
+                You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
+                (next payment due in {{ $nextSubscription }} days)
+            </div>
+        @endif
         <ul class="list-group list-group-flush">
-            @if($user->hasSubscription())
-                <li class="list-group-item">
-                    You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
-                    (next payment due in {{ $nextSubscription }} days)
-                </li>
-            @endif
             @foreach($plans as $plan)
                 <li class="list-group-item">
                     <div class="row" style="line-height:60px;">
@@ -39,28 +39,34 @@
     <br>
     @if($user->hasSubscription())
         <div class="card" style="width: 100%;">
-            <ul class="list-group list-group-flush">
-                {!! Form::close() !!}
+            {!! Form::close() !!}
+
+            @if($user->subscribedToFreePlan())
+                <h5 class="text-muted pt-2 pl-2">
+                    You can not cancel your subscription because you are subscribed to the free plan.
+                </h5>
+            @else
                 {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
                 {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
                 {!! Form::close() !!}
-            </ul>
+            @endif
         </div>
     @elseif($user->hasBillingAgreement())
         <div class="card" style="width: 100%;">
-            <ul class="list-group list-group-flush">
-                {!! Form::close() !!}
-                <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
-                    Subscription in progress.
-                </button>
-            </ul>
+            {!! Form::close() !!}
+            <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
+                Subscription in progress.
+            </button>
         </div>
     @else
-        <div class="card" style="width: 100%;">
-            <ul class="list-group list-group-flush">
-                {{ Form::submit('Subscribe', ['class' => 'btn btn-outline-success btn-lg btn-block']) }}
-                {!! Form::close() !!}
-            </ul>
-        </div>
+        {{ Form::submit('Subscribe', ['class' => 'btn btn-outline-success btn-lg btn-block']) }}
+        {!! Form::close() !!}
+
+        @if($user->access_free_plan)
+            <form method="POST" action="{{ route('subscriptions.free') }}" class="mt-2">
+                @csrf
+                <input class="btn btn-outline-secondary btn-lg btn-block" type="submit" value="Subscribe to free plan">
+            </form>
+        @endif
     @endif
 </div>
