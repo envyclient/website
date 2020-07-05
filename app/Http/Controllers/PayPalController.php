@@ -40,7 +40,7 @@ class PayPalController extends Controller
     {
         // Create a new billing plan
         $plan = new Plan();
-        $plan->setName('Free')
+        $plan->setName('Standard')
             ->setDescription('1 month of recurring Envy Client')
             ->setType('INFINITE');
 
@@ -50,21 +50,20 @@ class PayPalController extends Controller
             ->setType('REGULAR')
             ->setFrequency('MONTH')
             ->setFrequencyInterval('1')
-            //->setCycles('12')
             ->setAmount(new Currency([
-                'value' => 0,
+                'value' => 7,
                 'currency' => 'USD'
             ]));
 
         // Set merchant preferences
         $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl(route('paypal.execute'))
-            ->setCancelUrl(route('paypal.cancel'))
+        $merchantPreferences->setReturnUrl('https://dashboard.envyclient.com/paypal/execute')
+            ->setCancelUrl('https://dashboard.envyclient.com/paypal/cancel')
             ->setAutoBillAmount('YES')
             ->setInitialFailAmountAction('CANCEL')
             ->setMaxFailAttempts('0')
             ->setSetupFee(new Currency([
-                'value' => 0,
+                'value' => 7,
                 'currency' => 'USD'
             ]));
 
@@ -97,8 +96,6 @@ class PayPalController extends Controller
         $this->validate($request, [
             'id' => 'required|integer'
         ]);
-
-        // 'P-2XF851689H528853W3UZLKOA'
 
         $user = $request->user();
         if ($user->hasBillingAgreement()) {
