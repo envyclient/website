@@ -11,12 +11,12 @@
 
                 <div class="form-group">
                     <label for="name" class="form-label">Name</label>
-                    <input class="form-control" disabled name="name" type="text" value="{{ $user->name }}"
+                    <input class="form-control" readonly name="name" type="text" value="{{ $user->name }}"
                            id="name">
                 </div>
                 <div class="form-group">
                     <label for="email" class="form-label">Email</label>
-                    <input class="form-control" disabled name="email" type="text" value="{{ $user->email }}"
+                    <input class="form-control" readonly name="email" type="text" value="{{ $user->email }}"
                            id="email">
                 </div>
                 <div class="form-group">

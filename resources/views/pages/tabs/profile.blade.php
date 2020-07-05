@@ -15,7 +15,7 @@
     <div>
         @if($user->hasSubscription())
             <div class="alert alert-secondary" style="font-size:25px;">
-                <i class="fas fa-file" style="padding-right:10px;"></i>Configs
+                <i class="fas fa-file" style="padding-right:10px;"></i> Configs
                 <span class="badge badge-secondary">{{ $configs->count() }}/<span
                         class="font-weight-bold">{{ $user->getConfigLimit() }}</span>
                             </span>
