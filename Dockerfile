@@ -16,7 +16,7 @@ RUN npm install && npm run prod
 RUN echo "upload_max_filesize = 50M\n" \
          "post_max_size = 50M\n" \
          "max_execution_time = 60\n" \
-         > /etc/php7/conf.d/uploads.ini
+         > /usr/local/etc/php/conf.d/uploads.ini
 
 # run php server
 EXPOSE 9191
