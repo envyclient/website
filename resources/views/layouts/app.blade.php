@@ -14,8 +14,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script async src="https://ackee.affanhaq.me/tracker.js" data-ackee-server="https://ackee.affanhaq.me"
-            data-ackee-domain-id="7feb27df-f2a3-46e6-b3ea-911b14343827"></script>
+    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0" 
+        src="https://umami.affanhaq.me/umami.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
