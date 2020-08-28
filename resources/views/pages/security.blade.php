@@ -69,9 +69,11 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Close
                     </button>
-                    {!! Form::open(['action' => 'UsersController@disable', 'method' => 'DELETE']) !!}
-                    {{ Form::submit('Disable Account', ['class' => 'btn btn-outline-danger m-sm-2']) }}
-                    {!! Form::close() !!}
+                    <form method="POST" action="{{ route('user.disable') }}" accept-charset="UTF-8">
+                        @csrf
+                        <input name="_method" type="hidden" value="DELETE">
+                        <input class="btn btn-outline-danger m-sm-2" type="submit" value="Disable Account">
+                    </form>
                 </div>
             </div>
         </div>

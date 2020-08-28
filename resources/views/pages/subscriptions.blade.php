@@ -6,6 +6,7 @@
             <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
         </div>
         {!! Form::open(['action' => 'PayPalController@process', 'method' => 'POST']) !!}
+        @csrf
         <div class="card" style="width:100%;">
             @if($user->hasSubscription())
                 <div class="card-header">
@@ -40,30 +41,29 @@
         </div>
         <br>
         @if($user->hasSubscription())
-            <div class="card" style="width: 100%;">
+        </form> <!-- close form -->
+        <div class="card" style="width: 100%;">
+            @if($user->subscribedToFreePlan())
+                <h5 class="text-muted pt-2 pl-2">
+                    You can not cancel your subscription because you are subscribed to the free plan.
+                </h5>
+            @else
+                {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
+                {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
                 {!! Form::close() !!}
-
-                @if($user->subscribedToFreePlan())
-                    <h5 class="text-muted pt-2 pl-2">
-                        You can not cancel your subscription because you are subscribed to the free plan.
-                    </h5>
-                @else
-                    {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
-                    {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
-                    {!! Form::close() !!}
-                @endif
-            </div>
+            @endif
+        </div>
         @elseif($user->hasBillingAgreement())
-            <div class="card" style="width: 100%;">
-                {!! Form::close() !!}
-                <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
-                    Subscription in progress.
-                </button>
-            </div>
+        </form> <!-- close form -->
+        <div class="card" style="width: 100%;">
+            <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
+                Subscription in progress.
+            </button>
+        </div>
         @else
-            {{ Form::submit('Subscribe', ['class' => 'btn btn-outline-success btn-lg btn-block']) }}
-            {!! Form::close() !!}
-
+            <input class="btn btn-outline-success btn-lg btn-block" type="submit"
+                   value="Subscribe">
+            </form> <!-- close form -->
             @if($user->access_free_plan)
                 <form method="POST" action="{{ route('subscriptions.free') }}" class="mt-2">
                     @csrf
