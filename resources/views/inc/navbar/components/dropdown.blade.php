@@ -1,5 +1,5 @@
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-    @if(Auth::user()->admin)
+    @if(auth()->user()->admin)
         <a class="dropdown-item" href="{{ route('home') }}">
             Dashboard
         </a>
