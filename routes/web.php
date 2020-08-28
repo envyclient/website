@@ -5,9 +5,14 @@ Auth::routes(['verify' => true]);
 /**
  * Home
  */
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('terms', 'HomeController@terms')->name('terms');
-Route::get('admin', 'HomeController@admin')->name('admin');
+
+Route::group([], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('security', 'HomeController@security')->name('pages.security');
+    Route::get('subscriptions', 'HomeController@subscriptions')->name('pages.subscriptions');
+    Route::get('terms', 'HomeController@terms')->name('pages.terms');
+    Route::get('admin', 'HomeController@admin')->name('admin');
+});
 
 /**
  * Subscriptions

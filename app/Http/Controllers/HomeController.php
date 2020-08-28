@@ -7,6 +7,7 @@ use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\GameSession;
 use App\Plan;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -27,12 +28,26 @@ class HomeController extends Controller
         $this->middleware('admin')->only('admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
         return view('pages.index')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
+        ]);
+    }
+
+    public function security(Request $request)
+    {
+        return view('pages.security')
+            ->with('user', $request->user());
+    }
+
+    public function subscriptions(Request $request)
+    {
+        $user = $request->user();
+        return view('pages.subscriptions')->with([
+            'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
             'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
         ]);

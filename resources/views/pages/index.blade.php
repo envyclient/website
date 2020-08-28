@@ -1,65 +1,61 @@
 @extends('layouts.dash')
 
 @section('content')
-    <div class="tab-content" style="width:95%;margin:0 auto">
+    <div style="width:95%;margin:0 auto">
 
-        <!-- settings -->
-    @include('pages.tabs.profile')
-    @include('pages.tabs.security')
-
-    <!-- billing -->
-    @include('pages.tabs.subscriptions')
-
-    <!-- disable account modal -->
-        <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Wooooow! Are you sure there bud?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">
-                            &times;
-                        </span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="color:red;">
-                        By disabling your account you will lose access to your account and if you have a subscription it
-                        will continue until the expire date.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Close
-                        </button>
-                        {!! Form::open(['action' => 'UsersController@disable', 'method' => 'DELETE']) !!}
-                        {{ Form::submit('Disable Account', ['class' => 'btn btn-outline-danger m-sm-2']) }}
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
+        <!--- Profile Section --->
+        <div class="alert alert-secondary" style="font-size:25px;">
+            <i class="fas fa-user" style="padding-right:10px;"></i> Profile
         </div>
 
-        <!-- TODO: use js to set dynamic data -->
-        @foreach($plans as $plan)
-            <div class="modal fade" id="{{ $plan->name }}-modal" tabindex="-1" role="dialog"
-                 aria-labelledby="{{ $plan->name }}-label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="{{ $plan->name }}-label">Features - {{ $plan->name }} Plan</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>{{ $plan->name }}</p>
-                            <p>{{ $plan->config_limit }} Configs</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
+        <div class="text-left">
+            <label class="form-label">Member Since</label>
+            <input class="form-control" placeholder="Date" readonly
+                   value="{{ $user->created_at->format('Y-m-d') }}">
+        </div>
+        <br>
+        <div>
+            @if($user->hasSubscription())
+                <div class="alert alert-secondary" style="font-size:25px;">
+                    <i class="fas fa-file" style="padding-right:10px;"></i> Configs
+                    <span class="badge badge-secondary">
+                        {{ $configs->count() }}/{{ $user->getConfigLimit() }}
+                    </span>
                 </div>
-            </div>
-    @endforeach
-
+                <div class="text-left">
+                    @if(count($configs) > 0)
+                        <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 400px;">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">name</th>
+                                    <th scope="col">public</th>
+                                    <th scope="col">favorites</th>
+                                    <th scope="col">created</th>
+                                    <th scope="col">last updated</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($configs as $config)
+                                    <tr>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <td>{{ $config->name }}</td>
+                                        <td>{{ $config->public ? 'true' : 'false' }}</td>
+                                        <td>{{ $config->favorites_count }}</td>
+                                        <td>{{ $config->created_at->diffForHumans() }}</td>
+                                        <td>{{ $config->updated_at->diffForHumans() }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                </div>
+                <a class="btn btn-primary btn-lg btn-block mt-3" href="{{ route('versions.launcher') }}">
+                    <i class="fas fa-download pr-1"></i> Download Launcher
+                </a>
+            @endif
+        </div>
+    </div>
 @endsection
