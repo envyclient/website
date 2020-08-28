@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('subscriptions:delete')
             ->everyMinute()
-            ->emailOutputTo('haqgamer66@gmail.com');
+            ->emailOutputOnFailure('haqgamer66@gmail.com');
     }
 
     /**
