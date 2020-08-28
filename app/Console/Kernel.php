@@ -2,9 +2,6 @@
 
 namespace App\Console;
 
-use App\Notifications\Generic;
-use App\Subscription;
-use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\DeleteCancelledSubscriptions::class
     ];
 
     /**
@@ -27,26 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            $subscriptions = Subscription::where('end_date', '<=', Carbon::now())->get();
-
-            foreach ($subscriptions as $subscription) {
-
-                $user = $subscription->user;
-                $billingAgreement = $subscription->billingAgreement;
-
-                // skip deleting if billing plan is active
-                if ($billingAgreement->state !== 'Cancelled') {
-                    continue;
-                }
-
-                // delete the subscription and notify the user
-                $user->subscription()->delete();
-                $user->billingAgreement()->delete();
-                //$this->notify(new Generic($user, 'Your subscription has expired. Please renew it you wish to continue using the client.', 'Subscription'));
-            }
-
-        })->everyMinute();
+        $schedule->command('subscriptions:delete')
+            ->everyMinute()
+            ->emailOutputTo('haqgamer66@gmail.com');
     }
 
     /**
