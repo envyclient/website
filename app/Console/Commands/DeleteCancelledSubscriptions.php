@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Notifications\Generic;
 use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -37,7 +38,7 @@ class DeleteCancelledSubscriptions extends Command
             $user->subscription()->delete();
             $user->billingAgreement()->delete();
             $count++;
-            //$this->notify(new Generic($user, 'Your subscription has expired. Please renew it you wish to continue using the client.', 'Subscription'));
+            $user->notify(new Generic($user, 'Your subscription has expired. Please renew it you wish to continue using the client.', 'Subscription'));
         }
 
         $this->info("Deleted $count subscriptions on " . Carbon::now());
