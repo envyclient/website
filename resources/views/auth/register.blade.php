@@ -74,7 +74,7 @@
                             <div class="form-group mb-0 text-center">
                                 <p class="text-muted">
                                     By clicking register you are agreeing to our
-                                    <a href="{{ route('terms') }}">Terms and Conditions.</a>
+                                    <a href="{{ route('pages.terms') }}">Terms and Conditions.</a>
                                 </p>
                             </div>
 
