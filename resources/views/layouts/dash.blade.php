@@ -17,7 +17,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0"
-        src="https://umami.affanhaq.me/umami.js"></script>
+            src="https://umami.affanhaq.me/umami.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -167,53 +167,115 @@
 </head>
 <body>
 <div id="app">
+
     <!-- vuejs notifications -->
     <notification></notification>
 
-    <!-- navbar -->
-    @include('inc.navbar.dashboard')
-
-    <div class="container-fluid" style="height:100vh;padding:0;">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background:#242424 !important;">
-            <div class="container-inner-nav text-white m-auto">
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false"
-                        aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <a class="navbar-brand text-white" href="{{ url('/') }}">
-                            {{ config('app.name', 'Laravel') }} | <span
-                                style="color:#888;">{{ request()->is("/") ? 'dashboard' : 'admin' }}</span>
-                        </a>
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto text-white">
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="{{ auth()->user()->image() }}?s=32" class="rounded-circle mr-1" alt="user image">
-                                {{ auth()->user()->name }} <span class="caret"></span>
-                            </a>
-                            @include('inc.navbar.components.dropdown')
-                        </li>
-                    </ul>
+    <!-- side navbar -->
+    <div class="sidebar-menu d-inline-block">
+        <div class="list-group">
+            <a class="navbar-brand text-white" href="{{ route('home') }}">
+                <div class="container text-center">
+                    <img src="{{ asset('/assets/logo_512x512.png') }}"
+                         style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
                 </div>
-            </div>
-        </nav>
-        <div id="main" class="dashboard-content">
-            <br>
-            <!-- notifications -->
-            <div class="container">
-                @include('inc.notifications')
-            </div>
-
-            <!-- content -->
-            @yield('content')
+            </a>
+            @if(request()->is('admin'))
+                <div class="list-group list-group-flush">
+                    <br>
+                    <h3 class="m-3 font-weight-bold" style="font-size:18px;">
+                        <small class="text-muted">ADMINISTRATOR</small>
+                    </h3>
+                    <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#users"
+                       style="cursor:pointer;">
+                        <i class="fas fa-users p-2" style="margin-right:10px;"></i>
+                        Users
+                    </a>
+                    <a class="list-group-item list-group-item-custom" data-toggle="list" href="#versions"
+                       style="cursor:pointer;">
+                        <i class="fas fa-download p-2" style="margin-right:10px;"></i>
+                        Versions
+                    </a>
+                    <a class="list-group-item list-group-item-custom" data-toggle="list" href="#game-sessions"
+                       style="cursor:pointer;">
+                        <i class="fas fa-chart-area p-2" style="margin-right:10px;"></i>
+                        Game Sessions
+                    </a>
+                </div>
+            @else
+                <div class="list-group list-group-flush">
+                    <h3 class="m-3 font-weight-bold" style="font-size:18px;">
+                        <small class="text-white">SETTINGS</small>
+                    </h3>
+                    <a class="list-group-item list-group-item-custom {{ request()->routeIs('home') ? 'active': null }}"
+                       href="{{ route('home') }}">
+                        <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
+                        Profile
+                    </a>
+                    <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.security') ? 'active': null }}"
+                       href="{{ route('pages.security') }}">
+                        <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
+                        Security
+                    </a>
+                    <a class="list-group-item list-group-item-custom" href="https://forums.envyclient.com/">
+                        <i class="fas fa-comments p-2" style="margin-right:10px;"></i>
+                        Forums
+                    </a>
+                    <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
+                        <small class="text-white">BILLING</small>
+                    </h3>
+                    <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.subscriptions') ? 'active': null }}"
+                       href="{{ route('pages.subscriptions') }}">
+                        <i class="fas fa-redo p-2" style="margin-right:10px;"></i>
+                        Subscription
+                    </a>
+                </div>
+            @endif
         </div>
+    </div>
+
+    <!-- top navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background:#242424 !important;">
+        <div class="container-inner-nav text-white m-auto">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
+                    <a class="navbar-brand text-white" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }} | <span
+                            style="color:#888;">{{ request()->is("/") ? 'dashboard' : 'admin' }}</span>
+                    </a>
+                </ul>
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto text-white">
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <img src="{{ auth()->user()->image() }}?s=32" class="rounded-circle mr-1"
+                                 alt="user image">
+                            {{ auth()->user()->name }} <span class="caret"></span>
+                        </a>
+                        @include('inc.navbar.dropdown')
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="main" class="dashboard-content mt-3">
+
+        <!-- notifications -->
+        <div class="container">
+            @include('inc.notifications')
+        </div>
+
+        <!-- content -->
+        @yield('content')
     </div>
 </div>
 @yield('js')

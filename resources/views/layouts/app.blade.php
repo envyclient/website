@@ -14,8 +14,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0" 
-        src="https://umami.affanhaq.me/umami.js"></script>
+    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0"
+            src="https://umami.affanhaq.me/umami.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -27,11 +27,52 @@
 </head>
 <body>
 <div>
-    @include('inc.navbar.default')
+    <!-- top navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
+
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <img src="{{ auth()->user()->image() }}?s=32" class="rounded-circle mr-1"
+                                     alt="user image">
+                                {{ auth()->user()->name }} <span class="caret"></span>
+                            </a>
+                            @include('inc.navbar.dropdown')
+                        </li>
+                    @endguest
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div id="main">
-        {{--        <div class="container">
-                    @include('inc.notifications')
-                </div>--}}
         @yield('content')
     </div>
 </div>
