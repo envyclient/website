@@ -40,7 +40,7 @@ class VersionsController extends Controller
         $version->file = $fileName;
         $version->save();
 
-        return back()->with('success', 'Version created.');
+        return back()->with('success', 'Version uploaded.');
     }
 
 }

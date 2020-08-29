@@ -16,7 +16,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0" 
+    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0"
         src="https://umami.affanhaq.me/umami.js"></script>
 
     <!-- Fonts -->
@@ -195,7 +195,8 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                <img src="{{ auth()->user()->image() }}?s=32" class="rounded-circle mr-1" alt="user image">
+                                {{ auth()->user()->name }} <span class="caret"></span>
                             </a>
                             @include('inc.navbar.components.dropdown')
                         </li>

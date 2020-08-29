@@ -6,7 +6,7 @@
                      style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
             </div>
         </a>
-        @if(request()->is("admin"))
+        @if(request()->is('admin'))
             <div class="list-group list-group-flush">
                 <br>
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;">
@@ -33,26 +33,25 @@
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;">
                     <small class="text-white">SETTINGS</small>
                 </h3>
-                <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#profile"
-                   style="cursor:pointer;">
+                <a class="list-group-item list-group-item-custom {{ request()->routeIs('home') ? 'active': null }}"
+                   href="{{ route('home') }}">
                     <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
                     Profile
                 </a>
-                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#security"
-                   style="cursor:pointer;">
+                <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.security') ? 'active': null }}"
+                   href="{{ route('pages.security') }}">
                     <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                     Security
                 </a>
-                <a class="list-group-item list-group-item-custom" href="https://forums.envyclient.com/"
-                   style="cursor:pointer;">
+                <a class="list-group-item list-group-item-custom" href="https://forums.envyclient.com/">
                     <i class="fas fa-comments p-2" style="margin-right:10px;"></i>
                     Forums
                 </a>
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
                     <small class="text-white">BILLING</small>
                 </h3>
-                <a class="list-group-item list-group-item-custom" data-toggle="list" href="#subscription"
-                   style="cursor:pointer;">
+                <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.subscriptions') ? 'active': null }}"
+                   href="{{ route('pages.subscriptions') }}">
                     <i class="fas fa-redo p-2" style="margin-right:10px;"></i>
                     Subscription
                 </a>
