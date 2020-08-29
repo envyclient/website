@@ -35,7 +35,7 @@ class AdminController extends Controller
             ], 400);
         }
 
-        $user = User::with(['subscription', 'wallet'])
+        $user = User::with(['subscription'])
             ->name($request->name);
 
         if ($request->type === 'banned') {

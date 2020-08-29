@@ -73,6 +73,9 @@
     </nav>
 
     <div id="main">
+     {{--   <div class="container mt-2">
+            @include('inc.notifications')
+        </div>--}}
         @yield('content')
     </div>
 </div>

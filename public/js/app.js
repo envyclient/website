@@ -2062,8 +2062,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -60001,8 +59999,6 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(user.email))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("$" + _vm._s(user.wallet.balance))]),
-                    _vm._v(" "),
                     user.subscription == null
                       ? _c("td", [_vm._v("NULL")])
                       : _c("td", [
@@ -60109,8 +60105,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("name")]),
         _vm._v(" "),
         _c("th", [_vm._v("email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("credits")]),
         _vm._v(" "),
         _c("th", [_vm._v("subscription")]),
         _vm._v(" "),
