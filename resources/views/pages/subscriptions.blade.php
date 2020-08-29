@@ -5,42 +5,47 @@
         <div class="alert alert-secondary" style="font-size:25px;">
             <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
         </div>
-        {!! Form::open(['action' => 'PayPalController@process', 'method' => 'POST']) !!}
-        @csrf
-        <div class="card" style="width:100%;">
-            @if($user->hasSubscription())
-                <div class="card-header">
-                    You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
-                    (next payment due in {{ $nextSubscription }} days)
+        <form method="POST" action="{{ route('paypal.process') }}" accept-charset="UTF-8">
+            @csrf
+            <div class="card" style="width:100%;">
+                @if($user->hasSubscription())
+                    <div class="card-header">
+                        You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
+                        (next payment due in {{ $nextSubscription }} days)
+                    </div>
+                @endif
+                <ul class="list-group list-group-flush">
+                    @foreach($plans as $plan)
+                        <li class="list-group-item">
+                            <div class="row" style="line-height:60px;">
+                                <div class="col">
+                                    <input class="form-check-inline" required name="id" type="radio"
+                                           value="{{ $plan->id }}"
+                                        {{ $user->hasSubscription() ? 'disabled' : null }}
+                                        {{  $user->hasSubscription() && $user->subscription->plan_id === $plan->id? 'checked' : null }}>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        {{ $plan->name }}
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-light" data-toggle="modal"
+                                            data-target="#{{ $plan->name }}-modal">
+                                        Features
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <b>${{ $plan->price }}</b> / 30 days
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="card-footer text-muted">
+                    It can take up to 10 minutes to process/cancel your subscription.
                 </div>
-            @endif
-            <ul class="list-group list-group-flush">
-                @foreach($plans as $plan)
-                    <li class="list-group-item">
-                        <div class="row" style="line-height:60px;">
-                            <div class="col">
-                                {{ Form::radio('id', $plan->id, $user->hasSubscription() ? $user->subscription->plan_id === $plan->id : false, ['class' => 'form-check-inline', 'required' ,  $user->hasSubscription() ? 'disabled' : null]) }}
-                                {{ $plan->name }}
-                            </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-light" data-toggle="modal"
-                                        data-target="#{{ $plan->name }}-modal">
-                                    Features
-                                </button>
-                            </div>
-                            <div class="col">
-                                <b>${{ $plan->price }}</b> / 30 days
-                            </div>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-            <div class="card-footer text-muted">
-                It can take up to 10 minutes to process/cancel your subscription.
             </div>
-        </div>
-        <br>
-        @if($user->hasSubscription())
+            <br>
+            @if($user->hasSubscription())
         </form> <!-- close form -->
         <div class="card" style="width: 100%;">
             @if($user->subscribedToFreePlan())
@@ -48,9 +53,10 @@
                     You can not cancel your subscription because you are subscribed to the free plan.
                 </h5>
             @else
-                {!! Form::open(['action' => 'SubscriptionsController@cancel', 'method' => 'POST']) !!}
-                {{ Form::submit('Cancel Subscription', ['class' => 'btn btn-outline-danger btn-lg btn-block']) }}
-                {!! Form::close() !!}
+                <form method="POST" action="{{ route('subscriptions.cancel') }}" accept-charset="UTF-8">
+                    <input class="btn btn-outline-danger btn-lg btn-block" type="submit"
+                           value="Cancel Subscription">
+                </form>
             @endif
         </div>
         @elseif($user->hasBillingAgreement())
