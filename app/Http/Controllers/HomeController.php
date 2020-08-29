@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified'])->except('terms');
-        $this->middleware('admin')->only('admin');
+        $this->middleware('admin')->only('admin', 'versions', 'sessions');
     }
 
     public function index(Request $request)
@@ -58,18 +58,30 @@ class HomeController extends Controller
         return view('pages.terms');
     }
 
-    public function admin()
+    // TODO: fix users table
+    public function admin(Request $request)
     {
-        $user = auth()->user();
-        $apiToken = $user->api_token;
+        $apiToken = $request->user()->api_token;
 
-        $usersChart = new UsersChart();
-        $usersChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+        // chart
+        $chart = new UsersChart();
+        $chart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
             ->options(self::CHART_OPTIONS)
             ->load(route('api.charts.users') . "?api_token=$apiToken");
 
-        $versionsChart = new VersionDownloadsChart();
-        $versionsChart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
+        return view('pages.admin.users')->with([
+            'apiToken' => $apiToken,
+            'chart' => $chart
+        ]);
+    }
+
+    public function versions(Request $request)
+    {
+        $apiToken = $request->user()->api_token;
+
+        // chart
+        $chart = new VersionDownloadsChart();
+        $chart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
             ->options([
                 'tooltip' => [
                     'show' => true
@@ -92,6 +104,17 @@ class HomeController extends Controller
             ])
             ->load(route('api.charts.versions') . "?api_token=$apiToken");
 
+        return view('pages.admin.versions')->with([
+            'apiToken' => $apiToken,
+            'chart' => $chart
+        ]);
+    }
+
+    public function sessions(Request $request)
+    {
+        $apiToken = $request->user()->api_token;
+
+        // chart options
         $sessionOptions = [
             'maintainAspectRatio' => false,
             'legend' => [
@@ -107,6 +130,7 @@ class HomeController extends Controller
             ]
         ];
 
+        // chart
         $gameSessionsChart = new GameSessionsChart();
         $gameSessionsChart->labels(self::getAllModulesNames())
             ->options($sessionOptions, true)
@@ -117,15 +141,13 @@ class HomeController extends Controller
             ->options($sessionOptions, true)
             ->load(route('api.charts.sessions.toggles') . "?api_token=$apiToken");
 
-
-        return view('pages.admin')->with([
+        return view('pages.admin.sessions')->with([
             'apiToken' => $apiToken,
-            'usersChart' => $usersChart,
-            'versionsChart' => $versionsChart,
             'gameSessionsChart' => $gameSessionsChart,
             'gameSessionsToggleChart' => $gameSessionsToggleChart
         ]);
     }
+
 
     public static function getAllModulesNames(): array
     {

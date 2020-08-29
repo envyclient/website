@@ -163,7 +163,6 @@
             top: 0;
         }
     </style>
-
 </head>
 <body>
 <div id="app">
@@ -180,24 +179,24 @@
                          style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
                 </div>
             </a>
-            @if(request()->is('admin'))
+            @if(request()->routeIs('admin') || request()->routeIs('admin.*'))
                 <div class="list-group list-group-flush">
                     <br>
                     <h3 class="m-3 font-weight-bold" style="font-size:18px;">
                         <small class="text-muted">ADMINISTRATOR</small>
                     </h3>
-                    <a class="list-group-item list-group-item-custom active" data-toggle="list" href="#users"
-                       style="cursor:pointer;">
+                    <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin') ? 'active': null }}"
+                       href="{{ route('admin') }}">
                         <i class="fas fa-users p-2" style="margin-right:10px;"></i>
                         Users
                     </a>
-                    <a class="list-group-item list-group-item-custom" data-toggle="list" href="#versions"
-                       style="cursor:pointer;">
+                    <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.versions') ? 'active': null }}"
+                       href="{{ route('admin.versions') }}">
                         <i class="fas fa-download p-2" style="margin-right:10px;"></i>
                         Versions
                     </a>
-                    <a class="list-group-item list-group-item-custom" data-toggle="list" href="#game-sessions"
-                       style="cursor:pointer;">
+                    <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.sessions') ? 'active': null }}"
+                       href="{{ route('admin.sessions') }}">
                         <i class="fas fa-chart-area p-2" style="margin-right:10px;"></i>
                         Game Sessions
                     </a>

@@ -1,17 +1,26 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Auth::routes(['verify' => true]);
 
 /**
  * Home
  */
-
 Route::group([], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('security', 'HomeController@security')->name('pages.security');
     Route::get('subscriptions', 'HomeController@subscriptions')->name('pages.subscriptions');
     Route::get('terms', 'HomeController@terms')->name('pages.terms');
-    Route::get('admin', 'HomeController@admin')->name('admin');
+});
+
+/**
+ * Admin
+ */
+Route::prefix('admin')->group(function () {
+    Route::get('/', 'HomeController@admin')->name('admin');
+    Route::get('versions', 'HomeController@versions')->name('admin.versions');
+    Route::get('sessions', 'HomeController@sessions')->name('admin.sessions');
 });
 
 /**

@@ -3,6 +3,9 @@
 /**
  * Auth
  */
+
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('auth')->group(function () {
     Route::post('login', 'API\AuthController@login');
     Route::get('me', 'API\AuthController@me');
