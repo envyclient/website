@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CheckDisabled
 {
@@ -13,12 +14,15 @@ class CheckDisabled
      * @param Request $request
      * @param Closure $next
      * @return mixed
+     * @throws ValidationException
      */
     public function handle($request, Closure $next)
     {
         if (auth()->check() && auth()->user()->disabled) {
             auth()->logout();
-            return redirect('/login')->with('error', "Account has been disabled.");
+            throw ValidationException::withMessages([
+                'email' => ['Account has been disabled.'],
+            ]);
         }
         return $next($request);
     }

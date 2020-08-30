@@ -1944,129 +1944,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../eventbus */ "./resources/js/eventbus.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "TransactionsTable",
-  props: {
-    url: {
-      type: String,
-      required: true
-    },
-    apiToken: {
-      type: String,
-      required: true
-    }
-  },
-  data: function data() {
-    return {
-      loading: true,
-      data: [],
-      filter: {
-        date: 'today',
-        type: 'all'
-      }
-    };
-  },
-  created: function created() {
-    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_TRANSACTIONS", this.fetchData);
-    this.fetchData();
-  },
-  methods: {
-    fetchData: function fetchData() {
-      var _this = this;
-
-      this.loading = true;
-      axios.get(this.url, {
-        params: {
-          date: this.filter.date,
-          type: this.filter.type,
-          api_token: this.apiToken
-        }
-      }).then(function (data) {
-        console.log(data);
-        _this.data = data.data;
-        _this.loading = false;
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    }
-  },
-  watch: {
-    filter: {
-      handler: function handler() {
-        this.fetchData();
-      },
-      deep: true
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/UsersTable.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/UsersTable.vue?vue&type=script&lang=js& ***!
@@ -2081,8 +1958,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-//
-//
 //
 //
 //
@@ -2424,191 +2299,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ReferralCodeCreate",
-  props: {
-    url: {
-      type: String,
-      required: true
-    },
-    apiToken: {
-      type: String,
-      required: true
-    }
-  },
-  data: function data() {
-    return {
-      username: null,
-      code: null
-    };
-  },
-  methods: {
-    submit: function submit() {
-      var _this = this;
-
-      // validator form
-      if (!this.username || !this.code) {
-        this.$notify({
-          type: "error",
-          title: "Error",
-          text: "Username or Code are invalid."
-        });
-      }
-
-      axios.post(this.url, {
-        username: this.username,
-        code: this.code,
-        api_token: this.apiToken
-      }).then(function (data) {
-        console.log(data);
-
-        _this.$notify({
-          type: "success",
-          title: "Success",
-          text: "Referral Code created."
-        });
-
-        _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("UPDATE_REFERRALS_CODE");
-        _this.username = null;
-        _this.code = null;
-      })["catch"](function (error) {
-        console.log(error);
-
-        _this.$notify({
-          type: "error",
-          title: "Error",
-          text: "Error, please check console."
-        });
-      });
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../eventbus */ "./resources/js/eventbus.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ReferralCodesTable",
-  props: {
-    url: {
-      type: String,
-      required: true
-    },
-    apiToken: {
-      type: String,
-      required: true
-    }
-  },
-  data: function data() {
-    return {
-      loading: true,
-      data: []
-    };
-  },
-  created: function created() {
-    _eventbus__WEBPACK_IMPORTED_MODULE_0__["default"].$on("UPDATE_REFERRALS_CODE", this.fetchData);
-    this.fetchData();
-  },
-  methods: {
-    fetchData: function fetchData() {
-      var _this = this;
-
-      this.loading = true;
-      axios.get(this.url, {
-        params: {
-          api_token: this.apiToken
-        }
-      }).then(function (data) {
-        console.log(data);
-        _this.data = data.data;
-        _this.loading = false;
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /*!*****************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
@@ -2617,9 +2307,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
-  * Bootstrap v4.5.0 (https://getbootstrap.com/)
+  * Bootstrap v4.5.2 (https://getbootstrap.com/)
   * Copyright 2011-2020 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
-  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 (function (global, factory) {
    true ? factory(exports, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"), __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")) :
@@ -2645,53 +2335,22 @@ __webpack_require__.r(__webpack_exports__);
     return Constructor;
   }
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
+  function _extends() {
+    _extends = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
 
-    return obj;
-  }
-
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
       }
-    }
 
-    return target;
+      return target;
+    };
+
+    return _extends.apply(this, arguments);
   }
 
   function _inheritsLoose(subClass, superClass) {
@@ -2702,8 +2361,8 @@ __webpack_require__.r(__webpack_exports__);
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v4.5.0): util.js
-   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+   * Bootstrap (v4.5.2): util.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
   /**
@@ -2883,7 +2542,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME = 'alert';
-  var VERSION = '4.5.0';
+  var VERSION = '4.5.2';
   var DATA_KEY = 'bs.alert';
   var EVENT_KEY = "." + DATA_KEY;
   var DATA_API_KEY = '.data-api';
@@ -3039,7 +2698,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$1 = 'button';
-  var VERSION$1 = '4.5.0';
+  var VERSION$1 = '4.5.2';
   var DATA_KEY$1 = 'bs.button';
   var EVENT_KEY$1 = "." + DATA_KEY$1;
   var DATA_API_KEY$1 = '.data-api';
@@ -3174,11 +2833,9 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      if (initialButton.tagName === 'LABEL' && inputBtn && inputBtn.type === 'checkbox') {
-        event.preventDefault(); // work around event sent to label and input
+      if (initialButton.tagName !== 'LABEL' || inputBtn && inputBtn.type !== 'checkbox') {
+        Button._jQueryInterface.call($(button), 'toggle');
       }
-
-      Button._jQueryInterface.call($(button), 'toggle');
     }
   }).on(EVENT_FOCUS_BLUR_DATA_API, SELECTOR_DATA_TOGGLE_CARROT, function (event) {
     var button = $(event.target).closest(SELECTOR_BUTTON)[0];
@@ -3234,7 +2891,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$2 = 'carousel';
-  var VERSION$2 = '4.5.0';
+  var VERSION$2 = '4.5.2';
   var DATA_KEY$2 = 'bs.carousel';
   var EVENT_KEY$2 = "." + DATA_KEY$2;
   var DATA_API_KEY$2 = '.data-api';
@@ -3421,7 +3078,7 @@ __webpack_require__.r(__webpack_exports__);
     ;
 
     _proto._getConfig = function _getConfig(config) {
-      config = _objectSpread2(_objectSpread2({}, Default), config);
+      config = _extends({}, Default, config);
       Util.typeCheckConfig(NAME$2, config, DefaultType);
       return config;
     };
@@ -3711,10 +3368,10 @@ __webpack_require__.r(__webpack_exports__);
       return this.each(function () {
         var data = $(this).data(DATA_KEY$2);
 
-        var _config = _objectSpread2(_objectSpread2({}, Default), $(this).data());
+        var _config = _extends({}, Default, $(this).data());
 
         if (typeof config === 'object') {
-          _config = _objectSpread2(_objectSpread2({}, _config), config);
+          _config = _extends({}, _config, config);
         }
 
         var action = typeof config === 'string' ? config : _config.slide;
@@ -3752,7 +3409,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var config = _objectSpread2(_objectSpread2({}, $(target).data()), $(this).data());
+      var config = _extends({}, $(target).data(), $(this).data());
 
       var slideIndex = this.getAttribute('data-slide-to');
 
@@ -3821,7 +3478,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$3 = 'collapse';
-  var VERSION$3 = '4.5.0';
+  var VERSION$3 = '4.5.2';
   var DATA_KEY$3 = 'bs.collapse';
   var EVENT_KEY$3 = "." + DATA_KEY$3;
   var DATA_API_KEY$3 = '.data-api';
@@ -4036,7 +3693,7 @@ __webpack_require__.r(__webpack_exports__);
     ;
 
     _proto._getConfig = function _getConfig(config) {
-      config = _objectSpread2(_objectSpread2({}, Default$1), config);
+      config = _extends({}, Default$1, config);
       config.toggle = Boolean(config.toggle); // Coerce string values
 
       Util.typeCheckConfig(NAME$3, config, DefaultType$1);
@@ -4090,7 +3747,7 @@ __webpack_require__.r(__webpack_exports__);
         var $this = $(this);
         var data = $this.data(DATA_KEY$3);
 
-        var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$1), $this.data()), typeof config === 'object' && config ? config : {});
+        var _config = _extends({}, Default$1, $this.data(), typeof config === 'object' && config ? config : {});
 
         if (!data && _config.toggle && typeof config === 'string' && /show|hide/.test(config)) {
           _config.toggle = false;
@@ -4170,7 +3827,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$4 = 'dropdown';
-  var VERSION$4 = '4.5.0';
+  var VERSION$4 = '4.5.2';
   var DATA_KEY$4 = 'bs.dropdown';
   var EVENT_KEY$4 = "." + DATA_KEY$4;
   var DATA_API_KEY$4 = '.data-api';
@@ -4397,7 +4054,7 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     _proto._getConfig = function _getConfig(config) {
-      config = _objectSpread2(_objectSpread2(_objectSpread2({}, this.constructor.Default), $(this._element).data()), config);
+      config = _extends({}, this.constructor.Default, $(this._element).data(), config);
       Util.typeCheckConfig(NAME$4, config, this.constructor.DefaultType);
       return config;
     };
@@ -4442,7 +4099,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (typeof this._config.offset === 'function') {
         offset.fn = function (data) {
-          data.offsets = _objectSpread2(_objectSpread2({}, data.offsets), _this2._config.offset(data.offsets, _this2._element) || {});
+          data.offsets = _extends({}, data.offsets, _this2._config.offset(data.offsets, _this2._element) || {});
           return data;
         };
       } else {
@@ -4472,7 +4129,7 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
 
-      return _objectSpread2(_objectSpread2({}, popperConfig), this._config.popperConfig);
+      return _extends({}, popperConfig, this._config.popperConfig);
     } // Static
     ;
 
@@ -4684,7 +4341,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$5 = 'modal';
-  var VERSION$5 = '4.5.0';
+  var VERSION$5 = '4.5.2';
   var DATA_KEY$5 = 'bs.modal';
   var EVENT_KEY$5 = "." + DATA_KEY$5;
   var DATA_API_KEY$5 = '.data-api';
@@ -4876,7 +4533,7 @@ __webpack_require__.r(__webpack_exports__);
     ;
 
     _proto._getConfig = function _getConfig(config) {
-      config = _objectSpread2(_objectSpread2({}, Default$3), config);
+      config = _extends({}, Default$3, config);
       Util.typeCheckConfig(NAME$5, config, DefaultType$3);
       return config;
     };
@@ -4892,11 +4549,24 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
 
+        var isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
+
+        if (!isModalOverflowing) {
+          this._element.style.overflowY = 'hidden';
+        }
+
         this._element.classList.add(CLASS_NAME_STATIC);
 
-        var modalTransitionDuration = Util.getTransitionDurationFromElement(this._element);
+        var modalTransitionDuration = Util.getTransitionDurationFromElement(this._dialog);
+        $(this._element).off(Util.TRANSITION_END);
         $(this._element).one(Util.TRANSITION_END, function () {
           _this3._element.classList.remove(CLASS_NAME_STATIC);
+
+          if (!isModalOverflowing) {
+            $(_this3._element).one(Util.TRANSITION_END, function () {
+              _this3._element.style.overflowY = '';
+            }).emulateTransitionEnd(_this3._element, modalTransitionDuration);
+          }
         }).emulateTransitionEnd(modalTransitionDuration);
 
         this._element.focus();
@@ -4921,6 +4591,8 @@ __webpack_require__.r(__webpack_exports__);
       this._element.removeAttribute('aria-hidden');
 
       this._element.setAttribute('aria-modal', true);
+
+      this._element.setAttribute('role', 'dialog');
 
       if ($(this._dialog).hasClass(CLASS_NAME_SCROLLABLE) && modalBody) {
         modalBody.scrollTop = 0;
@@ -5008,6 +4680,8 @@ __webpack_require__.r(__webpack_exports__);
       this._element.setAttribute('aria-hidden', true);
 
       this._element.removeAttribute('aria-modal');
+
+      this._element.removeAttribute('role');
 
       this._isTransitioning = false;
 
@@ -5190,7 +4864,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.each(function () {
         var data = $(this).data(DATA_KEY$5);
 
-        var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$3), $(this).data()), typeof config === 'object' && config ? config : {});
+        var _config = _extends({}, Default$3, $(this).data(), typeof config === 'object' && config ? config : {});
 
         if (!data) {
           data = new Modal(this, _config);
@@ -5240,7 +4914,7 @@ __webpack_require__.r(__webpack_exports__);
       target = document.querySelector(selector);
     }
 
-    var config = $(target).data(DATA_KEY$5) ? 'toggle' : _objectSpread2(_objectSpread2({}, $(target).data()), $(this).data());
+    var config = $(target).data(DATA_KEY$5) ? 'toggle' : _extends({}, $(target).data(), $(this).data());
 
     if (this.tagName === 'A' || this.tagName === 'AREA') {
       event.preventDefault();
@@ -5277,8 +4951,8 @@ __webpack_require__.r(__webpack_exports__);
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v4.5.0): tools/sanitizer.js
-   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+   * Bootstrap (v4.5.2): tools/sanitizer.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
   var uriAttrs = ['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href'];
@@ -5403,7 +5077,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$6 = 'tooltip';
-  var VERSION$6 = '4.5.0';
+  var VERSION$6 = '4.5.2';
   var DATA_KEY$6 = 'bs.tooltip';
   var EVENT_KEY$6 = "." + DATA_KEY$6;
   var JQUERY_NO_CONFLICT$6 = $.fn[NAME$6];
@@ -5791,7 +5465,7 @@ __webpack_require__.r(__webpack_exports__);
           return _this3._handlePopperPlacementChange(data);
         }
       };
-      return _objectSpread2(_objectSpread2({}, defaultBsConfig), this.config.popperConfig);
+      return _extends({}, defaultBsConfig, this.config.popperConfig);
     };
 
     _proto._getOffset = function _getOffset() {
@@ -5801,7 +5475,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (typeof this.config.offset === 'function') {
         offset.fn = function (data) {
-          data.offsets = _objectSpread2(_objectSpread2({}, data.offsets), _this4.config.offset(data.offsets, _this4.element) || {});
+          data.offsets = _extends({}, data.offsets, _this4.config.offset(data.offsets, _this4.element) || {});
           return data;
         };
       } else {
@@ -5856,7 +5530,7 @@ __webpack_require__.r(__webpack_exports__);
       $(this.element).closest('.modal').on('hide.bs.modal', this._hideModalHandler);
 
       if (this.config.selector) {
-        this.config = _objectSpread2(_objectSpread2({}, this.config), {}, {
+        this.config = _extends({}, this.config, {
           trigger: 'manual',
           selector: ''
         });
@@ -5956,7 +5630,7 @@ __webpack_require__.r(__webpack_exports__);
           delete dataAttributes[dataAttr];
         }
       });
-      config = _objectSpread2(_objectSpread2(_objectSpread2({}, this.constructor.Default), dataAttributes), typeof config === 'object' && config ? config : {});
+      config = _extends({}, this.constructor.Default, dataAttributes, typeof config === 'object' && config ? config : {});
 
       if (typeof config.delay === 'number') {
         config.delay = {
@@ -6115,21 +5789,21 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$7 = 'popover';
-  var VERSION$7 = '4.5.0';
+  var VERSION$7 = '4.5.2';
   var DATA_KEY$7 = 'bs.popover';
   var EVENT_KEY$7 = "." + DATA_KEY$7;
   var JQUERY_NO_CONFLICT$7 = $.fn[NAME$7];
   var CLASS_PREFIX$1 = 'bs-popover';
   var BSCLS_PREFIX_REGEX$1 = new RegExp("(^|\\s)" + CLASS_PREFIX$1 + "\\S+", 'g');
 
-  var Default$5 = _objectSpread2(_objectSpread2({}, Tooltip.Default), {}, {
+  var Default$5 = _extends({}, Tooltip.Default, {
     placement: 'right',
     trigger: 'click',
     content: '',
     template: '<div class="popover" role="tooltip">' + '<div class="arrow"></div>' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div></div>'
   });
 
-  var DefaultType$5 = _objectSpread2(_objectSpread2({}, Tooltip.DefaultType), {}, {
+  var DefaultType$5 = _extends({}, Tooltip.DefaultType, {
     content: '(string|element|function)'
   });
 
@@ -6295,7 +5969,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$8 = 'scrollspy';
-  var VERSION$8 = '4.5.0';
+  var VERSION$8 = '4.5.2';
   var DATA_KEY$8 = 'bs.scrollspy';
   var EVENT_KEY$8 = "." + DATA_KEY$8;
   var DATA_API_KEY$6 = '.data-api';
@@ -6409,7 +6083,7 @@ __webpack_require__.r(__webpack_exports__);
     ;
 
     _proto._getConfig = function _getConfig(config) {
-      config = _objectSpread2(_objectSpread2({}, Default$6), typeof config === 'object' && config ? config : {});
+      config = _extends({}, Default$6, typeof config === 'object' && config ? config : {});
 
       if (typeof config.target !== 'string' && Util.isElement(config.target)) {
         var id = $(config.target).attr('id');
@@ -6587,7 +6261,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$9 = 'tab';
-  var VERSION$9 = '4.5.0';
+  var VERSION$9 = '4.5.2';
   var DATA_KEY$9 = 'bs.tab';
   var EVENT_KEY$9 = "." + DATA_KEY$9;
   var DATA_API_KEY$7 = '.data-api';
@@ -6813,7 +6487,7 @@ __webpack_require__.r(__webpack_exports__);
    */
 
   var NAME$a = 'toast';
-  var VERSION$a = '4.5.0';
+  var VERSION$a = '4.5.2';
   var DATA_KEY$a = 'bs.toast';
   var EVENT_KEY$a = "." + DATA_KEY$a;
   var JQUERY_NO_CONFLICT$a = $.fn[NAME$a];
@@ -6866,6 +6540,8 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      this._clearTimeout();
+
       if (this._config.animation) {
         this._element.classList.add(CLASS_NAME_FADE$5);
       }
@@ -6914,8 +6590,7 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     _proto.dispose = function dispose() {
-      clearTimeout(this._timeout);
-      this._timeout = null;
+      this._clearTimeout();
 
       if (this._element.classList.contains(CLASS_NAME_SHOW$7)) {
         this._element.classList.remove(CLASS_NAME_SHOW$7);
@@ -6929,7 +6604,7 @@ __webpack_require__.r(__webpack_exports__);
     ;
 
     _proto._getConfig = function _getConfig(config) {
-      config = _objectSpread2(_objectSpread2(_objectSpread2({}, Default$7), $(this._element).data()), typeof config === 'object' && config ? config : {});
+      config = _extends({}, Default$7, $(this._element).data(), typeof config === 'object' && config ? config : {});
       Util.typeCheckConfig(NAME$a, config, this.constructor.DefaultType);
       return config;
     };
@@ -6959,6 +6634,11 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         complete();
       }
+    };
+
+    _proto._clearTimeout = function _clearTimeout() {
+      clearTimeout(this._timeout);
+      this._timeout = null;
     } // Static
     ;
 
@@ -18537,7 +18217,7 @@ var LaravelVuePagination_component = normalizeComponent(
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.15';
+  var VERSION = '4.17.20';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -22244,8 +21924,21 @@ var LaravelVuePagination_component = normalizeComponent(
      * @returns {Array} Returns the new sorted array.
      */
     function baseOrderBy(collection, iteratees, orders) {
+      if (iteratees.length) {
+        iteratees = arrayMap(iteratees, function(iteratee) {
+          if (isArray(iteratee)) {
+            return function(value) {
+              return baseGet(value, iteratee.length === 1 ? iteratee[0] : iteratee);
+            }
+          }
+          return iteratee;
+        });
+      } else {
+        iteratees = [identity];
+      }
+
       var index = -1;
-      iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(getIteratee()));
+      iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
 
       var result = baseMap(collection, function(value, key, collection) {
         var criteria = arrayMap(iteratees, function(iteratee) {
@@ -22502,6 +22195,10 @@ var LaravelVuePagination_component = normalizeComponent(
         var key = toKey(path[index]),
             newValue = value;
 
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+          return object;
+        }
+
         if (index != lastIndex) {
           var objValue = nested[key];
           newValue = customizer ? customizer(objValue, key, nested) : undefined;
@@ -22654,11 +22351,14 @@ var LaravelVuePagination_component = normalizeComponent(
      *  into `array`.
      */
     function baseSortedIndexBy(array, value, iteratee, retHighest) {
-      value = iteratee(value);
-
       var low = 0,
-          high = array == null ? 0 : array.length,
-          valIsNaN = value !== value,
+          high = array == null ? 0 : array.length;
+      if (high === 0) {
+        return 0;
+      }
+
+      value = iteratee(value);
+      var valIsNaN = value !== value,
           valIsNull = value === null,
           valIsSymbol = isSymbol(value),
           valIsUndefined = value === undefined;
@@ -24143,10 +23843,11 @@ var LaravelVuePagination_component = normalizeComponent(
       if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
         return false;
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(array);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var arrStacked = stack.get(array);
+      var othStacked = stack.get(other);
+      if (arrStacked && othStacked) {
+        return arrStacked == other && othStacked == array;
       }
       var index = -1,
           result = true,
@@ -24308,10 +24009,11 @@ var LaravelVuePagination_component = normalizeComponent(
           return false;
         }
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(object);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var objStacked = stack.get(object);
+      var othStacked = stack.get(other);
+      if (objStacked && othStacked) {
+        return objStacked == other && othStacked == object;
       }
       var result = true;
       stack.set(object, other);
@@ -27692,6 +27394,10 @@ var LaravelVuePagination_component = normalizeComponent(
      * // The `_.property` iteratee shorthand.
      * _.filter(users, 'active');
      * // => objects for ['barney']
+     *
+     * // Combining several predicates using `_.overEvery` or `_.overSome`.
+     * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
+     * // => objects for ['fred', 'barney']
      */
     function filter(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
@@ -28441,15 +28147,15 @@ var LaravelVuePagination_component = normalizeComponent(
      * var users = [
      *   { 'user': 'fred',   'age': 48 },
      *   { 'user': 'barney', 'age': 36 },
-     *   { 'user': 'fred',   'age': 40 },
+     *   { 'user': 'fred',   'age': 30 },
      *   { 'user': 'barney', 'age': 34 }
      * ];
      *
      * _.sortBy(users, [function(o) { return o.user; }]);
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
+     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
      *
      * _.sortBy(users, ['user', 'age']);
-     * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
+     * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
      */
     var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
@@ -33324,11 +33030,11 @@ var LaravelVuePagination_component = normalizeComponent(
 
       // Use a sourceURL for easier debugging.
       // The sourceURL gets injected into the source that's eval-ed, so be careful
-      // with lookup (in case of e.g. prototype pollution), and strip newlines if any.
-      // A newline wouldn't be a valid sourceURL anyway, and it'd enable code injection.
+      // to normalize all kinds of whitespace, so e.g. newlines (and unicode versions of it) can't sneak in
+      // and escape the comment, thus injecting code that gets evaled.
       var sourceURL = '//# sourceURL=' +
         (hasOwnProperty.call(options, 'sourceURL')
-          ? (options.sourceURL + '').replace(/[\r\n]/g, ' ')
+          ? (options.sourceURL + '').replace(/\s/g, ' ')
           : ('lodash.templateSources[' + (++templateCounter) + ']')
         ) + '\n';
 
@@ -33361,8 +33067,6 @@ var LaravelVuePagination_component = normalizeComponent(
 
       // If `variable` is not specified wrap a with-statement around the generated
       // code to add the data object to the top of the scope chain.
-      // Like with sourceURL, we take care to not check the option's prototype,
-      // as this configuration is a code injection vector.
       var variable = hasOwnProperty.call(options, 'variable') && options.variable;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
@@ -34069,6 +33773,9 @@ var LaravelVuePagination_component = normalizeComponent(
      * values against any array or object value, respectively. See `_.isEqual`
      * for a list of supported value comparisons.
      *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
+     *
      * @static
      * @memberOf _
      * @since 3.0.0
@@ -34084,6 +33791,10 @@ var LaravelVuePagination_component = normalizeComponent(
      *
      * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
+     *
+     * // Checking for several possible values
+     * _.filter(objects, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
       return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
@@ -34097,6 +33808,9 @@ var LaravelVuePagination_component = normalizeComponent(
      * **Note:** Partial comparisons will match empty array and empty object
      * `srcValue` values against any array or object value, respectively. See
      * `_.isEqual` for a list of supported value comparisons.
+     *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
      *
      * @static
      * @memberOf _
@@ -34114,6 +33828,10 @@ var LaravelVuePagination_component = normalizeComponent(
      *
      * _.find(objects, _.matchesProperty('a', 4));
      * // => { 'a': 4, 'b': 5, 'c': 6 }
+     *
+     * // Checking for several possible values
+     * _.filter(objects, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matchesProperty(path, srcValue) {
       return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
@@ -34337,6 +34055,10 @@ var LaravelVuePagination_component = normalizeComponent(
      * Creates a function that checks if **all** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -34363,6 +34085,10 @@ var LaravelVuePagination_component = normalizeComponent(
      * Creates a function that checks if **any** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -34382,6 +34108,9 @@ var LaravelVuePagination_component = normalizeComponent(
      *
      * func(NaN);
      * // => false
+     *
+     * var matchesFunc = _.overSome([{ 'a': 1 }, { 'a': 2 }])
+     * var matchesPropertyFunc = _.overSome([['a', 1], ['a', 2]])
      */
     var overSome = createOver(arraySome);
 
@@ -35868,6 +35597,8 @@ var map = {
 	"./tg.js": "./node_modules/moment/locale/tg.js",
 	"./th": "./node_modules/moment/locale/th.js",
 	"./th.js": "./node_modules/moment/locale/th.js",
+	"./tk": "./node_modules/moment/locale/tk.js",
+	"./tk.js": "./node_modules/moment/locale/tk.js",
 	"./tl-ph": "./node_modules/moment/locale/tl-ph.js",
 	"./tl-ph.js": "./node_modules/moment/locale/tl-ph.js",
 	"./tlh": "./node_modules/moment/locale/tlh.js",
@@ -38641,6 +38372,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             h: ['eine Stunde', 'einer Stunde'],
             d: ['ein Tag', 'einem Tag'],
             dd: [number + ' Tage', number + ' Tagen'],
+            w: ['eine Woche', 'einer Woche'],
             M: ['ein Monat', 'einem Monat'],
             MM: [number + ' Monate', number + ' Monaten'],
             y: ['ein Jahr', 'einem Jahr'],
@@ -38690,6 +38422,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             hh: '%d Stunden',
             d: processRelativeTime,
             dd: processRelativeTime,
+            w: processRelativeTime,
+            ww: '%d Wochen',
             M: processRelativeTime,
             MM: processRelativeTime,
             y: processRelativeTime,
@@ -38734,6 +38468,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             h: ['eine Stunde', 'einer Stunde'],
             d: ['ein Tag', 'einem Tag'],
             dd: [number + ' Tage', number + ' Tagen'],
+            w: ['eine Woche', 'einer Woche'],
             M: ['ein Monat', 'einem Monat'],
             MM: [number + ' Monate', number + ' Monaten'],
             y: ['ein Jahr', 'einem Jahr'],
@@ -38783,6 +38518,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             hh: '%d Stunden',
             d: processRelativeTime,
             dd: processRelativeTime,
+            w: processRelativeTime,
+            ww: '%d Wochen',
             M: processRelativeTime,
             MM: processRelativeTime,
             y: processRelativeTime,
@@ -38829,6 +38566,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             h: ['eine Stunde', 'einer Stunde'],
             d: ['ein Tag', 'einem Tag'],
             dd: [number + ' Tage', number + ' Tagen'],
+            w: ['eine Woche', 'einer Woche'],
             M: ['ein Monat', 'einem Monat'],
             MM: [number + ' Monate', number + ' Monaten'],
             y: ['ein Jahr', 'einem Jahr'],
@@ -38878,6 +38616,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             hh: '%d Stunden',
             d: processRelativeTime,
             dd: processRelativeTime,
+            w: processRelativeTime,
+            ww: '%d Wochen',
             M: processRelativeTime,
             MM: processRelativeTime,
             y: processRelativeTime,
@@ -40636,7 +40376,8 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             case 's':
                 return isFuture ? 'muutaman sekunnin' : 'muutama sekunti';
             case 'ss':
-                return isFuture ? 'sekunnin' : 'sekuntia';
+                result = isFuture ? 'sekunnin' : 'sekuntia';
+                break;
             case 'm':
                 return isFuture ? 'minuutin' : 'minuutti';
             case 'mm':
@@ -41091,6 +40832,24 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
     //! moment.js locale configuration
 
+    var monthsStrictRegex = /^(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i,
+        monthsShortStrictRegex = /(janv\.?|févr\.?|mars|avr\.?|mai|juin|juil\.?|août|sept\.?|oct\.?|nov\.?|déc\.?)/i,
+        monthsRegex = /(janv\.?|févr\.?|mars|avr\.?|mai|juin|juil\.?|août|sept\.?|oct\.?|nov\.?|déc\.?|janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i,
+        monthsParse = [
+            /^janv/i,
+            /^févr/i,
+            /^mars/i,
+            /^avr/i,
+            /^mai/i,
+            /^juin/i,
+            /^juil/i,
+            /^août/i,
+            /^sept/i,
+            /^oct/i,
+            /^nov/i,
+            /^déc/i,
+        ];
+
     var fr = moment.defineLocale('fr', {
         months: 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split(
             '_'
@@ -41098,7 +40857,13 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         monthsShort: 'janv._févr._mars_avr._mai_juin_juil._août_sept._oct._nov._déc.'.split(
             '_'
         ),
-        monthsParseExact: true,
+        monthsRegex: monthsRegex,
+        monthsShortRegex: monthsRegex,
+        monthsStrictRegex: monthsStrictRegex,
+        monthsShortStrictRegex: monthsShortStrictRegex,
+        monthsParse: monthsParse,
+        longMonthsParse: monthsParse,
+        shortMonthsParse: monthsParse,
         weekdays: 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
         weekdaysShort: 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
         weekdaysMin: 'di_lu_ma_me_je_ve_sa'.split('_'),
@@ -41954,7 +41719,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         },
         relativeTime: {
             future: '%s મા',
-            past: '%s પેહલા',
+            past: '%s પહેલા',
             s: 'અમુક પળો',
             ss: '%d સેકંડ',
             m: 'એક મિનિટ',
@@ -43129,9 +42894,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             sameElse: 'L',
         },
         relativeTime: {
-            future: function (s) {
-                return (/^[0-9].+$/.test(s) ? 'tra' : 'in') + ' ' + s;
-            },
+            future: 'tra %s',
             past: '%s fa',
             s: 'alcuni secondi',
             ss: '%d secondi',
@@ -48481,7 +48244,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         weekdaysMin: 'J2_J3_J4_J5_Al_Ij_J1'.split('_'),
         weekdaysParseExact: true,
         longDateFormat: {
-            LT: 'HH:mm',
+            LT: 'hh:mm A',
             LTS: 'HH:mm:ss',
             L: 'DD.MM.YYYY',
             LL: 'D MMMM YYYY',
@@ -49075,6 +48838,117 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
     });
 
     return th;
+
+})));
+
+
+/***/ }),
+
+/***/ "./node_modules/moment/locale/tk.js":
+/*!******************************************!*\
+  !*** ./node_modules/moment/locale/tk.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : Turkmen [trk]
+//! author : Atamyrat Abdyrahmanov : https://github.com/atamyratabdy
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+   undefined
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var suffixes = {
+        1: "'inji",
+        5: "'inji",
+        8: "'inji",
+        70: "'inji",
+        80: "'inji",
+        2: "'nji",
+        7: "'nji",
+        20: "'nji",
+        50: "'nji",
+        3: "'ünji",
+        4: "'ünji",
+        100: "'ünji",
+        6: "'njy",
+        9: "'unjy",
+        10: "'unjy",
+        30: "'unjy",
+        60: "'ynjy",
+        90: "'ynjy",
+    };
+
+    var tk = moment.defineLocale('tk', {
+        months: 'Ýanwar_Fewral_Mart_Aprel_Maý_Iýun_Iýul_Awgust_Sentýabr_Oktýabr_Noýabr_Dekabr'.split(
+            '_'
+        ),
+        monthsShort: 'Ýan_Few_Mar_Apr_Maý_Iýn_Iýl_Awg_Sen_Okt_Noý_Dek'.split('_'),
+        weekdays: 'Ýekşenbe_Duşenbe_Sişenbe_Çarşenbe_Penşenbe_Anna_Şenbe'.split(
+            '_'
+        ),
+        weekdaysShort: 'Ýek_Duş_Siş_Çar_Pen_Ann_Şen'.split('_'),
+        weekdaysMin: 'Ýk_Dş_Sş_Çr_Pn_An_Şn'.split('_'),
+        longDateFormat: {
+            LT: 'HH:mm',
+            LTS: 'HH:mm:ss',
+            L: 'DD.MM.YYYY',
+            LL: 'D MMMM YYYY',
+            LLL: 'D MMMM YYYY HH:mm',
+            LLLL: 'dddd, D MMMM YYYY HH:mm',
+        },
+        calendar: {
+            sameDay: '[bugün sagat] LT',
+            nextDay: '[ertir sagat] LT',
+            nextWeek: '[indiki] dddd [sagat] LT',
+            lastDay: '[düýn] LT',
+            lastWeek: '[geçen] dddd [sagat] LT',
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: '%s soň',
+            past: '%s öň',
+            s: 'birnäçe sekunt',
+            m: 'bir minut',
+            mm: '%d minut',
+            h: 'bir sagat',
+            hh: '%d sagat',
+            d: 'bir gün',
+            dd: '%d gün',
+            M: 'bir aý',
+            MM: '%d aý',
+            y: 'bir ýyl',
+            yy: '%d ýyl',
+        },
+        ordinal: function (number, period) {
+            switch (period) {
+                case 'd':
+                case 'D':
+                case 'Do':
+                case 'DD':
+                    return number;
+                default:
+                    if (number === 0) {
+                        // special case for zero
+                        return number + "'unjy";
+                    }
+                    var a = number % 10,
+                        b = (number % 100) - a,
+                        c = number >= 100 ? 100 : null;
+                    return number + (suffixes[a] || suffixes[b] || suffixes[c]);
+            }
+        },
+        week: {
+            dow: 1, // Monday is the first day of the week.
+            doy: 7, // The week that contains Jan 7th is the first week of the year.
+        },
+    });
+
+    return tk;
 
 })));
 
@@ -50264,7 +50138,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
         months: 'tháng 1_tháng 2_tháng 3_tháng 4_tháng 5_tháng 6_tháng 7_tháng 8_tháng 9_tháng 10_tháng 11_tháng 12'.split(
             '_'
         ),
-        monthsShort: 'Th01_Th02_Th03_Th04_Th05_Th06_Th07_Th08_Th09_Th10_Th11_Th12'.split(
+        monthsShort: 'Thg 01_Thg 02_Thg 03_Thg 04_Thg 05_Thg 06_Thg 07_Thg 08_Thg 09_Thg 10_Thg 11_Thg 12'.split(
             '_'
         ),
         monthsParseExact: true,
@@ -51008,7 +50882,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
-//! version : 2.26.0
+//! version : 2.27.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -56626,7 +56500,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
     //! moment.js
 
-    hooks.version = '2.26.0';
+    hooks.version = '2.27.0';
 
     setHookCallback(createLocal);
 
@@ -59879,177 +59753,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba& ***!
-  \******************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.filter.date,
-                expression: "filter.date"
-              }
-            ],
-            staticClass: "form-control",
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.filter,
-                  "date",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "today" } }, [_vm._v("Today")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "yesterday" } }, [
-              _vm._v("Yesterday")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "week" } }, [_vm._v("7 Days")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "month" } }, [_vm._v("30 Days")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "lifetime" } }, [_vm._v("Lifetime")])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.filter.type,
-                expression: "filter.type"
-              }
-            ],
-            staticClass: "form-control",
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.filter,
-                  "type",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "all" } }, [_vm._v("All")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "deposit" } }, [
-              _vm._v("Only Deposits")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "withdraw" } }, [
-              _vm._v("Only Withdrawals")
-            ])
-          ]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-striped table-hover" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        [
-          _vm.loading
-            ? _c("tr", [_vm._v("\n            Loading...\n        ")])
-            : _vm.data.length === 0
-            ? _c("tr", [_vm._v("\n            No transactions.\n        ")])
-            : _vm._l(_vm.data, function(transaction, index) {
-                return _c("tr", [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _vm._v(_vm._s(index + 1))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(transaction.user.name))]),
-                  _vm._v(" "),
-                  _c("td", { staticStyle: { color: "green" } }, [
-                    _vm._v("$" + _vm._s(transaction.amount))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(transaction.meta["description"]))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(transaction.date))])
-                ])
-              })
-        ],
-        2
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("id")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("user")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("amount")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("date")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/UsersTable.vue?vue&type=template&id=26d4356c&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/UsersTable.vue?vue&type=template&id=26d4356c& ***!
@@ -60296,8 +59999,6 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(user.email))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("$" + _vm._s(user.wallet.balance))]),
-                    _vm._v(" "),
                     user.subscription == null
                       ? _c("td", [_vm._v("NULL")])
                       : _c("td", [
@@ -60404,8 +60105,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("name")]),
         _vm._v(" "),
         _c("th", [_vm._v("email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("credits")]),
         _vm._v(" "),
         _c("th", [_vm._v("subscription")]),
         _vm._v(" "),
@@ -60514,199 +60213,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("date")]),
         _vm._v(" "),
         _c("th", [_vm._v("action")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&":
-/*!****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2& ***!
-  \****************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "user" } }, [_vm._v("Username")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group mb-2 mr-sm-2" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.username,
-              expression: "username"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", id: "user", placeholder: "username" },
-          domProps: { value: _vm.username },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.username = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "code" } }, [_vm._v("Code")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group mb-2 mr-sm-2" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.code,
-              expression: "code"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "code",
-            placeholder: "code",
-            maxlength: "15"
-          },
-          domProps: { value: _vm.code },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.code = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { type: "submit" },
-          on: { click: _vm.submit }
-        },
-        [_vm._v("Submit")]
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("div", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "fas fa-user" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("div", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "fas fa-tag" })
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&":
-/*!****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61& ***!
-  \****************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-striped table-hover" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "tbody",
-      [
-        _vm.loading
-          ? _c("tr", [_vm._v("\n        Loading...\n    ")])
-          : _vm._l(_vm.data, function(code, index) {
-              return _c("tr", [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _vm._v(_vm._s(index + 1))
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.code))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.uses.total))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.uses.today))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.user.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(code.date))])
-              ])
-            })
-      ],
-      2
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("code")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("total uses")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("today uses")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("user")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("date")])
       ])
     ])
   }
@@ -62001,8 +61507,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.11
- * (c) 2014-2019 Evan You
+ * Vue.js v2.6.12
+ * (c) 2014-2020 Evan You
  * Released under the MIT License.
  */
 
@@ -67441,7 +66947,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.11';
+Vue.version = '2.6.12';
 
 /*  */
 
@@ -69647,7 +69153,7 @@ function updateDOMProps (oldVnode, vnode) {
       // skip the update if old and new VDOM state is the same.
       // `value` is handled separately because the DOM value may be temporarily
       // out of sync with VDOM state due to focus, composition and modifiers.
-      // This  #4521 by skipping the unnecesarry `checked` update.
+      // This  #4521 by skipping the unnecessary `checked` update.
       cur !== oldProps[key]
     ) {
       // some property updates can throw
@@ -71892,7 +71398,7 @@ function parse (
       }
     },
     comment: function comment (text, start, end) {
-      // adding anyting as a sibling to the root node is forbidden
+      // adding anything as a sibling to the root node is forbidden
       // comments should still be allowed, but ignored
       if (currentParent) {
         var child = {
@@ -74051,11 +73557,8 @@ module.exports = function(module) {
 
 var map = {
 	"./components/Notification.vue": "./resources/js/components/Notification.vue",
-	"./components/dashboard/TransactionsTable.vue": "./resources/js/components/dashboard/TransactionsTable.vue",
 	"./components/dashboard/UsersTable.vue": "./resources/js/components/dashboard/UsersTable.vue",
-	"./components/dashboard/VersionsTable.vue": "./resources/js/components/dashboard/VersionsTable.vue",
-	"./components/dashboard/referral/ReferralCodeCreate.vue": "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue",
-	"./components/dashboard/referral/ReferralCodesTable.vue": "./resources/js/components/dashboard/referral/ReferralCodesTable.vue"
+	"./components/dashboard/VersionsTable.vue": "./resources/js/components/dashboard/VersionsTable.vue"
 };
 
 
@@ -74241,75 +73744,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/TransactionsTable.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/dashboard/TransactionsTable.vue ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TransactionsTable_vue_vue_type_template_id_c0156aba___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TransactionsTable.vue?vue&type=template&id=c0156aba& */ "./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba&");
-/* harmony import */ var _TransactionsTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TransactionsTable.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _TransactionsTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TransactionsTable_vue_vue_type_template_id_c0156aba___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _TransactionsTable_vue_vue_type_template_id_c0156aba___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/dashboard/TransactionsTable.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TransactionsTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TransactionsTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TransactionsTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba&":
-/*!************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba& ***!
-  \************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TransactionsTable_vue_vue_type_template_id_c0156aba___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TransactionsTable.vue?vue&type=template&id=c0156aba& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/TransactionsTable.vue?vue&type=template&id=c0156aba&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TransactionsTable_vue_vue_type_template_id_c0156aba___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TransactionsTable_vue_vue_type_template_id_c0156aba___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/dashboard/UsersTable.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/dashboard/UsersTable.vue ***!
@@ -74448,144 +73882,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReferralCodeCreate.vue?vue&type=template&id=24f405e2& */ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&");
-/* harmony import */ var _ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReferralCodeCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/dashboard/referral/ReferralCodeCreate.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodeCreate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2& ***!
-  \**********************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodeCreate.vue?vue&type=template&id=24f405e2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodeCreate.vue?vue&type=template&id=24f405e2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodeCreate_vue_vue_type_template_id_24f405e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=template&id=1a6efc61& */ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&");
-/* harmony import */ var _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/dashboard/referral/ReferralCodesTable.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61& ***!
-  \**********************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ReferralCodesTable.vue?vue&type=template&id=1a6efc61& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/referral/ReferralCodesTable.vue?vue&type=template&id=1a6efc61&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReferralCodesTable_vue_vue_type_template_id_1a6efc61___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/eventbus.js":
 /*!**********************************!*\
   !*** ./resources/js/eventbus.js ***!
@@ -74620,8 +73916,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\affan\Documents\GitHub\revived-website\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\affan\Documents\GitHub\revived-website\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\affan\Documents\GitHub\dashboard\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\affan\Documents\GitHub\dashboard\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

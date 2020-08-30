@@ -15,6 +15,10 @@ class Subscription extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'user_id', 'plan_id', 'billing_agreement_id', 'end_date'
+    ];
+
     protected $casts = [
         'end_date' => 'datetime'
     ];

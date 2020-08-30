@@ -59,7 +59,6 @@
                 <th>#</th>
                 <th>name</th>
                 <th>email</th>
-                <th>credits</th>
                 <th>subscription</th>
                 <th>actions</th>
             </tr>
@@ -72,7 +71,6 @@
                 <th scope="row">{{ user.id }}</th>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
-                <td>${{ user.wallet.balance }}</td>
                 <td v-if="user.subscription == null">NULL</td>
                 <td v-else>{{ calculateDifference(user.subscription.end_date) }}
                     Days Left
