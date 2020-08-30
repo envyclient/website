@@ -1,7 +1,7 @@
 @extends('layouts.dash')
 
 @section('content')
-    <div style="width:95%;margin:0 auto">
+    <div style="width:98%;margin:0 auto">
 
         <!--- Profile Section --->
         <div class="alert alert-secondary" style="font-size:25px;">
