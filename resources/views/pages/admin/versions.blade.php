@@ -1,7 +1,7 @@
 @extends('layouts.dash')
 
 @section('content')
-    <div style="width:95%;margin:0 auto">
+    <div style="width:98%;margin:0 auto">
         <!-- versions table -->
         <div>
             <div class="alert alert-primary" style="font-size:25px;">

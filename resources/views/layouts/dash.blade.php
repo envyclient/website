@@ -27,22 +27,20 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
 
+
     <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        .sidebar-menu {
-            display: inline-block;
-            float: left;
-            width: 250px;
-            height: 100vh;
+        #sidebar-wrapper {
             background-color: #303030;
+            min-height: 100vh;
+            margin-left: -15rem;
+            transition: margin .25s ease-out;
         }
 
-        .sidebar-menu .list-group-item-custom {
-            width: 100%;
+        #sidebar-wrapper .active {
+            background-color: #0f8c1d !important;
+        }
+
+        .list-group-item-custom {
             color: #fff;
             text-shadow: 1px 1px #666;
             background-color: #1c1c1c;
@@ -50,130 +48,56 @@
             border: none;
         }
 
-        .sidebar-menu .list-group-item-custom:hover,
-        .sidebar-menu .list-group-item-custom:focus {
-            z-index: 1;
+        .list-group-item-custom:hover,
+        .list-group-item-custom:focus {
             color: #fff;
             text-decoration: none;
             background-color: #0f8c1d;
             border: none;
         }
 
-        .sidebar-menu .active {
-            background-color: #0f8c1d !important;
+        #sidebar-wrapper .list-group {
+            width: 15rem;
         }
 
-        .inner-navbar {
-            width: calc(100vw - 15px);
+        #page-content-wrapper {
+            min-width: 100vw;
         }
 
-        .inner-navbar .navbar-brand {
-            color: #fff;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .container-inner-nav {
-            width: 95%;
-        }
-
-        a.custom-badge {
-            color: #fff;
-            background-color: #303030;
-            padding: 6px;
-        }
-
-        a.custom-badge:hover,
-        a.custom-badge:focus {
-            color: #fff;
-            background-color: #303030;
-        }
-
-        a.custom-badge:focus,
-        a.custom-badge.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
-        }
-
-        .custom-panel .card {
-            transition: .05s all;
-            margin-top: 10px;
-            -webkit-box-shadow: 0 0 0 -200px rgba(209, 209, 209, 1);
-            -moz-box-shadow: 0 0 0 -200px rgba(209, 209, 209, 1);
-            box-shadow: 0 0 0 -200px rgba(209, 209, 209, 1);
-        }
-
-        .custom-panel .card:hover {
-            transition: .05s all;
-            -webkit-box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
-            -moz-box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
-            box-shadow: 14px 14px 17px -1px rgba(209, 209, 209, 1);
-        }
-
-        .custom-panel .card-body {
-            background-color: #fff;
-            border: none;
-            font-weight: bold;
-            color: #303030;
-            text-align: left;
-            font-size: 23px;
-            padding-bottom: 0;
-        }
-
-        .custom-panel span.card-sub-title {
-            color: #8f8f8f;
-            text-align: left;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 15px 15px 0;
-        }
-
-        .custom-panel .card-footer {
-            border: none;
-            background-color: #fff;
-            text-align: left;
-            font-size: 13px;
-            color: #a8a8a8;
-            font-weight: bold;
-        }
-
-        .dashboard-content {
-            height: calc(100vh - 59px);
-            overflow-y: scroll;
-        }
-
-        a.color-red {
-            color: red;
-        }
-
-        a.color-red:hover {
-            color: #fff;
-        }
-
-        a.color-blue {
-            color: #3490dc;
-        }
-
-        a.color-blue:hover {
-            color: white;
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: 0;
         }
 
         .table-sticky thead th {
             position: sticky;
             top: 0;
         }
+
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -15rem;
+            }
+        }
     </style>
 </head>
 <body>
-<div id="app">
+<div class="d-flex" id="app wrapper">
 
     <!-- vuejs notifications -->
     <notification></notification>
 
-    <!-- side navbar -->
-    <div class="sidebar-menu d-inline-block">
+    <div class="d-inline-block" id="sidebar-wrapper">
         <div class="list-group">
-            <a class="navbar-brand text-white" href="{{ route('home') }}">
+            <a class="navbar-brand text-white">
                 <div class="container text-center">
                     <img src="{{ asset('/assets/logo_512x512.png') }}"
                          style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
@@ -204,7 +128,7 @@
             @else
                 <div class="list-group list-group-flush">
                     <h3 class="m-3 font-weight-bold" style="font-size:18px;">
-                        <small class="text-white">SETTINGS</small>
+                        <small class="text-muted">SETTINGS</small>
                     </h3>
                     <a class="list-group-item list-group-item-custom {{ request()->routeIs('home') ? 'active': null }}"
                        href="{{ route('home') }}">
@@ -221,7 +145,7 @@
                         Forums
                     </a>
                     <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
-                        <small class="text-white">BILLING</small>
+                        <small class="text-muted">BILLING</small>
                     </h3>
                     <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.subscriptions') ? 'active': null }}"
                        href="{{ route('pages.subscriptions') }}">
@@ -233,9 +157,14 @@
         </div>
     </div>
 
-    <!-- top navbar -->
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background:#242424 !important;">
-        <div class="container-inner-nav text-white m-auto">
+    <div id="page-content-wrapper">
+
+        <!-- top navbar -->
+        <nav class="navbar navbar-expand-lg shadow-sm" style="background:#242424 !important;">
+            <a class="navbar-brand text-white" href="{{ url('/') }}">
+                Envy Client | <span
+                    style="color:#888;">{{ request()->routeIs('admin') || request()->routeIs('admin.*') ? 'admin' : 'dashboard' }}</span>
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -245,10 +174,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-                    <a class="navbar-brand text-white" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }} | <span
-                            style="color:#888;">{{ request()->is("/") ? 'dashboard' : 'admin' }}</span>
-                    </a>
+
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto text-white">
@@ -263,17 +189,15 @@
                     </li>
                 </ul>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <div id="main" class="dashboard-content mt-3">
+        <br>
 
         <!-- notifications -->
         <div class="container">
             @include('inc.notifications')
         </div>
 
-        <!-- content -->
         @yield('content')
     </div>
 </div>
