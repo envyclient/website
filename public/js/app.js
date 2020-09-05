@@ -2021,47 +2021,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -59771,147 +59730,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.selectedUser != null
-        ? _c(
-            "div",
-            {
-              staticClass: "modal fade",
-              attrs: {
-                id: "addCoinsModal",
-                tabindex: "-1",
-                role: "dialog",
-                "aria-labelledby": "addCoinsLabel",
-                "aria-hidden": "true"
-              }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "modal-dialog", attrs: { role: "document" } },
-                [
-                  _c("div", { staticClass: "modal-content" }, [
-                    _c("div", { staticClass: "modal-header" }, [
-                      _c(
-                        "h5",
-                        {
-                          staticClass: "modal-title",
-                          attrs: { id: "addCoinsLabel" }
-                        },
-                        [_vm._v("Add Coins - " + _vm._s(_vm.selectedUser.name))]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(0)
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.modal.credits,
-                              expression: "modal.credits"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.modal,
-                                "credits",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "5" } }, [
-                            _vm._v("$5")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "10" } }, [
-                            _vm._v("$10")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "15" } }, [
-                            _vm._v("$15")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "20" } }, [
-                            _vm._v("$20")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "30" } }, [
-                            _vm._v("$30")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "40" } }, [
-                            _vm._v("$40")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "50" } }, [
-                            _vm._v("$50")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "60" } }, [
-                            _vm._v("$50")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "70" } }, [
-                            _vm._v("$70")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "80" } }, [
-                            _vm._v("$80")
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary",
-                          attrs: { type: "button", "data-dismiss": "modal" },
-                          on: {
-                            click: function($event) {
-                              return _vm.setSelectedUser(null)
-                            }
-                          }
-                        },
-                        [_vm._v("Close\n                    ")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button", "data-dismiss": "modal" },
-                          on: { click: _vm.addCreditsToUser }
-                        },
-                        [_vm._v("Add\n                    ")]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]
-          )
-        : _vm._e(),
-      _vm._v(" "),
       _c("div", { staticClass: "form-row" }, [
         _c("div", { staticClass: "col" }, [
           _c("input", {
@@ -59982,7 +59800,7 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c("table", { staticClass: "table table-striped table-hover" }, [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c(
           "tbody",
@@ -60012,23 +59830,6 @@ var render = function() {
                         ]),
                     _vm._v(" "),
                     _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-outline-primary text-primary",
-                          attrs: {
-                            "data-toggle": "modal",
-                            "data-target": "#addCoinsModal"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.setSelectedUser(user)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-coins" })]
-                      ),
-                      _vm._v(" "),
                       user.banned
                         ? _c(
                             "a",
@@ -60077,23 +59878,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
