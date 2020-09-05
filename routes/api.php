@@ -33,9 +33,7 @@ Route::prefix('configs')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('transactions', 'API\AdminController@transactions')->name('api.admin.transactions');
     Route::get('users', 'API\AdminController@users')->name('api.admin.users');
-
     Route::put('users/ban/{user}', 'API\AdminController@ban')->name('api.admin.users.ban');
-    Route::put('users/credits/{user}', 'API\AdminController@credits')->name('api.admin.users.credits');
 });
 
 /**
@@ -58,14 +56,6 @@ Route::prefix('versions')->group(function () {
     Route::get('/', 'API\VersionsController@index')->name('api.versions.index');
     Route::get('{version}', 'API\VersionsController@show')->name('api.versions.show');
     Route::delete('{version}', 'API\VersionsController@destroy')->name('api.versions.delete');
-});
-
-/**
- * Referrals
- */
-Route::prefix('referrals')->group(function () {
-    Route::get('/', 'API\ReferralCodesController@index')->name('api.referrals.index');
-    Route::post('/', 'API\ReferralCodesController@store')->name('api.referrals.store');
 });
 
 /**

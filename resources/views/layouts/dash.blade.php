@@ -64,7 +64,7 @@
             min-width: 100vw;
         }
 
-        #wrapper.toggled #sidebar-wrapper {
+        .wrapper.toggled #sidebar-wrapper {
             margin-left: 0;
         }
 
@@ -83,14 +83,14 @@
                 width: 100%;
             }
 
-            #wrapper.toggled #sidebar-wrapper {
+            .wrapper.toggled #sidebar-wrapper {
                 margin-left: -15rem;
             }
         }
     </style>
 </head>
 <body>
-<div class="d-flex" id="app wrapper">
+<div class="d-flex wrapper" id="app">
 
     <!-- vuejs notifications -->
     <notification></notification>

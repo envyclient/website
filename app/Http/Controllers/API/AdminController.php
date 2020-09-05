@@ -14,16 +14,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class AdminController extends Controller
+class admincontroller extends controller
 {
     public function __construct()
     {
         $this->middleware(['auth:api', 'api-admin']);
     }
 
-    public function users(Request $request)
+    public function users(request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = validator::make($request->all(), [
             'name' => 'nullable|string',
             'type' => 'nullable|string|in:all,banned',
             'page' => 'required|integer'
@@ -31,11 +31,11 @@ class AdminController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => '400 Bad Request'
+                'message' => '400 bad request'
             ], 400);
         }
 
-        $user = User::with(['subscription'])
+        $user = user::with(['subscription'])
             ->name($request->name);
 
         if ($request->type === 'banned') {
@@ -45,31 +45,10 @@ class AdminController extends Controller
         return $user->paginate(20);
     }
 
-    public function credits(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'amount' => 'required|integer'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
-        }
-
-        $user = User::findOrFail($id);
-        $amount = $request->amount;
-        $user->deposit($amount, 'deposit', ['admin_id' => auth()->id(), 'description' => "Admin {$request->user()->name} deposited $amount credits into your account."]);
-
-        return response()->json([
-            'message' => '200 OK'
-        ]);
-    }
-
     public function ban($id)
     {
-        $user = User::findOrFail($id);
-        if ($user->hasSubscription()) {
+        $user = user::findorfail($id);
+        if ($user->hassubscription()) {
             $user->subscription->fill([
                 'renew' => false
             ])->save();
@@ -85,7 +64,7 @@ class AdminController extends Controller
         ])->save();
 
         return response()->json([
-            'message' => '200 OK'
+            'message' => '200 ok'
         ]);
     }
 }
