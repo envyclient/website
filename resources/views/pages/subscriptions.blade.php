@@ -95,6 +95,9 @@
                     <div class="modal-body">
                         <p>{{ $plan->name }}</p>
                         <p>{{ $plan->config_limit }} Configs</p>
+                        @if($plan->beta_access)
+                            <p>Beta Access</p>
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
