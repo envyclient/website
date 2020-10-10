@@ -57,8 +57,8 @@ class PayPalController extends Controller
 
         // Set merchant preferences
         $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://dashboard.envyclient.com/paypal/execute')
-            ->setCancelUrl('https://dashboard.envyclient.com/paypal/cancel')
+        $merchantPreferences->setReturnUrl('http://127.0.0.1:8000/paypal/execute')
+            ->setCancelUrl('http://127.0.0.1:8000/paypal/cancel')
             ->setAutoBillAmount('YES')
             ->setInitialFailAmountAction('CANCEL')
             ->setMaxFailAttempts('0')

@@ -3,16 +3,16 @@
 @section('content')
     <div style="width:98%;margin:0 auto">
         <div class="alert alert-secondary" style="font-size:25px;">
-            <i class="fas fa-redo" style="padding-right:10px;"></i>
-            Subscription
+            <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
         </div>
         <form method="POST" action="{{ route('paypal.process') }}" accept-charset="UTF-8">
             @csrf
             <div class="card" style="width:100%;">
                 @if($user->hasSubscription())
                     <div class="card-header">
-                        You are currently subscribed to the {{ $user->subscription->plan->name  }} plan.
-                        (next payment due in {{ $nextSubscription }} days)
+                        You are currently subscribed to the
+                        <strong>{{ $user->subscription->plan->name }}</strong>
+                        plan. (next payment due in {{ $nextSubscription }} days)
                     </div>
                 @endif
                 <ul class="list-group list-group-flush">
@@ -37,6 +37,11 @@
                                 <div class="col">
                                     <b>${{ $plan->price }}</b> / 30 days
                                 </div>
+                                <div class="col">
+                                    <svg style="width:48px;height:48px" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M3,12V6.75L9,5.43V11.91L3,12M20,3V11.75L10,11.9V5.21L20,3M3,13L9,13.09V19.9L3,18.75V13M20,13.25V22L10,20.09V13.1L20,13.25Z" />
+                                    </svg>
+                                </div>
                             </div>
                         </li>
                     @endforeach
@@ -47,19 +52,18 @@
             </div>
             <br>
             @if($user->hasSubscription())
-        </form> <!-- close form -->
-        <div class="card" style="width: 100%;">
+            </form> <!-- close form -->
             @if($user->subscribedToFreePlan())
                 <h5 class="text-muted pt-2 pl-2">
                     You can not cancel your subscription because you are subscribed to the free plan.
                 </h5>
             @else
                 <form method="POST" action="{{ route('subscriptions.cancel') }}" accept-charset="UTF-8">
+                    @csrf
                     <input class="btn btn-outline-danger btn-lg btn-block" type="submit"
                            value="Cancel Subscription">
                 </form>
             @endif
-        </div>
         @elseif($user->hasBillingAgreement())
         </form> <!-- close form -->
         <div class="card" style="width: 100%;">
