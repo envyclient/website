@@ -49,7 +49,6 @@ class SubscriptionsController extends Controller
     public function cancel(Request $request)
     {
         $user = $request->user();
-
         if (!$user->hasSubscription()) {
             return back()->with('error', 'You must subscribe to a plan first.');
         }

@@ -12,6 +12,11 @@
     <!-- fav icon -->
     <link rel="shortcut icon" href="{{ asset('/assets/logo_512x512.png') }}"/>
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0"
+            src="https://umami.affanhaq.me/umami.js"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
