@@ -3,7 +3,8 @@
 @section('content')
     <div style="width:98%;margin:0 auto">
         <div class="alert alert-secondary" style="font-size:25px;">
-            <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
+            <i class="fas fa-redo" style="padding-right:10px;"></i>
+            Subscription
         </div>
         <form method="POST" action="{{ route('paypal.process') }}" accept-charset="UTF-8">
             @csrf

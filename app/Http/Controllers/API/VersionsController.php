@@ -16,7 +16,7 @@ class VersionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->middleware('api-admin')->only('destroy');
+        $this->middleware('admin')->only('destroy');
     }
 
     // used to download JRE, ASSETS, or CLIENT ASSETS

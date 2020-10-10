@@ -3,7 +3,8 @@
 @section('content')
     <div style="width:98%;margin:0 auto">
         <div class="alert alert-secondary" style="font-size:25px;">
-            <i class="fas fa-lock" style="padding-right:10px;"></i> Security
+            <i class="fas fa-lock" style="padding-right:10px;"></i>
+            Security
         </div>
         <div class="card">
             <div class="card-body">
@@ -40,12 +41,10 @@
             </div>
         </div>
         <div class="card mt-3" style="width: 100%;">
-            <ul class="list-group list-group-flush">
-                <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal"
-                        data-target="#disableAccountModal">
-                    Disable Account
-                </button>
-            </ul>
+            <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal"
+                    data-target="#disableAccountModal">
+                Disable Account
+            </button>
         </div>
     </div>
 

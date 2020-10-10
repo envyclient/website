@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified'])->except('terms');
-        $this->middleware('admin')->only('admin', 'versions', 'sessions');
+        $this->middleware('admin')->only('users', 'versions', 'sessions');
     }
 
     public function index(Request $request)
@@ -58,8 +58,7 @@ class HomeController extends Controller
         return view('pages.terms');
     }
 
-    // TODO: fix users table
-    public function admin(Request $request)
+    public function users(Request $request)
     {
         $apiToken = $request->user()->api_token;
 

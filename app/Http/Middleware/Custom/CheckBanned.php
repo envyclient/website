@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Custom;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class CheckDisabled
+class CheckBanned
 {
     /**
      * Handle an incoming request.
@@ -18,10 +18,10 @@ class CheckDisabled
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->disabled) {
+        if (auth()->check() && auth()->user()->banned) {
             auth()->logout();
             throw ValidationException::withMessages([
-                'email' => ['Account has been disabled.'],
+                'email' => ['Account has been banned.'],
             ]);
         }
         return $next($request);
