@@ -18,7 +18,7 @@ Route::group([], function () {
  * Admin
  */
 Route::prefix('admin')->group(function () {
-    Route::get('/', 'HomeController@admin')->name('admin');
+    Route::get('/', 'HomeController@users')->name('admin.users');
     Route::get('versions', 'HomeController@versions')->name('admin.versions');
     Route::get('sessions', 'HomeController@sessions')->name('admin.sessions');
 });

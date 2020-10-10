@@ -37,8 +37,8 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
             // custom
-            \App\Http\Middleware\CheckBanned::class,
-            \App\Http\Middleware\CheckDisabled::class,
+            \App\Http\Middleware\Custom\CheckBanned::class,
+            \App\Http\Middleware\Custom\CheckDisabled::class,
         ],
 
         'api' => [
@@ -66,11 +66,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-
         // custom
-        'admin' => \App\Http\Middleware\CheckAdmin::class,
-        'api-admin' => \App\Http\Middleware\API\CheckAdmin::class,
-        'subscription' => \App\Http\Middleware\CheckSubscription::class,
+        'admin' => \App\Http\Middleware\Custom\CheckAdmin::class,
+        'subscription' => \App\Http\Middleware\Custom\CheckSubscription::class,
     ];
 
     /**

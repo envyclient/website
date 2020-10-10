@@ -19,7 +19,7 @@ class ChartsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:api', 'api-admin']);
+        $this->middleware(['auth:api', 'admin']);
     }
 
     public function users()

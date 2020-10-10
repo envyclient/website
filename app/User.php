@@ -19,22 +19,31 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property bool disabled
  * @property bool access_free_plan
  */
-// TODO: add user client settings
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, Favoriter;
 
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'hwid', 'admin', 'banned', 'disabled', 'access_free_plan'
+        'name',
+        'email',
+        'password',
+        'api_token',
+        'hwid',
+        'admin',
+        'banned',
+        'disabled',
+        'access_free_plan'
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at', 'admin'
+        'password',
+        'remember_token',
+        'email_verified_at',
+        'admin'
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'last_launch_at' => 'datetime'
+        'email_verified_at' => 'datetime'
     ];
 
     public function scopeName($query, $name)
@@ -63,11 +72,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function downloads()
     {
         return $this->belongsToMany('App\Version', 'user_downloads', 'user_id', 'version_id');
-    }
-
-    public function referralCode()
-    {
-        return $this->hasOne('App\ReferralCode', 'id', 'referral_code_id');
     }
 
     public function gameSessions()
