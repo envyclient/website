@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class admincontroller extends controller
+class AdminController extends controller
 {
     public function __construct()
     {
