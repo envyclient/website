@@ -15,7 +15,6 @@ class VersionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->middleware('admin')->only('destroy');
     }
 
     public function index(Request $request)
@@ -43,15 +42,4 @@ class VersionsController extends Controller
         return Storage::disk('minio')->download(Version::FILES_DIRECTORY . '/' . $version->file);
     }
 
-    public function destroy($id)
-    {
-        $version = Version::findOrFail($id);
-        Storage::disk('minio')->delete(Version::FILES_DIRECTORY . '/' . $version->file);
-        DB::table('user_downloads')->where('version_id', $version->id)->delete();
-        $version->delete();
-
-        return response()->json([
-            'message' => '200 OK'
-        ], 200);
-    }
 }

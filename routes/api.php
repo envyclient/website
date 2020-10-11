@@ -52,7 +52,6 @@ Route::prefix('charts')->group(function () {
 Route::prefix('versions')->group(function () {
     Route::get('/', [VersionsController::class, 'index'])->name('api.versions.index');
     Route::get('{version}', [VersionsController::class, 'show'])->name('api.versions.show');
-    Route::delete('{version}', [VersionsController::class, 'destroy'])->name('api.versions.delete');
 });
 
 /**

@@ -11,7 +11,7 @@
                 {!! $chart->container() !!}
             </div>
 
-            <versions-table url="{{ route('api.versions.index') }}" api-token="{{ $apiToken }}"></versions-table>
+            @livewire('versions-table')
         </div>
 
         <br>
