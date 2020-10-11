@@ -19,7 +19,6 @@ RUN echo -en "upload_max_filesize = 50M\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 
 # laravel cache
-RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
 
