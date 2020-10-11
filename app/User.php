@@ -101,7 +101,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasBetaAccess(): bool
     {
-        return $this->hasSubscription() && $this->subscription->plan->beta_access;
+        return $this->admin || ($this->hasSubscription() && $this->subscription->plan->beta_access);
     }
 
     public function image(): string

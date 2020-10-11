@@ -38,8 +38,9 @@
                                     <b>${{ $plan->price }}</b> / 30 days
                                 </div>
                                 <div class="col">
-                                    <svg style="width:48px;height:48px" viewBox="0 0 24 24">
-                                        <path fill="currentColor" d="M3,12V6.75L9,5.43V11.91L3,12M20,3V11.75L10,11.9V5.21L20,3M3,13L9,13.09V19.9L3,18.75V13M20,13.25V22L10,20.09V13.1L20,13.25Z" />
+                                    <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                                        <path fill="currentColor"
+                                              d="M3,12V6.75L9,5.43V11.91L3,12M20,3V11.75L10,11.9V5.21L20,3M3,13L9,13.09V19.9L3,18.75V13M20,13.25V22L10,20.09V13.1L20,13.25Z"/>
                                     </svg>
                                 </div>
                             </div>
@@ -52,7 +53,8 @@
             </div>
             <br>
             @if($user->hasSubscription())
-            </form> <!-- close form -->
+        </form> <!-- close form -->
+        <div class="card" style="width: 100%;">
             @if($user->subscribedToFreePlan())
                 <h5 class="text-muted pt-2 pl-2">
                     You can not cancel your subscription because you are subscribed to the free plan.
@@ -64,6 +66,7 @@
                            value="Cancel Subscription">
                 </form>
             @endif
+        </div>
         @elseif($user->hasBillingAgreement())
         </form> <!-- close form -->
         <div class="card" style="width: 100%;">
