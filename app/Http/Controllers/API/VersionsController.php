@@ -39,7 +39,7 @@ class VersionsController extends Controller
     {
         $user = $request->user();
         return VersionResource::collection(
-            $user->hasBetaAccess() ? Version::all() : Version::where('beta', false)
+            $user->hasBetaAccess() ? Version::all() : Version::where('beta', false)->get()
         );
     }
 
