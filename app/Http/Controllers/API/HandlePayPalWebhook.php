@@ -21,8 +21,6 @@ class HandlePayPalWebhook extends Controller
 
     public function __construct()
     {
-        $this->middleware('api');
-
         $this->paypal = new ApiContext(new OAuthTokenCredential(
             config('paypal.client_id'),
             config('paypal.secret')
