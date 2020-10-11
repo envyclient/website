@@ -76,7 +76,6 @@ class HandlePayPalWebhook extends Controller
             }
             case 'BILLING.SUBSCRIPTION.CANCELLED': // user has cancelled their subscription
             {
-                return 1;
                 // get billing agreement
                 $billingAgreement = BillingAgreement::where('billing_agreement_id', $data->resource->id)->firstOrFail();
                 $user = $billingAgreement->user;
