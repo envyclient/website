@@ -18,6 +18,11 @@ RUN echo -en "upload_max_filesize = 50M\n" \
          "max_execution_time = 60\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 
+# laravel cache
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
+
 # run php server
 EXPOSE 9191
 CMD php artisan serve --host=0.0.0.0 --port=9191
