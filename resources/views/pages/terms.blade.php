@@ -16,7 +16,6 @@
 
         ## Rights of Haq Development
         * Haq Development reserves the right to modify or terminate Envy Client accounts at any time, for any reason.
-        * Haq Development reserves the right to modify or terminate Envy Client services at any time, for any reason.
 
         ## Restrictions
         It is not permissible to:
