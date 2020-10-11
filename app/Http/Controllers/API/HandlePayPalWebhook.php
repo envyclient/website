@@ -21,8 +21,6 @@ class HandlePayPalWebhook extends Controller
 
     public function __construct()
     {
-        $this->middleware('api');
-
         $this->paypal = new ApiContext(new OAuthTokenCredential(
             config('paypal.client_id'),
             config('paypal.secret')
@@ -78,6 +76,7 @@ class HandlePayPalWebhook extends Controller
             }
             case 'BILLING.SUBSCRIPTION.CANCELLED': // user has cancelled their subscription
             {
+                return 1;
                 // get billing agreement
                 $billingAgreement = BillingAgreement::where('billing_agreement_id', $data->resource->id)->firstOrFail();
                 $user = $billingAgreement->user;

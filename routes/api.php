@@ -5,7 +5,6 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\ConfigsController;
 use App\Http\Controllers\API\GameSessionsController;
-use App\Http\Controllers\API\HandlePayPalWebhook;
 use App\Http\Controllers\API\VersionsController;
 use App\Http\Controllers\DownloadAssets;
 use Illuminate\Support\Facades\Route;
@@ -76,4 +75,3 @@ Route::prefix('sessions')->group(function () {
  * Extra
  */
 Route::get('assets', DownloadAssets::class);
-Route::post('paypal', HandlePayPalWebhook::class);

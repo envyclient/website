@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\HandlePayPalWebhook;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SubscriptionsController;
@@ -46,6 +47,8 @@ Route::prefix('paypal')->group(function () {
     Route::post('process', [PayPalController::class, 'process'])->name('paypal.process');
     Route::get('execute', [PayPalController::class, 'execute'])->name('paypal.execute');
     Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+
+    Route::post('webhook', HandlePayPalWebhook::class);
 });
 
 /**
