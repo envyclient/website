@@ -39,9 +39,13 @@ class DeleteCancelledSubscriptions extends Command
             $user->billingAgreement()->delete();
             $count++;
             $user->notify(new Generic($user, 'Your subscription has expired. Please renew it you wish to continue using the client.', 'Subscription'));
+
+
         }
 
         $this->info("Deleted $count subscriptions on " . Carbon::now());
         $this->info('Command took: ' . Carbon::now()->diffInMilliseconds($start) . 'ms');
+
+        return 0;
     }
 }
