@@ -13,9 +13,21 @@
     <!-- fav icon -->
     <link rel="shortcut icon" href="{{ asset('/assets/logo_512x512.png') }}"/>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous" defer></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous" defer></script>
+
+    <!-- Charts.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <!-- Umami Analytics -->
     <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0"
             src="https://umami.affanhaq.me/umami.js"></script>
 
@@ -24,8 +36,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
+
+    @livewireStyles
 
     <style type="text/css">
         #sidebar-wrapper {
@@ -89,10 +104,7 @@
     </style>
 </head>
 <body>
-<div class="d-flex wrapper" id="app">
-
-    <!-- vuejs notifications -->
-    <notification></notification>
+<div class="d-flex wrapper">
 
     <div class="d-inline-block" id="sidebar-wrapper">
         <div class="list-group">
@@ -195,6 +207,11 @@
         @yield('content')
     </div>
 </div>
+
+@livewireScripts
+
+<!-- Custom JS Scripts -->
 @yield('js')
+
 </body>
 </html>

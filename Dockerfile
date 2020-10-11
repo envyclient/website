@@ -1,7 +1,7 @@
 FROM php:7.4.9-cli-alpine
 
 # install npm & composer
-RUN apk --no-cache add curl npm
+RUN apk --no-cache add curl
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN docker-php-ext-install pdo_mysql
 
@@ -11,7 +11,7 @@ COPY . /app
 
 # build dependencies
 RUN composer install --optimize-autoloader --no-dev
-RUN npm install && npm run prod
+# RUN npm install && npm run prod
 
 RUN echo -en "upload_max_filesize = 50M\n" \
          "post_max_size = 50M\n" \
@@ -19,7 +19,6 @@ RUN echo -en "upload_max_filesize = 50M\n" \
          > /usr/local/etc/php/conf.d/uploads.ini
 
 # laravel cache
-RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
 

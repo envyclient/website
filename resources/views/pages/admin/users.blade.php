@@ -20,9 +20,12 @@
             <div class="alert alert-secondary" style="font-size:25px;">
                 User Management
             </div>
+
+            @livewire('users-table'){{--
+            <hr>
             <users-table url="{{ route('api.admin.users') }}"
                          api-token="{{ $apiToken }}">
-            </users-table>
+            </users-table>--}}
         </div>
     </div>
 @endsection
