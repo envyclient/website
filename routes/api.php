@@ -34,14 +34,6 @@ Route::prefix('configs')->group(function () {
 });
 
 /**
- * Admin
- */
-Route::prefix('admin')->group(function () {
-    Route::get('users', [AdminController::class, 'users'])->name('api.admin.users');
-    Route::put('users/ban/{user}', [AdminController::class, 'ban'])->name('api.admin.users.ban');
-});
-
-/**
  * Charts
  */
 Route::prefix('charts')->group(function () {

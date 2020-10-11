@@ -26,6 +26,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
+    @livewireStyles
 
     <style type="text/css">
         #sidebar-wrapper {
@@ -195,6 +196,7 @@
         @yield('content')
     </div>
 </div>
+@livewireScripts
 @yield('js')
 </body>
 </html>
