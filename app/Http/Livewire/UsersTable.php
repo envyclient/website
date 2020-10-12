@@ -29,6 +29,16 @@ class UsersTable extends Component
         ]);
     }
 
+    public function resetUserHWID($id)
+    {
+        $user = user::findorfail($id);
+        $user->fill([
+            'hwid' => null
+        ])->save();
+
+        $this->resetPage();
+    }
+
     public function banUser($id)
     {
         $user = user::findorfail($id);
