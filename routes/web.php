@@ -8,8 +8,6 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VersionsController;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes(['verify' => true]);
-
 /**
  * Home
  */

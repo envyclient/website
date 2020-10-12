@@ -14,7 +14,7 @@ class CreateBillingAgreementsTable extends Migration
     public function up()
     {
         Schema::create('billing_agreements', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('plan_id');
             $table->string('billing_agreement_id')->unique();
