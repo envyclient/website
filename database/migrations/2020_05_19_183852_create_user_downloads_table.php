@@ -14,7 +14,7 @@ class CreateUserDownloadsTable extends Migration
     public function up()
     {
         Schema::create('user_downloads', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('version_id');
             $table->timestamps();

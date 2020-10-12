@@ -13,25 +13,25 @@
 
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input class="form-control" readonly name="name" type="text" value="{{ $user->name }}"
+                        <input class="form-control" disabled name="name" type="text" value="{{ $user->name }}"
                                id="name">
                     </div>
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>
-                        <input class="form-control" readonly name="email" type="text" value="{{ $user->email }}"
+                        <input class="form-control" disabled name="email" type="text" value="{{ $user->email }}"
                                id="email">
                     </div>
                     <div class="form-group">
-                        <label for="password_current" class="form-label">Current Password</label>
-                        <input class="form-control" required name="password_current" type="password"
-                               id="password_current">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input class="form-control" required name="current_password" type="password"
+                               id="current_password">
                     </div>
                     <div class="form-group">
-                        <label for="password" class="form-label">New password</label>
+                        <label for="password" class="form-label">New Password</label>
                         <input class="form-control" required name="password" type="password" id="password">
                     </div>
                     <div class="form-group">
-                        <label for="password_confirmation" class="form-label">New Password Confirm</label>
+                        <label for="password_confirmation" class="form-label">Confirm Password</label>
                         <input class="form-control" required name="password_confirmation" type="password"
                                id="password_confirmation">
                     </div>
@@ -39,11 +39,17 @@
                 </form>
             </div>
         </div>
-        <div class="card mt-3" style="width: 100%;">
-            <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal"
-                    data-target="#disableAccountModal">
-                Disable Account
-            </button>
+        <div class="mt-3">
+            @if($user->hasSubscription())
+                <button type="button" class="btn btn-outline-danger btn-lg btn-block" disabled>
+                    You cannot disable your account because you have an active subscription.
+                </button>
+            @else
+                <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal"
+                        data-target="#disableAccountModal">
+                    Disable Account
+                </button>
+            @endif
         </div>
     </div>
 
@@ -60,8 +66,7 @@
                     </button>
                 </div>
                 <div class="modal-body" style="color:red;">
-                    By disabling your account you will lose access to your account and if you have a subscription it
-                    will continue until the expire date.
+                    By disabling your account you will lose access to your account.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">

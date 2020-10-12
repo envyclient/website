@@ -14,7 +14,7 @@ class CreateVersionsTable extends Migration
     public function up()
     {
         Schema::create('versions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 30)->unique();
             $table->boolean('beta')->default(false);
             $table->string('file')->unique();
