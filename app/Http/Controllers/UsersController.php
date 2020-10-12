@@ -15,7 +15,7 @@ class UsersController extends Controller
     public function updatePassword(Request $request)
     {
         $request->validate([
-            'password_current' => 'required|min:8',
+            'current_password' => 'required',
             'password' => 'required|min:8|confirmed|different:password_current',
             'password_confirmation' => 'required_with:password|min:8'
         ]);

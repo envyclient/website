@@ -3,7 +3,7 @@
 @section('content')
     <div style="width:98%;margin:0 auto">
         <div class="alert alert-secondary" style="font-size:25px;">
-            <i class="fas fa-redo" style="padding-right:10px;"></i> Subscription
+            <i class="fab fa-cc-paypal" style="padding-right:10px;"></i> Subscription
         </div>
         <form method="POST" action="{{ route('paypal.process') }}" accept-charset="UTF-8">
             @csrf
@@ -54,38 +54,36 @@
             <br>
             @if($user->hasSubscription())
         </form> <!-- close form -->
-        <div class="card" style="width: 100%;">
-            @if($user->subscribedToFreePlan())
-                <h5 class="text-muted pt-2 pl-2">
-                    You can not cancel your subscription because you are subscribed to the free plan.
-                </h5>
-            @else
-                <form method="POST" action="{{ route('subscriptions.cancel') }}" accept-charset="UTF-8">
-                    @csrf
-                    <input class="btn btn-outline-danger btn-lg btn-block" type="submit"
-                           value="Cancel Subscription">
-                </form>
-            @endif
-        </div>
-        @elseif($user->hasBillingAgreement())
-        </form> <!-- close form -->
-        <div class="card" style="width: 100%;">
-            <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
-                Subscription in progress.
+        @if($user->subscribedToFreePlan())
+            <button type="button" class="btn btn-outline-danger btn-lg btn-block" disabled>
+                You can not cancel your subscription because you are subscribed to the free plan.
             </button>
-        </div>
         @else
-            <input class="btn btn-outline-success btn-lg btn-block" type="submit"
-                   value="Subscribe">
-            </form> <!-- close form -->
-            @if($user->access_free_plan)
-                <form method="POST" action="{{ route('subscriptions.free') }}" class="mt-2">
-                    @csrf
-                    <input class="btn btn-outline-secondary btn-lg btn-block" type="submit"
-                           value="Subscribe to free plan">
-                </form>
+            <form method="POST" action="{{ route('subscriptions.cancel') }}" accept-charset="UTF-8">
+                @csrf
+                <input class="btn btn-outline-danger btn-lg btn-block" type="submit"
+                       value="Cancel Subscription">
+            </form>
             @endif
-        @endif
+            @elseif($user->hasBillingAgreement())
+            </form> <!-- close form -->
+            <div class="card" style="width: 100%;">
+                <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
+                    Subscription in progress.
+                </button>
+            </div>
+            @else
+                <input class="btn btn-outline-success btn-lg btn-block" type="submit"
+                       value="Subscribe">
+                </form> <!-- close form -->
+                @if($user->access_free_plan)
+                    <form method="POST" action="{{ route('subscriptions.free') }}" class="mt-2">
+                        @csrf
+                        <input class="btn btn-outline-secondary btn-lg btn-block" type="submit"
+                               value="Subscribe to free plan">
+                    </form>
+                @endif
+            @endif
     </div>
 
     <!-- TODO: use js to set dynamic data -->

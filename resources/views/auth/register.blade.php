@@ -18,6 +18,9 @@
                                     <input id="name" type="text"
                                            class="form-control @error('name') is-invalid @enderror" name="name"
                                            value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <p class="mb-0 small text-muted">
+                                        This cannot be changed.
+                                    </p>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">

@@ -121,7 +121,7 @@
                 <a class="list-group-item list-group-item-custom {{ request()->routeIs('home') ? 'active': null }}"
                    href="{{ route('home') }}">
                     <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
-                    Profile
+                    Home
                 </a>
                 <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.security') ? 'active': null }}"
                    href="{{ route('pages.security') }}">
