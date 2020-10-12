@@ -14,7 +14,7 @@ class CreateGameSessionsTable extends Migration
     public function up()
     {
         Schema::create('game_sessions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedInteger('user_id');
             $table->json('data')->nullable();
             $table->timestamps();
