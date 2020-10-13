@@ -53,9 +53,8 @@
                     </div>
                 @endif
             </div>
-            <a class="btn btn-primary btn-lg btn-block mt-3" href="{{ route('versions.launcher') }}">
-                <i class="fas fa-download pr-1"></i> Download Launcher
-            </a>
+
+            @livewire('download-launcher')
         @endif
 
     </div>
