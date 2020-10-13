@@ -62,6 +62,5 @@ Route::prefix('user')->group(function () {
  * Versions
  */
 Route::prefix('versions')->group(function () {
-    Route::get('launcher', [VersionsController::class, 'downloadLauncher'])->name('versions.launcher');
     Route::post('/', [VersionsController::class, 'store'])->name('versions.store');
 });
