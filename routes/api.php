@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\ConfigsController;
+use App\Http\Controllers\API\DownloadAssets;
 use App\Http\Controllers\API\GameSessionsController;
 use App\Http\Controllers\API\VersionsController;
-use App\Http\Controllers\DownloadAssets;
 use Illuminate\Support\Facades\Route;
 
 /**

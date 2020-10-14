@@ -93,16 +93,17 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="{{ $plan->name }}-label">Features - {{ $plan->name }} Plan</h5>
+                        <h5 class="modal-title" id="{{ $plan->name }}-label">{{ $plan->name }} Plan</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>{{ $plan->name }}</p>
-                        <p>{{ $plan->config_limit }} Configs</p>
+                        <p>&#10003; {{ $plan->config_limit }} Configs</p>
                         @if($plan->beta_access)
-                            <p>Beta Access</p>
+                            <p>&#10003; Beta Access</p>
+                        @else
+                            <p>&#120; Beta Access</p>
                         @endif
                     </div>
                     <div class="modal-footer">

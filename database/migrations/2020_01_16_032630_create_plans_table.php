@@ -22,7 +22,6 @@ class CreatePlansTable extends Migration
             $table->string('paypal_id')->unique()->nullable();
             $table->unsignedTinyInteger('config_limit');
             $table->boolean('beta_access')->default(false);
-            $table->boolean('capes_access')->default(false);
         });
 
         DB::table('plans')->insert([
