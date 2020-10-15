@@ -14,6 +14,8 @@ class VersionsTable extends Component
 
     protected $paginationTheme = 'bootstrap';
 
+    protected $listeners = ['VERSION_UPLOADED' => '$refresh'];
+
     public function render()
     {
         return view('livewire.versions-table')->with([
@@ -28,7 +30,5 @@ class VersionsTable extends Component
         Storage::disk('minio')->delete(Version::FILES_DIRECTORY . '/' . $version->file);
         DB::table('user_downloads')->where('version_id', $version->id)->delete();
         $version->delete();
-
-        $this->resetPage();
     }
 }

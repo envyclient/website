@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\VersionsController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -56,11 +55,4 @@ Route::prefix('paypal')->group(function () {
 Route::prefix('user')->group(function () {
     Route::put('password', [UsersController::class, 'updatePassword'])->name('user.update-password');
     Route::delete('disable', [UsersController::class, 'disable'])->name('user.disable');
-});
-
-/**
- * Versions
- */
-Route::prefix('versions')->group(function () {
-    Route::post('/', [VersionsController::class, 'store'])->name('versions.store');
 });
