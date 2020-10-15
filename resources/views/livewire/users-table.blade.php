@@ -14,9 +14,9 @@
 
     <br>
 
-   {{-- @hello('LaraShout')--}}
+{{-- @hello('LaraShout')--}}
 
-    <!-- users table -->
+<!-- users table -->
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -44,7 +44,11 @@
                     <td>No Subscription</td>
                 @endif
                 <td>
-                    {{ $user->hwid !== null ? 'Set' : 'Not Set' }}
+                    @if($user->hwid === null)
+                        <span>&#10006;
+                    @else
+                                &#10004;
+                    @endif
                 </td>
                 <td>
                     @if($user->hwid !== null)
