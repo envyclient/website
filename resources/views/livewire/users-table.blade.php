@@ -45,9 +45,9 @@
                 @endif
                 <td>
                     @if($user->hwid === null)
-                        <span>&#10006;
+                        &#10006;
                     @else
-                                &#10004;
+                        &#10004;
                     @endif
                 </td>
                 <td>
