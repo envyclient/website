@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         App\Providers\MinIOStorageServiceProvider::class,
+        App\Providers\BladeServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
 
         /*
