@@ -24,9 +24,8 @@ class BladeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        Blade::directive('hello', function ($expression) {
-            return "<?php echo 'Hello ' . {$expression}; ?>";
+        Blade::if('admin', function () {
+            return auth()->check() && auth()->user()->admin;
         });
     }
 }
