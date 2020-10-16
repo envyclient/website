@@ -141,7 +141,7 @@
                     Subscription
                 </a>
             </div>
-            @if(auth()->user()->admin)
+            @admin
                 <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
                     <small class="text-muted">ADMINISTRATOR</small>
                 </h3>
@@ -160,7 +160,7 @@
                     <i class="fas fa-chart-area p-2" style="margin-right:10px;"></i>
                     Game Sessions
                 </a>
-            @endif
+            @endadmin
         </div>
     </div>
 

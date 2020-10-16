@@ -7,36 +7,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('user.update-password') }}" accept-charset="UTF-8">
-                    @csrf
-                    <input name="_method" type="hidden" value="PUT">
-
-                    <div class="form-group">
-                        <label for="name" class="form-label">Name</label>
-                        <input class="form-control" disabled name="name" type="text" value="{{ $user->name }}"
-                               id="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input class="form-control" disabled name="email" type="text" value="{{ $user->email }}"
-                               id="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="current_password" class="form-label">Current Password</label>
-                        <input class="form-control" required name="current_password" type="password"
-                               id="current_password">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="form-label">New Password</label>
-                        <input class="form-control" required name="password" type="password" id="password">
-                    </div>
-                    <div class="form-group">
-                        <label for="password_confirmation" class="form-label">Confirm Password</label>
-                        <input class="form-control" required name="password_confirmation" type="password"
-                               id="password_confirmation">
-                    </div>
-                    <input class="btn btn-success" type="submit" value="Change Password">
-                </form>
+                @livewire('change-password')
             </div>
         </div>
         <div class="mt-3">

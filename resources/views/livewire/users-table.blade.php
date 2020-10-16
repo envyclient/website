@@ -14,9 +14,7 @@
 
     <br>
 
-{{-- @hello('LaraShout')--}}
-
-<!-- users table -->
+    <!-- users table -->
     <table class="table table-striped table-hover">
         <thead>
         <tr>

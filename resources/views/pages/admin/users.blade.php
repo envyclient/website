@@ -21,11 +21,7 @@
                 User Management
             </div>
 
-            @livewire('users-table'){{--
-            <hr>
-            <users-table url="{{ route('api.admin.users') }}"
-                         api-token="{{ $apiToken }}">
-            </users-table>--}}
+            @livewire('users-table')
         </div>
     </div>
 @endsection
