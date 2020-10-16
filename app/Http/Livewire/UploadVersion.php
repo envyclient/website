@@ -18,7 +18,7 @@ class UploadVersion extends Component
     protected $rules = [
         'name' => 'required|string|max:30|unique:versions',
         'beta' => 'nullable',
-        'file' => 'required|file|max:50000'
+        'file' => 'required|file|max:40000'
     ];
 
     public function updated($propertyName)

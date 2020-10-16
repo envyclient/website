@@ -53,6 +53,5 @@ Route::prefix('paypal')->group(function () {
  * Users
  */
 Route::prefix('user')->group(function () {
-    Route::put('password', [UsersController::class, 'updatePassword'])->name('user.update-password');
     Route::delete('disable', [UsersController::class, 'disable'])->name('user.disable');
 });
