@@ -9,9 +9,12 @@
         </div>
 
         <div class="text-left">
-            <label class="form-label">Member Since</label>
-            <input class="form-control" placeholder="Date" readonly
-                   value="{{ $user->created_at->format('Y-m-d') }}">
+            <label class="form-label" for="member-since">Member Since</label>
+            <input id="member-since"
+                   class="form-control"
+                   placeholder="Date"
+                   value="{{ $user->created_at->format('Y-m-d') }}"
+                   readonly>
         </div>
 
         <br>

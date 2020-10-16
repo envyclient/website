@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="google" content="nositelinkssearchbox"/>
+    <meta name="google" content="notranslate"/>
+    <meta name="google" content="nopagereadaloud"/>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -111,12 +114,13 @@
             <a class="navbar-brand text-white">
                 <div class="container text-center">
                     <img src="{{ asset('/assets/logo_512x512.png') }}"
-                         style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;">
+                         style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;"
+                         alt="envyclient logo">
                 </div>
             </a>
             <div class="list-group list-group-flush">
-                <h3 class="m-3 font-weight-bold" style="font-size:18px;">
-                    <small class="text-muted">SETTINGS</small>
+                <h3 class="m-3 text-white" style="font-size:16px;">
+                    SETTINGS
                 </h3>
                 <a class="list-group-item list-group-item-custom {{ request()->routeIs('home') ? 'active': null }}"
                    href="{{ route('home') }}">
@@ -132,8 +136,8 @@
                     <i class="fas fa-comments p-2" style="margin-right:10px;"></i>
                     Forums
                 </a>
-                <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
-                    <small class="text-muted">BILLING</small>
+                <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
+                    BILLING
                 </h3>
                 <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.subscriptions') ? 'active': null }}"
                    href="{{ route('pages.subscriptions') }}">
@@ -142,24 +146,24 @@
                 </a>
             </div>
             @admin
-                <h3 class="m-3 font-weight-bold" style="font-size:18px;padding-top:30px;">
-                    <small class="text-muted">ADMINISTRATOR</small>
-                </h3>
-                <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.users') ? 'active': null }}"
-                   href="{{ route('admin.users') }}">
-                    <i class="fas fa-users p-2" style="margin-right:10px;"></i>
-                    Users
-                </a>
-                <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.versions') ? 'active': null }}"
-                   href="{{ route('admin.versions') }}">
-                    <i class="fas fa-download p-2" style="margin-right:10px;"></i>
-                    Versions
-                </a>
-                <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.sessions') ? 'active': null }}"
-                   href="{{ route('admin.sessions') }}">
-                    <i class="fas fa-chart-area p-2" style="margin-right:10px;"></i>
-                    Game Sessions
-                </a>
+            <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
+                ADMINISTRATOR
+            </h3>
+            <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.users') ? 'active': null }}"
+               href="{{ route('admin.users') }}">
+                <i class="fas fa-users p-2" style="margin-right:10px;"></i>
+                Users
+            </a>
+            <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.versions') ? 'active': null }}"
+               href="{{ route('admin.versions') }}">
+                <i class="fas fa-download p-2" style="margin-right:10px;"></i>
+                Versions
+            </a>
+            <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.sessions') ? 'active': null }}"
+               href="{{ route('admin.sessions') }}">
+                <i class="fas fa-chart-area p-2" style="margin-right:10px;"></i>
+                Game Sessions
+            </a>
             @endadmin
         </div>
     </div>
