@@ -80,14 +80,14 @@ class HandlePayPalWebhook extends Controller
                 {
                     // get billing agreement
                     $billingAgreement = BillingAgreement::where('billing_agreement_id', $data->resource->id)->firstOrFail();
-                    $user = $billingAgreement->user;
 
                     // cancel billing agreement by updating the state
-                    $billingAgreement->state = $data->resource->state;
-                    $billingAgreement->save();
+                    $billingAgreement->fill([
+                        'state' => 'Cancelled'
+                    ])->save();
 
                     // email user about subscription cancellation
-                    $user->notify(new SubscriptionCancelled());
+                    $billingAgreement->user->notify(new SubscriptionCancelled());
 
                     break;
                 }
