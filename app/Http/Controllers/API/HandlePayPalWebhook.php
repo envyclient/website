@@ -6,6 +6,7 @@ use App\BillingAgreement;
 use App\Http\Controllers\Controller;
 use App\Notifications\NewSubscription;
 use App\Notifications\SubscriptionCancelled;
+use App\Notifications\SubscriptionUpdated;
 use App\Subscription;
 use Carbon\Carbon;
 use Exception;
@@ -87,7 +88,10 @@ class HandlePayPalWebhook extends Controller
                     ])->save();
 
                     // email user about subscription cancellation
-                    $billingAgreement->user->notify(new SubscriptionCancelled());
+                    $billingAgreement->user->notify(new SubscriptionUpdated(
+                        'Subscription Cancelled',
+                        'Your subscription has been cancelled and you will not be charged at the next billing cycle.'
+                    ));
 
                     break;
                 }

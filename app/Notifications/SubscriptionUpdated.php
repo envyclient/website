@@ -8,12 +8,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SubscriptionCancelled extends Notification implements ShouldQueue
+class SubscriptionUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct()
+    private $subject, $message;
+
+    public function __construct(string $subject, string $message)
     {
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**
@@ -36,10 +40,10 @@ class SubscriptionCancelled extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Subscription Cancelled')
+            ->subject($this->subject)
             ->from('noreply@envyclient.com')
             ->greeting("Hello $notifiable->name")
-            ->line('Your subscription has been cancelled and you will not be charged at the next billing cycle.')
+            ->line($this->message)
             ->action('Manage Subscription', url(RouteServiceProvider::SUBSCRIPTIONS));
     }
 

@@ -48,8 +48,8 @@ class Generic extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->subject)
             ->from('noreply@envyclient.com')
+            ->subject($this->subject)
             ->greeting('Hello ' . $this->user->name)
             ->line($this->message)
             ->action('Visit Website', url('/'));
