@@ -15,6 +15,8 @@ use PayPal\Api\AgreementStateDescriptor;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 
+use Illuminate\Support\Facades\Log;
+
 class HandlePayPalWebhook extends Controller
 {
     private $paypal;
@@ -45,6 +47,8 @@ class HandlePayPalWebhook extends Controller
             ], 400);
         }
 
+        Log::info($request->getContent());
+
         switch ($data->event_type) {
             case 'PAYMENT.SALE.COMPLETED': // received payment so we extend or create subscription
             {
@@ -69,6 +73,7 @@ class HandlePayPalWebhook extends Controller
                     $subscription->end_date = Carbon::now()->addDays(30);
                     $subscription->save();
 
+                    // email user about new subscription
                     $user->notify(new NewSubscription($user));
                 }
 
