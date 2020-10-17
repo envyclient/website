@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class UsersController extends Controller
 {
     public function __construct()
@@ -9,9 +11,9 @@ class UsersController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-    public function disable()
+    public function disable(Request $request)
     {
-        $user = auth()->user();
+        $user =  $request->user();
 
         if ($user->hasSubscription()) {
             return back()->with('error', 'You must wait until your subscription has ended before disabling your account.');

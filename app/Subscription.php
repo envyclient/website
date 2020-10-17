@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int user_id
  * @property int|null plan_id
  * @property int|null billing_agreement_id
- * @property bool renew
  * @property Carbon|null end_date
  */
 class Subscription extends Model
@@ -17,11 +16,9 @@ class Subscription extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'user_id', 
-        'plan_id', 
-        'billing_agreement_id', 
-        'end_date',
-        'renew',
+        'user_id',
+        'plan_id',
+        'billing_agreement_id',
         'end_date',
     ];
 

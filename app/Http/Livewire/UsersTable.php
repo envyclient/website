@@ -17,7 +17,7 @@ class UsersTable extends Component
 
     public function render()
     {
-        $user = user::with(['subscription'])
+        $user = User::with(['subscription'])
             ->name($this->name);
 
         if ($this->type === 'banned') {
@@ -31,7 +31,7 @@ class UsersTable extends Component
 
     public function resetUserHWID($id)
     {
-        $user = user::findorfail($id);
+        $user = User::findOrFail($id);
         $user->fill([
             'hwid' => null
         ])->save();
@@ -41,20 +41,9 @@ class UsersTable extends Component
 
     public function banUser($id)
     {
-        $user = user::findorfail($id);
-        if ($user->hassubscription()) {
-            $user->subscription->fill([
-                'renew' => false
-            ])->save();
-        }
-
-        $banned = true;
-        if ($user->banned) {
-            $banned = false;
-        }
-
+        $user = User::findOrFail($id);
         $user->fill([
-            'banned' => $banned
+            'banned' => !$user->banned
         ])->save();
 
         $this->resetPage();
