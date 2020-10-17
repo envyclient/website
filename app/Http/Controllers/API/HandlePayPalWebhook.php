@@ -4,8 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\BillingAgreement;
 use App\Http\Controllers\Controller;
-use App\Notifications\NewSubscription;
-use App\Notifications\SubscriptionCancelled;
+use App\Notifications\SubscriptionCreated;
 use App\Notifications\SubscriptionUpdated;
 use App\Subscription;
 use Carbon\Carbon;
@@ -72,7 +71,7 @@ class HandlePayPalWebhook extends Controller
                         ]);
 
                         // email user about new subscription
-                        $user->notify(new NewSubscription());
+                        $user->notify(new SubscriptionCreated());
                     }
 
                     break;
