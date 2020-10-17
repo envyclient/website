@@ -2,31 +2,27 @@
 
 namespace App\Notifications;
 
-use App\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewSubscription extends Notification
+class SubscriptionUpdated extends Notification
 {
     use Queueable;
 
-    private $user;
+    private $subject, $message;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @param User $user the user
-     */
-    public function __construct(User $user)
+    public function __construct(string $subject, string $message)
     {
-        $this->user = $user;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -37,20 +33,23 @@ class NewSubscription extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return MailMessage
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New Subscription')
-            ->markdown('emails.subscription', ['user' => $this->user]);
+            ->subject($this->subject)
+            ->from('noreply@envyclient.com')
+            ->greeting("Hello $notifiable->name")
+            ->line($this->message)
+            ->action('Manage Subscription', url(RouteServiceProvider::SUBSCRIPTIONS));
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)

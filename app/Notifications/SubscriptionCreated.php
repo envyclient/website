@@ -2,30 +2,16 @@
 
 namespace App\Notifications;
 
-use App\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Generic extends Notification implements ShouldQueue
+class SubscriptionCreated extends Notification
 {
     use Queueable;
 
-    private $user, $message, $subject;
-
-    /**
-     * Create a new notification instance.
-     *
-     * @param User $user
-     * @param string $message
-     * @param string $subject
-     */
-    public function __construct(User $user, string $message, string $subject)
+    public function __construct()
     {
-        $this->user = $user;
-        $this->message = $message;
-        $this->subject = $subject;
     }
 
     /**
@@ -48,11 +34,8 @@ class Generic extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->subject)
-            ->from('noreply@envyclient.com')
-            ->greeting('Hello ' . $this->user->name)
-            ->line($this->message)
-            ->action('Visit Website', url('/'));
+            ->subject('New Subscription')
+            ->markdown('emails.subscription', ['user' => $notifiable]);
     }
 
     /**

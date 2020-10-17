@@ -6,14 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property string billing_agreement_id
  * @property int user_id
  * @property int plan_id
+ * @property string billing_agreement_id
  * @property string state
  */
 class BillingAgreement extends Model
 {
     use SoftDeletes;
+
+    protected $fillable = [
+        'user_id',
+        'plan_id',
+        'billing_agreement_id',
+        'state',
+    ];
 
     public function user()
     {
