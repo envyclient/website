@@ -104,7 +104,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->admin || ($this->hasSubscription() && $this->subscription->plan->beta_access);
     }
 
-    public function image(): string
+    public function getGravatarUrlAttribute(): string
     {
         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }

@@ -1,5 +1,5 @@
 @component('mail::message')
-# New Subscription
+# Hello {{ $user->name }}
 
 Thank you for subscribing to the {{ $user->subscription->plan->name }} plan!
 
@@ -13,6 +13,6 @@ Thank you for subscribing to the {{ $user->subscription->plan->name }} plan!
 Manage Subscription
 @endcomponent
 
-Thanks,<br>
+Regards,<br>
 {{ config('app.name') }}
 @endcomponent
