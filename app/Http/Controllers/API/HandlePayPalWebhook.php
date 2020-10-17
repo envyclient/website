@@ -56,22 +56,19 @@ class HandlePayPalWebhook extends Controller
                     $billingAgreement = BillingAgreement::where('billing_agreement_id', $data->resource->billing_agreement_id)->firstOrFail();
                     $user = $billingAgreement->user;
 
-                    // TODO: handle plan switching
-
                     if ($user->hasSubscription()) {
-                        // extended the subscription
-                        $user->subscription->end_date = $user->subscription->end_date->addDays(30);
-                        $user->subscription->save();
+                        $user->subscription->fill([
+                            'end_date' => $user->subscription->end_date->addDays(30)
+                        ])->save();
 
                         // TODO: notify user about renewal
                     } else {
-                        // creating a new subscription for the user
-                        $subscription = new Subscription();
-                        $subscription->user_id = $user->id;
-                        $subscription->plan_id = $billingAgreement->plan_id;
-                        $subscription->billing_agreement_id = $billingAgreement->id;
-                        $subscription->end_date = Carbon::now()->addDays(30);
-                        $subscription->save();
+                        Subscription::create([
+                            'user_id' => $user->id,
+                            'plan_id' => $billingAgreement->plan_id,
+                            'billing_agreement_id' => $billingAgreement->id,
+                            'end_date' => Carbon::now()->addDays(30),
+                        ]);
 
                         // email user about new subscription
                         $user->notify(new NewSubscription());
