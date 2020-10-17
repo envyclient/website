@@ -169,12 +169,12 @@ class PayPalController extends Controller
         $billingAgreement->state = $agreement->getState();
         $billingAgreement->save();
 
-        return redirect(RouteServiceProvider::HOME)->with('success', 'Subscription successful.');
+        return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('success', 'Subscription successful.');
     }
 
     public function cancel()
     {
-        return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription cancelled.');
+        return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('error', 'Subscription cancelled.');
     }
 
 }

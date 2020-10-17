@@ -66,7 +66,7 @@ class SubscriptionsController extends Controller
             $agreement = Agreement::get($user->billingAgreement->billing_agreement_id, $this->paypal);
             $agreement->cancel($agreementStateDescriptor, $this->paypal);
         } catch (Exception $e) {
-            return back()->with('error', 'An error occurred while cancelling your subscription. This is most likely due to your subscript in que for cancellation.');
+            return back()->with('error', 'An error occurred while cancelling your subscription. This is most likely due to your subscription already in queue for cancellation.');
         }
 
         return back()->with('success', 'Your subscription has been queued to cancel and will not renew at the end of billing period.');
