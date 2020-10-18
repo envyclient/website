@@ -24,14 +24,19 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('terms');
+        $this->middleware(['auth', 'verified'])->except('index', 'terms');
         $this->middleware('admin')->only('users', 'versions', 'sessions');
     }
 
-    public function index(Request $request)
+    public function index()
+    {
+        return view('pages.index');
+    }
+
+    public function home(Request $request)
     {
         $user = $request->user();
-        return view('pages.index')->with([
+        return view('pages.dashboard')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
         ]);

@@ -14,7 +14,8 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- fav icon -->
-    <link rel="shortcut icon" href="{{ asset('/assets/logo_512x512.png') }}"/>
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -113,7 +114,7 @@
         <div class="list-group">
             <a class="navbar-brand text-white">
                 <div class="container text-center">
-                    <img src="{{ asset('/assets/logo_512x512.png') }}"
+                    <img src="{{ asset('logo.svg') }}"
                          style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;"
                          alt="envyclient logo">
                 </div>
