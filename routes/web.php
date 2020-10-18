@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
  * Home
  */
 Route::group([], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::get('home', [HomeController::class, 'home'])->name('home');
     Route::get('security', [HomeController::class, 'security'])->name('pages.security');
     Route::get('subscriptions', [HomeController::class, 'subscriptions'])->name('pages.subscriptions');
     Route::get('terms', [HomeController::class, 'terms'])->name('pages.terms');

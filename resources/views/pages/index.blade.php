@@ -1,64 +1,160 @@
-@extends('layouts.dash')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-@section('content')
-    <div style="width:98%;margin:0 auto">
+    <title>Envy Client</title>
 
-        <!--- Profile Section --->
-        <div class="alert alert-secondary" style="font-size:25px;">
-            <i class="fas fa-user" style="padding-right:10px;"></i> Profile
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+
+    <meta content="Envy Client" property="og:title">
+    <meta content="Official website of the Envy Client" property="og:description">
+    <meta content="{{ asset('logo.svg') }}" property="og:image">
+    <meta content="128" property="og:image:width">
+    <meta content="128" property="og:image:height">
+
+    <link rel="stylesheet" href="{{ asset('css/bundle.css') }}">
+</head>
+
+<body>
+    <div class="nav">
+        <a href="#" class="logo">
+            <img src="{{ asset('logo.svg') }}" alt="logo">
+        </a>
+        <div class="menu">
+            <a href="#features">Features</a>
+            <a href="#media">Media</a>
+            <a href="#pricing">Pricing</a>
+            @guest
+                <a href="{{ route('login') }}">Login</a>
+            @else
+                <a href="{{ route('home') }}">Home</a>
+            @endguest
         </div>
-
-        <div class="text-left">
-            <label class="form-label" for="member-since">Member Since</label>
-            <input id="member-since"
-                   class="form-control"
-                   placeholder="Date"
-                   value="{{ $user->created_at->format('Y-m-d') }}"
-                   readonly>
-        </div>
-
-        <br>
-
-        @if($user->hasSubscription())
-            <div class="alert alert-secondary" style="font-size:25px;">
-                <i class="fas fa-file" style="padding-right:10px;"></i> Configs
-                <span class="badge badge-secondary">
-                        {{ $configs->count() }}/{{ $user->getConfigLimit() }}
-                    </span>
-            </div>
-            <div class="text-left">
-                @if(count($configs) > 0)
-                    <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 400px;">
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">name</th>
-                                <th scope="col">public</th>
-                                <th scope="col">favorites</th>
-                                <th scope="col">created</th>
-                                <th scope="col">last updated</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($configs as $config)
-                                <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
-                                    <td>{{ $config->name }}</td>
-                                    <td>{{ $config->public ? 'true' : 'false' }}</td>
-                                    <td>{{ $config->favorites_count }}</td>
-                                    <td>{{ $config->created_at->diffForHumans() }}</td>
-                                    <td>{{ $config->updated_at->diffForHumans() }}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endif
-            </div>
-
-            @livewire('download-launcher')
-        @endif
-
     </div>
-@endsection
+
+    <div class="landing">
+        <div class="content">
+            <div class="landing-container">
+                <h1><span>Envy</span> Client</h1>
+                <p>Envy is a premium Minecraft Hacked Client with the best features in the market.</p>
+                <div class="btns">
+                    @guest
+                        <a href="{{ route('login') }}" class="btn">Login</a>
+                    @else
+                        <a href="{{ route('home') }}" class="btn">Home</a>
+                    @endguest
+                    <a href="#features" class="btn">Read more</a>
+                </div>
+            </div>
+            <div class="landing-container">
+                <img src="{{ asset('logo.svg') }}" alt="logo">
+            </div>
+        </div>
+    </div>
+
+    <div id="features" class="features">
+        <h1>
+            Features
+            <span class="separator"></span>
+        </h1>
+        <div class="feature">
+            <div class="feature-image">
+                <img src="{{ asset('assets/features/feature1.png') }}" alt="feature-image">
+            </div>
+            <div class="feature-content">
+                <h1>Powerful</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quisquam culpa aliquam in eos quibusdam cumque, libero quos placeat debitis ullam cum ipsum, nemo praesentium impedit ad molestias! Quos, nostrum. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates odio sit vel ratione, iure laudantium obcaecati! Corporis, ducimus architecto. Exercitationem ab inventore vitae officiis ducimus non nisi aliquid ea iure?</p>
+            </div>
+        </div>
+        <div class="feature right">
+            <div class="feature-content">
+                <h1>Beautiful</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quisquam culpa aliquam in eos quibusdam cumque, libero quos placeat debitis ullam cum ipsum, nemo praesentium impedit ad molestias! Quos, nostrum. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates odio sit vel ratione, iure laudantium obcaecati! Corporis, ducimus architecto. Exercitationem ab inventore vitae officiis ducimus non nisi aliquid ea iure?</p>
+            </div>
+            <div class="feature-image">
+                <img src="{{ asset('assets/features/feature2.png') }}" alt="feature-image">
+            </div>
+        </div>
+    </div>
+
+    <div class="media" id="media">
+        <div class="media-content">
+            <h1>
+                Media
+                <span class="separator"></span>
+            </h1>
+            <div class="videos">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/4PQTDTmbUaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/4PQTDTmbUaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pricing" id="pricing">
+        <h1>
+            Pricing
+            <span class="separator"></span>
+        </h1>
+        <div class="price-tables">
+            <div class="price">
+                <h1>Standard</h1>
+                <ul>
+                    <li>monthly updates</li>
+                    <li>killer features</li>
+                    <li>lorem ipsum</li>
+                    <li>dolor sit</li>
+                </ul>
+                <h2 class="subscription-price">$7.00<span>/month</span></h2>
+            </div>
+            <div class="price">
+                <h1>Premium</h1>
+                <ul>
+                    <li>monthly updates</li>
+                    <li>killer features</li>
+                    <li>lorem ipsum</li>
+                    <li>dolor sit</li>
+                </ul>
+                <h2 class="subscription-price">$10.00<span>/month</span></h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h1>
+            <span>Envy</span> Client
+            <span class="separator"></span>
+        </h1>
+        <div class="footer-content">
+            <div class="content">
+                <a href="#" class="menu-link">Home</a><br>
+                <a href="#features" class="menu-link">Features</a><br>
+                <a href="#media" class="menu-link">Media</a><br>
+                <a href="#pricing" class="menu-link">Pricing</a><br>
+                <a href="/login" class="menu-link">Sign In</a>
+            </div>
+            <p class="content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi debitis necessitatibus quaerat minima ab aliquid quibusdam molestias natus facilis. Quisquam tempora repellendus totam ducimus rem nulla placeat enim culpa numquam.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        "use strict";
+        ! function() {
+            const e = document.querySelector(".nav");
+            document.querySelector(".landing .content").style.top = `calc(30% + ${e.clientHeight}px)`
+        }(), window.addEventListener("scroll", (() => {
+            var e, l;
+            window.scrollY > 30 ? null === (e = document.querySelector(".nav")) || void 0 === e || e.classList.add("scrolled") : null === (l = document.querySelector(".nav")) || void 0 === l || l.classList.remove("scrolled")
+        }));
+    </script>
+</body>
+
+</html>

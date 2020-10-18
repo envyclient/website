@@ -10,7 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- fav icon -->
-    <link rel="shortcut icon" href="{{ asset('/assets/logo_512x512.png') }}"/>
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -41,7 +42,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                {{ config('app.name') }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
