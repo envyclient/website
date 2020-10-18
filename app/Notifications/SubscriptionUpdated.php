@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SubscriptionUpdated extends Notification
+class SubscriptionUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -41,7 +42,7 @@ class SubscriptionUpdated extends Notification
         return (new MailMessage)
             ->subject($this->subject)
             ->from('noreply@envyclient.com')
-            ->greeting("Hello $notifiable->name")
+            ->greeting("Hello $notifiable->name,")
             ->line($this->message)
             ->action('Manage Subscription', url(RouteServiceProvider::SUBSCRIPTIONS));
     }
