@@ -137,7 +137,7 @@
                 <a href="#features" class="menu-link">Features</a><br>
                 <a href="#media" class="menu-link">Media</a><br>
                 <a href="#pricing" class="menu-link">Pricing</a><br>
-                <a href="/login" class="menu-link">Sign In</a>
+                <a href="{{ route('pages.terms') }}" class="menu-link">Terms</a>
             </div>
             <p class="content">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi debitis necessitatibus quaerat minima ab aliquid quibusdam molestias natus facilis. Quisquam tempora repellendus totam ducimus rem nulla placeat enim culpa numquam.
@@ -145,16 +145,7 @@
         </div>
     </div>
 
-    <script>
-        "use strict";
-        ! function() {
-            const e = document.querySelector(".nav");
-            document.querySelector(".landing .content").style.top = `calc(30% + ${e.clientHeight}px)`
-        }(), window.addEventListener("scroll", (() => {
-            var e, l;
-            window.scrollY > 30 ? null === (e = document.querySelector(".nav")) || void 0 === e || e.classList.add("scrolled") : null === (l = document.querySelector(".nav")) || void 0 === l || l.classList.remove("scrolled")
-        }));
-    </script>
+    <script src="{{ asset('js/bundle.js') }}"></script>
 </body>
 
 </html>
