@@ -54,36 +54,30 @@
             <br>
             @if($user->hasSubscription())
         </form> <!-- close form -->
-        @if($user->subscribedToFreePlan())
-            <button type="button" class="btn btn-outline-danger btn-lg btn-block" disabled>
-                You can not cancel your subscription because you are subscribed to the free plan.
+        <form method="POST" action="{{ route('subscriptions.cancel') }}" accept-charset="UTF-8">
+            @csrf
+            <input class="btn btn-outline-danger btn-lg btn-block" type="submit"
+                   value="Cancel Subscription">
+        </form>
+        @elseif($user->hasBillingAgreement())
+        </form> <!-- close form -->
+        <div class="card" style="width: 100%;">
+            <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
+                Subscription in progress.
             </button>
+        </div>
         @else
-            <form method="POST" action="{{ route('subscriptions.cancel') }}" accept-charset="UTF-8">
-                @csrf
-                <input class="btn btn-outline-danger btn-lg btn-block" type="submit"
-                       value="Cancel Subscription">
-            </form>
-            @endif
-            @elseif($user->hasBillingAgreement())
+            <input class="btn btn-outline-success btn-lg btn-block" type="submit"
+                   value="Subscribe">
             </form> <!-- close form -->
-            <div class="card" style="width: 100%;">
-                <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
-                    Subscription in progress.
-                </button>
-            </div>
-            @else
-                <input class="btn btn-outline-success btn-lg btn-block" type="submit"
-                       value="Subscribe">
-                </form> <!-- close form -->
-                @if($user->access_free_plan)
-                    <form method="POST" action="{{ route('subscriptions.free') }}" class="mt-2">
-                        @csrf
-                        <input class="btn btn-outline-secondary btn-lg btn-block" type="submit"
-                               value="Subscribe to free plan">
-                    </form>
-                @endif
+            @if($user->access_free_plan)
+                <form method="POST" action="{{ route('subscriptions.free') }}" class="mt-2">
+                    @csrf
+                    <input class="btn btn-outline-secondary btn-lg btn-block" type="submit"
+                           value="Subscribe to free plan">
+                </form>
             @endif
+        @endif
     </div>
 
     <!-- TODO: use js to set dynamic data -->

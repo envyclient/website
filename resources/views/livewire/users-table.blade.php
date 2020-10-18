@@ -23,6 +23,7 @@
             <th>email</th>
             <th>subscription</th>
             <th>hwid</th>
+            <th>banned</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -46,6 +47,13 @@
                         &#10006;
                     @else
                         &#10004;
+                    @endif
+                </td>
+                <td>
+                    @if($user->banned)
+                        &#10004;
+                    @else
+                        &#10006;
                     @endif
                 </td>
                 <td>

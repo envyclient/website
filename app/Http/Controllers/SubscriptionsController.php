@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\SubscriptionUpdated;
 use App\Subscription;
 use Carbon\Carbon;
 use Exception;
@@ -38,11 +39,16 @@ class SubscriptionsController extends Controller
             return back()->with('error', 'You already have a subscription.');
         }
 
-        $subscription = new Subscription();
-        $subscription->user_id = $user->id;
-        $subscription->plan_id = 1;
-        $subscription->end_date = Carbon::now()->addDecade();
-        $subscription->save();
+        Subscription::create([
+            'user_id' => $user->id,
+            'plan_id' => 1,
+            'end_date' => Carbon::now()->addDecade(),
+        ]);
+
+        $user->notify(new SubscriptionUpdated(
+            'New Subscription',
+            'Thank you for subscribing to the free plan.'
+        ));
 
         return back()->with('success', 'Subscribed to the free plan.');
     }
@@ -52,6 +58,17 @@ class SubscriptionsController extends Controller
         $user = $request->user();
         if (!$user->hasSubscription()) {
             return back()->with('error', 'You must subscribe to a plan first.');
+        }
+
+        if ($user->subscribedToFreePlan()) {
+            Subscription::where('user_id', $user->id)->delete();
+
+            $user->notify(new SubscriptionUpdated(
+                'Subscription Cancelled',
+                'You have cancelled your free subscription. Please renew it if you wish to continue using the client.'
+            ));
+
+            return back()->with('success', 'You have cancelled your free subscription.');
         }
 
         if ($user->billingAgreement->state !== 'Active') {

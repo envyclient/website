@@ -1,5 +1,5 @@
 @component('mail::message')
-# Hello {{ $user->name }}
+# Hello {{ $user->name }},
 
 Thank you for subscribing to the {{ $user->subscription->plan->name }} plan!
 
