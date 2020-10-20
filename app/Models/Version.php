@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,6 @@ class Version extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'user_downloads', 'version_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'user_downloads', 'version_id', 'user_id');
     }
 }

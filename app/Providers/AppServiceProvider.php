@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Observers\UserObserver;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;

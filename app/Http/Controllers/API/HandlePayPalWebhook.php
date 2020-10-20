@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\BillingAgreement;
+use App\Models\BillingAgreement;
 use App\Http\Controllers\Controller;
 use App\Notifications\SubscriptionCreated;
 use App\Notifications\SubscriptionUpdated;
-use App\Subscription;
+use App\Models\Subscription;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;

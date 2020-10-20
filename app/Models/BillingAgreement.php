@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,16 +24,16 @@ class BillingAgreement extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function plan()
     {
-        return $this->belongsTo('App\Plan');
+        return $this->belongsTo('App\Models\Plan');
     }
 
     public function subscription()
     {
-        return $this->hasOne('App\Subscription', 'billing_agreement_id');
+        return $this->hasOne('App\Models\Subscription', 'billing_agreement_id');
     }
 }

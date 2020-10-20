@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -29,16 +29,16 @@ class Subscription extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function plan()
     {
-        return $this->belongsTo('App\Plan');
+        return $this->belongsTo('App\Models\Plan');
     }
 
     public function billingAgreement()
     {
-        return $this->belongsTo('App\BillingAgreement', 'id', 'billing_agreement_id');
+        return $this->belongsTo('App\Models\BillingAgreement', 'id', 'billing_agreement_id');
     }
 }

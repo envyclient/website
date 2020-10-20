@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,6 +18,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property bool banned
  * @property bool disabled
  * @property bool access_free_plan
+ * @property string gravatar_url
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -56,27 +57,27 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function configs()
     {
-        return $this->hasMany('App\Config');
+        return $this->hasMany('App\Models\Config');
     }
 
     public function subscription()
     {
-        return $this->hasOne('App\Subscription');
+        return $this->hasOne('App\Models\Subscription');
     }
 
     public function billingAgreement()
     {
-        return $this->hasOne('App\BillingAgreement');
+        return $this->hasOne('App\Models\BillingAgreement');
     }
 
     public function downloads()
     {
-        return $this->belongsToMany('App\Version', 'user_downloads', 'user_id', 'version_id');
+        return $this->belongsToMany('App\Models\Version', 'user_downloads', 'user_id', 'version_id');
     }
 
     public function gameSessions()
     {
-        return $this->hasMany('App\GameSession');
+        return $this->hasMany('App\Models\GameSession');
     }
 
     public function hasSubscription(): bool
