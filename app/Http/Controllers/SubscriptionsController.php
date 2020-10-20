@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\SubscriptionUpdated;
-use App\Subscription;
+use App\Models\Subscription;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -45,10 +45,10 @@ class SubscriptionsController extends Controller
             'end_date' => Carbon::now()->addDecade(),
         ]);
 
-        $user->notify(new SubscriptionUpdated(
+        /*$user->notify(new SubscriptionUpdated(
             'New Subscription',
             'Thank you for subscribing to the free plan.'
-        ));
+        ));*/
 
         return back()->with('success', 'Subscribed to the free plan.');
     }
@@ -63,10 +63,10 @@ class SubscriptionsController extends Controller
         if ($user->subscribedToFreePlan()) {
             Subscription::where('user_id', $user->id)->delete();
 
-            $user->notify(new SubscriptionUpdated(
+            /*$user->notify(new SubscriptionUpdated(
                 'Subscription Cancelled',
                 'You have cancelled your free subscription. Please renew it if you wish to continue using the client.'
-            ));
+            ));*/
 
             return back()->with('success', 'You have cancelled your free subscription.');
         }

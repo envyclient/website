@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\GameSession;
+use App\Models\GameSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

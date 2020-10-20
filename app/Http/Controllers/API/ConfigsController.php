@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Config;
+use App\Models\Config;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Config as ConfigResource;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

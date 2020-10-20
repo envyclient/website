@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Charts\GameSessionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
-use App\GameSession;
-use App\Plan;
+use App\Models\GameSession;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

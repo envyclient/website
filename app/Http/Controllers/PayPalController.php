@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\BillingAgreement;
+use App\Models\BillingAgreement;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Exception;
@@ -110,7 +110,9 @@ class PayPalController extends Controller
 
         // Set plan id
         $plan = new Plan();
-        $plan->setId(\App\Plan::find($request->id)->paypal_id);
+        $plan->setId(
+            \App\Models\Plan::find($request->id)->paypal_id
+        );
         $agreement->setPlan($plan);
 
         // Add payer type
