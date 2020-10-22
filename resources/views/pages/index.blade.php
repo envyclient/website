@@ -157,8 +157,8 @@
     </div>
 </div>
 
-<script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="{{ asset('js/bundle.js') }}" defer></script>
+<script type="text/javascript" defer>
     window.onload = function init() {
         const vidDefer = document.getElementsByTagName('iframe');
         for (let i = 0; i < vidDefer.length; i++) {
