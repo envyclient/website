@@ -160,11 +160,9 @@
 <script type="text/javascript" src="{{ asset('js/bundle.js') }}" defer></script>
 <script type="text/javascript" defer>
     window.onload = function init() {
-        const vidDefer = document.getElementsByTagName('iframe');
-        for (let i = 0; i < vidDefer.length; i++) {
-            if (vidDefer[i].getAttribute('data-src')) {
-                vidDefer[i].setAttribute('src', vidDefer[i].getAttribute('data-src'));
-            }
+        const videos = document.getElementsByTagName('iframe');
+        for (let i = 0; i < videos.length; i++) {
+            videos[i].setAttribute('src', videos[i].getAttribute('data-src'));
         }
     };
 </script>

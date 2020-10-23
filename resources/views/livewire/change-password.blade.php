@@ -32,7 +32,7 @@
             <input class="form-control @error('current_password') is-invalid @enderror"
                    type="password"
                    id="current-password"
-                   wire:model="current_password"
+                   wire:model.defer="current_password"
                    required>
 
             @error('current_password')
@@ -47,7 +47,7 @@
             <input class="form-control @error('password') is-invalid @enderror"
                    type="password"
                    id="password"
-                   wire:model="password"
+                   wire:model.defer="password"
                    required>
 
             @error('password')
@@ -62,7 +62,7 @@
             <input class="form-control @error('password_confirmation') is-invalid @enderror"
                    type="password"
                    id="password-confirmation"
-                   wire:model="password_confirmation"
+                   wire:model.defer="password_confirmation"
                    required>
 
             @error('password_confirmation')

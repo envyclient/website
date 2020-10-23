@@ -39,7 +39,7 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::disk('minio')->download(Version::FILES_DIRECTORY . '/' . $version->file);
+        return Storage::cloud()->download(Version::FILES_DIRECTORY . '/' . $version->file);
     }
 
 }

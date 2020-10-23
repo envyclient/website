@@ -27,6 +27,6 @@ class DownloadAssets extends Controller
             ], 400);
         }
 
-        return Storage::disk('minio')->download($request->file_name);
+        return Storage::cloud()->download($request->file_name);
     }
 }

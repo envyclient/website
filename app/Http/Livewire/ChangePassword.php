@@ -18,27 +18,17 @@ class ChangePassword extends Component
         'password_confirmation' => 'required_with:password'
     ];
 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-
-    private function resetInputFields()
-    {
-        $this->current_password = '';
-        $this->password = '';
-        $this->password_confirmation = '';
-    }
-
     public function render()
     {
-        return view('livewire.change-password')->with([
+        return view('livewire.change-password', [
             'user' => auth()->user(),
         ]);
     }
 
     public function submit()
     {
+        $this->validate();
+
         $user = auth()->user();
         if (!Hash::check($this->current_password, $user->password)) {
             throw ValidationException::withMessages([
@@ -52,5 +42,12 @@ class ChangePassword extends Component
 
         session()->flash('message', 'Your password has been updated.');
         $this->resetInputFields();
+    }
+
+    private function resetInputFields()
+    {
+        $this->current_password = '';
+        $this->password = '';
+        $this->password_confirmation = '';
     }
 }
