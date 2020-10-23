@@ -27,7 +27,7 @@ class VersionsTable extends Component
     public function deleteVersion($id)
     {
         $version = Version::findOrFail($id);
-        Storage::disk('minio')->delete(Version::FILES_DIRECTORY . '/' . $version->file);
+        Storage::cloud()->delete(Version::FILES_DIRECTORY . '/' . $version->file);
         DB::table('user_downloads')->where('version_id', $version->id)->delete();
         $version->delete();
     }

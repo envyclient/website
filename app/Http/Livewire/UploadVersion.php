@@ -36,7 +36,7 @@ class UploadVersion extends Component
         $this->validate();
 
         $fileName = bin2hex(openssl_random_pseudo_bytes(30)) . '.' . $this->file->getClientOriginalExtension();
-        Storage::disk('minio')->putFileAs(Version::FILES_DIRECTORY, $this->file, $fileName);
+        Storage::cloud()->putFileAs(Version::FILES_DIRECTORY, $this->file, $fileName);
 
         $version = new Version();
         $version->name = $this->name;
