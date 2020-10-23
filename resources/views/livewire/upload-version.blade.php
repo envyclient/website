@@ -7,7 +7,7 @@
                    placeholder="Name"
                    type="text"
                    id="name"
-                   wire:model="name"
+                   wire:model.lazy="name"
                    required>
 
             @error('name')
@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="beta" wire:model="beta">
+                <input type="checkbox" class="custom-control-input" id="beta" wire:model.lazy="beta">
                 <label class="custom-control-label" for="beta">Is Beta Version?</label>
             </div>
         </div>
