@@ -71,7 +71,7 @@ return [
             'region' => 'us-east-1',
             'bucket' => env('MINIO_BUCKET'),
             'endpoint' => env('MINIO_ENDPOINT')
-        ]
+        ],
 
     ],
 
