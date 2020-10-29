@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -56,3 +57,40 @@ Route::prefix('paypal')->group(function () {
 Route::prefix('user')->group(function () {
     Route::delete('disable', [UsersController::class, 'disable'])->name('user.disable');
 });
+
+/**
+ * Bootstrap Livewire
+ */
+
+Route::middleware('guest')->group(function () {
+    /*    Route::get('login', Login::class)
+            ->name('login');*/
+
+    Route::get('register', Register::class)
+        ->name('register');
+});
+
+/*
+Route::get('password/reset', Email::class)
+    ->name('password.request');
+
+Route::get('password/reset/{token}', Reset::class)
+    ->name('password.reset');
+
+Route::middleware('auth')->group(function () {
+    Route::get('email/verify', Verify::class)
+        ->middleware('throttle:6,1')
+        ->name('verification.notice');
+
+    Route::get('password/confirm', Confirm::class)
+        ->name('password.confirm');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)
+        ->middleware('signed')
+        ->name('verification.verify');
+
+    Route::post('logout', LogoutController::class)
+        ->name('logout');
+});*/

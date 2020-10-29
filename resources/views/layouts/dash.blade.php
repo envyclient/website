@@ -31,10 +31,6 @@
     <!-- Charts.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
-    <!-- Umami Analytics -->
-    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0"
-            src="https://umami.affanhaq.me/umami.js"></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
