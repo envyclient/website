@@ -24,10 +24,6 @@
             integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
             crossorigin="anonymous" defer></script>
 
-    <!-- Umami Analytics -->
-    <script async defer data-website-id="0d3cae30-14ae-49d2-aac9-b176a4049cc0"
-            src="https://umami.affanhaq.me/umami.js"></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -35,6 +31,8 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    @livewireStyles
 </head>
 <body>
 <div>
@@ -90,6 +88,8 @@
         @yield('content')
     </div>
 </div>
+
+@livewireScripts
 
 </body>
 </html>
