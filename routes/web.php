@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\HandlePayPalWebhook;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SubscriptionsController;
@@ -89,11 +91,11 @@ Route::middleware('auth')->group(function () {
         ->name('password.confirm');
 });
 
-/*Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)
         ->middleware('signed')
         ->name('verification.verify');
 
     Route::post('logout', LogoutController::class)
         ->name('logout');
-});*/
+});
