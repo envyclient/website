@@ -6,6 +6,7 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Livewire\Auth\Login;
+use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
@@ -84,8 +85,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')
         ->name('verification.notice');
 
-    /* Route::get('password/confirm', Confirm::class)
-         ->name('password.confirm');*/
+    Route::get('password/confirm', Confirm::class)
+        ->name('password.confirm');
 });
 
 /*Route::middleware('auth')->group(function () {
