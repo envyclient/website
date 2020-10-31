@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\API\HandlePayPalWebhook;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\Actions\DisableAccount;
+use App\Http\Controllers\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\SubscriptionsController;
-use App\Http\Controllers\UsersController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -62,7 +62,7 @@ Route::prefix('paypal')->group(function () {
  * Users
  */
 Route::prefix('user')->group(function () {
-    Route::delete('disable', [UsersController::class, 'disable'])->name('user.disable');
+    Route::delete('disable', DisableAccount::class)->name('user.disable');
 });
 
 /**

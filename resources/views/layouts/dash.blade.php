@@ -201,14 +201,14 @@
             </div>
         </nav>
 
-        <br>
-
         <!-- notifications -->
-        <div class="container">
+        <div class="container mt-3">
             @include('inc.notifications')
         </div>
 
-        @yield('content')
+        <div class="mt-3">
+            @yield('content')
+        </div>
     </div>
 </div>
 
