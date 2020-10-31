@@ -19,9 +19,9 @@ class Reset extends Component
     public $passwordConfirmation;
 
     protected $rules = [
-        'token' => 'required',
-        'email' => 'required|email',
-        'password' => 'required|min:8|same:passwordConfirmation',
+        'token' => 'required|string',
+        'email' => 'required|string|email',
+        'password' => 'required|string|min:8|same:passwordConfirmation',
     ];
 
     public function mount($token)

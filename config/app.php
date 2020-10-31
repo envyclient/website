@@ -167,7 +167,6 @@ return [
          */
         App\Providers\MinIOStorageServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -192,7 +191,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
