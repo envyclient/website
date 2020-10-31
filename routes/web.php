@@ -7,6 +7,7 @@ use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Email;
+use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use Illuminate\Support\Facades\Route;
@@ -62,9 +63,8 @@ Route::prefix('user')->group(function () {
 });
 
 /**
- * Bootstrap Livewire
+ * BLL STACK
  */
-
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
         ->name('login');
@@ -73,12 +73,11 @@ Route::middleware('guest')->group(function () {
         ->name('register');
 });
 
-
 Route::get('forgot-password', Email::class)
     ->name('password.request');
 
-/*Route::get('password/reset/{token}', Reset::class)
-    ->name('password.reset');*/
+Route::get('reset-password/{token}', Reset::class)
+    ->name('password.reset');
 
 Route::middleware('auth')->group(function () {
     Route::get('email/verify', Verify::class)
