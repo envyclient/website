@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        App\Providers\MinIOStorageServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
 
         /*

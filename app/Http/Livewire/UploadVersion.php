@@ -12,7 +12,7 @@ class UploadVersion extends Component
     use WithFileUploads;
 
     public $name;
-    public $beta;
+    public $beta = false;
     public $file;
 
     protected $rules = [
@@ -36,15 +36,13 @@ class UploadVersion extends Component
         $this->validate();
 
         $fileName = bin2hex(openssl_random_pseudo_bytes(30)) . '.' . $this->file->getClientOriginalExtension();
-        Storage::cloud()->putFileAs(Version::FILES_DIRECTORY, $this->file, $fileName);
+        Storage::putFileAs(Version::FILES_DIRECTORY, $this->file, $fileName);
 
-        $version = new Version();
-        $version->name = $this->name;
-        if ($this->beta === true) {
-            $version->beta = true;
-        }
-        $version->file = $fileName;
-        $version->save();
+        Version::create([
+            'name' => $this->name,
+            'beta' => $this->beta === true,
+            'file' => $fileName,
+        ]);
 
         $this->emit('VERSION_UPLOADED');
     }

@@ -1,3 +1,5 @@
 *
 !public/
+!versions/
+!livewire-tmp/
 !.gitignore
