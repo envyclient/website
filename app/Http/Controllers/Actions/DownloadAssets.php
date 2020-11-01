@@ -27,6 +27,6 @@ class DownloadAssets extends Controller
             ], 400);
         }
 
-        return Storage::cloud()->download($request->file_name);
+        return Storage::download($request->file_name);
     }
 }

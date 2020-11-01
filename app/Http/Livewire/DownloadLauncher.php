@@ -14,6 +14,6 @@ class DownloadLauncher extends Component
 
     public function download()
     {
-        return Storage::cloud()->download('envy-launcher.exe');
+        return Storage::download('envy-launcher.exe');
     }
 }
