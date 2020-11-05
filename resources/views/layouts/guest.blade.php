@@ -13,7 +13,7 @@
     <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
     <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
 
-    <!-- JS, Popper.js, and jQuery -->
+    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->

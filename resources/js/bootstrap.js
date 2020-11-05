@@ -1,4 +1,5 @@
-const bootstrap = require('bootstrap')
+require('bootstrap');
+require('chart.js');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
