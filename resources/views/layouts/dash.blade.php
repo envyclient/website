@@ -144,11 +144,6 @@
                 <i class="fas fa-download p-2" style="margin-right:10px;"></i>
                 Versions
             </a>
-            <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.sessions') ? 'active': null }}"
-               href="{{ route('admin.sessions') }}">
-                <i class="fas fa-chart-area p-2" style="margin-right:10px;"></i>
-                Game Sessions
-            </a>
             @endadmin
         </div>
     </div>
