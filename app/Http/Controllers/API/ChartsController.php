@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Charts\GameSessionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Models\Config;
-use App\Models\GameSession;
 use App\Http\Controllers\Controller;
 use App\Models\Subscription;
 use App\Models\User;
@@ -68,74 +66,5 @@ class ChartsController extends Controller
             ));
         }
         return $chart->api();
-    }
-
-    public function onTime()
-    {
-        return self::getSessionsData();
-    }
-
-    public function toggles()
-    {
-        return self::getSessionsData(true);
-    }
-
-    private static function getSessionsData($toggles = false)
-    {
-        $modules = [];
-        $sessions = GameSession::whereDate('updated_at', '>=', Carbon::today()->subDays(7))
-            ->where('data', '<>', null)
-            ->get();
-
-        foreach ($sessions as $session) {
-
-            // get the on time for each module
-            foreach (json_decode($session->data) as $module) {
-                $name = $module->name;
-
-                $add = $toggles ? $module->times_toggled : $module->on_time;
-
-                if (isset($modules[$name])) {
-                    $time = $modules[$name];
-                    $time += $add;
-                    $modules[$name] = $time;
-                } else {
-                    $modules[$name] = $add;
-                }
-            }
-        }
-
-        $max = max(self::getMax($sessions, $toggles), 1);
-
-        $newModules = [];
-
-        // divide all the modules on time by total time
-        foreach ($modules as $key => $value) {
-            array_push($newModules, ($value / $max) * 100);
-        }
-
-        $chart = new GameSessionsChart();
-        $chart->dataset('Modules', 'doughnut', $newModules)
-            ->backgroundColor(RandomColor::many(30, [
-                    'luminosity' => 'light'
-                ]
-            ));
-        return $chart->api();
-    }
-
-    private static function getMax($sessions, $toggles = false): int
-    {
-        $data = 0;
-        foreach ($sessions as $session) {
-            foreach (json_decode($session->data) as $module) {
-                $data += $toggles ? $module->times_toggled : $module->on_time;
-            }
-        }
-        return $data;
-    }
-
-    private static function randomColor()
-    {
-        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
     }
 }
