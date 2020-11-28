@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\HandlePayPalWebhook;
+use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\SubscriptionsController;
@@ -22,8 +23,13 @@ Route::group([], function () {
  * Admin
  */
 Route::prefix('admin')->group(function () {
+
+    // list users and versions
     Route::get('users', [HomeController::class, 'users'])->name('admin.users');
     Route::get('versions', [HomeController::class, 'versions'])->name('admin.versions');
+
+    // upload version
+    Route::post('versions', UploadVersion::class)->name('admin.versions.upload');
 });
 
 /**

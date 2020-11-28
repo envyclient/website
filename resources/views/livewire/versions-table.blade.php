@@ -16,7 +16,7 @@
                 <th scope="row">{{ $loop->index + 1 }}</th>
                 <td>{{ $version->name }}</td>
                 <td>
-                    @if($version->public)
+                    @if($version->beta)
                         &#10004;
                     @else
                         &#10006;
