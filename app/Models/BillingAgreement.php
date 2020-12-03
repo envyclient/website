@@ -24,16 +24,16 @@ class BillingAgreement extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     public function plan()
     {
-        return $this->belongsTo('App\Models\Plan');
+        return $this->belongsTo(Plan::class);
     }
 
     public function subscription()
     {
-        return $this->hasOne('App\Models\Subscription', 'billing_agreement_id');
+        return $this->hasOne(Subscription::class, 'billing_agreement_id');
     }
 }
