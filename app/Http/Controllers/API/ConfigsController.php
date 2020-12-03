@@ -139,7 +139,7 @@ class ConfigsController extends Controller
     {
         $data['favorites'] = ConfigResource::collection(
             $request->user()
-                ->configs()
+                ->getFavoriteItems(Config::class)
                 ->withCount('favorites')
                 ->orderBy('favorites_count', 'desc')
                 ->paginate(Config::PAGE_LIMIT)
