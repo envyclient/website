@@ -51,7 +51,7 @@ class AuthController extends Controller
         return $this->returnUserObject($user, $user->hwid);
     }
 
-    private function returnUserObject($user, string $hwid)
+    private static function returnUserObject($user, string $hwid)
     {
         // check for duplicate hwid
         $userCheck = User::where('hwid', $hwid)->where('id', '<>', $user->id);
