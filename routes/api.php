@@ -4,7 +4,6 @@ use App\Http\Controllers\Actions\DownloadAssets;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\ConfigsController;
-use App\Http\Controllers\API\GameSessionsController;
 use App\Http\Controllers\API\VersionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,14 +50,6 @@ Route::prefix('charts')->group(function () {
 Route::prefix('versions')->group(function () {
     Route::get('/', [VersionsController::class, 'index'])->name('api.versions.index');
     Route::get('{version}', [VersionsController::class, 'show'])->name('api.versions.show');
-});
-
-/**
- * Game Sessions
- */
-Route::prefix('sessions')->group(function () {
-    Route::post('/', [GameSessionsController::class, 'store']);
-    Route::put('{session}', [GameSessionsController::class, 'update']);
 });
 
 /**
