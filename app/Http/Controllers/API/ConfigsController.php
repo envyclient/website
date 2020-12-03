@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Config;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Config as ConfigResource;
+use App\Models\Config;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -84,14 +84,12 @@ class ConfigsController extends Controller
             ], 406);
         }
 
-        $config = new Config();
-        $config->user_id = $user->id;
-        $config->name = $request->name;
-        $config->data = $request->data;
-        if ($request->has('public')) {
-            $config->public = $request->public;
-        }
-        $config->save();
+        $config = Config::create([
+            'user_id' => $user->id,
+            'name' => $request->name,
+            'data' => $request->data,
+            'public' => $request->has('public'),
+        ]);
 
         return response()->json([
             'message' => '201 Created',

@@ -21,6 +21,6 @@ class Version extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'user_downloads', 'version_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_downloads', 'version_id', 'user_id');
     }
 }

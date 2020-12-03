@@ -29,16 +29,16 @@ class Subscription extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     public function plan()
     {
-        return $this->belongsTo('App\Models\Plan');
+        return $this->belongsTo(Plan::class);
     }
 
     public function billingAgreement()
     {
-        return $this->belongsTo('App\Models\BillingAgreement', 'id', 'billing_agreement_id');
+        return $this->belongsTo(BillingAgreement::class, 'id', 'billing_agreement_id');
     }
 }

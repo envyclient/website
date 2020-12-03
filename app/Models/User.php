@@ -57,27 +57,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function configs()
     {
-        return $this->hasMany('App\Models\Config');
+        return $this->hasMany(Config::class);
     }
 
     public function subscription()
     {
-        return $this->hasOne('App\Models\Subscription');
+        return $this->hasOne(Subscription::class);
     }
 
     public function billingAgreement()
     {
-        return $this->hasOne('App\Models\BillingAgreement');
+        return $this->hasOne(BillingAgreement::class);
     }
 
     public function downloads()
     {
-        return $this->belongsToMany('App\Models\Version', 'user_downloads', 'user_id', 'version_id');
-    }
-
-    public function gameSessions()
-    {
-        return $this->hasMany('App\Models\GameSession');
+        return $this->belongsToMany(Version::class, 'user_downloads', 'user_id', 'version_id');
     }
 
     public function hasSubscription(): bool
