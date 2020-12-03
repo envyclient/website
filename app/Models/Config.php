@@ -17,6 +17,13 @@ class Config extends Model
 
     const PAGE_LIMIT = 12;
 
+    protected $fillable = [
+        'user_id',
+        'name',
+        'data',
+        'public',
+    ];
+
     protected $casts = [
         'data' => 'array'
     ];
