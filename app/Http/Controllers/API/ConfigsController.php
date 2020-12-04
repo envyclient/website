@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -130,60 +129,6 @@ class ConfigsController extends Controller
     public function destroy(Request $request, $id)
     {
         $request->user()->configs()->findOrFail($id)->delete();
-        return response()->json([
-            'message' => '200 OK'
-        ], 200);
-    }
-
-    public function getCurrentUserConfigs(Request $request)
-    {
-        $data['favorites'] = ConfigResource::collection(
-            $request->user()
-                ->getFavoriteItems(Config::class)
-                ->withCount('favorites')
-                ->orderBy('favorites_count', 'desc')
-                ->paginate(Config::PAGE_LIMIT)
-        );
-        $data['self'] = ConfigResource::collection(
-            $request->user()
-                ->configs()
-                ->withCount('favorites')
-                ->orderBy('favorites_count', 'desc')
-                ->paginate(Config::PAGE_LIMIT)
-        );
-        return $data;
-    }
-
-    public function getConfigsByUser(string $name)
-    {
-        $user = User::where('name', $name)->firstOrFail();
-        return ConfigResource::collection(
-            $user->configs()
-                ->where('public', true)
-                ->withCount('favorites')
-                ->orderBy('favorites_count', 'desc')
-                ->paginate(Config::PAGE_LIMIT)
-        );
-    }
-
-    public function favorite(Request $request, $id)
-    {
-        $config = Config::findOrFail($id);
-        $user = $request->user();
-
-        // can not favorite own config
-        if ($config->user_id === $user->id) {
-            return response()->json([
-                'message' => 'You can not favorite your own config.'
-            ], 403);
-        }
-
-        if ($user->hasFavorited($config)) {
-            $user->unfavorite($config);
-        } else {
-            $user->favorite($config);
-        }
-
         return response()->json([
             'message' => '200 OK'
         ], 200);
