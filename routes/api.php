@@ -5,6 +5,9 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\ConfigsController;
 use App\Http\Controllers\API\VersionsController;
+use App\Http\Controllers\Configs\FavoriteConfig;
+use App\Http\Controllers\Configs\GetConfigsForCurrentUser;
+use App\Http\Controllers\Configs\GetConfigsForUser;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -19,10 +22,10 @@ Route::prefix('auth')->group(function () {
  * Configs
  */
 Route::prefix('configs')->group(function () {
-    Route::put('favorite/{config}', [ConfigsController::class, 'favorite']);
+    Route::put('favorite/{config}', FavoriteConfig::class);
 
-    Route::get('user', [ConfigsController::class, 'getCurrentUserConfigs']);
-    Route::get('user/{name}', [ConfigsController::class, 'getConfigsByUser']);
+    Route::get('user', GetConfigsForCurrentUser::class);
+    Route::get('user/{name}', GetConfigsForUser::class);
 
     Route::get('/', [ConfigsController::class, 'index']);
     Route::get('{config}', [ConfigsController::class, 'show']);
