@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Configs;
+namespace App\Http\Controllers\Configs\Actions;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Configs\ConfigsController;
 use App\Models\Config;
 use Illuminate\Http\Request;
 
-class FavoriteConfig extends Controller
+class FavoriteConfig extends ConfigsController
 {
     public function __construct()
     {
         $this->middleware('auth:api');
     }
-    
+
     public function __invoke(Request $request, $id)
     {
         $config = Config::findOrFail($id);
