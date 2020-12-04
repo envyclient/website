@@ -33,18 +33,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'admin',
         'banned',
         'disabled',
-        'access_free_plan'
+        'access_free_plan',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
         'email_verified_at',
-        'admin'
+        'admin',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
     ];
 
     public function scopeName($query, $name)

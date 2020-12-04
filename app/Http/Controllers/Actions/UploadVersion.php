@@ -28,7 +28,7 @@ class UploadVersion extends Controller
 
         Version::create([
             'name' => $request->name,
-            'beta' => $request->beta !== null,
+            'beta' => $request->has('beta'),
             'file' => $fileName,
         ]);
 

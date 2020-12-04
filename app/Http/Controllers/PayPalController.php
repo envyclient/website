@@ -164,12 +164,12 @@ class PayPalController extends Controller
             return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
-        $billingAgreement = new BillingAgreement();
-        $billingAgreement->billing_agreement_id = $agreement->getId();
-        $billingAgreement->user_id = $request->user()->id;
-        $billingAgreement->plan_id = $planId;
-        $billingAgreement->state = $agreement->getState();
-        $billingAgreement->save();
+        BillingAgreement::create([
+            'user_id' => $request->user()->id,
+            'plan_id' => $planId,
+            'billing_agreement_id' => $agreement->getId(),
+            'state' => $agreement->getState(),
+        ]);
 
         return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('success', 'Subscription successful.');
     }
