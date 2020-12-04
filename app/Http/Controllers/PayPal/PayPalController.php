@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\PayPal;
 
+use App\Http\Controllers\Controller;
 use App\Models\BillingAgreement;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;

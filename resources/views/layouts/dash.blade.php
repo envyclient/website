@@ -107,12 +107,12 @@
                 <h3 class="m-3 text-white" style="font-size:16px;">
                     SETTINGS
                 </h3>
-                <a class="list-group-item list-group-item-custom {{ request()->routeIs('home') ? 'active': null }}"
-                   href="{{ route('home') }}">
+                <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active': null }}"
+                   href="{{ route('dashboard') }}">
                     <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
                     Home
                 </a>
-                <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.security') ? 'active': null }}"
+                <a class="list-group-item list-group-item-custom {{ Route::is('pages.security') ? 'active': null }}"
                    href="{{ route('pages.security') }}">
                     <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                     Security
@@ -124,7 +124,7 @@
                 <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
                     BILLING
                 </h3>
-                <a class="list-group-item list-group-item-custom {{ request()->routeIs('pages.subscriptions') ? 'active': null }}"
+                <a class="list-group-item list-group-item-custom {{ Route::is('pages.subscriptions') ? 'active': null }}"
                    href="{{ route('pages.subscriptions') }}">
                     <i class="fas fa-redo p-2" style="margin-right:10px;"></i>
                     Subscription
@@ -134,12 +134,12 @@
             <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
                 ADMINISTRATOR
             </h3>
-            <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.users') ? 'active': null }}"
+            <a class="list-group-item list-group-item-custom {{ Route::is('admin.users') ? 'active': null }}"
                href="{{ route('admin.users') }}">
                 <i class="fas fa-users p-2" style="margin-right:10px;"></i>
                 Users
             </a>
-            <a class="list-group-item list-group-item-custom {{ request()->routeIs('admin.versions') ? 'active': null }}"
+            <a class="list-group-item list-group-item-custom {{ Route::is('admin.versions') ? 'active': null }}"
                href="{{ route('admin.versions') }}">
                 <i class="fas fa-download p-2" style="margin-right:10px;"></i>
                 Versions

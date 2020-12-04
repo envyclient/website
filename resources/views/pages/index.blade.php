@@ -30,7 +30,7 @@
         @guest
             <a href="{{ route('login') }}">Login</a>
         @else
-            <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('dashboard') }}">Dashboard</a>
         @endguest
     </div>
 </div>
@@ -44,7 +44,7 @@
                 @guest
                     <a href="{{ route('login') }}" class="btn">Login</a>
                 @else
-                    <a href="{{ route('home') }}" class="btn">Home</a>
+                    <a href="{{ route('dashboard') }}" class="btn">Dashboard</a>
                 @endguest
                 <a href="#features" class="btn">Read more</a>
             </div>

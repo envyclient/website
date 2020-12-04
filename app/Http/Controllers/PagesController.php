@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Charts\GameSessionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
-use App\Models\GameSession;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class PagesController extends Controller
 {
     const CHART_OPTIONS = [
         'tooltip' => [
@@ -33,10 +31,10 @@ class HomeController extends Controller
         return view('pages.index');
     }
 
-    public function home(Request $request)
+    public function dashboard(Request $request)
     {
         $user = $request->user();
-        return view('pages.dashboard')->with([
+        return view('pages.dashboard.home')->with([
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
         ]);
@@ -44,14 +42,14 @@ class HomeController extends Controller
 
     public function security(Request $request)
     {
-        return view('pages.security')
+        return view('pages.dashboard.security')
             ->with('user', $request->user());
     }
 
     public function subscriptions(Request $request)
     {
         $user = $request->user();
-        return view('pages.subscriptions')->with([
+        return view('pages.dashboard.subscriptions')->with([
             'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
             'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
@@ -73,7 +71,7 @@ class HomeController extends Controller
             ->options(self::CHART_OPTIONS)
             ->load(route('api.charts.users') . "?api_token=$apiToken");
 
-        return view('pages.admin.users')->with([
+        return view('pages.dashboard.admin.users')->with([
             'apiToken' => $apiToken,
             'chart' => $chart
         ]);
@@ -108,7 +106,7 @@ class HomeController extends Controller
             ])
             ->load(route('api.charts.versions') . "?api_token=$apiToken");
 
-        return view('pages.admin.versions')->with([
+        return view('pages.dashboard.admin.versions')->with([
             'apiToken' => $apiToken,
             'chart' => $chart
         ]);

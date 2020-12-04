@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Actions;
+namespace App\Http\Controllers\PayPal\Actions;
 
 use App\Models\BillingAgreement;
 use App\Http\Controllers\Controller;

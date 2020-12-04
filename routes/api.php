@@ -41,18 +41,13 @@ Route::prefix('configs')->group(function () {
 Route::prefix('charts')->group(function () {
     Route::get('users', [ChartsController::class, 'users'])->name('api.charts.users');
     Route::get('versions', [ChartsController::class, 'versions'])->name('api.charts.versions');
-
-    Route::prefix('sessions')->group(function () {
-        Route::get('onTime', [ChartsController::class, 'onTime'])->name('api.charts.sessions.ontime');
-        Route::get('toggles', [ChartsController::class, 'toggles'])->name('api.charts.sessions.toggles');
-    });
 });
 
 /**
  * Versions
  */
 Route::prefix('versions')->group(function () {
-    Route::get('/', ShowAllVersions::class)->name('api.versions.index');
+    Route::get('/', ShowAllVersions::class);
     Route::get('{version}', ShowVersion::class)->name('api.versions.show');
 });
 
