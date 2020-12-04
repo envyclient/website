@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\Actions\DisableAccount;
-use App\Http\Controllers\Actions\HandlePayPalWebhook;
+use App\Http\Controllers\Actions\DownloadLauncher;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
+use App\Http\Controllers\PayPal\PayPalController;
 use App\Http\Controllers\Subscriptions\Actions\CancelSubscription;
 use App\Http\Controllers\Subscriptions\Actions\SubscribeToFreePlan;
 use Illuminate\Support\Facades\Route;
@@ -62,5 +63,10 @@ Route::prefix('paypal')->group(function () {
 Route::prefix('user')->group(function () {
     Route::delete('disable', DisableAccount::class)->name('user.disable');
 });
+
+/**
+ * Extra
+ */
+Route::get('launcher', DownloadLauncher::class)->name('download-launcher');
 
 require __DIR__ . '/auth.php';

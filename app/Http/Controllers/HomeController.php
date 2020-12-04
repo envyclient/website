@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Charts\GameSessionsChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
-use App\Models\GameSession;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
