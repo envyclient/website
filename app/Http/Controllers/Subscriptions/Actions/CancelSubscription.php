@@ -1,59 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Subscriptions\Actions;
 
-use App\Notifications\SubscriptionUpdated;
+use App\Http\Controllers\Subscriptions\SubscriptionsController;
 use App\Models\Subscription;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use PayPal\Api\Agreement;
 use PayPal\Api\AgreementStateDescriptor;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Rest\ApiContext;
 
-class SubscriptionsController extends Controller
+class CancelSubscription extends SubscriptionsController
 {
-    private $paypal;
-
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified']);
-
-        $this->paypal = new ApiContext(new OAuthTokenCredential(
-            config('paypal.client_id'),
-            config('paypal.secret')
-        ));
-        $this->paypal->setConfig(config('paypal.settings'));
-    }
-
-    public function free(Request $request)
-    {
-        $user = $request->user();
-
-        if (!$user->access_free_plan) {
-            return back();
-        }
-
-        if ($user->hasSubscription()) {
-            return back()->with('error', 'You already have a subscription.');
-        }
-
-        Subscription::create([
-            'user_id' => $user->id,
-            'plan_id' => 1,
-            'end_date' => Carbon::now()->addDecade(),
-        ]);
-
-        /*$user->notify(new SubscriptionUpdated(
-            'New Subscription',
-            'Thank you for subscribing to the free plan.'
-        ));*/
-
-        return back()->with('success', 'Subscribed to the free plan.');
-    }
-
-    public function cancel(Request $request)
+    public function __invoke(Request $request)
     {
         $user = $request->user();
         if (!$user->hasSubscription()) {

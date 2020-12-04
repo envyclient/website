@@ -5,7 +5,8 @@ use App\Http\Controllers\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayPalController;
-use App\Http\Controllers\SubscriptionsController;
+use App\Http\Controllers\Subscriptions\Actions\CancelSubscription;
+use App\Http\Controllers\Subscriptions\Actions\SubscribeToFreePlan;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -36,8 +37,8 @@ Route::prefix('admin')->group(function () {
  * Subscriptions
  */
 Route::prefix('subscriptions')->group(function () {
-    Route::post('free', [SubscriptionsController::class, 'free'])->name('subscriptions.free');
-    Route::post('cancel', [SubscriptionsController::class, 'cancel'])->name('subscriptions.cancel');
+    Route::post('free', SubscribeToFreePlan::class)->name('subscriptions.free');
+    Route::post('cancel', CancelSubscription::class)->name('subscriptions.cancel');
 });
 
 /**

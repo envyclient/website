@@ -4,10 +4,11 @@ use App\Http\Controllers\Actions\DownloadAssets;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\ConfigsController;
-use App\Http\Controllers\API\VersionsController;
-use App\Http\Controllers\Configs\FavoriteConfig;
-use App\Http\Controllers\Configs\GetConfigsForCurrentUser;
-use App\Http\Controllers\Configs\GetConfigsForUser;
+use App\Http\Controllers\Configs\Actions\FavoriteConfig;
+use App\Http\Controllers\Configs\Actions\GetConfigsForCurrentUser;
+use App\Http\Controllers\Configs\Actions\GetConfigsForUser;
+use App\Http\Controllers\Versions\Actions\ShowAllVersions;
+use App\Http\Controllers\Versions\Actions\ShowVersion;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -51,8 +52,8 @@ Route::prefix('charts')->group(function () {
  * Versions
  */
 Route::prefix('versions')->group(function () {
-    Route::get('/', [VersionsController::class, 'index'])->name('api.versions.index');
-    Route::get('{version}', [VersionsController::class, 'show'])->name('api.versions.show');
+    Route::get('/', ShowAllVersions::class)->name('api.versions.index');
+    Route::get('{version}', ShowVersion::class)->name('api.versions.show');
 });
 
 /**

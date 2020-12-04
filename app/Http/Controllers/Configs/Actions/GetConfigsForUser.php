@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Configs;
+namespace App\Http\Controllers\Configs\Actions;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Configs\ConfigsController;
 use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class GetConfigsForUser extends Controller
+class GetConfigsForUser extends ConfigsController
 {
     public function __construct()
     {
