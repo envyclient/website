@@ -15,7 +15,7 @@ class Config extends Model
 {
     use Favoriteable;
 
-    const PAGE_LIMIT = 12;
+    const PAGE_LIMIT = 5;
 
     protected $fillable = [
         'user_id',
