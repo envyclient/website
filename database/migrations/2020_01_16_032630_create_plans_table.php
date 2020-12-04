@@ -36,7 +36,6 @@ class CreatePlansTable extends Migration
             'name' => 'Standard',
             'description' => 'Get basic access to Envy Client for 30 days.',
             'price' => 7,
-            'paypal_id' => 'P-7DJ706835P617523NL53BWTI',
             'config_limit' => 5
         ]);
 
@@ -44,7 +43,6 @@ class CreatePlansTable extends Migration
             'name' => 'Premium',
             'description' => 'Get premium access to Envy Client for 30 days.',
             'price' => 10,
-            'paypal_id' => 'P-6J818930MT2795746L53BXQI',
             'config_limit' => 15,
             'beta_access' => true
         ]);
