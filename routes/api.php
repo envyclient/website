@@ -4,7 +4,6 @@ use App\Http\Controllers\Actions\DownloadAssets;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\ConfigsController;
-use App\Http\Controllers\API\VersionsController;
 use App\Http\Controllers\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\Configs\Actions\GetConfigsForCurrentUser;
 use App\Http\Controllers\Configs\Actions\GetConfigsForUser;
