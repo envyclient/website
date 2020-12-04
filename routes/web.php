@@ -3,7 +3,7 @@
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\DownloadLauncher;
 use App\Http\Controllers\Actions\UploadVersion;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
 use App\Http\Controllers\Subscriptions\Actions\CancelSubscription;
@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
  * Home
  */
 Route::group([], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('index');
-    Route::get('home', [HomeController::class, 'home'])->name('home');
-    Route::get('security', [HomeController::class, 'security'])->name('pages.security');
-    Route::get('subscriptions', [HomeController::class, 'subscriptions'])->name('pages.subscriptions');
-    Route::get('terms', [HomeController::class, 'terms'])->name('pages.terms');
+    Route::get('/', [PagesController::class, 'index'])->name('index');
+    Route::get('dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
+    Route::get('security', [PagesController::class, 'security'])->name('pages.security');
+    Route::get('subscriptions', [PagesController::class, 'subscriptions'])->name('pages.subscriptions');
+    Route::get('terms', [PagesController::class, 'terms'])->name('pages.terms');
 });
 
 /**
@@ -27,8 +27,8 @@ Route::group([], function () {
 Route::prefix('admin')->group(function () {
 
     // list users and versions
-    Route::get('users', [HomeController::class, 'users'])->name('admin.users');
-    Route::get('versions', [HomeController::class, 'versions'])->name('admin.versions');
+    Route::get('users', [PagesController::class, 'users'])->name('admin.users');
+    Route::get('versions', [PagesController::class, 'versions'])->name('admin.versions');
 
     // upload version
     Route::post('versions', UploadVersion::class)->name('admin.versions.upload');

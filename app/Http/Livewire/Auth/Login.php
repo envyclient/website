@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Auth;
 
+use App\Providers\RouteServiceProvider;
 use Auth;
 use Livewire\Component;
 
@@ -30,6 +31,6 @@ class Login extends Component
             return;
         }
 
-        return redirect()->intended(route('home'));
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }
