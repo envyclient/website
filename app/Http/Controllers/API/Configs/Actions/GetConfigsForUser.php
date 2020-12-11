@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Configs\Actions;
+namespace App\Http\Controllers\API\Configs\Actions;
 
-use App\Http\Controllers\Configs\ConfigsController;
+use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
 use App\Models\User;
