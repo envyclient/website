@@ -1,16 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Versions\Actions;
+namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Versions\VersionsController;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Version as VersionResource;
 use App\Models\Version;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class ShowVersion extends VersionsController
+class VersionsController extends Controller
 {
-    public function __invoke(Request $request, $id)
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    public function index(Request $request)
+    {
+        $user = $request->user();
+        return VersionResource::collection(
+            $user->hasBetaAccess() ? Version::all() : Version::where('beta', false)->get()
+        );
+    }
+
+    public function show(Request $request, $id)
     {
         $user = $request->user();
         $version = Version::findOrFail($id);
