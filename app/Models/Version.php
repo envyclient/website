@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Version extends Model
 {
-    const FILES_DIRECTORY = 'versions';
-
     protected $fillable = [
         'name',
         'beta',

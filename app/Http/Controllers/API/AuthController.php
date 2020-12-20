@@ -19,7 +19,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'hwid' => 'required|string|min:40|max:40'
+            'hwid' => 'required|string|min:40|max:40',
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'hwid' => 'required|string|min:40|max:40'
+            'hwid' => 'required|string|min:40|max:40',
         ]);
 
         if ($validator->fails()) {
@@ -87,7 +87,8 @@ class AuthController extends Controller
         return response()->json([
             'name' => $user->name,
             'api_token' => $user->api_token,
-            'date' => $user->created_at->diffForHumans()
+            'cape' => $user->cape === null ? asset('assets/default_cape.png') : asset("storage/capes/$user->cape"),
+            'date' => $user->created_at->diffForHumans(),
         ]);
     }
 

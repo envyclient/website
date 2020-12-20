@@ -39,6 +39,6 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::download(Version::FILES_DIRECTORY . "/$version->file");
+        return Storage::download("versions/$version->file");
     }
 }

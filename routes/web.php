@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\DownloadLauncher;
+use App\Http\Controllers\Actions\UploadCape;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
@@ -61,7 +62,8 @@ Route::prefix('paypal')->group(function () {
  * Users
  */
 Route::prefix('user')->group(function () {
-    Route::delete('disable', DisableAccount::class)->name('user.disable');
+    Route::delete('disable', DisableAccount::class)->name('users.disable');
+    Route::post('upload-cape', UploadCape::class)->name('users.upload-cape');
 });
 
 /**

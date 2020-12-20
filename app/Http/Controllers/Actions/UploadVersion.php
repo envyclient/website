@@ -24,7 +24,7 @@ class UploadVersion extends Controller
 
         $file = $request->file('version');
         $fileName = bin2hex(openssl_random_pseudo_bytes(30)) . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs(Version::FILES_DIRECTORY, $file, $fileName);
+        Storage::putFileAs('versions', $file, $fileName);
 
         Version::create([
             'name' => $request->name,

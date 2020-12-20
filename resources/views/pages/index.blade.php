@@ -120,8 +120,6 @@
             <ul>
                 <li>monthly updates</li>
                 <li>killer features</li>
-                <li>lorem ipsum</li>
-                <li>dolor sit</li>
             </ul>
             <h2 class="subscription-price">$7.00<span>/month</span></h2>
         </div>
@@ -130,8 +128,8 @@
             <ul>
                 <li>monthly updates</li>
                 <li>killer features</li>
-                <li>lorem ipsum</li>
-                <li>dolor sit</li>
+                <li>capes access</li>
+                <li>beta access</li>
             </ul>
             <h2 class="subscription-price">$10.00<span>/month</span></h2>
         </div>
