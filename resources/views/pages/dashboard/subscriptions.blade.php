@@ -99,6 +99,11 @@
                         @else
                             <p>&#120; Beta Access</p>
                         @endif
+                        @if($plan->capes_access)
+                            <p>&#10003; Capes Access</p>
+                        @else
+                            <p>&#120; Capes Access</p>
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
