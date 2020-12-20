@@ -16,12 +16,17 @@ class CreatePlansTable extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
+
             $table->string('name')->unique();
             $table->string('description');
             $table->unsignedTinyInteger('price');
+
             $table->string('paypal_id')->unique()->nullable();
+
             $table->unsignedTinyInteger('config_limit');
+
             $table->boolean('beta_access')->default(false);
+            $table->boolean('capes_access')->default(false);
         });
 
         DB::table('plans')->insert([
@@ -29,7 +34,8 @@ class CreatePlansTable extends Migration
             'description' => 'Get free access to Envy Client for 30 days.',
             'price' => 0,
             'config_limit' => 15,
-            'beta_access' => true
+            'beta_access' => true,
+            'capes_access' => true,
         ]);
 
         DB::table('plans')->insert([
@@ -44,7 +50,8 @@ class CreatePlansTable extends Migration
             'description' => 'Get premium access to Envy Client for 30 days.',
             'price' => 10,
             'config_limit' => 15,
-            'beta_access' => true
+            'beta_access' => true,
+            'capes_access' => true,
         ]);
     }
 

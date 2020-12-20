@@ -68,7 +68,7 @@ class Kernel extends HttpKernel
 
         // custom
         'admin' => \App\Http\Middleware\Custom\CheckAdmin::class,
-        'subscription' => \App\Http\Middleware\Custom\CheckSubscription::class,
+        'subscribed' => \App\Http\Middleware\Custom\CheckSubscription::class,
     ];
 
     /**

@@ -38,7 +38,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         NO, CANCEL
                     </button>
-                    <form method="POST" action="{{ route('user.disable') }}" accept-charset="UTF-8">
+                    <form action="{{ route('users.disable') }}" method="post">
                         @csrf
                         <input name="_method" type="hidden" value="DELETE">
                         <input class="btn btn-danger m-sm-2" type="submit" value="YES">

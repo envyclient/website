@@ -17,10 +17,45 @@
                    readonly>
         </div>
 
-        <br>
-
         @if($user->hasSubscription())
-            <div class="alert alert-secondary" style="font-size:25px;">
+
+            @if($user->hasCapesAccess())
+                <div class="mt-3">
+                    <label class="form-label">Cape</label>
+                    <br>
+
+                    <img
+                        src="{{ $user->cape === null ? asset('assets/default_cape.png') : asset("storage/capes/$user->cape") }}"
+                        alt="cape"
+                        class="rounded"
+                        width="128px"
+                        height="128px"
+                    >
+
+                    <form action="{{ route('users.upload-cape') }}" method="post" enctype="multipart/form-data"
+                          style="margin-top: 15px;">
+                        @csrf
+                        <div class="custom-file">
+                            <input type="file"
+                                   class="custom-file-input @error('cape') is-invalid @enderror"
+                                   id="cape"
+                                   name="cape"
+                                   required>
+                            <label class="custom-file-label" for="file">Choose file</label>
+
+                            @error('cape')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-success mt-2">Upload</button>
+                    </form>
+                </div>
+            @endif
+
+            <div class="alert alert-secondary mt-3" style="font-size:25px;">
                 <i class="fas fa-file" style="padding-right:10px;"></i> Configs
                 <span class="badge badge-secondary">
                         {{ $configs->count() }}/{{ $user->getConfigLimit() }}
@@ -64,8 +99,17 @@
                 </svg>
                 Download Launcher
             </a>
-
         @endif
 
     </div>
+@endsection
+
+@section('js')
+    <script>
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            const fileName = document.getElementById("cape").files[0].name;
+            const nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
 @endsection
