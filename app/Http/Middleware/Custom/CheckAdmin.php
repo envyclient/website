@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\Custom;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,6 @@ class CheckAdmin
         if (auth()->check() && auth()->user()->admin) {
             return $next($request);
         }
-        return back();
+        return redirect(RouteServiceProvider::HOME);
     }
 }

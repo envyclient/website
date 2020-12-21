@@ -42,6 +42,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="improvements">Improvements</label>
+                    <textarea class="form-control" id="improvements" name="improvements" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="removed">Removed</label>
+                    <textarea class="form-control" id="removed" name="removed" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="beta" name="beta">
                         <label class="custom-control-label" for="beta">Is Beta Version?</label>
