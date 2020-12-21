@@ -20,8 +20,7 @@ class UploadVersion extends Controller
             'name' => 'required|string|max:30|unique:versions',
             'beta' => 'nullable',
             'version' => 'required|file|max:40000',
-            'improvements' => 'required|string',
-            'removed' => 'required|string',
+            'changelog' => 'required|string',
         ]);
 
         $file = $request->file('version');
@@ -32,8 +31,7 @@ class UploadVersion extends Controller
             'name' => $request->name,
             'beta' => $request->has('beta'),
             'file' => $fileName,
-            'improvements' => $request->improvements,
-            'removed' => $request->removed,
+            'changelog' => $request->changelog,
         ]);
 
         return back()->with('success', 'Version upload.');

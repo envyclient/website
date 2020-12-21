@@ -42,13 +42,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="improvements">Improvements</label>
-                    <textarea class="form-control" id="improvements" name="improvements" rows="3"></textarea>
-                </div>
+                    <label for="changelog">Changelog</label>
+                    <textarea class="form-control" id="changelog" name="changelog" rows="3" required></textarea>
 
-                <div class="form-group">
-                    <label for="removed">Removed</label>
-                    <textarea class="form-control" id="removed" name="removed" rows="3"></textarea>
+                    @error('changelog')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
