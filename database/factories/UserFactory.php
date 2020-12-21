@@ -20,7 +20,7 @@ class UserFactory extends Factory
             'api_token' => Str::random(60),
             'hwid' => Str::random(40),
             'cape' => null,
-            'admin' => 1,
+            'admin' => 0,
             'banned' => 0,
             'disabled' => 0,
             'access_free_plan' => 1,
