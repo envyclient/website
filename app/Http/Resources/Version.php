@@ -20,7 +20,9 @@ class Version extends JsonResource
             'name' => $this->name,
             'file' => $this->file,
             'beta' => (bool)$this->beta,
-            'date' => $this->created_at->diffForHumans()
+            'improvements' => $this->improvements,
+            'removed' => $this->removed,
+            'date' => $this->created_at->diffForHumans(),
         ];
     }
 }
