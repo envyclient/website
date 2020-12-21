@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Admin;
 
 use App\Models\User;
 use App\Models\Version;
@@ -29,17 +29,21 @@ class VersionsTest extends TestCase
         $user = User::factory()->create([
             'admin' => 1,
         ]);
+
         $this->actingAs($user)
             ->get(route('admin.versions'))
             ->assertStatus(200);
     }
 
     /** @test */
-    public function can_upload_version()
+    public function can_admin_upload_version()
     {
         Storage::fake('local');
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'admin' => 1,
+        ]);
+
         $this->actingAs($user)
             ->post(route('admin.versions.upload'), [
                 'name' => 'Beta 1',
