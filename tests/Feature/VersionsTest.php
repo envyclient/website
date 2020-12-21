@@ -46,8 +46,7 @@ class VersionsTest extends TestCase
                 'name' => 'Beta 1',
                 'beta' => true,
                 'version' => UploadedFile::fake()->create('version.exe', 1000),
-                'improvements' => '+test\n+test1',
-                'removed' => '-test\n-test1',
+                'changelog' => '+test\n+test1',
             ])
             ->assertRedirect();
 

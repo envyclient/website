@@ -15,8 +15,7 @@ class Version extends Model
         'name',
         'beta',
         'file',
-        'improvements',
-        'removed',
+        'changelog',
     ];
 
     public function users()
