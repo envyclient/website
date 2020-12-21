@@ -14,26 +14,7 @@ class UsersTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_unauthenticated_user_not_see_dashboard()
-    {
-        $this->get(route('dashboard'))
-            ->assertRedirect('/login');
-    }
-
-    /** @test */
-    public function can_authenticated_user_see_dashboard()
-    {
-        $user = User::factory()->create([
-            'admin' => 0,
-        ]);
-
-        $this->actingAs($user)
-            ->get(route('dashboard'))
-            ->assertOk();
-    }
-
-    /** @test */
-    public function can_upload_cape()
+    public function can_user_upload_cape()
     {
         Storage::fake('public');
 
