@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UsersTest extends TestCase
@@ -29,22 +32,32 @@ class UsersTest extends TestCase
             ->assertOk();
     }
 
-    /*public function can_upload_cape()
+    /** @test */
+    public function can_upload_cape()
     {
-        Storage::fake('local');
+        Storage::fake('public');
 
+        // create non admin user
         $user = User::factory()->create([
             'admin' => 0,
         ]);
 
+        // subscribe to free plan
+        Subscription::create([
+            'user_id' => $user->id,
+            'plan_id' => 1,
+            'billing_agreement_id' => null,
+            'end_date' => now()
+        ]);
+
         $this->actingAs($user)
             ->post(route('users.upload-cape'), [
-                'cape' => UploadedFile::fake()->image('cape.jpg'),
+                'cape' => UploadedFile::fake()->image('cape.png'),
             ])
             ->assertRedirect();
 
         // Assert the file was stored...
         $this->assertTrue($user->cape !== null);
-        Storage::disk('local')->assertExists("capes/$user->cape");
-    }*/
+        Storage::disk('public')->assertExists("capes/$user->cape");
+    }
 }

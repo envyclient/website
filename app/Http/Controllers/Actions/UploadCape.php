@@ -21,7 +21,7 @@ class UploadCape extends Controller
 
         $file = $request->file('cape');
         $fileName = md5(auth()->id()) . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs('public/capes', $file, $fileName);
+        Storage::disk('public')->putFileAs('capes', $file, $fileName);
 
         auth()->user()->fill([
             'cape' => $fileName,
