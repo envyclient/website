@@ -11,10 +11,10 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
 /**
  * @property string name
  * @property string email
- * @property string email_verified_at
+ * @property null|string email_verified_at
  * @property string password
  * @property string api_token
- * @property string hwid
+ * @property null|string hwid
  * @property bool admin
  * @property bool banned
  * @property bool disabled
@@ -46,6 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $casts = [
+        'banned' => 'bool',
         'email_verified_at' => 'datetime',
     ];
 

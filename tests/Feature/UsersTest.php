@@ -38,7 +38,8 @@ class UsersTest extends TestCase
             ->assertRedirect();
 
         // Assert the file was stored...
-        $this->assertTrue($user->cape !== null);
-        Storage::disk('public')->assertExists("capes/$user->cape");
+        $cape = User::find(1)->cape;
+        $this->assertTrue($cape !== null);
+        Storage::disk('public')->assertExists("capes/$cape");
     }
 }

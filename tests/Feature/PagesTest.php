@@ -25,6 +25,20 @@ class PagesTest extends TestCase
     }
 
     /** @test */
+    public function can_guest_not_see_security()
+    {
+        $this->get(route('pages.security'))
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function can_guest_not_see_subscription()
+    {
+        $this->get(route('pages.subscriptions'))
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
     public function can_user_see_dashboard()
     {
         $user = User::factory()->create([
