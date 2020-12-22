@@ -19,7 +19,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property bool banned
  * @property bool disabled
  * @property bool access_free_plan
- * @property string gravatar_url
+ * @property string image
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -35,7 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'banned',
         'disabled',
         'access_free_plan',
-        'cape'
+        'cape',
+        'image',
     ];
 
     protected $hidden = [
@@ -106,10 +107,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasCapesAccess(): bool
     {
         return $this->admin || ($this->hasSubscription() && $this->subscription->plan->capes_access);
-    }
-
-    public function getGravatarUrlAttribute(): string
-    {
-        return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
 }
