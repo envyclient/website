@@ -10,32 +10,29 @@
                 @livewire('change-password')
             </div>
         </div>
-        <div class="mt-3">
-            <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal"
-                    data-target="#disableAccountModal">
+        <div class="mt-3 mb-3 d-grid gap-2">
+            <button type="button"
+                    class="btn btn-outline-danger btn-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target="#disableAccountModal">
                 Disable Account
             </button>
         </div>
-        <br>
     </div>
 
     <!-- disable account modal -->
-    <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="disableAccountModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Disable Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">
-                            &times;
-                        </span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     By disabling your account you will lose access to your account. Are you sure you want to proceed?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         NO, CANCEL
                     </button>
                     <form action="{{ route('users.disable') }}" method="post">

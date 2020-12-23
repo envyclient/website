@@ -23,7 +23,6 @@
                 <div class="mt-3">
                     <label class="form-label">Cape</label>
                     <br>
-
                     <img
                         src="{{ $user->cape === null ? asset('assets/default_cape.png') : asset("storage/capes/$user->cape") }}"
                         alt="cape"
@@ -32,16 +31,19 @@
                         height="128px"
                     >
 
-                    <form action="{{ route('users.upload-cape') }}" method="post" enctype="multipart/form-data"
+                    <form action="{{ route('users.upload-cape') }}"
+                          method="post"
+                          enctype="multipart/form-data"
                           style="margin-top: 15px;">
                         @csrf
-                        <div class="custom-file">
-                            <input type="file"
-                                   class="custom-file-input @error('cape') is-invalid @enderror"
+
+                        <div class="mb-3">
+                            <input class="form-control"
+                                   type="file"
                                    id="cape"
                                    name="cape"
+                                   accept=".png,.jpg,.jpeg"
                                    required>
-                            <label class="custom-file-label" for="file">Choose file</label>
 
                             @error('cape')
                             <span class="invalid-feedback" role="alert">
@@ -50,16 +52,16 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-success mt-2">Upload</button>
+                        <button type="submit" class="btn btn-success">Upload</button>
                     </form>
                 </div>
             @endif
 
             <div class="alert alert-secondary mt-3" style="font-size:25px;">
                 <i class="fas fa-file" style="padding-right:10px;"></i> Configs
-                <span class="badge badge-secondary">
-                        {{ $configs->count() }}/{{ $user->getConfigLimit() }}
-                    </span>
+                <span class="badge bg-secondary">
+                        {{ count($configs) }}/{{ $user->getConfigLimit() }}
+                </span>
             </div>
             <div class="text-left">
                 @if(count($configs) > 0)
@@ -92,24 +94,16 @@
                 @endif
             </div>
 
-            <a role="button" class="btn btn-primary btn-lg btn-block" href="{{ route('download-launcher') }}">
-                <svg style="width:24px;height:24px" viewBox="0 0 24 24" class="mb-1 mr-1">
-                    <path fill="currentColor"
-                          d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
-                </svg>
-                Download Launcher
-            </a>
+            <div class="d-grid gap-2">
+                <a role="button" class="btn btn-primary btn-lg" href="{{ route('download-launcher') }}">
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24" class="mb-1 mr-1">
+                        <path fill="currentColor"
+                              d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
+                    </svg>
+                    Download Launcher
+                </a>
+            </div>
         @endif
 
     </div>
-@endsection
-
-@section('js')
-    <script>
-        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
-            const fileName = document.getElementById("cape").files[0].name;
-            const nextSibling = e.target.nextElementSibling;
-            nextSibling.innerText = fileName;
-        });
-    </script>
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature;
 
 use App\Http\Livewire\Auth\Login;
 use App\Models\User;
@@ -47,7 +47,4 @@ class LoginTest extends TestCase
 
         $this->assertGuest();
     }
-
-    // TODO: can banned in user not login
-    // TODO: can disabled user not login
 }

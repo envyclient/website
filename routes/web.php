@@ -27,11 +27,11 @@ Route::group([], function () {
  */
 Route::prefix('admin')->group(function () {
 
-    // list users and versions
+// list users and versions
     Route::get('users', [PagesController::class, 'users'])->name('admin.users');
     Route::get('versions', [PagesController::class, 'versions'])->name('admin.versions');
 
-    // upload version
+// upload version
     Route::post('versions', UploadVersion::class)->name('admin.versions.upload');
 });
 
@@ -47,7 +47,7 @@ Route::prefix('subscriptions')->group(function () {
  * Payments
  */
 Route::prefix('paypal')->group(function () {
-    // admin
+// admin
     Route::get('createBillingPlan', [PayPalController::class, 'createBillingPlan'])->name('paypal.createBillingPlan');
 
     Route::post('process', [PayPalController::class, 'process'])->name('paypal.process');
