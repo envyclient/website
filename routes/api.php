@@ -50,8 +50,3 @@ Route::prefix('versions')->group(function () {
     Route::get('{version}/download-version', [VersionsController::class, 'downloadVersion']);
     Route::get('{version}/download-assets', [VersionsController::class, 'downloadAssets']);
 });
-
-/**
- * Extra
- */
-Route::get('assets', DownloadAssets::class);
