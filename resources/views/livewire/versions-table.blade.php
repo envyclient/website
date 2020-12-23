@@ -5,7 +5,8 @@
             <th>#</th>
             <th>name</th>
             <th>beta</th>
-            <th>file</th>
+            <th>version</th>
+            <th>assets</th>
             <th>date</th>
             <th>action</th>
         </tr>
@@ -22,15 +23,10 @@
                         &#10006;
                     @endif
                 </td>
-                <td>{{ $version->file }}</td>
+                <td>{{ $version->version }}</td>
+                <td>{{ $version->assets }}</td>
                 <td>{{ $version->created_at->diffForHumans() }}</td>
                 <td>
-                    <a type="button" class="btn btn-primary" role="button"
-                       href="{{ route('api.versions.show', $version->id) }}?api_token={{ $apiToken }}">
-                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
-                        </svg>
-                    </a>
                     <a type="button" class="btn btn-danger" role="button"
                        wire:click="deleteVersion({{ $version->id }})">
                         <svg style="width:24px;height:24px" viewBox="0 0 24 24">

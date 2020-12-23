@@ -20,17 +20,20 @@ class UploadVersion extends Controller
             'name' => 'required|string|max:30|unique:versions',
             'beta' => 'nullable',
             'version' => 'required|file|max:40000',
+            'assets' => 'required|file|max:10000',
             'changelog' => 'required|string',
         ]);
 
-        $file = $request->file('version');
-        $fileName = bin2hex(openssl_random_pseudo_bytes(30)) . '.' . $file->getClientOriginalExtension();
-        Storage::disk('local')->putFileAs('versions', $file, $fileName);
+        // store version & assets
+        $path = 'versions/' . bin2hex(openssl_random_pseudo_bytes(10));
+        Storage::disk('local')->putFileAs($path, $request->file('version'), 'version.exe');
+        Storage::disk('local')->putFileAs($path, $request->file('assets'), 'assets.jar');
 
         Version::create([
             'name' => $request->name,
             'beta' => $request->has('beta'),
-            'file' => $fileName,
+            'version' => "$path/version.exe",
+            'assets' => "$path/assets.jar",
             'changelog' => $request->changelog,
         ]);
 

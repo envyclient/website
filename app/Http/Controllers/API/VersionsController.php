@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Version as VersionResource;
 use App\Models\Version;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class VersionsController extends Controller
 {
@@ -19,12 +19,14 @@ class VersionsController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        return VersionResource::collection(
-            $user->hasBetaAccess() ? Version::all() : Version::where('beta', false)->get()
-        );
+        $versions = Version::orderBy('created_at');
+        if (!$user->hasBetaAccess()) {
+            $versions->where('beta', false);
+        }
+        return $versions->get();
     }
 
-    public function show(Request $request, $id)
+    public function downloadVersion(Request $request, $id)
     {
         $user = $request->user();
         $version = Version::findOrFail($id);
@@ -39,6 +41,12 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::download("versions/$version->file");
+        return Storage::download($version->version);
+    }
+
+    public function downloadAssets(Request $request, $id)
+    {
+        $version = Version::findOrFail($id);
+        return Storage::download($version->assets);
     }
 }

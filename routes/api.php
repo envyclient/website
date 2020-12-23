@@ -47,7 +47,8 @@ Route::prefix('charts')->group(function () {
  */
 Route::prefix('versions')->group(function () {
     Route::get('/', [VersionsController::class, 'index']);
-    Route::get('{version}', [VersionsController::class, 'show'])->name('api.versions.show');
+    Route::get('{version}/download-version', [VersionsController::class, 'downloadVersion']);
+    Route::get('{version}/download-assets', [VersionsController::class, 'downloadAssets']);
 });
 
 /**

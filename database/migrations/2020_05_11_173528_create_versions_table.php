@@ -17,7 +17,8 @@ class CreateVersionsTable extends Migration
             $table->id();
             $table->string('name', 30)->unique();
             $table->boolean('beta')->default(false);
-            $table->string('file')->unique();
+            $table->string('version')->unique();
+            $table->string('assets')->unique();
             $table->text('changelog');
             $table->timestamps();
         });

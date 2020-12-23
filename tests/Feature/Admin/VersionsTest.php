@@ -2,12 +2,15 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Http\Livewire\UsersTable;
+use App\Http\Livewire\VersionsTable;
 use App\Models\User;
 use App\Models\Version;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class VersionsTest extends TestCase
@@ -49,6 +52,7 @@ class VersionsTest extends TestCase
                 'name' => 'Beta 1',
                 'beta' => true,
                 'version' => UploadedFile::fake()->create('version.exe', 1000),
+                'assets' => UploadedFile::fake()->create('assets.jar', 1000),
                 'changelog' => '+test\n+test1',
             ])
             ->assertRedirect();
@@ -56,6 +60,24 @@ class VersionsTest extends TestCase
         // Assert the file was stored...
         $version = Version::find(1);
         $this->assertTrue($version->exists());
-        Storage::disk('local')->assertExists("versions/$version->file");
+        Storage::disk('local')
+            ->assertExists($version->version)
+            ->assertExists($version->assets);
+    }
+
+    /** @test */
+    public function can_admin_delete_version()
+    {
+        $this->can_admin_upload_version();
+
+        $version = Version::find(1);
+
+        Livewire::test(VersionsTable::class)
+            ->call('deleteVersion', 1);
+
+        $this->assertFalse($version->exists());
+        Storage::disk('local')
+            ->assertMissing($version->version)
+            ->assertMissing($version->assets);
     }
 }
