@@ -1,11 +1,11 @@
 <div>
     <!-- filters -->
-    <div class="form-row">
+    <div class="row">
         <div class="col">
             <input class="form-control" type="text" placeholder="Name" wire:model="name">
         </div>
         <div class="col">
-            <select class="form-control" wire:model="type">
+            <select class="form-select" wire:model="type">
                 <option value="all">All</option>
                 <option value="banned">Only Banned</option>
             </select>

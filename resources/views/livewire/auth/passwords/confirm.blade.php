@@ -1,15 +1,16 @@
-<div class="container mt-4">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Confirm Password') }}</div>
 
                 <div class="card-body">
+
                     {{ __('Please confirm your password before continuing.') }}
 
                     <form wire:submit.prevent="confirm">
 
-                        <div class="form-group row">
+                        <div class="mb-3 mt-3 row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">
                                 {{ __('Password') }}
                             </label>
@@ -30,7 +31,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Confirm Password') }}
