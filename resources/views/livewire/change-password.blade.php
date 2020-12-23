@@ -1,33 +1,31 @@
 <div>
     <form wire:submit.prevent="submit">
 
-        <div>
-            @if (session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
-            @endif
-        </div>
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input class="form-control"
                    type="text"
                    value="{{ $user->name }}"
                    id="name"
-                   disabled>
+                   readonly>
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input class="form-control"
                    type="text"
                    value="{{ $user->email }}"
                    id="email"
-                   disabled>
+                   readonly>
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="current-password" class="form-label">Current Password</label>
             <input class="form-control @error('current_password') is-invalid @enderror"
                    type="password"
@@ -37,12 +35,12 @@
 
             @error('current_password')
             <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                <strong>{{ $message }}</strong>
+            </span>
             @enderror
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="password" class="form-label">New Password</label>
             <input class="form-control @error('password') is-invalid @enderror"
                    type="password"
@@ -52,12 +50,12 @@
 
             @error('password')
             <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                <strong>{{ $message }}</strong>
+            </span>
             @enderror
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="password-confirmation" class="form-label">Confirm Password</label>
             <input class="form-control @error('password_confirmation') is-invalid @enderror"
                    type="password"
@@ -67,8 +65,8 @@
 
             @error('password_confirmation')
             <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                <strong>{{ $message }}</strong>
+            </span>
             @enderror
         </div>
 

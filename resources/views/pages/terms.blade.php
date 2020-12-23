@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 
 @section('content')
-    <div class="container mt-4">
+    <div class="container">
         <h1>Terms of Service</h1>
         <p>This license is a legal agreement between the Subscriber ("you") and Envy Client (“we”) for the use of the
             Software. By downloading any Envy Client files you agree to be bound by the terms and conditions of this

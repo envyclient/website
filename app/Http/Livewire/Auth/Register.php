@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Auth;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
@@ -39,7 +39,7 @@ class Register extends Component
 
     public function render()
     {
-        return view('livewire.auth.register')->extends('layouts.guest');
+            return view('livewire.auth.register')->extends('layouts.guest');
     }
 
     public function register()

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54487c6d6d4a6ca26b8320b2ccbe85d7",
+    "content-hash": "b20119cf54eb12a68c3e47160de1b4f4",
     "packages": [
         {
             "name": "balping/json-raw-encoder",
@@ -5559,6 +5559,62 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "haq/seal",
+            "version": "v1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/haq/laravel-seal.git",
+                "reference": "599e26f9d9af13bca08a7a884b866cc3f30b8cc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/haq/laravel-seal/zipball/599e26f9d9af13bca08a7a884b866cc3f30b8cc4",
+                "reference": "599e26f9d9af13bca08a7a884b866cc3f30b8cc4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/filesystem": "^8.0",
+                "illuminate/support": "^8.0",
+                "livewire/livewire": "^2.3",
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Haq\\Seal\\SealServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Haq\\Seal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Affan Haq",
+                    "email": "affan.haq@outlook.com"
+                }
+            ],
+            "description": "Basic authentication scaffolding using Blade, Boostrap and Livewire.",
+            "keywords": [
+                "auth",
+                "bootstrap",
+                "laravel",
+                "livewire"
+            ],
+            "support": {
+                "issues": "https://github.com/haq/laravel-seal/issues",
+                "source": "https://github.com/haq/laravel-seal/tree/v1.1.4"
+            },
+            "time": "2020-12-23T19:21:23+00:00"
         },
         {
             "name": "mockery/mockery",

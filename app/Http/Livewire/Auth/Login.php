@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Auth;
 
 use App\Providers\RouteServiceProvider;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Login extends Component

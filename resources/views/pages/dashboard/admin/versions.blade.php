@@ -25,8 +25,8 @@
             <form action="{{ route('admin.versions.upload') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group">
-                    <label for="name">Name</label>
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
                     <input class="form-control @error('name') is-invalid @enderror"
                            placeholder="Name"
                            type="text"
@@ -41,8 +41,8 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="changelog">Changelog</label>
+                <div class="mb-3">
+                    <label class="form-label" for="changelog">Changelog</label>
                     <textarea class="form-control" id="changelog" name="changelog" rows="3" required></textarea>
 
                     @error('changelog')
@@ -52,57 +52,43 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="beta" name="beta">
-                        <label class="custom-control-label" for="beta">Is Beta Version?</label>
-                    </div>
+                <div class="mb-3 form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="beta" name="beta">
+                    <label class="form-check-label" for="beta">
+                        Is Beta Version?
+                    </label>
                 </div>
 
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Version</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file"
-                                   class="custom-file-input @error('version') is-invalid @enderror"
-                                   id="version"
-                                   name="version"
-                                   accept=".exe"
-                                   required>
-                            <label class="custom-file-label" for="version">Choose file</label>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Version</label>
+                    <input class="form-control @error('version') is-invalid @enderror"
+                           type="file"
+                           id="version"
+                           name="version"
+                           accept=".exe"
+                           required>
 
-                            @error('version')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
+                    @error('version')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
 
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Assets</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file"
-                                   class="custom-file-input @error('assets') is-invalid @enderror"
-                                   id="assets"
-                                   name="assets"
-                                   accept=".jar"
-                                   required>
-                            <label class="custom-file-label" for="assets">Choose file</label>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Assets</label>
+                    <input class="form-control @error('assets') is-invalid @enderror"
+                           type="file"
+                           id="assets"
+                           name="assets"
+                           accept=".jar"
+                           required>
 
-                            @error('assets')
-                            <span class="invalid-feedback" role="alert">
+                    @error('assets')
+                    <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-                            @enderror
-                        </div>
-                    </div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-success">Upload</button>
@@ -116,16 +102,4 @@
 
 @section('js')
     {!! $chart->script() !!}
-    <script>
-        document.getElementById('version').addEventListener('change', function (e) {
-            const fileName = document.getElementById("version").files[0].name;
-            const nextSibling = e.target.nextElementSibling;
-            nextSibling.innerText = fileName;
-        });
-        document.getElementById('assets').addEventListener('change', function (e) {
-            const fileName = document.getElementById("assets").files[0].name;
-            const nextSibling = e.target.nextElementSibling;
-            nextSibling.innerText = fileName;
-        });
-    </script>
 @endsection

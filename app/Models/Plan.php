@@ -11,9 +11,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int paypal_id
  * @property int config_limit
  * @property bool beta_access
+ * @property bool capes_access
  */
 class Plan extends Model
 {
+    protected $casts = [
+        'beta_access' => 'bool',
+        'capes_access' => 'bool',
+    ];
+
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
