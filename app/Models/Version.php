@@ -7,15 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string name
  * @property boolean beta
- * @property string file
+ * @property string version
+ * @property string assets
+ * @property string changelog
  */
 class Version extends Model
 {
     protected $fillable = [
         'name',
         'beta',
-        'file',
+        'version',
+        'assets',
         'changelog',
+    ];
+
+    protected $hidden = [
+        'version',
+        'assets',
+    ];
+
+    protected $casts = [
+        'beta' => 'bool',
     ];
 
     public function users()

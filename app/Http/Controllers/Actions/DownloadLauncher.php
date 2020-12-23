@@ -10,7 +10,7 @@ class DownloadLauncher extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified', 'subscribed']);
     }
 
     public function __invoke(Request $request)

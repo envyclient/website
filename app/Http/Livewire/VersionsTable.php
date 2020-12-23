@@ -20,15 +20,22 @@ class VersionsTable extends Component
     {
         return view('livewire.versions-table')->with([
             'apiToken' => auth()->user()->api_token,
-            'versions' => Version::all(),
+            'versions' => Version::orderBy('created_at')->get(),
         ]);
     }
 
     public function deleteVersion($id)
     {
         $version = Version::findOrFail($id);
-        Storage::delete("versions/$version->file");
+
+        // delete the directory in which the files are held
+        $directory = explode('/', $version->version)[1];
+        Storage::deleteDirectory("versions/$directory");
+
+        // deleting the version downloads
         DB::table('user_downloads')->where('version_id', $version->id)->delete();
+
+        // deleting the row from the table
         $version->delete();
     }
 }
