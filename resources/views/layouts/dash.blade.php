@@ -93,7 +93,7 @@
 </head>
 <body>
 <div class="d-flex wrapper">
-    
+
     <div class="d-inline-block" id="sidebar-wrapper">
         <div class="list-group">
             <a class="navbar-brand text-white">
