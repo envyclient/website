@@ -17,7 +17,6 @@ class ConfigsController extends Controller
 
     public function index(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'search' => 'nullable|string'
         ]);
