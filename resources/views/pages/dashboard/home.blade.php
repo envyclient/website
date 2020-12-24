@@ -114,7 +114,12 @@
         @endif
     </div>
 
-    <div class="modal fade" id="launcher-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade"
+         id="launcher-modal"
+         data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         tabindex="-1"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -124,7 +129,7 @@
                 <div class="modal-body">
                     <div class="alert alert-warning " role="alert">
                         Make sure to install <strong>Microsoft Visual C++ 2015 Redistributable</strong>.
-                        You can download it <a class="alert-link"
+                        You can download it <a class="alert-link" target="_blank"
                                                href="https://www.microsoft.com/en-us/download/details.aspx?id=53587">here</a>.
                     </div>
                     <p>
