@@ -44,6 +44,10 @@
                                    name="cape"
                                    accept=".png,.jpg,.jpeg"
                                    required>
+                            <div class="form-text">
+                                The dimensions must be 92x44.
+                            </div>
+
 
                             @error('cape')
                             <span class="invalid-feedback" role="alert">
