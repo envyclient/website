@@ -47,9 +47,6 @@ Route::prefix('subscriptions')->group(function () {
  * Payments
  */
 Route::prefix('paypal')->group(function () {
-// admin
-    Route::get('createBillingPlan', [PayPalController::class, 'createBillingPlan'])->name('paypal.createBillingPlan');
-
     Route::post('process', [PayPalController::class, 'process'])->name('paypal.process');
     Route::get('execute', [PayPalController::class, 'execute'])->name('paypal.execute');
     Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
