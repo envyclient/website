@@ -28,7 +28,7 @@
                         alt="cape"
                         class="rounded"
                         width="128px"
-                        height="128px"
+                        height="61px"
                     >
 
                     <form action="{{ route('users.upload-cape') }}"
