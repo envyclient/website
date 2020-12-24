@@ -122,20 +122,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    You are downloading an <strong>unsigned version</strong> of the launcher.
-                    Make sure you <strong>accept</strong> all warning messages.
-                    In future updates, these warnings will go away.
-
-                    <div class="mb-3">
-                        <h4>Microsoft Edge</h4>
-                        <img src="{{ asset('assets/launcher/1.png') }}" class="rounded">
+                    <div class="alert alert-warning " role="alert">
+                        Make sure to install <strong>Microsoft Visual C++ 2015 Redistributable</strong>.
+                        You can download it <a class="alert-link"
+                                               href="https://www.microsoft.com/en-us/download/details.aspx?id=53587">here</a>.
                     </div>
+                    <p>
+                        You are downloading an <strong>unsigned version</strong> of the launcher.
+                        Make sure you <strong>accept</strong> all warning messages.
+                        In future updates, these warnings will go away.
+                    </p>
 
-                    <div>
-                        <h4>Windows Defender</h4>
-                        <img src="{{ asset('assets/launcher/2.png') }}" class="rounded">
+                    <div class="row">
+                        <div class="col">
+                            <h4>Microsoft Edge</h4>
+                            <img src="{{ asset('assets/launcher/1.png') }}" class="rounded" width="312" height="330">
+                        </div>
+
+                        <div class="col">
+                            <h4>Windows Defender</h4>
+                            <img src="{{ asset('assets/launcher/2.png') }}" class="rounded" width="416" height="390">
+                        </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
