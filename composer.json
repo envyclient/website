@@ -11,14 +11,13 @@
         "php": "^7.3|8.0",
         "consoletvs/charts": "6.*",
         "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "livewire/livewire": "^2.3",
         "mistic100/randomcolor": "^1.0",
-        "overtrue/laravel-favorite": "^2.0",
-        "paypal/rest-api-sdk-php": "*"
+        "overtrue/laravel-favorite": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

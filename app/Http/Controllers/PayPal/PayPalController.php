@@ -2,100 +2,28 @@
 
 namespace App\Http\Controllers\PayPal;
 
+use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\BillingAgreement;
+use App\Models\Plan;
 use App\Providers\RouteServiceProvider;
-use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
-use PayPal\Api\Agreement;
-use PayPal\Api\Currency;
-use PayPal\Api\MerchantPreferences;
-use PayPal\Api\Patch;
-use PayPal\Api\PatchRequest;
-use PayPal\Api\Payer;
-use PayPal\Api\PaymentDefinition;
-use PayPal\Api\Plan;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Common\PayPalModel;
-use PayPal\Exception\PayPalConnectionException;
-use PayPal\Rest\ApiContext;
+use Illuminate\Support\Facades\Http;
 
 class PayPalController extends Controller
 {
-    private $paypal;
+    private $endpoint;
 
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->middleware('admin')->only('createBillingPlan');
-
-        $this->paypal = new ApiContext(new OAuthTokenCredential(
-            config('paypal.client_id'),
-            config('paypal.secret')
-        ));
-        $this->paypal->setConfig(config('paypal.settings'));
-    }
-
-    public function createBillingPlan()
-    {
-        // Create a new billing plan
-        $plan = new Plan();
-        $plan->setName('Standard')
-            ->setDescription('1 month of recurring Envy Client')
-            ->setType('INFINITE');
-
-        // Set billing plan definitions
-        $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Regular Payments')
-            ->setType('REGULAR')
-            ->setFrequency('MONTH')
-            ->setFrequencyInterval('1')
-            ->setAmount(new Currency([
-                'value' => 7,
-                'currency' => 'USD'
-            ]));
-
-        // Set merchant preferences
-        $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://dashboard.envyclient.com/paypal/execute')
-            ->setCancelUrl('https://dashboard.envyclient.com/paypal/cancel')
-            ->setAutoBillAmount('YES')
-            ->setInitialFailAmountAction('CANCEL')
-            ->setMaxFailAttempts('1')
-            ->setSetupFee(new Currency([
-                'value' => 7,
-                'currency' => 'USD'
-            ]));
-
-        $plan->setPaymentDefinitions([$paymentDefinition]);
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        try {
-            $createdPlan = $plan->create($this->paypal);
-        } catch (PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        }
-
-        $patch = new Patch();
-        $patch->setOp('replace')
-            ->setPath('/')
-            ->setValue(new PayPalModel('{"state":"ACTIVE"}'));
-
-        $patchRequest = new PatchRequest();
-        $patchRequest->addPatch($patch);
-        $createdPlan->update($patchRequest, $this->paypal);
-
-        $plan = Plan::get($createdPlan->getId(), $this->paypal);
-        dd($plan);
+        $this->endpoint = config('paypal.endpoint');
     }
 
     public function process(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|integer'
+            'id' => 'required|integer|exists:plans'
         ]);
 
         $user = $request->user();
@@ -103,28 +31,21 @@ class PayPalController extends Controller
             return back()->with('error', 'You already have a active subscription.');
         }
 
-        // Create new agreement
-        $agreement = new Agreement();
-        $agreement->setName('Base Agreement')
-            ->setDescription('Basic Agreement')
-            ->setStartDate(Carbon::today()->addMonth()->toIso8601String());
+        $response = Http::withToken(Paypal::getAccessToken())
+            ->withBody(json_encode([
+                'name' => 'Base Agreement',
+                'description' => 'Basic Agreement',
+                'start_date' => today()->addMonth()->toIso8601String(),
+                'plan' => [
+                    'id' => Plan::find($request->id)->paypal_id
+                ],
+                'payer' => [
+                    'payment_method' => 'paypal'
+                ]
+            ]), 'application/json')
+            ->post("$this->endpoint/v1/payments/billing-agreements/");
 
-        // Set plan id
-        $plan = new Plan();
-        $plan->setId(
-            \App\Models\Plan::find($request->id)->paypal_id
-        );
-        $agreement->setPlan($plan);
-
-        // Add payer type
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-        $agreement->setPayer($payer);
-
-        try {
-            $agreement = $agreement->create($this->paypal);
-        } catch (Exception $e) {
-            die($e);
+        if ($response->status() !== 201) {
             return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
@@ -133,7 +54,7 @@ class PayPalController extends Controller
             'plan_id' => $request->id
         ]);
 
-        return redirect()->away($agreement->getApprovalLink());
+        return redirect()->away($response->json()['links'][0]['href']);
     }
 
     public function execute(Request $request)
@@ -151,25 +72,26 @@ class PayPalController extends Controller
             return back()->with('error', 'You already have a active subscription.');
         }
 
-        $agreement = new Agreement();
+        $response = HTTP::withToken(Paypal::getAccessToken())
+            ->withHeaders([
+                'Content-Type:' => 'application/json'
+            ])
+            ->post("$this->endpoint/v1/payments/billing-agreements/$request->token/agreement-execute");
 
-        try {
-            $result = $agreement->execute($request->token, $this->paypal);
-            //dd($result);
-        } catch (Exception $e) {
-            die($e);
+        if ($response->status() !== 200) {
             return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
-        if ($agreement->getState() !== 'Active') {
+        $responseData = $response->json();
+        if ($responseData['state'] !== 'Active') {
             return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
         BillingAgreement::create([
             'user_id' => $request->user()->id,
             'plan_id' => $planId,
-            'billing_agreement_id' => $agreement->getId(),
-            'state' => $agreement->getState(),
+            'billing_agreement_id' => $responseData['id'],
+            'state' => $responseData['state'],
         ]);
 
         return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('success', 'Subscription successful.');
