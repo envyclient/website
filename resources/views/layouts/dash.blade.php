@@ -132,7 +132,7 @@
             </div>
             @admin
             <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
-                <ADMINISTRATOR></ADMINISTRATOR>
+                ADMINISTRATOR
             </h3>
             <a class="list-group-item list-group-item-custom {{ Route::is('admin.users') ? 'active': null }}"
                href="{{ route('admin.users') }}">
@@ -151,7 +151,8 @@
     <div id="page-content-wrapper">
 
         <!-- top navbar -->
-        <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark"
+             style="background-color: #303030 !important;">
             <a class="navbar-brand text-white mx-3" href="{{ url('/') }}">
                 Envy Client | <span class="text-muted">dashboard</span>
             </a>
