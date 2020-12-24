@@ -20,7 +20,7 @@ class Register extends Component
         'name' => [
             'required',
             'string',
-            'max:3',
+            'min:3',
             'max:255',
         ],
         'email' => [
