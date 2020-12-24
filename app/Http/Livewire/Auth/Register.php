@@ -20,6 +20,7 @@ class Register extends Component
         'name' => [
             'required',
             'string',
+            'max:3',
             'max:255',
         ],
         'email' => [
@@ -39,7 +40,7 @@ class Register extends Component
 
     public function render()
     {
-            return view('livewire.auth.register')->extends('layouts.guest');
+        return view('livewire.auth.register')->extends('layouts.guest');
     }
 
     public function register()
