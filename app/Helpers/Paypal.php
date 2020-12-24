@@ -19,7 +19,7 @@ class Paypal
             throw new Exception('Invalid Credentials.');
         }
 
-        return $response->json()['access_token'];
+        return $response->json('access_token');
     }
 
     public static function cancelBillingAgreement($id, $message): int
