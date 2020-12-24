@@ -11,7 +11,7 @@ class GetConfigsForCurrentUser extends ConfigsController
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        parent::__construct();
     }
 
     public function __invoke(Request $request)
