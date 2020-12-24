@@ -15,6 +15,6 @@ class DownloadLauncher extends Controller
 
     public function __invoke(Request $request)
     {
-        return Storage::download('envy-launcher.exe');
+        return Storage::disk('local')->download('envy-launcher.exe');
     }
 }
