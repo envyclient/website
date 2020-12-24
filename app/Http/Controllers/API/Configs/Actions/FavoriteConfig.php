@@ -10,7 +10,7 @@ class FavoriteConfig extends ConfigsController
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        parent::__construct();
     }
 
     public function __invoke(Request $request, $id)
@@ -25,14 +25,10 @@ class FavoriteConfig extends ConfigsController
             ], 403);
         }
 
-        if ($user->hasFavorited($config)) {
-            $user->unfavorite($config);
-        } else {
-            $user->favorite($config);
-        }
+        $user->toggleFavorite($config);
 
         return response()->json([
             'message' => '200 OK'
-        ], 200);
+        ]);
     }
 }

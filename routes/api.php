@@ -22,7 +22,6 @@ Route::prefix('auth')->group(function () {
  * Configs
  */
 Route::prefix('configs')->group(function () {
-    Route::put('favorite/{config}', FavoriteConfig::class);
 
     Route::get('user', GetConfigsForCurrentUser::class);
     Route::get('user/{name}', GetConfigsForUser::class);
@@ -31,6 +30,7 @@ Route::prefix('configs')->group(function () {
     Route::get('{config}', [ConfigsController::class, 'show']);
     Route::post('/', [ConfigsController::class, 'store']);
     Route::put('{config}', [ConfigsController::class, 'update']);
+    Route::put('{config}/favorite', FavoriteConfig::class);
     Route::delete('{config}', [ConfigsController::class, 'destroy']);
 });
 

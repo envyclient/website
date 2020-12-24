@@ -17,6 +17,7 @@ class ConfigsController extends Controller
 
     public function index(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'search' => 'nullable|string'
         ]);
@@ -27,26 +28,18 @@ class ConfigsController extends Controller
             ], 400);
         }
 
+        $configs = Config::with('user')
+            ->withCount('favorites')
+            ->where('public', true)
+            ->orderBy('favorites_count', 'desc');
+
         if ($request->has('search')) {
-            $name = $request->search;
-            return ConfigResource::collection(
-                Config::with('user:id,name')
-                    ->where([
-                        ['name', 'like', "%$name%"],
-                        ['public', '=', true]
-                    ])->withCount('favorites')
-                    ->orderBy('favorites_count', 'desc')
-                    ->paginate(Config::PAGE_LIMIT)
-            );
-        } else {
-            return ConfigResource::collection(
-                Config::with('user:id,name')
-                    ->withCount('favorites')
-                    ->where('public', true)
-                    ->orderBy('favorites_count', 'desc')
-                    ->paginate(Config::PAGE_LIMIT)
-            );
+            $configs->where('name', 'like', "%$request->search%");
         }
+
+        return ConfigResource::collection(
+            $configs->paginate(Config::PAGE_LIMIT)
+        );
     }
 
     public function show($id)
@@ -67,7 +60,7 @@ class ConfigsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:15',
             'data' => 'required|json',
-            'public' => 'nullable|boolean'
+            'public' => 'nullable|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -92,7 +85,7 @@ class ConfigsController extends Controller
 
         return response()->json([
             'message' => '201 Created',
-            'id' => $config->id
+            'id' => $config->id,
         ], 201);
     }
 
@@ -101,7 +94,7 @@ class ConfigsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:15',
             'data' => 'required|json',
-            'public' => 'nullable|boolean'
+            'public' => 'nullable|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -123,7 +116,7 @@ class ConfigsController extends Controller
 
         return response()->json([
             'message' => '200 OK'
-        ], 200);
+        ]);
     }
 
     public function destroy(Request $request, $id)

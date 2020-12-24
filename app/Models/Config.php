@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
@@ -13,7 +14,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  */
 class Config extends Model
 {
-    use Favoriteable;
+    use Favoriteable, HasFactory;
 
     const PAGE_LIMIT = 5;
 
