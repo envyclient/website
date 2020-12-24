@@ -6,6 +6,8 @@ use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class GetConfigsForCurrentUser extends ConfigsController
 {
@@ -16,8 +18,17 @@ class GetConfigsForCurrentUser extends ConfigsController
 
     public function __invoke(Request $request)
     {
-        $data = collect();
+        $validator = Validator::make($request->all(), [
+            'search' => 'nullable|string'
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request'
+            ], 400);
+        }
+
+        $data = collect();
         foreach ($request->user()
                      ->configs()
                      ->withCount('favorites')
@@ -32,6 +43,12 @@ class GetConfigsForCurrentUser extends ConfigsController
                      ->orderBy('favorites_count', 'desc')
                      ->get() as $config) {
             $data->push($config);
+        }
+
+        if ($request->has('search')) {
+            $data = $data->filter(function ($value, $key) use ($request) {
+                return Str::contains(strtolower($value['name']), strtolower($request->search));
+            });
         }
 
         return ConfigResource::collection($data);

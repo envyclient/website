@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Actions\DownloadAssets;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
