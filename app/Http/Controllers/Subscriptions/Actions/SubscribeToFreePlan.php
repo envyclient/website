@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class SubscribeToFreePlan extends SubscriptionsController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function __invoke(Request $request)
     {
         $user = $request->user();
@@ -26,11 +31,6 @@ class SubscribeToFreePlan extends SubscriptionsController
             'plan_id' => 1,
             'end_date' => Carbon::now()->addDecade(),
         ]);
-
-        /*$user->notify(new SubscriptionUpdated(
-            'New Subscription',
-            'Thank you for subscribing to the free plan.'
-        ));*/
 
         return back()->with('success', 'Subscribed to the free plan.');
     }
