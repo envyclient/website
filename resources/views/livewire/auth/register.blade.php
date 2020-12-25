@@ -86,6 +86,13 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <p class="text-muted">
+                                By clicking register you are agreeing to our
+                                <a href="{{ route('pages.terms') }}">Terms and Conditions.</a>
+                            </p>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-sm-10 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
