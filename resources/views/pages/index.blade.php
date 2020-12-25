@@ -62,28 +62,38 @@
     </h1>
     <div class="feature">
         <div class="feature-image">
-            <img src="{{ asset('assets/features/feature1.png') }}" alt="feature-image">
+            <img src="{{ asset('assets/features/feature2.png') }}" alt="feature-image">
         </div>
         <div class="feature-content">
-            <h1>Powerful</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quisquam culpa aliquam in eos quibusdam
-                cumque, libero quos placeat debitis ullam cum ipsum, nemo praesentium impedit ad molestias! Quos,
-                nostrum. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates odio sit vel ratione, iure
-                laudantium obcaecati! Corporis, ducimus architecto. Exercitationem ab inventore vitae officiis ducimus
-                non nisi aliquid ea iure?</p>
+            <h1>Client</h1>
+            <ul>
+                <li>Designed to bypass Watchdog.</li>
+                <li>
+                    Comes with a built-in account manager in
+                    the multiplayer menu that supports <a target="_blank" href="https://thealtening.com/">The
+                        Altening</a>.
+                </li>
+                <li>Features latest OptiFine to provide maximum performance.</li>
+            </ul>
         </div>
     </div>
     <div class="feature right">
         <div class="feature-content">
-            <h1>Beautiful</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quisquam culpa aliquam in eos quibusdam
-                cumque, libero quos placeat debitis ullam cum ipsum, nemo praesentium impedit ad molestias! Quos,
-                nostrum. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates odio sit vel ratione, iure
-                laudantium obcaecati! Corporis, ducimus architecto. Exercitationem ab inventore vitae officiis ducimus
-                non nisi aliquid ea iure?</p>
+            <h1>Launcher</h1>
+            <p>Uses a custom launcher written using C++ to provide complete security.</p>
         </div>
         <div class="feature-image">
-            <img src="{{ asset('assets/features/feature2.png') }}" alt="feature-image">
+            <img src="{{ asset('assets/features/feature1.png') }}" alt="feature-image">
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-image">
+            <img src="{{ asset('assets/features/feature3.png') }}" alt="feature-image">
+        </div>
+        <div class="feature-content">
+            <h1>Configs</h1>
+            <p>The new config manager allows the ability to store and load configs from the web, providing complete
+                unity across different versions.</p>
         </div>
     </div>
 </div>
@@ -101,7 +111,7 @@
                         style="border:0;" allowfullscreen></iframe>
             </div>
             <div class="video-container">
-                <iframe data-src="https://www.youtube.com/embed/4PQTDTmbUaA"
+                <iframe data-src="https://youtube.com/embed/-_fcrYO0T-U"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         style="border:0;" allowfullscreen></iframe>
             </div>
