@@ -98,7 +98,7 @@
                 @endif
             </div>
 
-            <div class="d-grid gap-2">
+            <div class="d-grid gap-2 mt-3">
                 <button type="button"
                         class="btn btn-primary btn-lg"
                         data-bs-toggle="modal"

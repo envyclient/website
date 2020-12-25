@@ -64,7 +64,7 @@
         <div class="feature-image">
             <img src="{{ asset('assets/features/feature2.png') }}" alt="feature-image">
         </div>
-        <div class="feature-content">
+        <div class="feature-content" style="margin-left: 30px;">
             <h1>Client</h1>
             <ul>
                 <li>Designed to bypass Watchdog.</li>
@@ -92,8 +92,10 @@
         </div>
         <div class="feature-content">
             <h1>Configs</h1>
-            <p>The new config manager allows the ability to store and load configs from the web, providing complete
-                unity across different versions.</p>
+            <p>
+                The new config manager allows the ability to store and load configs from the web, providing complete
+                unity across different versions.
+            </p>
         </div>
     </div>
 </div>
