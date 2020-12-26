@@ -24,7 +24,7 @@ class UploadCape extends Controller
         Storage::disk('public')->putFileAs('capes', $file, $fileName);
 
         auth()->user()->fill([
-            'cape' => $fileName,
+            'cape' => asset("storage/capes/$fileName"),
         ])->save();
 
         return back()->with('success', 'Cape uploaded.');
