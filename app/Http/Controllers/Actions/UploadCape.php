@@ -16,7 +16,7 @@ class UploadCape extends Controller
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'cape' => 'required|file|image|mimes:png,jpeg,jpg|dimensions:width=92,height=44|max:1024',
+            'cape' => 'required|file|image|mimes:png,jpeg,jpg',
         ]);
 
         $file = $request->file('cape');
