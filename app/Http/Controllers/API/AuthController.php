@@ -87,7 +87,6 @@ class AuthController extends Controller
         return response()->json([
             'name' => $user->name,
             'api_token' => $user->api_token,
-            'cape' => $user->cape === null ? asset('assets/default_cape.png') : asset("storage/capes/$user->cape"),
             'date' => $user->created_at->diffForHumans(),
         ]);
     }

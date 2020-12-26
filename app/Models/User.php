@@ -19,7 +19,9 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property bool banned
  * @property bool disabled
  * @property bool access_free_plan
+ * @property string cape
  * @property string image
+ * @property null|string current_account
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -37,6 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'access_free_plan',
         'cape',
         'image',
+        'current_account',
     ];
 
     protected $hidden = [

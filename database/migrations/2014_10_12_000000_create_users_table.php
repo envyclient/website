@@ -23,9 +23,10 @@ class CreateUsersTable extends Migration
 
             $table->string('api_token', 60)->unique();
             $table->string('hwid', 40)->nullable()->unique();
-            $table->string('cape')->nullable()->unique();
             $table->string('image');
 
+            $table->string('cape');
+            $table->char('current_account', 36)->nullable();
 
             $table->boolean('admin')->default(false);
             $table->boolean('banned')->default(false);

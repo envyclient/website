@@ -24,7 +24,7 @@
                     <label class="form-label">Cape</label>
                     <br>
                     <img
-                        src="{{ $user->cape === null ? asset('assets/default_cape.png') : asset("storage/capes/$user->cape") }}"
+                        src="{{ $user->cape }}"
                         alt="cape"
                         class="rounded"
                         width="128px"
@@ -130,7 +130,9 @@
                     <div class="alert alert-warning " role="alert">
                         Make sure to install <strong>Microsoft Visual C++ 2015 Redistributable</strong>.
                         You can download
-                        <a class="alert-link" target="_blank" href="https://www.microsoft.com/en-us/download/details.aspx?id=53587">here</a> (<a class="alert-link" href="https://aka.ms/vs/16/release/vc_redist.x64.exe">mirror</a>).
+                        <a class="alert-link" target="_blank"
+                           href="https://www.microsoft.com/en-us/download/details.aspx?id=53587">here</a> (<a
+                            class="alert-link" href="https://aka.ms/vs/16/release/vc_redist.x64.exe">mirror</a>).
                     </div>
                     <p>
                         You are downloading an <strong>unsigned version</strong> of the launcher.
