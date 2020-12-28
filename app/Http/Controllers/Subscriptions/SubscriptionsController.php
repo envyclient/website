@@ -26,7 +26,7 @@ class SubscriptionsController extends Controller
             return back()->with('success', 'You have cancelled your free subscription.');
         }
 
-        if ($user->billingAgreement->state !== 'Active') {
+        if ($user->isBillingAgreementCancelled()) {
             return back()->with('error', 'You have already cancelled your subscription.');
         }
 
