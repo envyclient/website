@@ -49,7 +49,7 @@ class HandlePayPalWebhook extends Controller
             ], 400);
         }
 
-        Log::debug($request->json());
+        Log::debug($request->getContent());
 
         switch ($request->json('event_type')) {
             // received payment so we extend or create subscription
