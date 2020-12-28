@@ -99,11 +99,21 @@
                     <input class="btn btn-outline-danger btn-lg" type="submit" value="Cancel Subscription">
                 </div>
             </form>
+        @elseif($user->hasBillingAgreement() && $user->billingAgreement->state === 'Canceled')
+            <div class="card" style="width: 100%;">
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-primary btn-lg" disabled>
+                        Subscription Cancelled
+                    </button>
+                </div>
+            </div>
         @elseif($user->hasBillingAgreement())
             <div class="card" style="width: 100%;">
-                <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
-                    Processing Subscription...
-                </button>
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-primary btn-lg" disabled>
+                        Processing Subscription...
+                    </button>
+                </div>
             </div>
         @endif
     </div>
