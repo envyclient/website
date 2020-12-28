@@ -87,6 +87,7 @@ class PayPalController extends Controller
             return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
         }
 
+        // TODO: or listen to BILLING.SUBSCRIPTION.CREATED event
         BillingAgreement::create([
             'user_id' => $request->user()->id,
             'plan_id' => $planId,
