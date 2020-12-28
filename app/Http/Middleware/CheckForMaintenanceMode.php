@@ -13,6 +13,6 @@ class CheckForMaintenanceMode extends Middleware
      */
     protected $except = [
         '/api/*',
-        '/paypal/webhook'
+        '/paypal/webhook',
     ];
 }
