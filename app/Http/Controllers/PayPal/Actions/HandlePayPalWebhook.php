@@ -120,12 +120,6 @@ class HandlePayPalWebhook extends Controller
                 }
                 break;
             }
-            default :
-            {
-                return response()->json([
-                    'message' => 'Invalid Event Type'
-                ], 400);
-            }
         }
 
         return response()->json([
