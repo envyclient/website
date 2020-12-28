@@ -97,6 +97,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->billingAgreement()->exists();
     }
 
+    public function isBillingAgreementCancelled(): bool
+    {
+        return $this->billingAgreement->state === 'Cancelled';
+    }
+
     public function getConfigLimit(): int
     {
         return $this->subscription->plan->config_limit;
