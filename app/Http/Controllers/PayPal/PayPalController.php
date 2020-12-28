@@ -94,7 +94,10 @@ class PayPalController extends Controller
             'state' => $responseData['state'],
         ]);
 
-        return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('success', 'Subscription successful.');
+        $plan = Plan::findOrFail($planId);
+
+        return redirect(RouteServiceProvider::SUBSCRIPTIONS)
+            ->with('success', "Subscribed to the $plan->name plan.");
     }
 
     public function cancel()

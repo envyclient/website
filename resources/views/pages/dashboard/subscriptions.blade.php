@@ -102,7 +102,7 @@
         @elseif($user->hasBillingAgreement())
             <div class="card" style="width: 100%;">
                 <button type="button" class="btn btn-lg btn-primary btn-block" disabled>
-                    Subscription in progress.
+                    Processing Subscription...
                 </button>
             </div>
         @endif
