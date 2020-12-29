@@ -116,6 +116,7 @@
         @endif
     </div>
 
+    <!-- Launcher Modal -->
     <div class="modal fade"
          id="launcher-modal"
          data-bs-backdrop="static"
@@ -125,10 +126,15 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Download Launcher</h5>
+                    <h5 class="modal-title">Launcher</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-dark" role="alert">
+                        For video instructions please watch <a class="alert-link" target="_blank"
+                                                               href="https://www.youtube.com/watch?v=OXr9YGbxIlU">Install
+                            Envy Client</a>.
+                    </div>
                     <div class="alert alert-warning " role="alert">
                         Make sure to install <strong>Microsoft Visual C++ 2015 Redistributable</strong>.
                         You can download
@@ -136,6 +142,7 @@
                            href="https://www.microsoft.com/en-us/download/details.aspx?id=53587">here</a> (<a
                             class="alert-link" href="https://aka.ms/vs/16/release/vc_redist.x64.exe">mirror</a>).
                     </div>
+
                     <p>
                         You are downloading an <strong>unsigned version</strong> of the launcher.
                         Make sure you <strong>accept</strong> all warning messages.
@@ -157,14 +164,14 @@
                 <div class="modal-footer card-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <a role="button" class="btn btn-primary" href="{{ route('launcher.show') }}">
-                        Download
+                        Download Launcher
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Capes Modal -->
     <div class="modal fade" id="capes-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
