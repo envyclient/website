@@ -156,7 +156,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a role="button" class="btn btn-primary" href="{{ route('download-launcher') }}">
+                    <a role="button" class="btn btn-primary" href="{{ route('launcher.show') }}">
                         Download
                     </a>
                 </div>

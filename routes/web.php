@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Actions\DisableAccount;
-use App\Http\Controllers\Actions\DownloadLauncher;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\CapesController;
+use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
@@ -70,8 +70,11 @@ Route::prefix('cape')->group(function () {
 });
 
 /**
- * Extra
+ * Launcher
  */
-Route::get('launcher', DownloadLauncher::class)->name('download-launcher');
+Route::prefix('launcher')->group(function () {
+    Route::get('/', [LauncherController::class, 'show'])->name('launcher.show');
+    Route::post('/', [LauncherController::class, 'store'])->name('launcher.store');
+});
 
 require __DIR__ . '/auth.php';
