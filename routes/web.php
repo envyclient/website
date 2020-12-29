@@ -73,7 +73,6 @@ Route::prefix('cape')->group(function () {
  * Launcher
  */
 Route::prefix('launcher')->group(function () {
-    Route::get('/latest', [LauncherController::class, 'latest'])->name('launcher.latest');
     Route::get('/download', [LauncherController::class, 'download'])->name('launcher.show');
     Route::post('/', [LauncherController::class, 'store'])->name('launcher.store');
 });
