@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Actions\LatestLauncher;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
@@ -60,4 +61,9 @@ Route::prefix('minecraft')->group(function () {
     Route::post('/', [MinecraftController::class, 'store']);
     Route::delete('/', [MinecraftController::class, 'destroy']);
 });
+
+/**
+ * Launcher
+ */
+Route::get('launcher/latest', LatestLauncher::class);
 

@@ -13,14 +13,9 @@ class LauncherController extends Controller
         $this->middleware('admin')->only('store');
     }
 
-    public function latest()
-    {
-        return Storage::disk('local')->get('launcher/latest.json');
-    }
-
     public function download()
     {
-        return Storage::disk('local')->download('launcher/envy-launcher.exe');
+        return Storage::disk('local')->download('launcher/envy.exe');
     }
 
     public function store(Request $request)
@@ -39,7 +34,7 @@ class LauncherController extends Controller
         Storage::disk('local')->putFileAs(
             'launcher/',
             $request->file('launcher'),
-            'envy-launcher.exe'
+            'envy.exe'
         );
 
         return back()->with('success', 'Launcher uploaded.');
