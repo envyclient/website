@@ -154,7 +154,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer card-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <a role="button" class="btn btn-primary" href="{{ route('launcher.show') }}">
                         Download
@@ -193,7 +193,7 @@
                     </div>
 
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer card-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>

@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class LauncherController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'subscribed']);
+        $this->middleware(['auth', 'verified', 'subscribed'])->except('latest');
         $this->middleware('admin')->only('store');
     }
 
-    public function show()
+    public function latest()
+    {
+        return Storage::disk('local')->get('launcher/latest.json');
+    }
+
+    public function download()
     {
         return Storage::disk('local')->download('launcher/envy-launcher.exe');
     }
