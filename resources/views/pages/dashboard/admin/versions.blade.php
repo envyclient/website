@@ -2,6 +2,7 @@
 
 @section('content')
     <div style="width:98%;margin:0 auto">
+
         <!-- versions table -->
         <div>
             <div class="alert alert-primary" style="font-size:25px;">
@@ -11,7 +12,7 @@
                 {!! $chart->container() !!}
             </div>
 
-            @livewire('versions-table')
+            @livewire('version.list-versions', ['apiToken' => $apiToken])
         </div>
 
         <br>

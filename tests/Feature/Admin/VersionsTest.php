@@ -3,7 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Http\Livewire\UsersTable;
-use App\Http\Livewire\VersionsTable;
+use App\Http\Livewire\ListVersions;
 use App\Models\User;
 use App\Models\Version;
 use App\Providers\RouteServiceProvider;
@@ -72,7 +72,7 @@ class VersionsTest extends TestCase
 
         $version = Version::find(1);
 
-        Livewire::test(VersionsTable::class)
+        Livewire::test(ListVersions::class)
             ->call('deleteVersion', 1);
 
         $this->assertFalse($version->exists());
