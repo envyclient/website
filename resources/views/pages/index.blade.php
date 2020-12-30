@@ -161,9 +161,6 @@
             <a href="#pricing" class="menu-link">Pricing</a><br>
             <a href="{{ route('pages.terms') }}" class="menu-link">Terms</a>
         </div>
-        <p class="content">
-            &copy; 2020 Envy Client
-        </p>
     </div>
 </div>
 
