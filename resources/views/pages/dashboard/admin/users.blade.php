@@ -18,7 +18,7 @@
         <!-- users table -->
         <div id="users-table">
             <div class="alert alert-secondary" style="font-size:25px;">
-                User Management
+                User Management<span class="badge bg-secondary mx-2">{{ \App\Models\User::count() }}</span>
             </div>
 
             @livewire('users-table')
