@@ -24,7 +24,7 @@ class RegisterTest extends TestCase
     public function can_user_register()
     {
         Livewire::test(Register::class)
-            ->set('name', 'Test User')
+            ->set('name', 'Test_User')
             ->set('email', 'test@example.com')
             ->set('password', 'password')
             ->set('passwordConfirmation', 'password')

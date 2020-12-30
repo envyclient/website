@@ -30,18 +30,18 @@
         <tbody>
         @foreach($users as $user)
             <tr>
-                <th scope="row">{{ $loop->index + 1 }}</th>
+                <th scope="row">{{ $user->id }}</th>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                @if($user->hasSubscription())
-                    <td>
+                <td>
+                    @if($user->hasSubscription())
                         Plan: <strong>{{ $user->subscription->plan->name }}</strong>
                         <br>
                         Expires: <strong>{{ $user->subscription->end_date->diffInDays() }}</strong> days
-                    </td>
-                @else
-                    <td>No Subscription</td>
-                @endif
+                    @else
+                        No Subscription
+                    @endif
+                </td>
                 <td>
                     @if($user->hwid === null)
                         &#10006;
