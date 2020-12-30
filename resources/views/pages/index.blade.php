@@ -108,7 +108,7 @@
         </h1>
         <div class="videos">
             <div class="video-container">
-                <iframe data-src="https://youtube.com/embed/OXr9YGbxIlU"
+                <iframe data-src="https://youtube.com/embed/UwzW7A9ofrM"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         style="border:0;" allowfullscreen></iframe>
             </div>
@@ -161,9 +161,9 @@
             <a href="#pricing" class="menu-link">Pricing</a><br>
             <a href="{{ route('pages.terms') }}" class="menu-link">Terms</a>
         </div>
-        {{--     <p class="content">
-                 &copy; 2020 Haq Development
-             </p>--}}
+        <p class="content">
+            &copy; 2020 Envy Client
+        </p>
     </div>
 </div>
 
