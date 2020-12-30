@@ -12,8 +12,8 @@ class UsersTable extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $name = '';
-    public $type = 'all';
+    public string $name = '';
+    public string $type = 'all';
 
     public function render()
     {
@@ -29,24 +29,32 @@ class UsersTable extends Component
         ]);
     }
 
-    public function resetUserHWID($id)
+    public function resetUserHWID(int $id): void
     {
         $user = User::findOrFail($id);
-        $user->fill([
-            'hwid' => null
-        ])->save();
+        $user->update([
+            'hwid' => null,
+        ]);
 
         $this->resetPage();
     }
 
-    public function banUser($id)
+    public function banUser(int $id): void
     {
         $user = User::findOrFail($id);
-        $user->fill([
-            'banned' => !$user->banned
-        ])->save();
+        $user->update([
+            'banned' => !$user->banned,
+        ]);
 
         $this->resetPage();
+    }
+
+    public function freePlan(int $id): void
+    {
+        $user = User::findOrFail($id);
+        $user->update([
+            'access_free_plan' => !$user->access_free_plan,
+        ]);
     }
 
     public function updatingName()
