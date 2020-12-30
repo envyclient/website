@@ -56,7 +56,9 @@ class UsersTable extends Component
 
         // removing the users subscription to the free plan
         if ($removing) {
-            $user->subscription()->delete();
+            Subscription::where('user_id', $id)
+                ->where('plan_id', 1)
+                ->delete();
         }
 
         $user->update([
