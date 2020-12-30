@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -49,9 +50,15 @@ class UsersTable extends Component
         $this->resetPage();
     }
 
-    public function freePlan(int $id): void
+    public function freePlan(int $id, bool $removing = false): void
     {
         $user = User::findOrFail($id);
+
+        // removing the users subscription to the free plan
+        if ($removing) {
+            $user->subscription()->delete();
+        }
+
         $user->update([
             'access_free_plan' => !$user->access_free_plan,
         ]);
