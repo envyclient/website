@@ -69,7 +69,7 @@
                 </ul>
 
                 <div class="card-footer text-muted">
-                    It can take up to 10 minutes to process/cancel your subscription.
+                    It can take up to 5 minutes to process/cancel your subscription.
                 </div>
             </div>
 
