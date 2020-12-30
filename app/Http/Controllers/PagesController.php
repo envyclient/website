@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Models\Plan;
+use App\Models\Version;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -108,7 +109,7 @@ class PagesController extends Controller
 
         return view('pages.dashboard.admin.versions')->with([
             'apiToken' => $apiToken,
-            'chart' => $chart
+            'chart' => $chart,
         ]);
     }
 }

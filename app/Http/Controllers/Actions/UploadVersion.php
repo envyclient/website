@@ -37,6 +37,8 @@ class UploadVersion extends Controller
             'changelog' => $request->changelog,
         ]);
 
+
+
         return back()->with('success', 'Version upload.');
     }
 }
