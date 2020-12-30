@@ -22,6 +22,7 @@ class Register extends Component
             'string',
             'min:3',
             'max:255',
+            'alpha_dash',
         ],
         'email' => [
             'required',
