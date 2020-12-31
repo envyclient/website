@@ -25,6 +25,7 @@
             <th>hwid</th>
             <th>banned</th>
             <th>free plan</th>
+            <th>using client</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -59,6 +60,13 @@
                 </td>
                 <td>
                     @if($user->access_free_plan)
+                        &#10004;
+                    @else
+                        &#10006;
+                    @endif
+                </td>
+                <td>
+                    @if($user->minecraft_account !== null)
                         &#10004;
                     @else
                         &#10006;
