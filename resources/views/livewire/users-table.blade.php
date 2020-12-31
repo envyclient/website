@@ -66,7 +66,7 @@
                     @endif
                 </td>
                 <td>
-                    @if($user->minecraft_account !== null)
+                    @if($user->current_account !== null)
                         &#10004;
                     @else
                         &#10006;
