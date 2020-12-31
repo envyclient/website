@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Auth;
 
+use App\Models\ReferralCode;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -55,10 +56,13 @@ class Register extends Component
     {
         $this->validate();
 
+        $code = ReferralCode::where('code', $this->referralCode)->first();
+
         $user = User::create([
             'email' => $this->email,
             'name' => $this->name,
             'password' => Hash::make($this->password),
+            'referral_code_id' => $code === null ? null : $code->id,
         ]);
 
         event(new Registered($user));

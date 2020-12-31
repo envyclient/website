@@ -95,9 +95,7 @@
                                 <input id="referral-code"
                                        type="text"
                                        class="form-control @error('referralCode') is-invalid @enderror"
-                                       wire:model.defer="referralCode"
-                                       required
-                                       autocomplete="email">
+                                       wire:model.defer="referralCode">
                                 <div class="form-text">
                                     This cannot be changed.
                                 </div>
