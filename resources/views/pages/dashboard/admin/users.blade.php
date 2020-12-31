@@ -22,6 +22,9 @@
                 <span class="badge bg-secondary mx-2">
                     {{ \App\Models\User::count() }}
                 </span>
+                <span class="badge bg-secondary mx-2">
+                    {{ \App\Models\User::where('current_account', '<>', null)->count() }}
+                </span>
             </div>
 
             @livewire('users-table')
