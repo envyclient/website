@@ -12,7 +12,7 @@
                 {!! $chart->container() !!}
             </div>
 
-            @livewire('version.list-versions', ['apiToken' => $apiToken])
+            @livewire('version.list-versions')
         </div>
 
         <br>
@@ -29,7 +29,6 @@
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
                     <input class="form-control @error('name') is-invalid @enderror"
-                           placeholder="Name"
                            type="text"
                            id="name"
                            name="name"

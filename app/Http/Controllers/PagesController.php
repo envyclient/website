@@ -35,7 +35,7 @@ class PagesController extends Controller
     public function dashboard(Request $request)
     {
         $user = $request->user();
-        return view('pages.dashboard.home')->with([
+        return view('pages.dashboard.home', [
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
         ]);
@@ -50,7 +50,7 @@ class PagesController extends Controller
     public function subscriptions(Request $request)
     {
         $user = $request->user();
-        return view('pages.dashboard.subscriptions')->with([
+        return view('pages.dashboard.subscriptions', [
             'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
             'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
@@ -72,7 +72,7 @@ class PagesController extends Controller
             ->options(self::CHART_OPTIONS)
             ->load(route('api.charts.users') . "?api_token=$apiToken");
 
-        return view('pages.dashboard.admin.users')->with([
+        return view('pages.dashboard.admin.users', [
             'apiToken' => $apiToken,
             'chart' => $chart
         ]);
@@ -107,9 +107,15 @@ class PagesController extends Controller
             ])
             ->load(route('api.charts.versions') . "?api_token=$apiToken");
 
-        return view('pages.dashboard.admin.versions')->with([
+        return view('pages.dashboard.admin.versions', [
             'apiToken' => $apiToken,
             'chart' => $chart,
+        ]);
+    }
+
+    public function referrals()
+    {
+        return view('pages.dashboard.admin.referrals')->with([
         ]);
     }
 }

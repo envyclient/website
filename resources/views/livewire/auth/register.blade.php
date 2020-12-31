@@ -86,6 +86,30 @@
                             </div>
                         </div>
 
+                        <div class="mb-3 row">
+                            <label for="referral-code" class="col-sm-2 col-form-label">
+                                {{ __('Referral Code') }}
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input id="referral-code"
+                                       type="text"
+                                       class="form-control @error('referralCode') is-invalid @enderror"
+                                       wire:model.defer="referralCode"
+                                       required
+                                       autocomplete="email">
+                                <div class="form-text">
+                                    This cannot be changed.
+                                </div>
+
+                                @error('referralCode')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row">
                             <p class="text-muted">
                                 By clicking register you are agreeing to our

@@ -15,6 +15,7 @@ class Register extends Component
     public $email;
     public $password;
     public $passwordConfirmation;
+    public $referralCode;
 
     protected $rules = [
         'name' => [
@@ -36,6 +37,12 @@ class Register extends Component
             'string',
             'min:8',
             'same:passwordConfirmation',
+        ],
+        'referralCode' => [
+            'nullable',
+            'string',
+            'alpha_dash',
+            'exists:referral_codes,code',
         ],
     ];
 

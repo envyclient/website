@@ -5,15 +5,24 @@
 
         <!--- Profile Section --->
         <div class="alert alert-secondary" style="font-size:25px;">
-            <i class="fas fa-user" style="padding-right:10px;"></i> Profile
+            <i class="fas fa-user" style="padding-right:10px;"></i>
+            Profile
         </div>
 
-        <div class="text-left">
+        <div class="mb-3">
             <label class="form-label" for="member-since">Member Since</label>
             <input id="member-since"
                    class="form-control"
                    placeholder="Date"
                    value="{{ $user->created_at->format('Y-m-d') }}"
+                   readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="referral-code">Referral Code</label>
+            <input id="referral-code"
+                   class="form-control"
+                   value="{{ $user->referralCode ? $user->referralCode->code : 'none used' }}"
                    readonly>
         </div>
 
