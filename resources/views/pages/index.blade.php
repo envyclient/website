@@ -69,9 +69,11 @@
             <ul>
                 <li>Designed to bypass Watchdog.</li>
                 <li>
-                    Comes with a built-in account manager in
-                    the multiplayer menu that supports <a target="_blank" href="https://thealtening.com/">The
-                        Altening</a>.
+                    Comes with a built-in account manager baked into the multiplayer menu.
+                </li>
+                <li>
+                    Supports the use of
+                    <a target="_blank" href="https://thealtening.com/" style="color: white">The Altening</a>.
                 </li>
                 <li>Features latest OptiFine to provide maximum performance.</li>
             </ul>
@@ -79,8 +81,11 @@
     </div>
     <div class="feature right">
         <div class="feature-content">
-            <h1>Launcher</h1>
-            <p>Uses a custom launcher written using C++ to provide complete security.</p>
+            <h1>Custom Launcher</h1>
+            <p>
+                Envy comes with a custom launcher written using C++ to provide the smoothest possible cheating
+                experience.
+            </p>
         </div>
         <div class="feature-image">
             <img src="{{ asset('assets/features/feature1.png') }}" alt="feature-image">
@@ -91,9 +96,9 @@
             <img src="{{ asset('assets/features/feature3.png') }}" alt="feature-image">
         </div>
         <div class="feature-content">
-            <h1>Configs</h1>
+            <h1>Web Configs</h1>
             <p>
-                The new config manager allows the ability to store and load configs from the web, providing complete
+                The new config system allows the ability to store and load configs from the web, providing complete
                 unity across different versions.
             </p>
         </div>
