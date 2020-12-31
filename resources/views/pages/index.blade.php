@@ -62,7 +62,7 @@
     </h1>
     <div class="feature">
         <div class="feature-image">
-            <img src="{{ asset('assets/features/feature2.png') }}" alt="feature-image">
+            <img src="{{ asset('assets/features/2.png') }}" alt="feature-image">
         </div>
         <div class="feature-content" style="margin-left: 30px;">
             <h1>Client</h1>
@@ -88,12 +88,12 @@
             </p>
         </div>
         <div class="feature-image">
-            <img src="{{ asset('assets/features/feature1.png') }}" alt="feature-image">
+            <img src="{{ asset('assets/features/1.png') }}" alt="feature-image">
         </div>
     </div>
     <div class="feature">
         <div class="feature-image">
-            <img src="{{ asset('assets/features/feature3.png') }}" alt="feature-image">
+            <img src="{{ asset('assets/features/3.png') }}" alt="feature-image">
         </div>
         <div class="feature-content">
             <h1>Web Configs</h1>

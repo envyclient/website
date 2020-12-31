@@ -125,94 +125,101 @@
         @endif
     </div>
 
-    <!-- Launcher Modal -->
-    <div class="modal fade"
-         id="launcher-modal"
-         data-bs-backdrop="static"
-         data-bs-keyboard="false"
-         tabindex="-1"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Launcher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-dark" role="alert">
-                        For video instructions please watch <a class="alert-link" target="_blank"
-                                                               href="https://www.youtube.com/watch?v=OXr9YGbxIlU">Install
-                            Envy Client</a>.
+    @if($user->hasSubscription())
+        <!-- Launcher Modal -->
+        <div class="modal fade"
+             id="launcher-modal"
+             data-bs-backdrop="static"
+             data-bs-keyboard="false"
+             tabindex="-1"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Launcher</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="alert alert-warning " role="alert">
-                        Make sure to install <strong>Microsoft Visual C++ 2015 Redistributable</strong>.
-                        You can download
-                        <a class="alert-link" target="_blank"
-                           href="https://www.microsoft.com/en-us/download/details.aspx?id=53587">here</a> (<a
-                            class="alert-link" href="https://aka.ms/vs/16/release/vc_redist.x64.exe">mirror</a>).
-                    </div>
-
-                    <p>
-                        You are downloading an <strong>unsigned version</strong> of the launcher.
-                        Make sure you <strong>accept</strong> all warning messages.
-                        In future updates, these warnings will go away.
-                    </p>
-
-                    <div class="row">
-                        <div class="col">
-                            <h4>Microsoft Edge</h4>
-                            <img src="{{ asset('assets/launcher/1.png') }}" class="rounded" width="312" height="330">
+                    <div class="modal-body">
+                        <div class="alert alert-dark" role="alert">
+                            For video instructions please watch <a class="alert-link" target="_blank"
+                                                                   href="https://www.youtube.com/watch?v=OXr9YGbxIlU">Install
+                                Envy Client</a>.
+                        </div>
+                        <div class="alert alert-warning " role="alert">
+                            Make sure to install <strong>Microsoft Visual C++ 2015 Redistributable</strong>.
+                            You can download
+                            <a class="alert-link" target="_blank"
+                               href="https://www.microsoft.com/en-us/download/details.aspx?id=53587">here</a> (<a
+                                class="alert-link" href="https://aka.ms/vs/16/release/vc_redist.x64.exe">mirror</a>).
                         </div>
 
-                        <div class="col">
-                            <h4>Windows Defender</h4>
-                            <img src="{{ asset('assets/launcher/2.png') }}" class="rounded" width="416" height="390">
+                        <p>
+                            You are downloading an <strong>unsigned version</strong> of the launcher.
+                            Make sure you <strong>accept</strong> all warning messages.
+                            In future updates, these warnings will go away.
+                        </p>
+
+                        <div class="row">
+                            <div class="col">
+                                <h4>Microsoft Edge</h4>
+                                <img src="{{ asset('assets/launcher/1.png') }}" class="rounded" width="312"
+                                     height="330">
+                            </div>
+
+                            <div class="col">
+                                <h4>Windows Defender</h4>
+                                <img src="{{ asset('assets/launcher/2.png') }}" class="rounded" width="416"
+                                     height="390">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer card-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a role="button" class="btn btn-primary" href="{{ route('launcher.show') }}">
-                        Download Launcher
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Capes Modal -->
-    <div class="modal fade" id="capes-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Capes</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body ">
-
-                    <div>
-                        <h3>Cape Template</h3>
-                        <a class="btn btn-outline-dark d-inline-block" href="{{ asset('assets/capes/template.png') }}">
-                            Download
+                    <div class="modal-footer card-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a role="button" class="btn btn-primary" href="{{ route('launcher.show') }}">
+                            Download Launcher
                         </a>
                     </div>
-
-                    <div class="mt-3">
-                        <h3>Reset to default cape</h3>
-                        <form action="{{ route('capes.delete') }}"
-                              method="post"
-                              class="d-inline-block">
-                            @csrf
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-outline-danger">Reset Cape</button>
-                        </form>
-                    </div>
-
-                </div>
-                <div class="modal-footer card-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+
+    @if($user->hasCapesAccess())
+        <!-- Capes Modal -->
+        <div class="modal fade" id="capes-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Capes</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div>
+                            <h3>Cape Template</h3>
+                            <a class="btn btn-outline-dark d-inline-block"
+                               href="{{ asset('assets/capes/template.png') }}">
+                                Download
+                            </a>
+                        </div>
+
+                        <div class="mt-3">
+                            <h3>Reset to default cape</h3>
+                            <form action="{{ route('capes.delete') }}"
+                                  method="post"
+                                  class="d-inline-block">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-outline-danger">Reset Cape</button>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer card-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
