@@ -27,11 +27,12 @@ Route::group([], function () {
  */
 Route::prefix('admin')->group(function () {
 
-// list users and versions
+    // list users and versions
     Route::get('users', [PagesController::class, 'users'])->name('admin.users');
     Route::get('versions', [PagesController::class, 'versions'])->name('admin.versions');
+    Route::get('referrals', [PagesController::class, 'referrals'])->name('admin.referrals');
 
-// upload version
+    // upload version
     Route::post('versions', UploadVersion::class)->name('admin.versions.upload');
 });
 

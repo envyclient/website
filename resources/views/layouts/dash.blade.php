@@ -144,6 +144,11 @@
                 <i class="fas fa-download p-2" style="margin-right:10px;"></i>
                 Versions
             </a>
+            <a class="list-group-item list-group-item-custom {{ Route::is('admin.referrals') ? 'active': null }}"
+               href="{{ route('admin.referrals') }}">
+                <i class="fas fa-qrcode p-2" style="margin-right:10px;"></i>
+                Referrals Codes
+            </a>
             @endadmin
         </div>
     </div>

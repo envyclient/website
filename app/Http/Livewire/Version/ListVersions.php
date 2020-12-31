@@ -10,21 +10,13 @@ class ListVersions extends Component
 {
     use WithPagination;
 
-    public $apiToken;
-
     protected string $paginationTheme = 'bootstrap';
 
     protected $listeners = ['VERSION_DELETED' => '$refresh'];
 
-    public function mount(string $apiToken)
-    {
-        $this->apiToken = $apiToken;
-    }
-
     public function render()
     {
-        return view('livewire.version.list-versions')->with([
-            'apiToken' => auth()->user()->api_token,
+        return view('livewire.version.list-versions', [
             'versions' => Version::orderBy('created_at')->paginate(5),
         ]);
     }

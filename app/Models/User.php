@@ -22,6 +22,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string cape
  * @property string image
  * @property null|string current_account
+ * @property null|int referral_code_id
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -40,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'cape',
         'image',
         'current_account',
+        'referral_code_id',
     ];
 
     protected $hidden = [
@@ -80,6 +82,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function downloads()
     {
         return $this->belongsToMany(Version::class, 'user_downloads', 'user_id', 'version_id');
+    }
+
+    public function referralCode()
+    {
+        return $this->belongsTo(ReferralCode::class);
     }
 
     public function hasSubscription(): bool
