@@ -24,7 +24,7 @@
                     <label class="form-label" for="referral-code">Referral Code</label>
                     <input id="referral-code"
                            class="form-control"
-                           value="{{ $user->referralCode ? $user->referralCode->code : 'none used' }}"
+                           value="{{ $user->referralCode()->exists() ? $user->referralCode->code : 'none used' }}"
                            readonly>
                 </div>
 
