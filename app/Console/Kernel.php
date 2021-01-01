@@ -28,6 +28,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('subscriptions:delete')
             ->everyMinute()
             ->emailOutputOnFailure('haqgamer66@gmail.com');
+
+        $schedule->command('discord:sync')
+            ->everyFifteenMinutes()
+            ->emailOutputOnFailure('haqgamer66@gmail.com');
     }
 
     /**
