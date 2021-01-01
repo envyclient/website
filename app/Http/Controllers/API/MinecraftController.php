@@ -13,7 +13,14 @@ class MinecraftController extends Controller
         $this->middleware(['auth:api', 'subscribed']);
     }
 
-    public function show(Request $request, $uuid)
+    public function index()
+    {
+        return User::where('current_account', '<>', null)
+            ->pluck('current_account')
+            ->toArray();
+    }
+
+    public function show($uuid)
     {
         $user = User::where('current_account', $uuid)
             ->firstOrFail();
@@ -35,9 +42,9 @@ class MinecraftController extends Controller
             'uuid' => 'required|uuid'
         ]);
 
-        $request->user()->fill([
-            'current_account' => $validated['uuid']
-        ])->save();
+        $request->user()->update([
+            'current_account' => $validated['uuid'],
+        ]);
 
         return response()->json([
             'message' => '200 OK'
@@ -46,9 +53,9 @@ class MinecraftController extends Controller
 
     public function destroy(Request $request)
     {
-        $request->user()->fill([
-            'current_account' => null
-        ])->save();
+        $request->user()->update([
+            'current_account' => null,
+        ]);
 
         return response()->json([
             'message' => '200 OK'

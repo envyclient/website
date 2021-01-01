@@ -7,7 +7,6 @@ use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForCurrentUser;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
 use App\Http\Controllers\API\Configs\ConfigsController;
-use App\Http\Controllers\API\Minecraft\Actions\GetAccount;
 use App\Http\Controllers\API\MinecraftController;
 use App\Http\Controllers\API\VersionsController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +56,7 @@ Route::prefix('versions')->group(function () {
  * Minecraft
  */
 Route::prefix('minecraft')->group(function () {
+    Route::get('/', [MinecraftController::class, 'index']);
     Route::get('{uuid}', [MinecraftController::class, 'show']);
     Route::post('/', [MinecraftController::class, 'store']);
     Route::delete('/', [MinecraftController::class, 'destroy']);
