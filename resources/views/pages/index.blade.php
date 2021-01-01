@@ -16,6 +16,45 @@
     <meta content="128" property="og:image:height">
 
     <link rel="stylesheet" href="{{ asset('css/bundle.css') }}">
+    <style>
+        .video-image {
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .video-image span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+            background: url({{ asset('assets/play.png') }}) no-repeat center center;
+            background-size: 96px 96px;
+            transition: all 0.2s;
+        }
+
+        .video-image:hover span {
+            transform: scale(1.3);
+        }
+
+        .video-image img {
+            overflow: hidden;
+            position: relative;
+            width: 107%;
+            left: -9px;
+            top: -9px;
+            height: 107%;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .video-image:hover img {
+            transform: scale(1.3);
+            filter: blur(3px);
+        }
+    </style>
 </head>
 
 <body>
@@ -47,6 +86,13 @@
                     <a href="{{ route('dashboard') }}" class="btn">Dashboard</a>
                 @endguest
                 <a href="#features" class="btn">Read more</a>
+                <a href="https://discord.gg/5UrBctTnWA" class="btn">
+                    <svg style="width:24px;height:24px; float: left; margin-left: 15px;" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M22,24L16.75,19L17.38,21H4.5A2.5,2.5 0 0,1 2,18.5V3.5A2.5,2.5 0 0,1 4.5,1H19.5A2.5,2.5 0 0,1 22,3.5V24M12,6.8C9.32,6.8 7.44,7.95 7.44,7.95C8.47,7.03 10.27,6.5 10.27,6.5L10.1,6.33C8.41,6.36 6.88,7.53 6.88,7.53C5.16,11.12 5.27,14.22 5.27,14.22C6.67,16.03 8.75,15.9 8.75,15.9L9.46,15C8.21,14.73 7.42,13.62 7.42,13.62C7.42,13.62 9.3,14.9 12,14.9C14.7,14.9 16.58,13.62 16.58,13.62C16.58,13.62 15.79,14.73 14.54,15L15.25,15.9C15.25,15.9 17.33,16.03 18.73,14.22C18.73,14.22 18.84,11.12 17.12,7.53C17.12,7.53 15.59,6.36 13.9,6.33L13.73,6.5C13.73,6.5 15.53,7.03 16.56,7.95C16.56,7.95 14.68,6.8 12,6.8M9.93,10.59C10.58,10.59 11.11,11.16 11.1,11.86C11.1,12.55 10.58,13.13 9.93,13.13C9.29,13.13 8.77,12.55 8.77,11.86C8.77,11.16 9.28,10.59 9.93,10.59M14.1,10.59C14.75,10.59 15.27,11.16 15.27,11.86C15.27,12.55 14.75,13.13 14.1,13.13C13.46,13.13 12.94,12.55 12.94,11.86C12.94,11.16 13.45,10.59 14.1,10.59Z"/>
+                    </svg>
+                    Discord
+                </a>
             </div>
         </div>
         <div class="landing-container">
@@ -112,15 +158,37 @@
             <span class="separator"></span>
         </h1>
         <div class="videos">
+
             <div class="video-container">
-                <iframe data-src="https://youtube.com/embed/UwzW7A9ofrM"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        style="border:0;" allowfullscreen></iframe>
+                <div class="video-image">
+                    <img id="video-1-image"
+                         src="https://i1.ytimg.com/vi/UwzW7A9ofrM/maxresdefault.jpg"
+                         alt="thumbnail">
+                    <span onClick="playVideo(this, 'video-1', 'video-1-image');"></span>
+                    <iframe id="video-1"
+                            class="video-image"
+                            src="https://youtube.com/embed/UwzW7A9ofrM"
+                            style="display: none;border: 0;"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+                </div>
             </div>
+
             <div class="video-container">
-                <iframe data-src="https://youtube.com/embed/-_fcrYO0T-U"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        style="border:0;" allowfullscreen></iframe>
+                <div class="video-image">
+                    <img id="video-2-image"
+                         src="https://i1.ytimg.com/vi/pAAL2_YFsDA/maxresdefault.jpg"
+                         alt="thumbnail">
+                    <span onClick="playVideo(this, 'video-2', 'video-2-image');"></span>
+                    <iframe id="video-2"
+                            class="video-image"
+                            src="https://youtube.com/embed/pAAL2_YFsDA"
+                            style="display: none;border: 0;"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -171,12 +239,21 @@
 
 <script type="text/javascript" src="{{ asset('js/bundle.js') }}" defer></script>
 <script type="text/javascript" defer>
-    window.onload = function init() {
-        const videos = document.getElementsByTagName('iframe');
-        for (let i = 0; i < videos.length; i++) {
-            videos[i].setAttribute('src', videos[i].getAttribute('data-src'));
-        }
-    };
+    // play the clicked video
+    function playVideo(span, frameID, imageID) {
+        const frame = document.getElementById(frameID);
+        const image = document.getElementById(imageID);
+
+        // hiding the play button
+        span.style.display = "none";
+
+        // hiding the video thumbnail
+        image.style.display = "none";
+
+        // showing the iframe and playing the video
+        frame.style.display = "block";
+        frame.src += "?autoplay=1";
+    }
 </script>
 </body>
 

@@ -24,7 +24,7 @@
                     <label class="form-label" for="referral-code">Referral Code</label>
                     <input id="referral-code"
                            class="form-control"
-                           value="{{ $user->referralCode ? $user->referralCode->code : 'none used' }}"
+                           value="{{ $user->referralCode()->exists() ? $user->referralCode->code : 'none used' }}"
                            readonly>
                 </div>
 
@@ -71,7 +71,6 @@
                         </form>
                     </div>
                 @endif
-
             </div>
 
             @if($user->hasSubscription())
@@ -83,7 +82,7 @@
                     </span>
                     </div>
                     @if(count($configs) > 0)
-                        <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 400px;">
+                        <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 536px;">
                             <table class="table table-bordered">
                                 <thead class="table-light">
                                 <tr>
@@ -107,7 +106,13 @@
                                                 &#10004;
                                             @endif
                                         </td>
-                                        <td>{{ $config->favorites_count }}</td>
+                                        <td>
+                                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                                <path fill="currentColor"
+                                                      d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
+                                            </svg>
+                                            {{ $config->favorites_count }}
+                                        </td>
                                         <td>{{ $config->created_at->diffForHumans() }}</td>
                                         <td>{{ $config->updated_at->diffForHumans() }}</td>
                                     </tr>
