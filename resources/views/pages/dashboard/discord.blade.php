@@ -34,7 +34,7 @@
                         <label class="form-label" for="discord-id">Discord ID</label>
                         <input id="discord-id"
                                class="form-control"
-                               value="{{ $user->discord_name }}"
+                               value="{{ $user->discord_id }}"
                                readonly>
                     </div>
 
