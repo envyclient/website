@@ -6,7 +6,7 @@
 
         <div class="row">
             <div class="col">
-                <div class="alert alert-secondary mt-3" style="font-size:25px;">
+                <div class="alert alert-secondary" style="font-size:25px;">
                     <i class="fas fa-user-friends" style="padding-right:10px;"></i>
                     Server
                 </div>
@@ -20,7 +20,7 @@
                 </iframe>
             </div>
             <div class="col">
-                <div class="alert alert-secondary mt-3" style="font-size:25px;">
+                <div class="alert alert-secondary" style="font-size:25px;">
                     <i class="fas fa-user" style="padding-right:10px;"></i>
                     Account
                 </div>
