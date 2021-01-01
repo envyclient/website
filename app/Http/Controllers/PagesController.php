@@ -57,6 +57,13 @@ class PagesController extends Controller
         ]);
     }
 
+    public function discord(Request $request)
+    {
+        return view('pages.dashboard.discord', [
+            'user' => $request->user(),
+        ]);
+    }
+
     public function terms()
     {
         return view('pages.terms');

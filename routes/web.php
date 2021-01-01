@@ -4,6 +4,7 @@ use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\CapesController;
 use App\Http\Controllers\LauncherController;
+use App\Http\Controllers\OAuth\DiscordController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
@@ -18,6 +19,7 @@ Route::group([], function () {
     Route::get('/', [PagesController::class, 'index'])->name('index');
     Route::get('dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
     Route::get('security', [PagesController::class, 'security'])->name('pages.security');
+    Route::get('discord', [PagesController::class, 'discord'])->name('pages.discord');
     Route::get('subscriptions', [PagesController::class, 'subscriptions'])->name('pages.subscriptions');
     Route::get('terms', [PagesController::class, 'terms'])->name('pages.terms');
 });
@@ -76,6 +78,14 @@ Route::prefix('cape')->group(function () {
 Route::prefix('launcher')->group(function () {
     Route::get('/download', [LauncherController::class, 'download'])->name('launcher.show');
     Route::post('/', [LauncherController::class, 'store'])->name('launcher.store');
+});
+
+/**
+ * OAuth
+ */
+Route::prefix('oauth')->group(function () {
+    Route::get('discord/', [DiscordController::class, 'login'])->name('oauth.discord.login');
+    Route::get('discord/callback', [DiscordController::class, 'callback']);
 });
 
 require __DIR__ . '/auth.php';
