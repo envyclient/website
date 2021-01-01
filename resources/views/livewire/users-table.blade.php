@@ -26,6 +26,7 @@
             <th>banned</th>
             <th>free plan</th>
             <th>using client</th>
+            <th>discord</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -67,8 +68,16 @@
                 </td>
                 <td>
                     @if($user->current_account !== null)
-                        <img src="https://crafatar.com/avatars/{{ $user->current_account }}?size=32&default=MHF_Steve&overlay"
-                             alt="head">
+                        <img
+                            src="https://crafatar.com/avatars/{{ $user->current_account }}?size=32&default=MHF_Steve&overlay"
+                            alt="head">
+                    @else
+                        &#10006;
+                    @endif
+                </td>
+                <td>
+                    @if($user->discord_id !== null)
+                        {{ $user->discord_name }}
                     @else
                         &#10006;
                     @endif
