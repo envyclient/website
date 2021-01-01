@@ -22,7 +22,11 @@ class DeleteCancelledSubscriptions extends Command
         $start = Carbon::now();
         $count = 0;
 
-        $subscriptions = Subscription::where('end_date', '<=', Carbon::now())->get();
+        $subscriptions = Subscription::where(
+            'end_date',
+            '<=',
+            Carbon::now()
+        )->get();
 
         foreach ($subscriptions as $subscription) {
 
