@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\DeleteCancelledSubscriptions::class
+        \App\Console\Commands\DeleteCancelledSubscriptions::class,
+        \App\Console\Commands\SyncDiscordRoles::class,
     ];
 
     /**
@@ -26,6 +27,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('subscriptions:delete')
             ->everyMinute()
+            ->emailOutputOnFailure('haqgamer66@gmail.com');
+
+        $schedule->command('discord:sync')
+            ->everyFifteenMinutes()
             ->emailOutputOnFailure('haqgamer66@gmail.com');
     }
 
