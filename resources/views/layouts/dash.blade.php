@@ -126,10 +126,6 @@
                     <i class="fab fa-discord p-2" style="margin-right:12px;"></i>
                     Discord
                 </a>
-                <a class="list-group-item list-group-item-custom" href="https://forums.envyclient.com/" target="_blank">
-                    <i class="fas fa-comments p-2" style="margin-right:10px;"></i>
-                    Forums
-                </a>
 
                 <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
                     BILLING
