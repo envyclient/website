@@ -107,12 +107,12 @@
                 <h3 class="m-3 text-white" style="font-size:16px;">
                     SETTINGS
                 </h3>
-                <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active': null }}"
+                <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active' : null }}"
                    href="{{ route('dashboard') }}">
                     <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
                     Home
                 </a>
-                <a class="list-group-item list-group-item-custom {{ Route::is('pages.security') ? 'active': null }}"
+                <a class="list-group-item list-group-item-custom {{ Route::is('pages.security') ? 'active' : null }}"
                    href="{{ route('pages.security') }}">
                     <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
                     Security
@@ -121,7 +121,8 @@
                 <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
                     COMMUNITY
                 </h3>
-                <a class="list-group-item list-group-item-custom" href="https://discord.gg/5UrBctTnWA" target="_blank">
+                <a class="list-group-item list-group-item-custom {{ Route::is('pages.discord') ? 'active' : null }}"
+                   href="{{ route('pages.discord') }}">
                     <i class="fab fa-discord p-2" style="margin-right:12px;"></i>
                     Discord
                 </a>

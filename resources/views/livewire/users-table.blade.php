@@ -67,7 +67,7 @@
                 </td>
                 <td>
                     @if($user->current_account !== null)
-                        <img src="https://crafatar.com/avatars/{{ $user->current_account }}?size=32&default=MHF_Steve"
+                        <img src="https://crafatar.com/avatars/{{ $user->current_account }}?size=32&default=MHF_Steve&overlay"
                              alt="head">
                     @else
                         &#10006;
