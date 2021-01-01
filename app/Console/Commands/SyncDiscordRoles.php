@@ -35,33 +35,47 @@ class SyncDiscordRoles extends Command
         $start = now();
         $count = 0;
 
-        $users = User::has('subscription')
-            ->with('subscription.plan')
+        $users = User::with('subscription.plan')
             ->where('discord_id', '<>', null)
             ->get();
 
         foreach ($users as $user) {
-            switch ($user->subscription->plan->id) {
-                case 1:
-                case 3:
-                {
-                    $this->discord->guild->addGuildMemberRole([
-                        'guild.id' => $this->guild,
-                        'user.id' => intval($user->discord_id),
-                        'role.id' => $this->roles['premium'],
-                    ]);
-                    break;
+
+            if ($user->subscription !== null) {
+                switch ($user->subscription->plan->id) {
+                    case 1:
+                    case 3:
+                    {
+                        $this->discord->guild->addGuildMemberRole([
+                            'guild.id' => $this->guild,
+                            'user.id' => intval($user->discord_id),
+                            'role.id' => $this->roles['premium'],
+                        ]);
+                        break;
+                    }
+                    case 2:
+                    {
+                        $this->discord->guild->addGuildMemberRole([
+                            'guild.id' => $this->guild,
+                            'user.id' => intval($user->discord_id),
+                            'role.id' => $this->roles['standard'],
+                        ]);
+                        break;
+                    }
                 }
-                case 2:
-                {
-                    $this->discord->guild->addGuildMemberRole([
-                        'guild.id' => $this->guild,
-                        'user.id' => intval($user->discord_id),
-                        'role.id' => $this->roles['standard'],
-                    ]);
-                    break;
-                }
+            } else {
+                $this->discord->guild->removeGuildMemberRole([
+                    'guild.id' => $this->guild,
+                    'user.id' => intval($user->discord_id),
+                    'role.id' => $this->roles['standard'],
+                ]);
+                $this->discord->guild->removeGuildMemberRole([
+                    'guild.id' => $this->guild,
+                    'user.id' => intval($user->discord_id),
+                    'role.id' => $this->roles['premium'],
+                ]);
             }
+
             $count++;
         }
 
