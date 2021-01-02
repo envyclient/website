@@ -96,10 +96,6 @@
                                        type="text"
                                        class="form-control @error('referralCode') is-invalid @enderror"
                                        wire:model.defer="referralCode">
-                                <div class="form-text">
-                                    This cannot be changed.
-                                </div>
-
                                 @error('referralCode')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
