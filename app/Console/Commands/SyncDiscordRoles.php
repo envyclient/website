@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Console\Command;
 use RestCord\DiscordClient;
 
@@ -64,16 +65,15 @@ class SyncDiscordRoles extends Command
                     }
                 }
             } else {
-                $this->discord->guild->removeGuildMemberRole([
-                    'guild.id' => $this->guild,
-                    'user.id' => intval($user->discord_id),
-                    'role.id' => $this->roles['standard'],
-                ]);
-                $this->discord->guild->removeGuildMemberRole([
-                    'guild.id' => $this->guild,
-                    'user.id' => intval($user->discord_id),
-                    'role.id' => $this->roles['premium'],
-                ]);
+                $this->removeRole(
+                    intval($user->discord_id),
+                    $this->roles['standard'],
+                );
+
+                $this->removeRole(
+                    intval($user->discord_id),
+                    $this->roles['premium'],
+                );
             }
 
             $count++;
@@ -83,5 +83,18 @@ class SyncDiscordRoles extends Command
         $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
 
         return 0;
+    }
+
+    private function removeRole(int $userID, int $roleID): void
+    {
+        try {
+            $this->discord->guild->removeGuildMemberRole([
+                'guild.id' => $this->guild,
+                'user.id' => $userID,
+                'role.id' => $roleID,
+            ]);
+        } catch (Exception $e) {
+            // user not in envy discord
+        }
     }
 }

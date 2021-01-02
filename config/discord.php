@@ -1,10 +1,10 @@
 <?php
 return [
     'token' => env('DISCORD_TOKEN'),
-    'guild' => env('DISCORD_GUILD_ID'),
+    'guild' => env('DISCORD_GUILD'),
 
     'roles' => [
-        'standard' => env('STANDARD_ROLE_ID'),
-        'premium' => env('PREMIUM_ROLE_ID'),
+        'standard' => env('DISCORD_GUILD_STANDARD_ROLE'),
+        'premium' => env('DISCORD_GUILD_PREMIUM_ROLE'),
     ]
 ];
