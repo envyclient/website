@@ -11,17 +11,17 @@
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://forums.envyclient.com/</loc>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
         <loc>https://envyclient.com/login/</loc>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://envyclient.com/terms/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://discord.gg/5UrBctTnWA</loc>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
