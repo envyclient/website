@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\UploadVersion;
+use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\CapesController;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\LauncherController;
@@ -61,6 +62,7 @@ Route::prefix('paypal')->group(function () {
  * Users
  */
 Route::prefix('user')->group(function () {
+    Route::post('referral-code', UseReferralCode::class)->name('users.referral-code');
     Route::delete('disable', DisableAccount::class)->name('users.disable');
 });
 

@@ -22,10 +22,25 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="referral-code">Referral Code</label>
-                    <input id="referral-code"
-                           class="form-control"
-                           value="{{ $user->referralCode()->exists() ? $user->referralCode->code : 'none used' }}"
-                           readonly>
+                    @if($user->referralCode()->exists())
+                        <input id="referral-code"
+                               class="form-control"
+                               value="{{ $user->referralCode->code }}"
+                               readonly>
+                    @else
+                        <form action="{{ route('users.referral-code') }}" method="post">
+                            @csrf
+                            <div class="input-group mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="code"
+                                       id="referral-code"
+                                       name="referral-code"
+                                       required>
+                                <button type="submit" class="btn btn-success">Use Code</button>
+                            </div>
+                        </form>
+                    @endif
                 </div>
 
                 @if($user->hasCapesAccess())
