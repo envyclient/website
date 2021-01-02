@@ -18,7 +18,7 @@ class UsersTable extends Component
 
     public function render()
     {
-        $user = User::with(['subscription'])
+        $user = User::with('subscription.plan')
             ->name($this->name);
 
         if ($this->type === 'banned') {
