@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Notifications\SubscriptionUpdated;
 use App\Models\Subscription;
+use App\Notifications\SubscriptionUpdated;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -19,13 +19,13 @@ class DeleteCancelledSubscriptions extends Command
 
     public function handle()
     {
-        $start = Carbon::now();
+        $start = now();
         $count = 0;
 
         $subscriptions = Subscription::where(
             'end_date',
             '<=',
-            Carbon::now()
+            now()
         )->get();
 
         foreach ($subscriptions as $subscription) {
