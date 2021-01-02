@@ -39,7 +39,9 @@ class ChartsController extends Controller
         $data = collect();
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
             $data->push(
-                Subscription::whereDate('created_at', today()->subDays($days_backwards))->count()
+                Subscription::whereDate('created_at', today()->subDays($days_backwards))
+                    ->where('billing_agreement_id', '<>', null)
+                    ->count()
             );
         }
         $chart->dataset('Subscriptions', 'bar', $data)
