@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'discord' => [
+        'client_id' => env('DISCORD_ID'),
+        'client_secret' => env('DISCORD_SECRET'),
+        'redirect' => env('DISCORD_RETURN_URL'),
+        'redirect_connect' => env('DISCORD_RETURN_URL_CONNECT')
+    ],
+
 ];

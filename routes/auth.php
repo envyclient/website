@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Livewire\Auth\Login;
@@ -15,6 +16,13 @@ Route::middleware('guest')->group(function () {
 
     Route::get('register', Register::class)
         ->name('register');
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('login/discord', [DiscordController::class, 'login'])
+        ->name('login.discord');
+
+    Route::get('login/discord/redirect', [DiscordController::class, 'redirect']);
 });
 
 Route::get('forgot-password', Email::class)

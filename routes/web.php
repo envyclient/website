@@ -3,8 +3,8 @@
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\CapesController;
+use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\LauncherController;
-use App\Http\Controllers\OAuth\DiscordController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
@@ -81,11 +81,13 @@ Route::prefix('launcher')->group(function () {
 });
 
 /**
- * OAuth
+ * Connect
  */
-Route::prefix('oauth')->group(function () {
-    Route::get('discord/', [DiscordController::class, 'login'])->name('oauth.discord.login');
-    Route::get('discord/callback', [DiscordController::class, 'callback']);
+Route::prefix('connect')->group(function () {
+    Route::group(['prefix' => 'discord'], function () {
+        Route::get('/', [DiscordController::class, 'login'])->name('connect.discord');
+        Route::get('redirect', [DiscordController::class, 'redirect']);
+    });
 });
 
 require __DIR__ . '/auth.php';
