@@ -25,25 +25,35 @@ class ChartsController extends Controller
         $chart = new UsersChart();
 
         // users
-        $data = [];
+        $data = collect();
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
-            array_push($data, User::whereDate('created_at', today()->subDays($days_backwards))->count());
+            $data->push(
+                User::whereDate('created_at', today()->subDays($days_backwards))->count()
+            );
         }
-        $chart->dataset('Users', 'line', $data)->color('#82c4c3')->fill(false);
+        $chart->dataset('Users', 'bar', $data)
+            ->backgroundColor('#82c4c3')
+            ->fill(false);
 
         // subscriptions
-        $data = [];
+        $data = collect();
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
-            array_push($data, Subscription::whereDate('created_at', today()->subDays($days_backwards))->count());
+            $data->push(
+                Subscription::whereDate('created_at', today()->subDays($days_backwards))->count()
+            );
         }
-        $chart->dataset('Subscriptions', 'line', $data)->color('#50d890')->fill(false);;
+        $chart->dataset('Subscriptions', 'bar', $data)
+            ->backgroundColor('#50d890');
 
         // configs
-        $data = [];
+        $data = collect();
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
-            array_push($data, Config::whereDate('created_at', today()->subDays($days_backwards))->count());
+            $data->push(
+                Config::whereDate('created_at', today()->subDays($days_backwards))->count()
+            );
         }
-        $chart->dataset('Configs', 'line', $data)->color('#fd5e53')->fill(false);
+        $chart->dataset('Configs', 'bar', $data)
+            ->backgroundColor('#fd5e53');
 
         return $chart->api();
     }
@@ -52,18 +62,20 @@ class ChartsController extends Controller
     {
         $chart = new VersionDownloadsChart();
         foreach (Version::all() as $version) {
-            $data = [];
+            $data = collect();
             for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
-                array_push($data, DB::table('user_downloads')
-                    ->where('version_id', $version->id)
-                    ->whereDate('created_at', today()->subDays($days_backwards))
-                    ->count()
+                $data->push(
+                    DB::table('user_downloads')
+                        ->where('version_id', $version->id)
+                        ->whereDate('created_at', today()->subDays($days_backwards))
+                        ->count()
                 );
             }
-            $chart->dataset($version->name, 'bar', $data)->backgroundColor(RandomColor::one([
-                    'luminosity' => 'light'
-                ]
-            ));
+            $chart->dataset($version->name, 'bar', $data)
+                ->backgroundColor(RandomColor::one([
+                        'luminosity' => 'light'
+                    ]
+                ));
         }
         return $chart->api();
     }

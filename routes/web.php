@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
  * Home
  */
 Route::group([], function () {
-    Route::get('/', [PagesController::class, 'index'])->name('index');
+    Route::view('/', 'pages.index')->name('index');
     Route::get('dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
     Route::get('security', [PagesController::class, 'security'])->name('pages.security');
     Route::get('discord', [PagesController::class, 'discord'])->name('pages.discord');
     Route::get('subscriptions', [PagesController::class, 'subscriptions'])->name('pages.subscriptions');
-    Route::get('terms', [PagesController::class, 'terms'])->name('pages.terms');
+    Route::view('terms', 'pages.terms')->name('pages.terms');
 });
 
 /**

@@ -5,7 +5,7 @@
 
         <!-- versions table -->
         <div>
-            <div class="alert alert-primary" style="font-size:25px;">
+            <div class="alert alert-dark" style="font-size:25px;">
                 Versions
             </div>
             <div style="height: 300px">
@@ -19,7 +19,7 @@
 
         <!-- create version -->
         <div>
-            <div class="alert alert-secondary" style="font-size:25px;">
+            <div class="alert alert-dark" style="font-size:25px;">
                 Create Version
             </div>
 

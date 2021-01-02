@@ -15,21 +15,26 @@ class PagesController extends Controller
             'show' => true
         ],
         'scales' => [
+            'xAxes' => [
+                [
+                    'stacked' => true
+                ]
+            ],
             'yAxes' => [
-                ['ticks' => ['precision' => 0]]
+                [
+                    'stacked' => true,
+                    'ticks' => [
+                        'precision' => 0
+                    ]
+                ]
             ]
         ]
     ];
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('index', 'terms');
+        $this->middleware(['auth', 'verified']);
         $this->middleware('admin')->only('users', 'versions', 'sessions');
-    }
-
-    public function index()
-    {
-        return view('pages.index');
     }
 
     public function dashboard(Request $request)
@@ -64,11 +69,6 @@ class PagesController extends Controller
         ]);
     }
 
-    public function terms()
-    {
-        return view('pages.terms');
-    }
-
     public function users(Request $request)
     {
         $apiToken = $request->user()->api_token;
@@ -92,26 +92,7 @@ class PagesController extends Controller
         // chart
         $chart = new VersionDownloadsChart();
         $chart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
-            ->options([
-                'tooltip' => [
-                    'show' => true
-                ],
-                'scales' => [
-                    'xAxes' => [
-                        [
-                            'stacked' => true
-                        ]
-                    ],
-                    'yAxes' => [
-                        [
-                            'stacked' => true,
-                            'ticks' => [
-                                'precision' => 0
-                            ]
-                        ]
-                    ]
-                ]
-            ])
+            ->options(self::CHART_OPTIONS)
             ->load(route('api.charts.versions') . "?api_token=$apiToken");
 
         return view('pages.dashboard.admin.versions', [
