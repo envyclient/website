@@ -5,7 +5,7 @@
 
         <!-- users chart -->
         <div>
-            <div class="alert alert-primary" style="font-size:25px;">
+            <div class="alert alert-dark" style="font-size:25px;">
                 Stats
             </div>
             <div style="height: 300px">
@@ -17,7 +17,7 @@
 
         <!-- users table -->
         <div id="users-table">
-            <div class="alert alert-secondary" style="font-size:25px;">
+            <div class="alert alert-dark" style="font-size:25px;">
                 User Management
                 <span class="badge bg-secondary mx-2">
                     {{ \App\Models\User::count() }}

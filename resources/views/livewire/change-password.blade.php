@@ -33,6 +33,10 @@
                    wire:model.defer="current_password"
                    required>
 
+            <div class="form-text">
+                If you registered using Discord you will need to reset your password.
+            </div>
+
             @error('current_password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

@@ -7,7 +7,7 @@
 
             <div class="col">
                 <!--- Profile Section --->
-                <div class="alert alert-secondary" style="font-size:25px;">
+                <div class="alert alert-dark" style="font-size:25px;">
                     <i class="fas fa-user" style="padding-right:10px;"></i>
                     Profile
                 </div>
@@ -75,7 +75,7 @@
 
             @if($user->hasSubscription())
                 <div class="col">
-                    <div class="alert alert-secondary" style="font-size:25px;">
+                    <div class="alert alert-dark" style="font-size:25px;">
                         <i class="fas fa-file" style="padding-right:10px;"></i> Configs
                         <span class="badge bg-secondary">
                         {{ count($configs) }}/{{ $user->getConfigLimit() }}

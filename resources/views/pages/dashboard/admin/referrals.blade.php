@@ -4,7 +4,7 @@
     <div style="width:98%;margin:0 auto">
 
         <div>
-            <div class="alert alert-primary" style="font-size:25px;">
+            <div class="alert alert-dark" style="font-size:25px;">
                 Referral Codes
             </div>
 
@@ -12,7 +12,7 @@
         </div>
 
         <div>
-            <div class="alert alert-secondary" style="font-size:25px;">
+            <div class="alert alert-dark" style="font-size:25px;">
                 Create Referral Code
             </div>
 

@@ -2,7 +2,7 @@
 
 @section('content')
     <div style="width:98%;margin:0 auto">
-        <div class="alert alert-secondary" style="font-size:25px;">
+        <div class="alert alert-dark" style="font-size:25px;">
             <i class="fab fa-cc-paypal" style="padding-right:10px;"></i> Subscription
         </div>
 
