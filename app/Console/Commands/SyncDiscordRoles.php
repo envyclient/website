@@ -24,10 +24,10 @@ class SyncDiscordRoles extends Command
             'token' => config('discord.token'),
         ]);
 
-        $this->guild = config('discord.guild');
+        $this->guild = config('discord.guild.id');
         $this->roles = [
-            'standard' => intval(config('discord.roles.standard')),
-            'premium' => intval(config('discord.roles.premium')),
+            'standard' => intval(config('discord.guild.roles.standard')),
+            'premium' => intval(config('discord.guild.roles.premium')),
         ];
     }
 
@@ -47,33 +47,26 @@ class SyncDiscordRoles extends Command
                     case 1:
                     case 3:
                     {
-                        $this->discord->guild->addGuildMemberRole([
-                            'guild.id' => $this->guild,
-                            'user.id' => intval($user->discord_id),
-                            'role.id' => $this->roles['premium'],
-                        ]);
+                        $this->updateRole(
+                            intval($user->discord_id),
+                            $this->roles['premium'],
+                        );
                         break;
                     }
                     case 2:
                     {
-                        $this->discord->guild->addGuildMemberRole([
-                            'guild.id' => $this->guild,
-                            'user.id' => intval($user->discord_id),
-                            'role.id' => $this->roles['standard'],
-                        ]);
+                        $this->updateRole(
+                            intval($user->discord_id),
+                            $this->roles['standard'],
+                        );
                         break;
                     }
                 }
             } else {
-                $this->removeRole(
-                    intval($user->discord_id),
-                    $this->roles['standard'],
-                );
-
-                $this->removeRole(
-                    intval($user->discord_id),
-                    $this->roles['premium'],
-                );
+                // removing the 2 roles
+                foreach ($this->roles as $role) {
+                    $this->updateRole(intval($user->discord_id), $role, true);
+                }
             }
 
             $count++;
@@ -85,14 +78,22 @@ class SyncDiscordRoles extends Command
         return 0;
     }
 
-    private function removeRole(int $userID, int $roleID): void
+    private function updateRole(int $userID, int $roleID, bool $remove = false): void
     {
         try {
-            $this->discord->guild->removeGuildMemberRole([
-                'guild.id' => $this->guild,
-                'user.id' => $userID,
-                'role.id' => $roleID,
-            ]);
+            if ($remove) {
+                $this->discord->guild->removeGuildMemberRole([
+                    'guild.id' => $this->guild,
+                    'user.id' => $userID,
+                    'role.id' => $roleID,
+                ]);
+            } else {
+                $this->discord->guild->addGuildMemberRole([
+                    'guild.id' => $this->guild,
+                    'user.id' => $userID,
+                    'role.id' => $roleID,
+                ]);
+            }
         } catch (Exception $e) {
             // user not in envy discord
         }
