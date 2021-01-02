@@ -125,18 +125,20 @@
             @endif
         </div>
 
-        <div class="d-grid gap-2 mt-3">
-            <button type="button"
-                    class="btn btn-primary btn-lg"
-                    data-bs-toggle="modal"
-                    data-bs-target="#launcher-modal">
-                <svg style="width:24px;height:24px" viewBox="0 0 24 24" class="mb-1 mr-1">
-                    <path fill="currentColor"
-                          d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
-                </svg>
-                Download Launcher
-            </button>
-        </div>
+        @if($user->hasSubscription())
+            <div class="d-grid gap-2 mt-3">
+                <button type="button"
+                        class="btn btn-primary btn-lg"
+                        data-bs-toggle="modal"
+                        data-bs-target="#launcher-modal">
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24" class="mb-1 mr-1">
+                        <path fill="currentColor"
+                              d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
+                    </svg>
+                    Download Launcher
+                </button>
+            </div>
+        @endif
 
     </div>
 

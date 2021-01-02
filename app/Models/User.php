@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'email_verified_at',
         'api_token',
         'hwid',
         'admin',
@@ -45,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'current_account',
         'referral_code_id',
         'discord_id',
-        'discord_name'
+        'discord_name',
     ];
 
     protected $hidden = [
