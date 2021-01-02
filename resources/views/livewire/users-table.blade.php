@@ -37,12 +37,12 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    @if($user->hasSubscription())
+                    @if($user->subscription !== null)
                         Plan: <strong>{{ $user->subscription->plan->name }}</strong>
                         <br>
                         Expires: <strong>{{ $user->subscription->end_date->diffInDays() }}</strong> days
                     @else
-                        No Subscription
+                        &#10006;
                     @endif
                 </td>
                 <td>
