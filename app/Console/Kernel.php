@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
             ->emailOutputOnFailure('haqgamer66@gmail.com');
 
         $schedule->command('discord:sync')
-            ->everyFifteenMinutes()
+            ->everyFiveMinutes()
             ->emailOutputOnFailure('haqgamer66@gmail.com');
     }
 
