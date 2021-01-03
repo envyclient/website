@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Notification;
 
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -21,7 +22,18 @@ class ListNotifications extends Component
             ->paginate(10);
 
         return view('livewire.notification.list-notifications', [
-            'notifications' => $notifications
+            'notifications' => $notifications,
         ]);
+    }
+
+    public function delete(string $id)
+    {
+        $version = DB::table('notifications')
+            ->where('id', $id)
+            ->first();
+
+        DB::table('notifications')
+            ->where('data', $version->data)
+            ->delete();
     }
 }

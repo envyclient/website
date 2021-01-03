@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Version;
 use App\Notifications\ClientNotification;
-use App\Notifications\LauncherNotification;
+use App\Notifications\VersionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
@@ -43,8 +43,8 @@ class UploadVersion extends Controller
 
         // send the notification to all users
         Notification::send(
-            User::has('subscription')->get(),
-            new LauncherNotification($request->name, $request->has('beta'), $request->changelog),
+            User::all(),
+            new ClientNotification('info', "$request->name has been released."),
         );
 
         return back()->with('success', 'Version upload.');

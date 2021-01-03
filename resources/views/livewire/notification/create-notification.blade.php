@@ -2,16 +2,13 @@
     <form wire:submit.prevent="submit">
 
         <div class="mb-3">
-            <label class="form-label" for="version">Version</label>
-            <input class="form-control @error('version') is-invalid @enderror"
-                   type="number"
-                   id="version"
-                   wire:model.defer="version"
-                   min="5.0"
-                   step="0.1"
-                   required>
+            <label class="form-label" for="type">Type</label>
+            <select class="form-select" id="type" wire:model.defer="type">
+                <option value="info" selected>Info</option>
+                <option value="warning">Warning</option>
+            </select>
 
-            @error('version')
+            @error('type')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -19,7 +16,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label" for="notification">Notification</label>
+            <label class="form-label" for="notification">Notification Message</label>
             <textarea class="form-control @error('notification') is-invalid @enderror"
                       id="notification"
                       wire:model.defer="notification"

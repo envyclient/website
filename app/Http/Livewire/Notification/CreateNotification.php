@@ -9,11 +9,11 @@ use Livewire\Component;
 
 class CreateNotification extends Component
 {
-    public $version;
+    public $type = 'info';
     public $notification;
 
     protected $rules = [
-        'version' => 'required|numeric|min:5.0',
+        'type' => 'required|string',
         'notification' => 'required|string',
     ];
 
@@ -28,13 +28,12 @@ class CreateNotification extends Component
 
         // send the notification to all users
         Notification::send(
-            User::has('subscription')->get(),
-            new ClientNotification($this->version, $this->notification),
+            User::all(),
+            new ClientNotification($this->type, $this->notification),
         );
 
-        $this->version = null;
-        $this->notification = null;
-
         $this->emit('NOTIFICATION_CREATED');
+
+        $this->reset();
     }
 }

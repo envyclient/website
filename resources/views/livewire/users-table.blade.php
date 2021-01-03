@@ -6,13 +6,13 @@
         </div>
         <div class="col">
             <select class="form-select" wire:model="type">
-                <option value="all">All</option>
+                <option value="all" selected>All</option>
                 <option value="banned">Only Banned</option>
             </select>
         </div>
         <div class="col">
             <select class="form-select" wire:model="referralCode">
-                <option value="ignore">Ignore</option>
+                <option value="ignore" selected>Ignore</option>
                 @foreach(\App\Models\ReferralCode::all() as $code)
                     <option value="{{ $code->id }}">{{ $code->code }}</option>
                 @endforeach

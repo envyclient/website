@@ -12,7 +12,7 @@
 
         <div>
             <div class="alert alert-dark" style="font-size:25px;">
-                Create Client Notification
+                Create Notification
             </div>
 
             @livewire('notification.create-notification')
