@@ -22,7 +22,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="referral-code">Referral Code</label>
-                    @if($user->referralCode()->exists())
+                    @if($user->referral_code_id !== null)
                         <input id="referral-code"
                                class="form-control"
                                value="{{ $user->referralCode->code }}"

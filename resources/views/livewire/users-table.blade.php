@@ -10,6 +10,14 @@
                 <option value="banned">Only Banned</option>
             </select>
         </div>
+        <div class="col">
+            <select class="form-select" wire:model="referralCode">
+                <option value="ignore">Ignore</option>
+                @foreach(\App\Models\ReferralCode::all() as $code)
+                    <option value="{{ $code->id }}">{{ $code->code }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
     <br>
@@ -22,11 +30,9 @@
             <th>name</th>
             <th>email</th>
             <th>subscription</th>
-            <th>hwid</th>
-            <th>banned</th>
-            <th>free plan</th>
-            <th>using client</th>
-            <th>discord</th>
+            <th>info</th>
+            <th>current account</th>
+            <th>referral code</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -46,25 +52,15 @@
                     @endif
                 </td>
                 <td>
-                    @if($user->hwid === null)
-                        &#10006;
-                    @else
-                        &#10004;
-                    @endif
-                </td>
-                <td>
-                    @if($user->banned)
-                        &#10004;
-                    @else
-                        &#10006;
-                    @endif
-                </td>
-                <td>
-                    @if($user->access_free_plan)
-                        &#10004;
-                    @else
-                        &#10006;
-                    @endif
+                    HWID: {{ $user->hwid === null ? '✖' : '✔' }}
+                    <br>
+                    Banned: {{ $user->hwid === null ? '✖' : '✔' }}
+                    <br>
+                    Free Plan: {{ $user->hwid === null ? '✖' : '✔' }}
+                    <br>
+                    Discord: {{ $user->discord_id === null ? '✖' : '✔' }}
+                    <br>
+                    Free Plan: {{ $user->hwid === null ? '✖' : '✔' }}
                 </td>
                 <td>
                     @if($user->current_account !== null)
@@ -76,8 +72,8 @@
                     @endif
                 </td>
                 <td>
-                    @if($user->discord_id !== null)
-                        {{ $user->discord_name }}
+                    @if($user->referralCode != null)
+                        {{ $user->referralCode->code }}
                     @else
                         &#10006;
                     @endif

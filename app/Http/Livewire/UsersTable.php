@@ -15,14 +15,19 @@ class UsersTable extends Component
 
     public string $name = '';
     public string $type = 'all';
+    public string $referralCode = 'ignore';
 
     public function render()
     {
-        $user = User::with('subscription.plan')
+        $user = User::with(['subscription.plan', 'referralCode'])
             ->name($this->name);
 
         if ($this->type === 'banned') {
             $user->where('banned', true);
+        }
+
+        if ($this->referralCode !== 'ignore') {
+            $user->where('referral_code_id', $this->referralCode);
         }
 
         return view('livewire.users-table')->with([

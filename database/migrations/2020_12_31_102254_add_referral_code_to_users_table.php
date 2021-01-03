@@ -15,6 +15,7 @@ class AddReferralCodeToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('referral_code_id')->nullable();
+            $table->timestamp('referral_code_used_at')->nullable();
         });
     }
 

@@ -29,9 +29,10 @@ class UseReferralCode extends Controller
         $code = ReferralCode::where('code', $data['referral-code'])
             ->first();
 
-        $user->fill([
-            'referral_code_id' => $code->id
-        ])->save();
+        $user->update([
+            'referral_code_id' => $code->id,
+            'referral_code_used_at' => now(),
+        ]);
 
         return back()->with('success', 'Used referral code.');
     }

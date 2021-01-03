@@ -11,7 +11,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
 /**
  * @property string name
  * @property string email
- * @property null|string email_verified_at
+ * @property null|\Illuminate\Support\Carbon email_verified_at
  * @property string password
  * @property string api_token
  * @property null|string hwid
@@ -23,6 +23,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string image
  * @property null|string current_account
  * @property null|int referral_code_id
+ * @property null|\Illuminate\Support\Carbon referral_code_used_at
  * @property null|string discord_id
  * @property null|string discord_name
  */
@@ -45,6 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'image',
         'current_account',
         'referral_code_id',
+        'referral_code_used_at',
         'discord_id',
         'discord_name',
     ];
@@ -59,6 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'banned' => 'bool',
         'email_verified_at' => 'datetime',
+        'referral_code_used_at' => 'datetime',
     ];
 
     public function scopeName($query, $name)
