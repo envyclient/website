@@ -106,4 +106,9 @@ class PagesController extends Controller
         return view('pages.dashboard.admin.referrals')->with([
         ]);
     }
+    public function notifications()
+    {
+        return view('pages.dashboard.admin.notifications')->with([
+        ]);
+    }
 }
