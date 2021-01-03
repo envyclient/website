@@ -155,6 +155,11 @@
                 <i class="fas fa-qrcode p-2" style="margin-right:10px;"></i>
                 Referrals Codes
             </a>
+            <a class="list-group-item list-group-item-custom {{ Route::is('admin.notifications') ? 'active': null }}"
+               href="{{ route('admin.notifications') }}">
+                <i class="fas fa-bell p-2" style="margin-right:10px;"></i>
+                Notifications
+            </a>
             @endadmin
         </div>
     </div>

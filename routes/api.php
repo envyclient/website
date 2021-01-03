@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Configs\Actions\GetConfigsForCurrentUser;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
 use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Controllers\API\MinecraftController;
+use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\API\VersionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,14 @@ Route::prefix('minecraft')->group(function () {
     Route::get('{uuid}', [MinecraftController::class, 'show']);
     Route::post('/', [MinecraftController::class, 'store']);
     Route::delete('/', [MinecraftController::class, 'destroy']);
+});
+
+/**
+ * Notifications
+ */
+Route::prefix('notifications')->group(function () {
+    Route::get('/', [NotificationsController::class, 'index']);
+    Route::patch('{id}', [NotificationsController::class, 'update']);
 });
 
 /**

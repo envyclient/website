@@ -34,7 +34,13 @@ class PagesController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->middleware('admin')->only('users', 'versions', 'sessions');
+        $this->middleware('admin')->only(
+            'users',
+            'versions',
+            'sessions',
+            'referrals',
+            'notifications'
+        );
     }
 
     public function dashboard(Request $request)
@@ -104,6 +110,12 @@ class PagesController extends Controller
     public function referrals()
     {
         return view('pages.dashboard.admin.referrals')->with([
+        ]);
+    }
+
+    public function notifications()
+    {
+        return view('pages.dashboard.admin.notifications')->with([
         ]);
     }
 }
