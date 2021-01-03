@@ -22,8 +22,17 @@ class UsersTable extends Component
         $user = User::with(['subscription.plan', 'referralCode'])
             ->name($this->name);
 
-        if ($this->type === 'banned') {
-            $user->where('banned', true);
+        switch ($this->type) {
+            case 'banned':
+            {
+                $user->where('banned', true);
+                break;
+            }
+            case 'active':
+            {
+                $user->where('current_account', '<>', null);
+                break;
+            }
         }
 
         if ($this->referralCode !== 'ignore') {

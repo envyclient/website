@@ -8,6 +8,7 @@
             <select class="form-select" wire:model="type">
                 <option value="all">All</option>
                 <option value="banned">Only Banned</option>
+                <option value="active">Only Active Users</option>
             </select>
         </div>
         <div class="col">
