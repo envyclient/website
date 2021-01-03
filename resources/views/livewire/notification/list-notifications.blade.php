@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>verson</th>
+                <th>version</th>
                 <th>message</th>
                 <th>created</th>
             </tr>
