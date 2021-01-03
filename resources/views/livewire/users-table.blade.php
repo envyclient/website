@@ -23,15 +23,18 @@
     <br>
 
     <!-- users table -->
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover table-sm">
         <thead>
         <tr>
             <th>#</th>
             <th>name</th>
             <th>email</th>
             <th>subscription</th>
-            <th>info</th>
+            <th>hwid</th>
+            <th>banned</th>
+            <th>free plan</th>
             <th>current account</th>
+            <th>discord</th>
             <th>referral code</th>
             <th>actions</th>
         </tr>
@@ -52,21 +55,38 @@
                     @endif
                 </td>
                 <td>
-                    HWID: {{ $user->hwid === null ? '✖' : '✔' }}
-                    <br>
-                    Banned: {{ $user->hwid === null ? '✖' : '✔' }}
-                    <br>
-                    Free Plan: {{ $user->hwid === null ? '✖' : '✔' }}
-                    <br>
-                    Discord: {{ $user->discord_id === null ? '✖' : '✔' }}
-                    <br>
-                    Free Plan: {{ $user->hwid === null ? '✖' : '✔' }}
+                    @if($user->hwid === null)
+                        &#10006;
+                    @else
+                        &#10004;
+                    @endif
+                </td>
+                <td>
+                    @if($user->banned)
+                        &#10004;
+                    @else
+                        &#10006;
+                    @endif
+                </td>
+                <td>
+                    @if($user->access_free_plan)
+                        &#10004;
+                    @else
+                        &#10006;
+                    @endif
                 </td>
                 <td>
                     @if($user->current_account !== null)
                         <img
                             src="https://crafatar.com/avatars/{{ $user->current_account }}?size=32&default=MHF_Steve&overlay"
                             alt="head">
+                    @else
+                        &#10006;
+                    @endif
+                </td>
+                <td>
+                    @if($user->discord_id !== null)
+                        {{ $user->discord_name }}
                     @else
                         &#10006;
                     @endif
