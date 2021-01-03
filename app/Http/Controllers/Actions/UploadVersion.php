@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Version;
+use App\Notifications\ClientNotification;
+use App\Notifications\LauncherNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class UploadVersion extends Controller
@@ -37,7 +41,11 @@ class UploadVersion extends Controller
             'changelog' => $request->changelog,
         ]);
 
-
+        // send the notification to all users
+        Notification::send(
+            User::has('subscription')->get(),
+            new LauncherNotification($request->name, $request->has('beta'), $request->changelog),
+        );
 
         return back()->with('success', 'Version upload.');
     }

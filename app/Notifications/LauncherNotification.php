@@ -10,12 +10,14 @@ class LauncherNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private float $version;
+    private string $name;
+    private bool $beta;
     private string $changelog;
 
-    public function __construct(float $version, string $changelog)
+    public function __construct(string $name, bool $beta, string $changelog)
     {
-        $this->version = $version;
+        $this->name = $name;
+        $this->beta = $beta;
         $this->changelog = $changelog;
     }
 
@@ -39,7 +41,8 @@ class LauncherNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'version' => $this->version,
+            'name' => $this->name,
+            'beta' => $this->beta,
             'changelog' => $this->changelog,
         ];
     }

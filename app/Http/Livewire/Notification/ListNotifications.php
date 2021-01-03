@@ -20,7 +20,6 @@ class ListNotifications extends Component
             ->notifications()
             ->paginate(10);
 
-
         return view('livewire.notification.list-notifications', [
             'notifications' => $notifications
         ]);

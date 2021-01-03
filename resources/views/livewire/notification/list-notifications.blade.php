@@ -4,8 +4,8 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>version</th>
-                <th>message</th>
+                <th>type</th>
+                <th>data</th>
                 <th>created</th>
             </tr>
             </thead>
@@ -13,8 +13,12 @@
             @foreach($notifications as $notification)
                 <tr>
                     <th scope="row">{{ $loop->index + 1 }}</th>
-                    <td>{{ $notification->data['version'] }}</td>
-                    <td>{{ $notification->data['message'] }}</td>
+                    <td>{{ $notification->type }}</td>
+                    <td>
+                        <code>
+                            {{ json_encode($notification->data) }}
+                        </code>
+                    </td>
                     <td>{{ $notification->created_at->diffForHumans() }}</td>
                 </tr>
             @endforeach
