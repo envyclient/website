@@ -11,7 +11,7 @@
         "php": "^8.0",
         "consoletvs/charts": "6.*",
         "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "^6.3.1",
+        "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
