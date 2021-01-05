@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
             // custom
             \App\Http\Middleware\Custom\CheckBanned::class,
             \App\Http\Middleware\Custom\CheckDisabled::class,
+            \App\Http\Middleware\Custom\CheckReferral::class,
         ],
 
         'api' => [
