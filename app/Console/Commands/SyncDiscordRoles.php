@@ -3,16 +3,16 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use Exception;
 use Illuminate\Console\Command;
-use RestCord\DiscordClient;
+use Illuminate\Support\Facades\Http;
 
 class SyncDiscordRoles extends Command
 {
     protected $signature = 'discord:sync';
     protected $description = 'Sync discord roles with subscriptions.';
 
-    private $discord;
+    private string $endpoint;
+    private string $token;
     private int $guild;
     private array $roles;
 
@@ -20,10 +20,8 @@ class SyncDiscordRoles extends Command
     {
         parent::__construct();
 
-        $this->discord = new DiscordClient([
-            'token' => config('discord.token'),
-        ]);
-
+        $this->endpoint = config('discord.endpoint');
+        $this->token = config('discord.token');
         $this->guild = config('discord.guild.id');
         $this->roles = [
             'standard' => intval(config('discord.guild.roles.standard')),
@@ -36,7 +34,8 @@ class SyncDiscordRoles extends Command
         $start = now();
         $count = 0;
 
-        $users = User::with('subscription.plan')
+        $users = User::has('subscription')
+            ->with('subscription.plan')
             ->where('discord_id', '<>', null)
             ->get();
 
@@ -80,22 +79,12 @@ class SyncDiscordRoles extends Command
 
     private function updateRole(int $userID, int $roleID, bool $remove = false): void
     {
-        try {
-            if ($remove) {
-                $this->discord->guild->removeGuildMemberRole([
-                    'guild.id' => $this->guild,
-                    'user.id' => $userID,
-                    'role.id' => $roleID,
-                ]);
-            } else {
-                $this->discord->guild->addGuildMemberRole([
-                    'guild.id' => $this->guild,
-                    'user.id' => $userID,
-                    'role.id' => $roleID,
-                ]);
-            }
-        } catch (Exception $e) {
-            // user not in envy discord
+        if ($remove) {
+            Http::withToken($this->token, 'Bot')
+                ->put("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
+        } else {
+            Http::withToken($this->token, 'Bot')
+                ->delete("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
         }
     }
 }

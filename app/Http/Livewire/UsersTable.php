@@ -23,6 +23,11 @@ class UsersTable extends Component
             ->name($this->name);
 
         switch ($this->type) {
+            case 'subscribed':
+            {
+                $user->has('subscription');
+                break;
+            }
             case 'banned':
             {
                 $user->where('banned', true);

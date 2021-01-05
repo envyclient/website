@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Version;
+use App\Notifications\ClientNotification;
+use App\Notifications\VersionNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class UploadVersion extends Controller
@@ -37,7 +41,11 @@ class UploadVersion extends Controller
             'changelog' => $request->changelog,
         ]);
 
-
+        // send the notification to all users
+        Notification::send(
+            User::all(),
+            new ClientNotification('info', "$request->name has been released."),
+        );
 
         return back()->with('success', 'Version upload.');
     }

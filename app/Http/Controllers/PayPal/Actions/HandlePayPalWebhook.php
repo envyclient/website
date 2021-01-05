@@ -6,8 +6,8 @@ use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\BillingAgreement;
 use App\Models\Subscription;
-use App\Notifications\SubscriptionCreated;
-use App\Notifications\SubscriptionUpdated;
+use App\Notifications\Subscription\SubscriptionCreated;
+use App\Notifications\Subscription\SubscriptionUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -39,13 +39,13 @@ class HandlePayPalWebhook extends Controller
 
         if ($response->status() !== 200) {
             return response()->json([
-                'message' => 'Failed Webhook Signature'
+                'message' => 'Failed Webhook Signature',
             ], 400);
         }
 
         if ($request->json('event_type') === null) {
             return response()->json([
-                'message' => 'Missing Billing Agreement'
+                'message' => 'Missing Billing Agreement',
             ], 400);
         }
 
@@ -64,9 +64,9 @@ class HandlePayPalWebhook extends Controller
                 $user = $billingAgreement->user;
 
                 if ($user->hasSubscription()) {
-                    $user->subscription->fill([
+                    $user->subscription->update([
                         'end_date' => $user->subscription->end_date->addDays(30)
-                    ])->save();
+                    ]);
 
                     // TODO: notify user about renewal
                 } else {
@@ -93,9 +93,9 @@ class HandlePayPalWebhook extends Controller
                 )->firstOrFail();
 
                 // cancel billing agreement by updating the state
-                $billingAgreement->fill([
-                    'state' => 'Cancelled'
-                ])->save();
+                $billingAgreement->update([
+                    'state' => 'Cancelled',
+                ]);
 
                 // email user about subscription cancellation
                 $billingAgreement->user->notify(new SubscriptionUpdated(
