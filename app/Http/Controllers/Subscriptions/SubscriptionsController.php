@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Subscriptions;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\Subscription;
-use App\Notifications\Subscription\SubscriptionUpdated;
 use Illuminate\Http\Request;
 
 class SubscriptionsController extends Controller

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 class ClearDiscordChannels extends Command
 {
     const CHANNELS = [
-        795476742184632330
+        794374280024031277,
     ];
 
     protected $signature = 'discord:clear';
@@ -30,16 +30,40 @@ class ClearDiscordChannels extends Command
     public function handle()
     {
         foreach (self::CHANNELS as $channel) {
-            $messages = Http::withToken(config('discord.token'), 'Bot')
-                ->get("https://discord.com/api/channels/$channel/messages?limit=100");
 
-            $response = Http::withToken(config('discord.token'), 'Bot')
-                ->withBody(json_encode([
-                    'messages' => collect($messages)->pluck('id'),
-                ]), 'application/json')
-                ->post("https://discord.com/api/channels/$channel/messages/bulk-delete");
+            $this->info("Checking Channel=$channel.");
 
-            dd($response->status());
+            while (true) {
+                $response = Http::withToken($this->token, 'Bot')
+                    ->get("$this->endpoint/channels/$channel/messages?limit=100");
+
+                // checking if were able to
+                if ($response->status() !== 200) {
+                    $this->error('Unable to fetch messages for channel.');
+                    break;
+                }
+
+                // checking if channel has no message
+                $messages = collect($response->json());
+                if ($messages->count() <= 0) {
+                    break;
+                }
+
+                $response = Http::withToken($this->token, 'Bot')
+                    ->withBody(json_encode([
+                        'messages' => $messages->pluck('id'),
+                    ]), 'application/json')
+                    ->post("$this->endpoint/channels/$channel/messages/bulk-delete");
+
+
+                // checking if we were able to delete the messages
+                if ($response->status() !== 204) {
+                    $this->error('Unable to delete messages for channel.');
+                    break;
+                }
+
+                $this->info("Chanel=$channel, Deleted={$messages->count()}.");
+            }
         }
 
         // TODO: send message that channel has been cleared
