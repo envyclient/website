@@ -12,7 +12,6 @@ class Kernel extends ConsoleKernel
 {
     const EMAILS = [
         'haqgamer66@gmail.com',
-        'matko.vukovic.csgo1@gmail.com',
     ];
 
     protected $commands = [
@@ -31,9 +30,9 @@ class Kernel extends ConsoleKernel
             ->everyFiveMinutes()
             ->emailOutputOnFailure(self::EMAILS);
 
-        /*  $schedule->command('discord:clear')
-              ->daily()
-              ->emailOutputOnFailure(self::EMAILS);*/
+        $schedule->command('discord:clear')
+            ->cron('0 0 */3 * *')
+            ->emailOutputTo(self::EMAILS);
     }
 
     protected function commands()

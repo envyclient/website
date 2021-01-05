@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Subscription;
-use App\Notifications\SubscriptionUpdated;
+use App\Notifications\Subscription\SubscriptionUpdated;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
