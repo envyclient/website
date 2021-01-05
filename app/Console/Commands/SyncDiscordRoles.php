@@ -81,10 +81,10 @@ class SyncDiscordRoles extends Command
     {
         if ($remove) {
             Http::withToken($this->token, 'Bot')
-                ->put("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
+                ->delete("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
         } else {
             Http::withToken($this->token, 'Bot')
-                ->delete("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
+                ->put("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
         }
     }
 }
