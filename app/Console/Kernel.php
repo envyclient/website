@@ -2,43 +2,40 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ClearDiscordChannels;
+use App\Console\Commands\DeleteCancelledSubscriptions;
+use App\Console\Commands\SyncDiscordRoles;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * The Artisan commands provided by your application.
-     * comp *
-     * @var array
-     */
-    protected $commands = [
-        \App\Console\Commands\DeleteCancelledSubscriptions::class,
-        \App\Console\Commands\SyncDiscordRoles::class,
+    const EMAILS = [
+        'haqgamer66@gmail.com',
+        'matko.vukovic.csgo1@gmail.com',
     ];
 
-    /**
-     * Define the application's command schedule.
-     *
-     * @param Schedule $schedule
-     * @return void
-     */
+    protected $commands = [
+        DeleteCancelledSubscriptions::class,
+        SyncDiscordRoles::class,
+        ClearDiscordChannels::class,
+    ];
+
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('subscriptions:delete')
             ->everyMinute()
-            ->emailOutputOnFailure('haqgamer66@gmail.com');
+            ->emailOutputOnFailure(self::EMAILS);
 
         $schedule->command('discord:sync')
             ->everyFiveMinutes()
-            ->emailOutputOnFailure('haqgamer66@gmail.com');
+            ->emailOutputOnFailure(self::EMAILS);
+
+        /*  $schedule->command('discord:clear')
+              ->daily()
+              ->emailOutputOnFailure(self::EMAILS);*/
     }
 
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
     protected function commands()
     {
         $this->load(__DIR__ . ' /Commands');
