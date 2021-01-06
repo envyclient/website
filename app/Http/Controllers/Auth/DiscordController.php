@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Strng;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -35,12 +36,13 @@ class DiscordController extends Controller
         $user = User::firstOrCreate([
             'email' => $user->getEmail(),
         ], [
-            'name' => str_replace(' ', '_', $user->getName()),
+            'name' => Strng::clean($user->getName()),
             'password' => Hash::make(Str::random(24)),
             'email_verified_at' => now(),
             'discord_id' => $user->getId(),
             'discord_name' => $user->getNickname(),
         ]);
+
 
         Auth::login($user, true);
 
