@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0",
         "consoletvs/charts": "6.*",
+        "coraxster/flysystem-aws-s3-v3-minio": "^1.0",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
@@ -18,7 +19,8 @@
         "livewire/livewire": "^2.3",
         "mistic100/randomcolor": "^1.0",
         "overtrue/laravel-favorite": "^2.0",
-        "socialiteproviders/discord": "^4.1"
+        "socialiteproviders/discord": "^4.1",
+        "spatie/laravel-backup": "^7.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
