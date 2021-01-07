@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class MinecraftController extends Controller
@@ -16,21 +15,13 @@ class MinecraftController extends Controller
 
     public function show($uuid)
     {
-        try {
-            $user = User::where('current_account', $uuid)
-                ->firstOrFail();
+        $user = User::where('current_account', $uuid)
+            ->firstOrFail();
 
-            $response = [
-                'using' => true,
-                'cape' => $user->hasCapesAccess() ? $user->cape : null,
-            ];
-
-        } catch (ModelNotFoundException $e) {
-            $response = [
-                'using' => false,
-                'cape' => null,
-            ];
-        }
+        $response = [
+            'using' => true,
+            'cape' => $user->hasCapesAccess() ? $user->cape : null,
+        ];
 
         return response()->json($response);
     }
