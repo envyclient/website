@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class MinecraftController extends Controller
@@ -13,27 +14,25 @@ class MinecraftController extends Controller
         $this->middleware(['auth:api', 'subscribed']);
     }
 
-    public function index()
-    {
-        return User::where('current_account', '<>', null)
-            ->pluck('current_account')
-            ->toArray();
-    }
-
     public function show($uuid)
     {
-        $user = User::where('current_account', $uuid)
-            ->firstOrFail();
+        try {
+            $user = User::where('current_account', $uuid)
+                ->firstOrFail();
 
-        if (!$user->hasCapesAccess()) {
-            return response()->json([
-                'message' => '403 Forbidden'
-            ], 403);
+            $response = [
+                'using' => true,
+                'cape' => $user->hasCapesAccess() ? $user->cape : null,
+            ];
+
+        } catch (ModelNotFoundException $e) {
+            $response = [
+                'using' => false,
+                'cape' => null,
+            ];
         }
 
-        return response()->json([
-            'cape' => $user->cape
-        ]);
+        return response()->json($response);
     }
 
     public function store(Request $request)
