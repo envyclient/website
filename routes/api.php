@@ -57,7 +57,6 @@ Route::prefix('versions')->group(function () {
  * Minecraft
  */
 Route::prefix('minecraft')->group(function () {
-    Route::get('/', [MinecraftController::class, 'index']);
     Route::get('{uuid}', [MinecraftController::class, 'show']);
     Route::post('/', [MinecraftController::class, 'store']);
     Route::delete('/', [MinecraftController::class, 'destroy']);

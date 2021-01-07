@@ -13,27 +13,17 @@ class MinecraftController extends Controller
         $this->middleware(['auth:api', 'subscribed']);
     }
 
-    public function index()
-    {
-        return User::where('current_account', '<>', null)
-            ->pluck('current_account')
-            ->toArray();
-    }
-
     public function show($uuid)
     {
         $user = User::where('current_account', $uuid)
             ->firstOrFail();
 
-        if (!$user->hasCapesAccess()) {
-            return response()->json([
-                'message' => '403 Forbidden'
-            ], 403);
-        }
+        $response = [
+            'using' => true,
+            'cape' => $user->hasCapesAccess() ? $user->cape : null,
+        ];
 
-        return response()->json([
-            'cape' => $user->cape
-        ]);
+        return response()->json($response);
     }
 
     public function store(Request $request)
