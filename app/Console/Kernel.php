@@ -33,6 +33,15 @@ class Kernel extends ConsoleKernel
         $schedule->command('discord:clear')
             ->cron('0 0 */3 * *')
             ->emailOutputTo(self::EMAILS);
+
+
+        // backup
+        $schedule->command('backup:clean')
+            ->daily()
+            ->at('01:00');
+        $schedule->command('backup:run')
+            ->daily()
+            ->at('02:00');
     }
 
     protected function commands()
