@@ -34,7 +34,6 @@ class Kernel extends ConsoleKernel
             ->cron('0 0 */3 * *')
             ->emailOutputTo(self::EMAILS);
 
-
         // backup
         $schedule->command('backup:clean')
             ->daily()

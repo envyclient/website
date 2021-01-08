@@ -82,16 +82,6 @@
             @endif
         </form>
 
-        @if(!$user->hasSubscription() && !$user->hasBillingAgreement() && $user->access_free_plan)
-            <form method="post" action="{{ route('subscriptions.free') }}" class="mt-2">
-                @csrf
-                <div class="d-grid gap-2">
-                    <input class="btn btn-outline-secondary btn-lg" type="submit"
-                           value="Subscribe to free plan">
-                </div>
-            </form>
-        @endif
-
         @if($user->hasBillingAgreement() && $user->isBillingAgreementCancelled())
             <div class="card" style="width: 100%;">
                 <div class="d-grid gap-2">
