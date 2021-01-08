@@ -69,7 +69,7 @@ class UsersTable extends Component
         $this->resetPage();
     }
 
-    public function freePlan(int $id, bool $removing = false): void
+    public function freeSubscription(int $id, bool $removing = false): void
     {
         $user = User::findOrFail($id);
 
@@ -78,11 +78,13 @@ class UsersTable extends Component
             Subscription::where('user_id', $id)
                 ->where('plan_id', 1)
                 ->delete();
+        } else {
+            Subscription::create([
+                'user_id' => $user->id,
+                'plan_id' => 1,
+                'end_date' => now()->addMonth(),
+            ]);
         }
-
-        $user->update([
-            'access_free_plan' => !$user->access_free_plan,
-        ]);
     }
 
     public function updatingName()
