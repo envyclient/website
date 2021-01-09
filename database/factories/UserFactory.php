@@ -23,7 +23,6 @@ class UserFactory extends Factory
             'admin' => 0,
             'banned' => 0,
             'disabled' => 0,
-            'access_free_plan' => 1,
             'remember_token' => Str::random(10),
         ];
     }

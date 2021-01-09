@@ -17,7 +17,7 @@
                     <input id="member-since"
                            class="form-control"
                            value="{{ $user->created_at->format('Y-m-d') }}"
-                           readonly>
+                           disabled>
                 </div>
 
                 <div class="mb-3">
@@ -26,7 +26,7 @@
                         <input id="referral-code"
                                class="form-control"
                                value="{{ $user->referralCode->code }}"
-                               readonly>
+                               disabled>
                     @else
                         <form action="{{ route('users.referral-code') }}" method="post">
                             @csrf

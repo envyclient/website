@@ -10,10 +10,12 @@ class Version extends Component
 {
     public int $index;
     public \App\Models\Version $version;
+    public bool $editMode = false;
 
-    public bool $editMode;
-    public string $name;
-    public bool $beta;
+    protected array $rules = [
+        'version.name' => 'required|string|max:30',
+        'version.beta' => 'nullable|bool',
+    ];
 
     public function mount(int $index, \App\Models\Version $version)
     {
@@ -26,25 +28,10 @@ class Version extends Component
         return view('livewire.version.version');
     }
 
-    public function enableEditMode(): void
+    public function save(): void
     {
-        $this->name = $this->version->name;
-        $this->beta = $this->version->beta;
-        $this->editMode = true;
-    }
-
-    public function submit(): void
-    {
-        $this->validate([
-            'name' => 'required|string|max:30',
-            'beta' => 'required|boolean',
-        ]);
-
-        $this->version->update([
-            'name' => $this->name,
-            'beta' => $this->beta,
-        ]);
-
+        $this->validate();
+        $this->version->save();
         $this->editMode = false;
     }
 

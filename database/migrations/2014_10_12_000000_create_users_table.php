@@ -32,8 +32,6 @@ class CreateUsersTable extends Migration
             $table->boolean('banned')->default(false);
             $table->boolean('disabled')->default(false);
 
-            $table->boolean('access_free_plan')->default(false);
-
             $table->rememberToken();
             $table->timestamps();
         });
