@@ -15,6 +15,8 @@
     <meta content="128" property="og:image:width">
     <meta content="128" property="og:image:height">
 
+    <script type="text/javascript" src="{{ asset('js/bundle.js') }}" defer></script>
+
     <link rel="stylesheet" href="{{ asset('css/bundle.css') }}">
     <style>
         .video-image {
@@ -167,7 +169,7 @@
                     <span onClick="playVideo(this, 'video-1', 'video-1-image');"></span>
                     <iframe id="video-1"
                             class="video-image"
-                            src="https://youtube.com/embed/UwzW7A9ofrM"
+                            data-src="https://youtube.com/embed/UwzW7A9ofrM"
                             style="display: none;border: 0;"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
@@ -183,7 +185,7 @@
                     <span onClick="playVideo(this, 'video-2', 'video-2-image');"></span>
                     <iframe id="video-2"
                             class="video-image"
-                            src="https://youtube.com/embed/pAAL2_YFsDA"
+                            data-src="https://youtube.com/embed/pAAL2_YFsDA"
                             style="display: none;border: 0;"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
@@ -239,7 +241,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{ asset('js/bundle.js') }}" defer></script>
 <script type="text/javascript" defer>
     // play the clicked video
     function playVideo(span, frameID, imageID) {
@@ -254,7 +255,7 @@
 
         // showing the iframe and playing the video
         frame.style.display = "block";
-        frame.src += "?autoplay=1";
+        frame.src = frame.getAttribute('data-src') + "?autoplay=1";
     }
 </script>
 </body>
