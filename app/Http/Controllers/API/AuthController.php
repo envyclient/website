@@ -80,9 +80,9 @@ class AuthController extends Controller
         }
 
         // fill users hwid
-        $user->fill([
+        $user->update([
             'hwid' => $hwid
-        ])->save();
+        ]);
 
         return response()->json([
             'name' => $user->name,

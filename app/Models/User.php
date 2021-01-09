@@ -6,24 +6,24 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 /**
  * @property string name
  * @property string email
- * @property null|\Illuminate\Support\Carbon email_verified_at
+ * @property null|Carbon email_verified_at
  * @property string password
  * @property string api_token
  * @property null|string hwid
  * @property bool admin
  * @property bool banned
  * @property bool disabled
- * @property bool access_free_plan
  * @property string cape
  * @property string image
  * @property null|string current_account
  * @property null|int referral_code_id
- * @property null|\Illuminate\Support\Carbon referral_code_used_at
+ * @property null|Carbon referral_code_used_at
  * @property null|string discord_id
  * @property null|string discord_name
  */
@@ -41,7 +41,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'admin',
         'banned',
         'disabled',
-        'access_free_plan',
         'cape',
         'image',
         'current_account',
