@@ -8,6 +8,7 @@ use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Stripe\Exception\InvalidRequestException;
 use Stripe\StripeClient;
 
 class StripeSourcesController extends Controller
@@ -39,15 +40,20 @@ class StripeSourcesController extends Controller
         } catch (ModelNotFoundException) {
 
             $stripe = new StripeClient(config('stripe.secret'));
-            $response = $stripe->sources->create([
-                "type" => "wechat",
-                "amount" => $plan->one_time_price,
-                "currency" => "usd",
-                "owner" => [
-                    "name" => $user->name,
-                    "email" => $user->email,
-                ],
-            ]);
+
+            try {
+                $response = $stripe->sources->create([
+                    "type" => "wechat",
+                    "amount" => $plan->one_time_price,
+                    "currency" => "usd",
+                    "owner" => [
+                        "name" => $user->name,
+                        "email" => $user->email,
+                    ],
+                ]);
+            } catch (InvalidRequestException $e) {
+                return back()->with('error', $e->getMessage());
+            }
 
             $source = StripeSource::create([
                 'user_id' => $user->id,
