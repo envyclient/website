@@ -97,7 +97,7 @@ class HandleStripeSourcesWebhook extends Controller
                 Stripe::setApiKey(config('stripe.secret'));
                 $charge = Charge::create([
                     'amount' => $source->plan->one_time_price,
-                    'currency' => 'usd',
+                    'currency' => 'cad',
                     'source' => $source->source_id,
                 ]);
 
