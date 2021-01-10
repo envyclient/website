@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\Strng;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\AccountCreated;
 use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -28,21 +29,30 @@ class DiscordController extends Controller
     {
         try {
             $user = Socialite::driver('discord')->user();
-        } catch (Exception $e) {
-            // since the user clicked cancel we redirect them to login page
+        } catch (Exception) {
             return redirect('login');
         }
 
+        $newUser = false;
+        if (!User::where('email', $user->getEmail())
+            ->exists()) {
+            $newUser = true;
+        }
+
+        $password = Str::random(24);
         $user = User::firstOrCreate([
             'email' => $user->getEmail(),
         ], [
             'name' => Strng::clean($user->getName()),
-            'password' => Hash::make(Str::random(24)),
+            'password' => Hash::make($password),
             'email_verified_at' => now(),
             'discord_id' => $user->getId(),
             'discord_name' => $user->getNickname(),
         ]);
 
+        if ($newUser) {
+            $user->notify(new AccountCreated($password));
+        }
 
         Auth::login($user, true);
 
