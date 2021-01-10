@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="col">
-                                    <b>${{ $plan->price }}</b> / 30 days
+                                    <b>${{ $plan->price }} USD</b> / 30 days
                                 </div>
 
                                 <div class="col">
