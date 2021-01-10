@@ -33,11 +33,7 @@ class DiscordController extends Controller
             return redirect('login');
         }
 
-        $newUser = false;
-        if (!User::where('email', $user->getEmail())
-            ->exists()) {
-            $newUser = true;
-        }
+        $userExists = User::where('email', $user->getEmail())->exists();
 
         $password = Str::random(24);
         $user = User::firstOrCreate([
@@ -50,7 +46,7 @@ class DiscordController extends Controller
             'discord_name' => $user->getNickname(),
         ]);
 
-        if ($newUser) {
+        if (!$userExists) {
             $user->notify(new AccountCreated($password));
         }
 
