@@ -33,7 +33,7 @@ class DeleteCancelledSubscriptions extends Command
             $user = $subscription->user;
             $billingAgreement = $subscription->billingAgreement;
 
-            // user is on free plan
+            // user did not subscribe using paypal
             if ($billingAgreement === null) {
                 $user->subscription()->delete();
                 self::sendNotification($user);

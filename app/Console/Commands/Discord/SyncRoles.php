@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Discord;
 
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-class SyncDiscordRoles extends Command
+class SyncRoles extends Command
 {
     protected $signature = 'discord:sync';
     protected $description = 'Sync discord roles with subscriptions.';

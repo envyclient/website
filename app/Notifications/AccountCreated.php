@@ -26,6 +26,7 @@ class AccountCreated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->from('noreply@envyclient.com')
             ->subject('Account Created')
             ->markdown('emails.account-created', ['name' => $notifiable->name, 'password' => $this->password]);
     }

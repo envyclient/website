@@ -101,14 +101,7 @@
                                   d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"/>
                         </svg>
                     </button>
-                    @if($user->hasSubscription())
-                        <a class="btn btn-outline-dark" wire:click="freeSubscription({{ $user->id }}, true)">
-                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                      d="M3,4.27L4.28,3L21,19.72L19.73,21L16.06,17.33C15.44,18 14.54,18.55 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15H9C9,16.08 10.37,17 12,17C13.13,17 14.14,16.56 14.65,15.92L11.68,12.95C9.58,12.42 7,11.75 7,9C7,8.77 7,8.55 7.07,8.34L3,4.27M10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C11.63,7 11.28,7.05 10.95,7.13L9.4,5.58L10.5,5.18Z"/>
-                            </svg>
-                        </a>
-                    @else
+                    @if(!$user->hasSubscription())
                         <a class="btn btn-outline-dark" wire:click="freeSubscription({{ $user->id }})">
                             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                 <path fill="currentColor"

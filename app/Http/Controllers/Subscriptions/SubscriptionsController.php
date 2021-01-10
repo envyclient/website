@@ -4,26 +4,22 @@ namespace App\Http\Controllers\Subscriptions;
 
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
-use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 class SubscriptionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified', 'subscribed']);
     }
 
     public function delete(Request $request)
     {
         $user = $request->user();
-        if (!$user->hasSubscription()) {
-            return back()->with('error', 'You must subscribe to a plan first.');
-        }
 
-        if ($user->subscribedToFreePlan()) {
-            Subscription::where('user_id', $user->id)->delete();
-            return back()->with('success', 'You have cancelled your free subscription.');
+        // user did not subscribe using paypal
+        if (!$user->hasBillingAgreement()) {
+            return back()->with('error', 'You do not have an active paypal subscription.');
         }
 
         if ($user->isBillingAgreementCancelled()) {
