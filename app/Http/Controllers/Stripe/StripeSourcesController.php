@@ -13,9 +13,12 @@ use Stripe\StripeClient;
 
 class StripeSourcesController extends Controller
 {
+    public StripeClient $stripe;
+
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+        $this->stripe = new StripeClient(config('stripe.secret'));
     }
 
     public function store(Request $request)
@@ -38,11 +41,8 @@ class StripeSourcesController extends Controller
                 'status' => 'pending'
             ])->firstOrFail();
         } catch (ModelNotFoundException) {
-
-            $stripe = new StripeClient(config('stripe.secret'));
-
             try {
-                $response = $stripe->sources->create([
+                $response = $this->stripe->sources->create([
                     "type" => "wechat",
                     "amount" => $plan->one_time_price,
                     "currency" => "cad",
@@ -52,7 +52,7 @@ class StripeSourcesController extends Controller
                     ],
                 ]);
             } catch (InvalidRequestException $e) {
-                return back()->with('error', $e->getMessage());
+                return back()->with('error', 'An error occurred.');
             }
 
             $source = StripeSource::create([
