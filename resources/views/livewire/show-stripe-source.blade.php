@@ -41,9 +41,13 @@
         </div>
         <div class="col">
             <h3>Scan QR Code</h3>
-            <img src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl={{ urlencode($source->url) }}"
-                 class="rounded"
-                 alt="qr code">
+            <div class="card">
+                <img src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl={{ urlencode($source->url) }}"
+                     class="rounded mx-auto"
+                     width="500"
+                     height="500"
+                     alt="qr code">
+            </div>
         </div>
 
         @if($source->status !== 'pending' && $source->status !== 'chargeable')

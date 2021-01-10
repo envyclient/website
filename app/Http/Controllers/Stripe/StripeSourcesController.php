@@ -45,7 +45,7 @@ class StripeSourcesController extends Controller
                 $response = $stripe->sources->create([
                     "type" => "wechat",
                     "amount" => $plan->one_time_price,
-                    "currency" => "usd",
+                    "currency" => "cad",
                     "owner" => [
                         "name" => $user->name,
                         "email" => $user->email,
