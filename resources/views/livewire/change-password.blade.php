@@ -13,7 +13,7 @@
                    type="text"
                    value="{{ $user->name }}"
                    id="name"
-                   readonly>
+                   disabled>
         </div>
 
         <div class="mb-3">
@@ -22,7 +22,7 @@
                    type="text"
                    value="{{ $user->email }}"
                    id="email"
-                   readonly>
+                   disabled>
         </div>
 
         <div class="mb-3">
@@ -34,7 +34,7 @@
                    required>
 
             <div class="form-text">
-                If you registered using Discord you will need to reset your password.
+                If you registered using Discord please check your email.
             </div>
 
             @error('current_password')
