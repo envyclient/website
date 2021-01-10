@@ -12,7 +12,8 @@ class SubscriptionUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $subject, $message;
+    private string $subject;
+    private string $message;
 
     public function __construct(string $subject, string $message)
     {

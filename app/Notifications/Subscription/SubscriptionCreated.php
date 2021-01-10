@@ -19,6 +19,7 @@ class SubscriptionCreated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->from('noreply@envyclient.com')
             ->subject('New Subscription')
             ->markdown('emails.subscription', ['user' => $notifiable]);
     }

@@ -3,7 +3,8 @@
 @section('content')
     <div style="width:98%;margin:0 auto">
         <div class="alert alert-dark" style="font-size:25px;">
-            <i class="fab fa-cc-paypal" style="padding-right:10px;"></i> Subscription
+            <i class="fab fa-cc-paypal" style="padding-right:10px;"></i>
+            Subscription
         </div>
 
         <form method="post" action="{{ route('paypal.process') }}">
@@ -77,7 +78,7 @@
 
             @if(!$user->hasSubscription() && !$user->hasBillingAgreement())
                 <div class="d-grid gap-2">
-                    <input class="btn btn-outline-success btn-lg " type="submit" value="Subscribe">
+                    <input class="btn btn-outline-success btn-lg " type="submit" value="Subscribe using PayPal">
                 </div>
             @endif
         </form>
@@ -105,6 +106,78 @@
                     </button>
                 </div>
             </div>
+        @endif
+
+        @if(!$user->hasSubscription())
+            <div class="alert alert-dark mt-3" style="font-size:25px;">
+                <i class="fas fa-money-check" style="padding-right:10px;"></i>
+                One Time Payment
+            </div>
+
+            <form method="post" action="{{ route('stripe.store') }}">
+                @csrf
+                <div class="card" style="width:100%;">
+
+                    @if($user->hasSubscription())
+                        <div class="card-header">
+                            Please select how many days you want to add to your subscription.
+                        </div>
+                    @endif
+
+                    <ul class="list-group list-group-flush">
+                        @foreach($plans as $plan)
+                            <li class="list-group-item">
+                                <div class="row" style="line-height:60px;">
+
+                                    <div class="col">
+                                        <input class="form-check-input"
+                                               style="margin-top: 22px;"
+                                               id="plan-id"
+                                               name="plan-id"
+                                               type="radio"
+                                               value="{{ $plan->id }}"
+                                               required>
+                                        <label class="form-check-label" for="plan-id">
+                                            {{ $plan->name }}
+                                        </label>
+                                    </div>
+
+                                    <div class="col">
+                                        <button type="button"
+                                                class="btn btn-light"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#plans-modal"
+                                                data-bs-title="{{ $plan->name }} Plan"
+                                                data-bs-configs="{{ $plan->config_limit }}"
+                                                data-bs-beta="{{ $plan->beta_access }}"
+                                                data-bs-capes="{{ $plan->capes_access }}"
+                                        >
+                                            Features
+                                        </button>
+                                    </div>
+
+                                    <div class="col">
+                                        <b>${{ number_format($plan->one_time_price / 100, 2) }}</b> / 90 days
+                                        <span class="badge bg-success">15% off</span>
+                                    </div>
+
+                                    <div class="col">
+                                        <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                                            <path fill="currentColor"
+                                                  d="M3,12V6.75L9,5.43V11.91L3,12M20,3V11.75L10,11.9V5.21L20,3M3,13L9,13.09V19.9L3,18.75V13M20,13.25V22L10,20.09V13.1L20,13.25Z"/>
+                                        </svg>
+                                    </div>
+
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                <div class="d-grid gap-2 mt-3">
+                    <input class="btn btn-outline-success btn-lg" type="submit" value="Purchase using WeChat Pay">
+                </div>
+            </form>
         @endif
     </div>
 

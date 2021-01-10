@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
-use App\Console\Commands\ClearDiscordChannels;
 use App\Console\Commands\DeleteCancelledSubscriptions;
-use App\Console\Commands\SyncDiscordRoles;
+use App\Console\Commands\Discord\ClearChannels;
+use App\Console\Commands\Discord\SyncRoles;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,8 +16,8 @@ class Kernel extends ConsoleKernel
 
     protected $commands = [
         DeleteCancelledSubscriptions::class,
-        SyncDiscordRoles::class,
-        ClearDiscordChannels::class,
+        SyncRoles::class,
+        ClearChannels::class,
     ];
 
     protected function schedule(Schedule $schedule)
@@ -26,10 +26,12 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
             ->emailOutputOnFailure(self::EMAILS);
 
+        // sync roles with subscriptions every 5 minutes
         $schedule->command('discord:sync')
             ->everyFiveMinutes()
             ->emailOutputOnFailure(self::EMAILS);
 
+        // clear channels every 3 days
         $schedule->command('discord:clear')
             ->cron('0 0 */3 * *')
             ->emailOutputTo(self::EMAILS);

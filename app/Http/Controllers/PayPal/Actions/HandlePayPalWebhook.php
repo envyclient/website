@@ -68,7 +68,10 @@ class HandlePayPalWebhook extends Controller
                         'end_date' => $user->subscription->end_date->addDays(30)
                     ]);
 
-                    // TODO: notify user about renewal
+                    $user->notify(new SubscriptionUpdated(
+                        'Subscription Renewed',
+                        'Your subscription for Envy Client has been renewed.'
+                    ));
                 } else {
                     Subscription::create([
                         'user_id' => $user->id,
