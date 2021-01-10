@@ -51,7 +51,7 @@ class HandleStripeSourcesWebhook extends Controller
                 self::createEvent(
                     $source->id,
                     'canceled',
-                    'You session has expired. Please create a new one to continue your purchase.'
+                    'The payment has expired. Please create a new one to continue your purchase.'
                 );
 
                 break;
@@ -71,7 +71,7 @@ class HandleStripeSourcesWebhook extends Controller
                 self::createEvent(
                     $source->id,
                     'failed',
-                    'You have canceled your payment.'
+                    'The payment has been canceled.'
                 );
 
                 break;
@@ -91,7 +91,7 @@ class HandleStripeSourcesWebhook extends Controller
                 self::createEvent(
                     $source->id,
                     'chargeable',
-                    'Your have authorized the payment.'
+                    'The payment has been authorized.'
                 );
 
                 Stripe::setApiKey(config('stripe.secret'));
