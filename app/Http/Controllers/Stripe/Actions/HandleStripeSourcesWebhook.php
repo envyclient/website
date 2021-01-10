@@ -9,28 +9,35 @@ use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Stripe\Charge;
-use Stripe\Event;
+use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
+use Stripe\Webhook;
+use UnexpectedValueException;
 
 class HandleStripeSourcesWebhook extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('valid-json-payload');
+        Stripe::setApiKey(config('stripe.secret'));
     }
 
     public function __invoke(Request $request)
     {
         $event = null;
-
         try {
-            $event = Event::constructFrom(
-                json_decode($request->getContent(), true)
+            $event = Webhook::constructEvent(
+                $request->getContent(),
+                $request->header('stripe-signature'),
+                config('stripe.webhook.secret')
             );
-        } catch (\UnexpectedValueException) {
+        } catch (UnexpectedValueException) {
             return response()->json([
                 'message' => 'Invalid Payload',
+            ], 400);
+        } catch (SignatureVerificationException) {
+            return response()->json([
+                'message' => 'Invalid Signature',
             ], 400);
         }
 
