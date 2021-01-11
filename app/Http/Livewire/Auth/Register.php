@@ -12,10 +12,10 @@ use Livewire\Component;
 
 class Register extends Component
 {
-    public $name;
-    public $email;
-    public $password;
-    public $passwordConfirmation;
+    public string $name = '';
+    public string $email = '';
+    public string $password = '';
+    public string $passwordConfirmation = '';
 
     protected $rules = [
         'name' => [
@@ -42,7 +42,7 @@ class Register extends Component
 
     public function render()
     {
-        return view('livewire.auth.register')->extends('layouts.guest');
+        return view('livewire.auth.register')->extends('layouts.auth');
     }
 
     public function register()

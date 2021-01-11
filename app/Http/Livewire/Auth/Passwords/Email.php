@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Email extends Component
 {
-    public $email;
+    public string $email = '';
 
     protected $rules = [
         'email' => 'required|string|email',
@@ -15,7 +15,7 @@ class Email extends Component
 
     public function render()
     {
-        return view('livewire.auth.passwords.email')->extends('layouts.guest');
+        return view('livewire.auth.passwords.email')->extends('layouts.auth');
     }
 
     public function sendResetPasswordLink()

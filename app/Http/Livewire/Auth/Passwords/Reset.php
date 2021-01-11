@@ -12,10 +12,10 @@ use Livewire\Component;
 
 class Reset extends Component
 {
-    public $token;
-    public $email;
-    public $password;
-    public $passwordConfirmation;
+    public string $token = '';
+    public string $email = '';
+    public string $password = '';
+    public string $passwordConfirmation = '';
 
     protected $rules = [
         'token' => 'required|string',
@@ -31,7 +31,7 @@ class Reset extends Component
 
     public function render()
     {
-        return view('livewire.auth.passwords.reset')->extends('layouts.guest');
+        return view('livewire.auth.passwords.reset')->extends('layouts.auth');
     }
 
     public function resetPassword()

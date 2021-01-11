@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Confirm extends Component
 {
-    public $password;
+    public string $password = '';
 
     protected $rules = [
         'password' => 'required|string|password',
@@ -15,7 +15,7 @@ class Confirm extends Component
 
     public function render()
     {
-        return view('livewire.auth.passwords.confirm')->extends('layouts.guest');
+        return view('livewire.auth.passwords.confirm')->extends('layouts.auth');
     }
 
     public function confirm()
