@@ -157,7 +157,7 @@
                                     </div>
 
                                     <div class="col">
-                                        <b>${{ number_format($plan->one_time_price / 100, 2) }} CAD</b> / 90 days
+                                        <b>${{ number_format($plan->one_time_price / 100) }} CAD</b> / 90 days
                                         <span class="badge bg-success">15% off</span>
                                     </div>
 
