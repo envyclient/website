@@ -7,6 +7,7 @@
             Software. By downloading any Envy Client files you agree to be bound by the terms and conditions of this
             license. We reserve the right to alter this agreement at any time, for any reason, without notice. By
             continuing to use Envy Client, you will be deemed to have accepted any changes.</p>
+
         <h2>Permitted Use</h2>
         <ul>
             <li>
@@ -15,12 +16,14 @@
             </li>
             <li>Envy Client may only be accessed on Microsoft Windows.</li>
         </ul>
+
         <h2>Rights of Envy Client</h2>
         <ul>
             <li>
                 Envy Client reserves the right to modify or terminate accounts at any time, for any reason.
             </li>
         </ul>
+
         <h2>Restrictions</h2>
         <p>It is not permissible to:</p>
         <ul>
@@ -28,8 +31,9 @@
             <li>Sell, rent, lease, assign, and modify Envy Client or portions thereof.</li>
             <li>Grant rights to any other person. Any violations of these restrictions are grounds for termination.</li>
         </ul>
+
         <h2>Payment Practices</h2>
-        <p>Envy Client will use PayPal to receive payments.</p>
+        <p>Envy Client will use PayPal and WeChat Pay to receive payments.</p>
         <ul>
             <li>The subscription for Envy Client will be in thirty-day billing cycles.</li>
             <li>Renewals will occur automatically, unless cancelled.</li>
@@ -42,15 +46,16 @@
                 Should payment not be received for an account with an active monthly billing cycle, then that account
                 will lose Envy Client service access.
             </li>
-            <li>All payments will be made in US Dollars.</li>
+            <li>All payments will be made in USD and CAD.</li>
         </ul>
+
         <h2>Refunds</h2>
         <p>Requested a refund within 24 days of purchasing a subscription to the Software.</p>
         <ul>
             <li>Not have used downloaded the Software after purchasing a subscription.</li>
             <li>Not have your account banned.</li>
-            <li>Not have opened a chargeback request on PayPal.</li>
         </ul>
+
         <h2>Data Collection</h2>
         <p>Envy Client strives to collect as very little data as possible. However, the following are collected:</p>
         <ul>
@@ -66,6 +71,7 @@
             (GDPR), contact us to sort out any inquiries.
         </p>
         <p>All data collection practices are pursuant to Canadian and EU regulations.</p>
+
         <h2>Limitations of Liability</h2>
         <p>
             YOU ASSUME ALL RISK ASSOCIATED WITH THE INSTALLATION AND USE OF THE SOFTWARE. IN NO EVENT SHALL THE AUTHORS
