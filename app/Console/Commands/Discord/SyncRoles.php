@@ -49,6 +49,7 @@ class SyncRoles extends Command
             // check if user does not discord linked
             if ($user->discord_id === null) {
                 $this->info("Skipping $user->name due to not having an account linked.");
+                continue;
             }
 
             // user has an active subscription
