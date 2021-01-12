@@ -80,15 +80,14 @@ class UsersTable extends Component
 
         // removing the users subscription to the free plan
         if ($removing) {
-            // TODO: remove subscription
-            /*  Subscription::where('user_id', $id)
-                  ->where('plan_id', 1)
-                  ->delete();*/
+            Subscription::where('user_id', $id)
+                ->where('plan_id', 1)
+                ->delete();
         } else {
             // give the user premium plan
             Subscription::create([
                 'user_id' => $user->id,
-                'plan_id' => 3,
+                'plan_id' => 1,
                 'end_date' => now()->addMonth(),
             ]);
         }
