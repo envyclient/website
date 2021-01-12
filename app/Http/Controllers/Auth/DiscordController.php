@@ -50,6 +50,13 @@ class DiscordController extends Controller
             $user->notify(new AccountCreated($password));
         }
 
+        // check if name is too short
+        if (strlen($user->name) < 3) {
+            $user->update([
+                'name' => "Envy_$user->id"
+            ]);
+        }
+
         Auth::login($user, true);
 
         return redirect(RouteServiceProvider::HOME);
