@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Discord;
 
-use App\Models\User;
+use App\Models\Subscription;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -34,14 +34,23 @@ class SyncRoles extends Command
         $start = now();
         $count = 0;
 
-        $users = User::has('subscription')
-            ->with('subscription.plan')
-            ->where('discord_id', '<>', null)
+        $subscriptions = Subscription::withTrashed()
+            ->with(['user', 'plan'])
             ->get();
 
-        foreach ($users as $user) {
+        foreach ($subscriptions as $subscription) {
+            $user = $subscription->user;
 
-            if ($user->subscription !== null) {
+            // check if user does not discord linked
+            if ($user->discord_id === null) {
+                $this->info("Skipping $user->name due to not having an account linked.");
+            }
+
+            if ($subscription->deleted_at === null) { // user no longer has an active subscription
+                foreach ($this->roles as $role) {
+                    $this->updateRole(intval($user->discord_id), $role, true);
+                }
+            } else { // user has an active subscription
                 switch ($user->subscription->plan->id) {
                     case 1:
                     case 3:
@@ -61,13 +70,7 @@ class SyncRoles extends Command
                         break;
                     }
                 }
-            } else {
-                // removing the 2 roles
-                foreach ($this->roles as $role) {
-                    $this->updateRole(intval($user->discord_id), $role, true);
-                }
             }
-
             $count++;
         }
 
