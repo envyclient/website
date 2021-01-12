@@ -24,11 +24,11 @@ class StripeSourcesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'plan-id' => 'required|integer|exists:plans,id'
+            'id' => 'required|integer|exists:plans'
         ]);
 
         $user = $request->user();
-        $plan = Plan::find($request->input('plan-id'));
+        $plan = Plan::find($request->id);
 
         if ($user->hasSubscription()) {
             return back()->with('error', 'You already have a subscription.');
@@ -43,15 +43,15 @@ class StripeSourcesController extends Controller
         } catch (ModelNotFoundException) {
             try {
                 $response = $this->stripe->sources->create([
-                    "type" => "wechat",
-                    "amount" => $plan->one_time_price,
-                    "currency" => "cad",
-                    "owner" => [
-                        "name" => $user->name,
-                        "email" => $user->email,
+                    'type' => 'wechat',
+                    'amount' => $plan->price * 100,
+                    'currency' => 'usd',
+                    'owner' => [
+                        'name' => $user->name,
+                        'email' => $user->email,
                     ],
                 ]);
-            } catch (InvalidRequestException $e) {
+            } catch (InvalidRequestException) {
                 return back()->with('error', 'An error occurred.');
             }
 

@@ -65,7 +65,7 @@ class HandlePayPalWebhook extends Controller
 
                 if ($user->hasSubscription()) {
                     $user->subscription->update([
-                        'end_date' => $user->subscription->end_date->addDays(30)
+                        'end_date' => $user->subscription->end_date->addMonth()
                     ]);
 
                     $user->notify(new SubscriptionUpdated(
@@ -77,7 +77,7 @@ class HandlePayPalWebhook extends Controller
                         'user_id' => $user->id,
                         'plan_id' => $billingAgreement->plan_id,
                         'billing_agreement_id' => $billingAgreement->id,
-                        'end_date' => now()->addDays(30),
+                        'end_date' => now()->addMonth(),
                     ]);
 
                     // email user about new subscription

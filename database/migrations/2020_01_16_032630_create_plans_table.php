@@ -20,7 +20,7 @@ class CreatePlansTable extends Migration
             $table->string('name')->unique();
             $table->string('description');
             $table->unsignedTinyInteger('price');
-            $table->unsignedSmallInteger('one_time_price');
+            $table->unsignedSmallInteger('cad_price');
 
             $table->string('paypal_id')->unique()->nullable();
 
@@ -35,7 +35,7 @@ class CreatePlansTable extends Migration
             'name' => 'Standard',
             'description' => 'Get basic access to Envy Client for 30 days.',
             'price' => 7,
-            'one_time_price' => 1799, // $17.99
+            'cad_price' => 899, // $8.99
             'config_limit' => 5
         ]);
 
@@ -43,7 +43,7 @@ class CreatePlansTable extends Migration
             'name' => 'Premium',
             'description' => 'Get premium access to Envy Client for 30 days.',
             'price' => 10,
-            'one_time_price' => 2499, // $24.99
+            'cad_price' => 1299, // $12.99
             'config_limit' => 15,
             'beta_access' => true,
             'capes_access' => true,
