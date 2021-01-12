@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ClearInactiveAccounts;
 use App\Console\Commands\DeleteCancelledSubscriptions;
 use App\Console\Commands\Discord\ClearChannels;
 use App\Console\Commands\Discord\SyncRoles;
@@ -18,12 +19,17 @@ class Kernel extends ConsoleKernel
         DeleteCancelledSubscriptions::class,
         SyncRoles::class,
         ClearChannels::class,
+        ClearInactiveAccounts::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('subscriptions:delete')
             ->everyMinute()
+            ->emailOutputOnFailure(self::EMAILS);
+
+        $schedule->command('minecraft:clear')
+            ->daily()
             ->emailOutputOnFailure(self::EMAILS);
 
         // sync roles with subscriptions every 5 minutes
@@ -40,6 +46,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')
             ->daily()
             ->at('01:00');
+
         $schedule->command('backup:run')
             ->daily()
             ->at('02:00');

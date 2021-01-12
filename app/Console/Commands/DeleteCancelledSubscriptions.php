@@ -53,8 +53,8 @@ class DeleteCancelledSubscriptions extends Command
             self::sendNotification($user);
         }
 
-        $this->info("Deleted $count subscriptions on " . Carbon::now());
-        $this->info('Command took: ' . Carbon::now()->diffInMilliseconds($start) . 'ms');
+        $this->info("Deleted $count subscriptions on " . now());
+        $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
 
         return 0;
     }
