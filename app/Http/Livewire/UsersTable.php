@@ -47,6 +47,13 @@ class UsersTable extends Component
                 $user->where('current_account', '<>', null);
                 break;
             }
+            case 'cancelled':
+            {
+                $user->with(['subscription.billingAgreement' => function ($q) {
+                    $q->where('state', 'Cancelled');
+                }]);
+                break;
+            }
         }
 
         if ($this->referralCode !== 'ignore') {
