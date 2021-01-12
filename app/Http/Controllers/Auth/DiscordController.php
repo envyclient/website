@@ -35,11 +35,17 @@ class DiscordController extends Controller
 
         $userExists = User::where('email', $user->getEmail())->exists();
 
+        // check if name is too short
+        $name = Strng::clean($user->getName());
+        if (strlen($name) < 3) {
+            $name = 'envy_' . random_int(1, 99999);
+        }
+
         $password = Str::random(24);
         $user = User::firstOrCreate([
             'email' => $user->getEmail(),
         ], [
-            'name' => Strng::clean($user->getName()),
+            'name' => $name,
             'password' => Hash::make($password),
             'email_verified_at' => now(),
             'discord_id' => $user->getId(),
@@ -48,13 +54,6 @@ class DiscordController extends Controller
 
         if (!$userExists) {
             $user->notify(new AccountCreated($password));
-        }
-
-        // check if name is too short
-        if (strlen($user->name) < 3) {
-            $user->update([
-                'name' => "Envy_$user->id"
-            ]);
         }
 
         Auth::login($user, true);
