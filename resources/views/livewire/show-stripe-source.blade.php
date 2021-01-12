@@ -4,7 +4,7 @@
             WeChat Pay
         </h1>
         <h5 class="text-lg text-gray-500 mt-1">
-            {{ $source->plan->name }} Plan - ${{ $source->plan->price }} USD
+            {{ $source->plan->name }} Plan - (${{ $source->plan->price }} USD, ${{ number_format($source->plan->cad_price / 100) }} CAD)
         </h5>
     </div>
     <div class="p-5 flex flex-col md:flex-row">

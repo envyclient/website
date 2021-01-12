@@ -35,7 +35,7 @@ class CreatePlansTable extends Migration
             'name' => 'Standard',
             'description' => 'Get basic access to Envy Client for 30 days.',
             'price' => 7,
-            'cad_price' => 899, // $8.99
+            'cad_price' => 900, // $9
             'config_limit' => 5
         ]);
 
@@ -43,7 +43,7 @@ class CreatePlansTable extends Migration
             'name' => 'Premium',
             'description' => 'Get premium access to Envy Client for 30 days.',
             'price' => 10,
-            'cad_price' => 1299, // $12.99
+            'cad_price' => 1300, // $13
             'config_limit' => 15,
             'beta_access' => true,
             'capes_access' => true,

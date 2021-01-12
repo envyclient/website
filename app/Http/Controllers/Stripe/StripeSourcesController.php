@@ -44,8 +44,8 @@ class StripeSourcesController extends Controller
             try {
                 $response = $this->stripe->sources->create([
                     'type' => 'wechat',
-                    'amount' => $plan->price * 100,
-                    'currency' => 'usd',
+                    'amount' => $plan->cad_price,
+                    'currency' => 'cad',
                     'owner' => [
                         'name' => $user->name,
                         'email' => $user->email,
