@@ -11,7 +11,7 @@
             @csrf
             <div class="card" style="width:100%;">
 
-                @if($user->hasSubscription())
+                @if($user->subscription !== null)
                     <div class="card-header">
                         You are currently subscribed to the
                         <strong>{{ $user->subscription->plan->name }}</strong>
@@ -31,8 +31,8 @@
                                            name="id"
                                            type="radio"
                                            value="{{ $plan->id }}"
-                                           {{ $user->hasSubscription() ? 'disabled' : null }}
-                                           {{  $user->hasSubscription() && $user->subscription->plan_id === $plan->id ? 'checked' : null }}
+                                           {{ $user->subscription !== null ? 'disabled' : null }}
+                                           {{ $user->subscription !== null && $user->subscription->plan_id === $plan->id ? 'checked' : null }}
                                            required>
                                     <label class="form-check-label" for="id">
                                         {{ $plan->name }}
@@ -74,7 +74,7 @@
 
             <br>
 
-            @if(!$user->hasSubscription() && !$user->hasBillingAgreement())
+            @if($user->subscription === null && $user->billingAgreement === null)
                 <div class="d-grid gap-2">
                     <button class="btn btn-outline-success btn-lg" onclick="processPayment('paypal')">
                         Subscribe using PayPal
@@ -86,7 +86,7 @@
             @endif
         </form>
 
-        @if($user->hasBillingAgreement() && $user->isBillingAgreementCancelled())
+        @if($user->billingAgreement !== null && $user->billingAgreement->state === 'Cancelled')
             <div class="card" style="width: 100%;">
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-outline-danger btn-lg" disabled>
@@ -94,14 +94,14 @@
                     </button>
                 </div>
             </div>
-        @elseif($user->hasSubscription())
+        @elseif($user->subscription !== null)
             <form method="post" action="{{ route('subscriptions.cancel') }}">
                 @csrf
                 <div class="d-grid gap-2">
                     <input class="btn btn-outline-danger btn-lg" type="submit" value="Cancel Subscription">
                 </div>
             </form>
-        @elseif($user->hasBillingAgreement())
+        @elseif($user->billingAgreement !== null)
             <div class="card" style="width: 100%;">
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-primary btn-lg" disabled>

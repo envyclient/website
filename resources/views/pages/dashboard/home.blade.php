@@ -88,7 +88,7 @@
                 @endif
             </div>
 
-            @if($user->hasSubscription())
+            @if($user->subscription !== null)
                 <div class="col">
                     <div class="alert alert-dark" style="font-size:25px;">
                         <i class="fas fa-file" style="padding-right:10px;"></i> Configs
@@ -140,7 +140,7 @@
             @endif
         </div>
 
-        @if($user->hasSubscription())
+        @if($user->subscription !== null)
             <div class="d-grid gap-2 mt-3">
                 <button type="button"
                         class="btn btn-primary btn-lg"
@@ -157,7 +157,7 @@
 
     </div>
 
-    @if($user->hasSubscription())
+    @if($user->subscription !== null)
         <!-- Launcher Modal -->
         <div class="modal fade"
              id="launcher-modal"

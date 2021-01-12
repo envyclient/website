@@ -44,7 +44,9 @@ class PagesController extends Controller
 
     public function dashboard(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user()
+            ->load(['subscription', 'configs']);
+
         return view('pages.dashboard.home', [
             'user' => $user,
             'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
@@ -53,8 +55,11 @@ class PagesController extends Controller
 
     public function security(Request $request)
     {
+        $user = $request->user()
+            ->load(['subscription', 'billingAgreement']);
+
         return view('pages.dashboard.security')
-            ->with('user', $request->user());
+            ->with('user', $user);
     }
 
     public function subscriptions(Request $request)

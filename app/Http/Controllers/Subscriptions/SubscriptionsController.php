@@ -19,7 +19,7 @@ class SubscriptionsController extends Controller
 
         // user did not subscribe using paypal
         if (!$user->hasBillingAgreement()) {
-            return back()->with('error', 'You do not have an active paypal subscription.');
+            return back()->with('error', 'Since you do not have a PayPal subscription there is no need to cancel.');
         }
 
         if ($user->isBillingAgreementCancelled()) {
