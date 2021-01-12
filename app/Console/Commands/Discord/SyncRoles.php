@@ -32,10 +32,15 @@ class SyncRoles extends Command
     public function handle()
     {
         $start = now();
-        $count = 0;
+
+        // arrays to hold the discord ids
+        $standard = collect();
+        $premium = collect();
+        $remove = collect();
 
         $subscriptions = Subscription::withTrashed()
             ->with(['user', 'plan'])
+            ->orderBy('created_at')
             ->get();
 
         foreach ($subscriptions as $subscription) {
@@ -52,33 +57,34 @@ class SyncRoles extends Command
                     case 1:
                     case 3:
                     {
-                        $this->info("Giving premium role to $user->name.");
-                        $this->updateRole(
-                            intval($user->discord_id),
-                            $this->roles['premium'],
-                        );
+                        $premium->push(intval($user->discord_id));
                         break;
                     }
                     case 2:
                     {
-                        $this->info("Giving standard role to $user->name.");
-                        $this->updateRole(
-                            intval($user->discord_id),
-                            $this->roles['standard'],
-                        );
+                        $standard->push(intval($user->discord_id));
                         break;
                     }
                 }
             } else { // user no longer has an active subscription
-                $this->info("Removing roles from $user->name.");
-                foreach ($this->roles as $role) {
-                    $this->updateRole(intval($user->discord_id), $role, true);
-                }
+                $remove->push(intval($user->discord_id));
             }
-            $count++;
         }
 
-        $this->info("Synced $count roles.");
+        foreach ($remove->unique() as $id) {
+            $this->info("Removing roles from $id.");
+            $this->updateRole($id, $this->roles['standard'], true);
+            $this->updateRole($id, $this->roles['premium'], true);
+        }
+        foreach ($standard->unique() as $id) {
+            $this->info("Giving standard role to $id.");
+            $this->updateRole($id, $this->roles['standard']);
+        }
+        foreach ($premium->unique() as $id) {
+            $this->info("Giving premium role to $id.");
+            $this->updateRole($id, $this->roles['premium']);
+        }
+
         $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
 
         return 0;
