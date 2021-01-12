@@ -52,6 +52,7 @@ class SyncRoles extends Command
                     case 1:
                     case 3:
                     {
+                        $this->info("Giving premium role to $user->name.");
                         $this->updateRole(
                             intval($user->discord_id),
                             $this->roles['premium'],
@@ -60,6 +61,7 @@ class SyncRoles extends Command
                     }
                     case 2:
                     {
+                        $this->info("Giving standard role to $user->name.");
                         $this->updateRole(
                             intval($user->discord_id),
                             $this->roles['standard'],
@@ -68,6 +70,7 @@ class SyncRoles extends Command
                     }
                 }
             } else { // user no longer has an active subscription
+                $this->info("Removing roles from $user->name.");
                 foreach ($this->roles as $role) {
                     $this->updateRole(intval($user->discord_id), $role, true);
                 }
