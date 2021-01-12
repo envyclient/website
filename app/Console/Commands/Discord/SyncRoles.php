@@ -46,11 +46,8 @@ class SyncRoles extends Command
                 $this->info("Skipping $user->name due to not having an account linked.");
             }
 
-            if ($subscription->deleted_at === null) { // user no longer has an active subscription
-                foreach ($this->roles as $role) {
-                    $this->updateRole(intval($user->discord_id), $role, true);
-                }
-            } else { // user has an active subscription
+            // user has an active subscription
+            if ($subscription->deleted_at === null) {
                 switch ($user->subscription->plan->id) {
                     case 1:
                     case 3:
@@ -69,6 +66,10 @@ class SyncRoles extends Command
                         );
                         break;
                     }
+                }
+            } else { // user no longer has an active subscription
+                foreach ($this->roles as $role) {
+                    $this->updateRole(intval($user->discord_id), $role, true);
                 }
             }
             $count++;
