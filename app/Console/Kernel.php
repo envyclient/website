@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
 
         // sync roles with subscriptions every 5 minutes
         $schedule->command('discord:sync')
-            ->everyFiveMinutes()
+            ->everyTenMinutes()
             ->emailOutputOnFailure(self::EMAILS);
 
         // clear channels every 3 days
