@@ -94,11 +94,15 @@ class SyncRoles extends Command
     private function updateRole(int $userID, int $roleID, bool $remove = false): void
     {
         if ($remove) {
-            Http::withToken($this->token, 'Bot')
+            $response = Http::withToken($this->token, 'Bot')
                 ->delete("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
+
         } else {
-            Http::withToken($this->token, 'Bot')
+            $response = Http::withToken($this->token, 'Bot')
                 ->put("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
+        }
+        if ($response->status() !== 204) {
+            $this->info('Could not update role. Limit=' . $response->header('X-RateLimit-Limit') . ' Remaining=' . $response->header('X-RateLimit-Remaining'));
         }
     }
 }
