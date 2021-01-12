@@ -103,7 +103,7 @@ class HandleStripeSourcesWebhook extends Controller
 
                 Stripe::setApiKey(config('stripe.secret'));
                 $charge = Charge::create([
-                    'amount' => $source->plan->one_time_price,
+                    'amount' => $source->plan->cad_price,
                     'currency' => 'cad',
                     'source' => $source->source_id,
                 ]);
@@ -133,7 +133,7 @@ class HandleStripeSourcesWebhook extends Controller
                     'user_id' => $source->user_id,
                     'plan_id' => $source->plan_id,
                     'billing_agreement_id' => null,
-                    'end_date' => now()->addDays(90),
+                    'end_date' => now()->addMonth(),
                 ]);
 
                 break;
