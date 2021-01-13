@@ -105,7 +105,7 @@ class SyncRoles extends Command
         // rate limit
         if ($response->header('X-RateLimit-Remaining') == 0) {
             $sleep = $response->header('X-RateLimit-Reset-After');
-            $this->info("Sleeping for $sleep");
+            $this->info("Hit rate limit, sleeping for $sleep seconds.");
             sleep(intval($sleep));
         }
     }
