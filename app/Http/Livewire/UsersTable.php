@@ -91,7 +91,7 @@ class UsersTable extends Component
                 ->where('plan_id', 1)
                 ->delete();
         } else {
-            // give the user premium plan
+            // give the user free plan
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,

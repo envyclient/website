@@ -29,7 +29,7 @@ class DiscordController extends Controller
     {
         try {
             $user = Socialite::driver('discord')->user();
-        } catch (Exception) {
+        } catch (Exception $e) {
             return redirect('login');
         }
 

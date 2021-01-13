@@ -31,11 +31,11 @@ class HandleStripeSourcesWebhook extends Controller
                 $request->header('stripe-signature'),
                 config('stripe.webhook.secret')
             );
-        } catch (UnexpectedValueException) {
+        } catch (UnexpectedValueException $e) {
             return response()->json([
                 'message' => 'Invalid Payload',
             ], 400);
-        } catch (SignatureVerificationException) {
+        } catch (SignatureVerificationException $e) {
             return response()->json([
                 'message' => 'Invalid Signature',
             ], 400);
