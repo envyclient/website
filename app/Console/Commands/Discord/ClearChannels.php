@@ -66,8 +66,6 @@ class ClearChannels extends Command
             }
         }
 
-        // TODO: send message that channel has been cleared
-
         return 0;
     }
 
