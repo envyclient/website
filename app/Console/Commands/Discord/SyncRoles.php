@@ -101,11 +101,12 @@ class SyncRoles extends Command
             $response = Http::withToken($this->token, 'Bot')
                 ->put("$this->endpoint/guilds/$this->guild/members/$userID/roles/$roleID");
         }
-        if ($response->status() !== 204) {
-            sleep(
-                intval($response->header('X-RateLimit-Reset-After'))
-            );
-            $this->info('Could not update role. Limit=' . $response->header('X-RateLimit-Limit') . ' Remaining=' . $response->header('X-RateLimit-Remaining'));
+
+        // rate limit
+        if ($response->header('X-RateLimit-Remaining') == 0) {
+            $sleep = $response->header('X-RateLimit-Reset-After');
+            $this->info("Sleeping for $sleep");
+            sleep(intval($sleep));
         }
     }
 }
