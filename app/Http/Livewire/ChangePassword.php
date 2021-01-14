@@ -8,9 +8,9 @@ use Livewire\Component;
 
 class ChangePassword extends Component
 {
-    public $current_password;
-    public $password;
-    public $password_confirmation;
+    public string $current_password = '';
+    public string $password = '';
+    public string $password_confirmation = '';
 
     protected $rules = [
         'current_password' => 'required',
@@ -20,9 +20,8 @@ class ChangePassword extends Component
 
     public function render()
     {
-        return view('livewire.change-password', [
-            'user' => auth()->user(),
-        ]);
+        return view('livewire.change-password')
+            ->with('user', auth()->user());
     }
 
     public function submit()
