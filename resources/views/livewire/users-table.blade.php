@@ -4,8 +4,9 @@
         <div class="col">
             <input class="form-control" type="text" placeholder="Name" wire:model="name">
         </div>
-        <div class="col">
-            <select class="form-select" wire:model="type">
+        <div class="col input-group">
+            <label class="input-group-text" for="type">Status</label>
+            <select class="form-select" id="type" wire:model="type">
                 <option value="all" selected>All</option>
                 <option value="active">Active</option>
                 <option value="subscribed">Subscribed</option>
@@ -13,8 +14,18 @@
                 <option value="banned">Banned</option>
             </select>
         </div>
-        <div class="col">
-            <select class="form-select" wire:model="referralCode">
+        <div class="col input-group">
+            <label class="input-group-text" for="subscription">Plan</label>
+            <select class="form-select" id="subscription" wire:model="subscription">
+                <option value="ignore" selected>Ignore</option>
+                <option value="1">Free</option>
+                <option value="2">Standard</option>
+                <option value="3">Premium</option>
+            </select>
+        </div>
+        <div class="col input-group">
+            <label class="input-group-text" for="referral-code">Referral Code</label>
+            <select class="form-select" id="referral-code" wire:model="referralCode">
                 <option value="ignore" selected>Ignore</option>
                 @foreach(\App\Models\ReferralCode::all() as $code)
                     <option value="{{ $code->id }}">{{ $code->code }}</option>
@@ -178,7 +189,6 @@
                 </div>
             </div>
         </form>
-
     @endif
 
 </div>
