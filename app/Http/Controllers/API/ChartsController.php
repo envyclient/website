@@ -28,7 +28,8 @@ class ChartsController extends Controller
         $data = collect();
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
             $data->push(
-                User::whereDate('created_at', today()->subDays($days_backwards))->count()
+                User::whereDate('created_at', today()->subDays($days_backwards))
+                    ->count()
             );
         }
         $chart->dataset('Users', 'bar', $data)
@@ -40,7 +41,7 @@ class ChartsController extends Controller
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
             $data->push(
                 Subscription::whereDate('created_at', today()->subDays($days_backwards))
-                    ->where('billing_agreement_id', '<>', null)
+                    ->where('plan_id', '<>', 1)
                     ->count()
             );
         }
@@ -51,7 +52,8 @@ class ChartsController extends Controller
         $data = collect();
         for ($days_backwards = 7; $days_backwards >= 0; $days_backwards--) {
             $data->push(
-                Config::whereDate('created_at', today()->subDays($days_backwards))->count()
+                Config::whereDate('created_at', today()->subDays($days_backwards))
+                    ->count()
             );
         }
         $chart->dataset('Configs', 'bar', $data)
