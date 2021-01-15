@@ -15,6 +15,7 @@ class UsersTable extends Component
 
     public string $name = '';
     public string $type = 'all';
+    public string $subscription = 'ignore';
     public string $referralCode = 'ignore';
 
     public bool $editMode;
@@ -37,6 +38,14 @@ class UsersTable extends Component
                 $user->has('subscription');
                 break;
             }
+            case 'cancelled':
+            {
+                /*$user->whereHas('subscription.billingAgreement', function ($q) {
+                    $q->where('state', 'Cancelled');
+                });*/
+                dd('wip');
+                break;
+            }
             case 'banned':
             {
                 $user->where('banned', true);
@@ -47,13 +56,12 @@ class UsersTable extends Component
                 $user->where('current_account', '<>', null);
                 break;
             }
-            case 'cancelled':
-            {
-                $user->with(['subscription.billingAgreement' => function ($q) {
-                    $q->where('state', 'Cancelled');
-                }]);
-                break;
-            }
+        }
+
+        if ($this->subscription !== 'ignore') {
+            $user->whereHas('subscription', function ($q) {
+                $q->where('plan_id', $this->subscription);
+            });
         }
 
         if ($this->referralCode !== 'ignore') {
