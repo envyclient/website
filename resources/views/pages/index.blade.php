@@ -171,8 +171,7 @@
                             class="video-image"
                             data-src="https://youtube.com/embed/D3EwIXscBxk"
                             style="display: none;border: 0;"
-                            allow="autoplay; encrypted-media;"
-                            allowfullscreen>
+                            allow="fullscreen; autoplay; encrypted-media;">
                     </iframe>
                 </div>
             </div>
@@ -180,15 +179,14 @@
             <div class="video-container">
                 <div class="video-image">
                     <img id="video-2-image"
-                         src="https://i1.ytimg.com/vi/pAAL2_YFsDA/maxresdefault.jpg"
+                         src="https://i1.ytimg.com/vi/vdQdSpl6V4g/maxresdefault.jpg"
                          alt="thumbnail">
                     <span onClick="playVideo(this, 'video-2', 'video-2-image');"></span>
                     <iframe id="video-2"
                             class="video-image"
-                            data-src="https://youtube.com/embed/pAAL2_YFsDA"
+                            data-src="https://youtube.com/embed/vdQdSpl6V4g"
                             style="display: none;border: 0;"
-                            allow="autoplay; encrypted-media;"
-                            allowfullscreen>
+                            allow="fullscreen; autoplay; encrypted-media;">
                     </iframe>
                 </div>
             </div>
