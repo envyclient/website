@@ -44,16 +44,16 @@
         .video-image img {
             overflow: hidden;
             position: relative;
-            width: 107%;
-            left: -9px;
-            top: -9px;
-            height: 107%;
-            border-radius: 8px;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            border-radius: 5px;
             transition: all 0.2s;
         }
 
         .video-image:hover img {
-            transform: scale(1.3);
+            transform: scale(1.2);
             filter: blur(3px);
         }
     </style>
@@ -164,14 +164,14 @@
             <div class="video-container">
                 <div class="video-image">
                     <img id="video-1-image"
-                         src="https://i1.ytimg.com/vi/UwzW7A9ofrM/maxresdefault.jpg"
+                         src="https://i1.ytimg.com/vi/D3EwIXscBxk/maxresdefault.jpg"
                          alt="thumbnail">
                     <span onClick="playVideo(this, 'video-1', 'video-1-image');"></span>
                     <iframe id="video-1"
                             class="video-image"
-                            data-src="https://youtube.com/embed/UwzW7A9ofrM"
+                            data-src="https://youtube.com/embed/D3EwIXscBxk"
                             style="display: none;border: 0;"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allow="autoplay; encrypted-media;"
                             allowfullscreen>
                     </iframe>
                 </div>
@@ -187,7 +187,7 @@
                             class="video-image"
                             data-src="https://youtube.com/embed/pAAL2_YFsDA"
                             style="display: none;border: 0;"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allow="autoplay; encrypted-media;"
                             allowfullscreen>
                     </iframe>
                 </div>
