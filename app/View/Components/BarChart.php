@@ -6,9 +6,9 @@ use Illuminate\View\Component;
 
 class BarChart extends Component
 {
-    private string $name;
+    public string $name;
 
-    public function __construct(string $name)
+    public function __construct($name)
     {
         $this->name = $name;
     }

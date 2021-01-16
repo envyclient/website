@@ -8,7 +8,7 @@
             <div class="alert alert-dark" style="font-size:25px;">
                 Versions
             </div>
-            <x-bar-chart name="users_chart"/>
+            <x-bar-chart name="version_downloads_chart"/>
 
             @livewire('version.list-versions')
         </div>

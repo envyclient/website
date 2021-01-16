@@ -5,13 +5,13 @@
     <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
     <script>
         const chart = new Chartisan({
-            el: '#chart',
-            url: "@chart('{{ $name }}')",
+            el: "#chart",
+            url: "{{ url("api/chart/$name") }}",
             hooks: new ChartisanHooks()
                 .tooltip(true)
                 .datasets([
                     {
-                        "stack": "stackbar"
+                        "stack": "stackbar",
                     }
                 ])
                 .options({
