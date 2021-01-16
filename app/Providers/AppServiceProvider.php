@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Charts\UsersChart;
+use App\Charts\VersionDownloadsChart;
 use App\Models\User;
 use App\Observers\UserObserver;
 use ConsoleTVs\Charts\Registrar as Charts;
@@ -37,7 +38,8 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         $charts->register([
-            UsersChart::class
+            UsersChart::class,
+            VersionDownloadsChart::class,
         ]);
     }
 }
