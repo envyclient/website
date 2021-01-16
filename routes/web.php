@@ -30,16 +30,21 @@ Route::group([], function () {
 /**
  * Admin
  */
-Route::prefix('admin')->group(function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     // list users and versions
-    Route::get('users', [PagesController::class, 'users'])->name('admin.users');
-    Route::get('versions', [PagesController::class, 'versions'])->name('admin.versions');
-    Route::get('referrals', [PagesController::class, 'referrals'])->name('admin.referrals');
-    Route::get('notifications', [PagesController::class, 'notifications'])->name('admin.notifications');
+    Route::view('users', 'pages.dashboard.admin.users')
+        ->name('admin.users');
+    Route::view('versions', 'pages.dashboard.admin.versions')
+        ->name('admin.versions');
+    Route::view('referrals', 'pages.dashboard.admin.referrals')
+        ->name('admin.referrals');
+    Route::view('notifications', 'pages.dashboard.admin.notifications')
+        ->name('admin.notifications');
 
     // upload version
-    Route::post('versions', UploadVersion::class)->name('admin.versions.upload');
+    Route::post('versions', UploadVersion::class)
+        ->name('admin.versions.upload');
 });
 
 /**

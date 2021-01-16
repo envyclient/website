@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\API\Actions\LatestLauncher;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\ChartsController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForCurrentUser;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
@@ -34,14 +33,6 @@ Route::prefix('configs')->group(function () {
     Route::put('{config}', [ConfigsController::class, 'update']);
     Route::put('{config}/favorite', FavoriteConfig::class);
     Route::delete('{config}', [ConfigsController::class, 'destroy']);
-});
-
-/**
- * Charts
- */
-Route::prefix('charts')->group(function () {
-    Route::get('users', [ChartsController::class, 'users'])->name('api.charts.users');
-    Route::get('versions', [ChartsController::class, 'versions'])->name('api.charts.versions');
 });
 
 /**
