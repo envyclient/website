@@ -166,8 +166,8 @@
                 ])
                 .options({
                     grid: {
-                        top: 5,
-                        bottom: 50,
+                        top: 6,
+                        bottom: 25,
                         left: '3%',
                         right: '3%',
                     }
