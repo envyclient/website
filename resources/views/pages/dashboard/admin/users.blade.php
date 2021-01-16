@@ -8,7 +8,7 @@
             <div class="alert alert-dark" style="font-size:25px;">
                 Stats
             </div>
-            <div id="chart" style="height: 300px;"></div>
+            <x-bar-chart name="users_chart"/>
         </div>
 
         <!-- users table -->
