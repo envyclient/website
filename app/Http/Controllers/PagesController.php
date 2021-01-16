@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Models\Plan;
 use Illuminate\Http\Request;
@@ -79,20 +78,9 @@ class PagesController extends Controller
         ]);
     }
 
-    public function users(Request $request)
+    public function users()
     {
-        $apiToken = $request->user()->api_token;
-
-        // chart
-        $chart = new UsersChart();
-        $chart->labels(['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'Yesterday', 'Today'])
-            ->options(self::CHART_OPTIONS)
-            ->load(route('api.charts.users') . "?api_token=$apiToken");
-
-        return view('pages.dashboard.admin.users', [
-            'apiToken' => $apiToken,
-            'chart' => $chart
-        ]);
+        return view('pages.dashboard.admin.users');
     }
 
     public function versions(Request $request)
@@ -113,13 +101,11 @@ class PagesController extends Controller
 
     public function referrals()
     {
-        return view('pages.dashboard.admin.referrals')->with([
-        ]);
+        return view('pages.dashboard.admin.referrals');
     }
 
     public function notifications()
     {
-        return view('pages.dashboard.admin.notifications')->with([
-        ]);
+        return view('pages.dashboard.admin.notifications');
     }
 }

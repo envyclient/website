@@ -8,12 +8,8 @@
             <div class="alert alert-dark" style="font-size:25px;">
                 Stats
             </div>
-            <div style="height: 300px">
-                {!! $chart->container() !!}
-            </div>
+            <div id="chart" style="height: 300px;"></div>
         </div>
-
-        <br>
 
         <!-- users table -->
         <div id="users-table">
@@ -33,5 +29,27 @@
 @endsection
 
 @section('js')
-    {!! $chart->script() !!}
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+    <script>
+        const chart = new Chartisan({
+            el: '#chart',
+            url: "@chart('users_chart')",
+            hooks: new ChartisanHooks()
+                .tooltip(true)
+                .datasets([
+                    {
+                        "stack": "stackbar"
+                    }
+                ])
+                .options({
+                    grid: {
+                        top: 5,
+                        bottom: 50,
+                        left: '3%',
+                        right: '3%',
+                    }
+                })
+        });
+    </script>
 @endsection

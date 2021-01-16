@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use App\Observers\UserObserver;
+use App\Charts\UsersChart;
 use App\Models\User;
+use App\Observers\UserObserver;
+use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -24,13 +26,18 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
+     * @param Charts $charts
      * @return void
      */
-    public function boot()
+    public function boot(Charts $charts)
     {
         Schema::defaultStringLength(191);
         JsonResource::withoutWrapping();
         User::observe(UserObserver::class);
         Paginator::useBootstrap();
+
+        $charts->register([
+            UsersChart::class
+        ]);
     }
 }

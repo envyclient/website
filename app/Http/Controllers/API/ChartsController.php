@@ -33,8 +33,7 @@ class ChartsController extends Controller
             );
         }
         $chart->dataset('Users', 'bar', $data)
-            ->backgroundColor('#82c4c3')
-            ->fill(false);
+            ->backgroundColor('#82c4c3');
 
         // subscriptions
         $data = collect();
