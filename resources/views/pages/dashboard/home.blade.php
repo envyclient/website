@@ -194,13 +194,13 @@
                         <div class="row">
                             <div class="col">
                                 <h4>Microsoft Edge</h4>
-                                <img src="{{ asset('assets/launcher/1.png') }}" class="rounded" width="312"
+                                <img src="{{ asset('assets/launcher/edge.png') }}" class="rounded" width="312"
                                      height="330">
                             </div>
 
                             <div class="col">
                                 <h4>Windows Defender</h4>
-                                <img src="{{ asset('assets/launcher/2.png') }}" class="rounded" width="416"
+                                <img src="{{ asset('assets/launcher/defender.png') }}" class="rounded" width="416"
                                      height="390">
                             </div>
                         </div>
