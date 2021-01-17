@@ -134,7 +134,7 @@
                 </h3>
                 <a class="list-group-item list-group-item-custom {{ Route::is('pages.subscriptions') ? 'active': null }}"
                    href="{{ route('pages.subscriptions') }}">
-                    <i class="fas fa-redo p-2" style="margin-right:10px;"></i>
+                    <i class="fas fa-sync p-2" style="padding-right:10px;"></i>
                     Subscription
                 </a>
             </div>
