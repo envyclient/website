@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
             ->daily()
             ->emailOutputOnFailure(self::EMAILS);
 
-        // sync roles with subscriptions every 5 minutes
+        // sync roles with subscriptions every 10 minutes
         $schedule->command('discord:sync')
             ->everyTenMinutes()
             ->emailOutputOnFailure(self::EMAILS);

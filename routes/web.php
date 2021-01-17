@@ -41,6 +41,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         ->name('admin.referrals');
     Route::view('notifications', 'pages.dashboard.admin.notifications')
         ->name('admin.notifications');
+    Route::view('sales', 'pages.dashboard.admin.sales')
+        ->name('admin.sales');
 
     // upload version
     Route::post('versions', UploadVersion::class)
