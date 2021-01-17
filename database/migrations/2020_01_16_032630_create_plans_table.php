@@ -30,10 +30,9 @@ class CreatePlansTable extends Migration
             $table->boolean('capes_access')->default(false);
         });
 
-
         DB::table('plans')->insert([
             'name' => 'Standard',
-            'description' => 'Get basic access to Envy Client for 30 days.',
+            'description' => 'Get standard access to Envy Client for 30 days.',
             'price' => 7,
             'cad_price' => 900, // $9
             'config_limit' => 5

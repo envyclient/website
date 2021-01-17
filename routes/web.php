@@ -4,13 +4,14 @@ use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\CapesController;
+use App\Http\Controllers\Coinbase\Actions\HandleCoinbaseWebhook;
+use App\Http\Controllers\Coinbase\CoinbaseController;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
 use App\Http\Controllers\Stripe\Actions\HandleStripeSourcesWebhook;
-use App\Http\Controllers\Stripe\StripeSourcesController;
 use App\Http\Controllers\Subscriptions\SubscriptionsController;
 use App\Http\Livewire\ShowStripeSource;
 use Illuminate\Support\Facades\Route;
@@ -103,9 +104,15 @@ Route::prefix('connect')->group(function () {
 
 Route::prefix('stripe')->group(function () {
     Route::get('{id}', ShowStripeSource::class)->name('stripe.show');
-    Route::post('/', [StripeSourcesController::class, 'store'])->name('stripe.store');
+    Route::post('/', [ShowStripeSource::class, 'store'])->name('stripe.store');
 
     Route::post('webhook', HandleStripeSourcesWebhook::class);
+});
+
+Route::prefix('coinbase')->group(function () {
+    Route::get('cancel', [CoinbaseController::class, 'cancel'])->name('coinbase.cancel');
+    Route::post('/', [CoinbaseController::class, 'store'])->name('coinbase.store');
+    Route::post('webhook', HandleCoinbaseWebhook::class);
 });
 
 require __DIR__ . '/auth.php';
