@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Charts\SalesChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
 use App\Models\User;
@@ -40,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $charts->register([
             UsersChart::class,
             VersionDownloadsChart::class,
+            SalesChart::class,
         ]);
     }
 }

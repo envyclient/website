@@ -160,6 +160,11 @@
                 <i class="fas fa-bell p-2" style="margin-right:10px;"></i>
                 Notifications
             </a>
+            <a class="list-group-item list-group-item-custom {{ Route::is('admin.sales') ? 'active': null }}"
+               href="{{ route('admin.sales') }}">
+                <i class="fas fa-coins p-2" style="margin-right:10px;"></i>
+                Sales
+            </a>
             @endadmin
         </div>
     </div>
