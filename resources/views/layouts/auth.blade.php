@@ -13,6 +13,10 @@
     <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
     <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
 
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+            data-cf-beacon='{"token": "84c979ca91574da6bd382f7062ce5002"}'></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
