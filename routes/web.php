@@ -12,6 +12,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
 use App\Http\Controllers\Stripe\Actions\HandleStripeSourcesWebhook;
+use App\Http\Controllers\Stripe\StripeSourcesController;
 use App\Http\Controllers\Subscriptions\SubscriptionsController;
 use App\Http\Livewire\ShowStripeSource;
 use Illuminate\Support\Facades\Route;
@@ -104,7 +105,7 @@ Route::prefix('connect')->group(function () {
 
 Route::prefix('stripe')->group(function () {
     Route::get('{id}', ShowStripeSource::class)->name('stripe.show');
-    Route::post('/', [ShowStripeSource::class, 'store'])->name('stripe.store');
+    Route::post('/', [StripeSourcesController::class, 'store'])->name('stripe.store');
 
     Route::post('webhook', HandleStripeSourcesWebhook::class);
 });
