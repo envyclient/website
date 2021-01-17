@@ -1,3 +1,8 @@
+@props([
+    'name',
+    'type' => 'text'
+])
+
 <div id="chart" style="height: 300px;"></div>
 
 @section('js')
