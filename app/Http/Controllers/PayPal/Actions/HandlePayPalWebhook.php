@@ -37,12 +37,14 @@ class HandlePayPalWebhook extends Controller
             ]), 'application/json')
             ->post("$this->endpoint/v1/notifications/verify-webhook-signature");
 
+        // webhook signature failed
         if ($response->status() !== 200) {
             return response()->json([
                 'message' => 'Failed Webhook Signature',
             ], 400);
         }
 
+        // invalid request
         if ($request->json('event_type') === null) {
             return response()->json([
                 'message' => 'Missing Billing Agreement',

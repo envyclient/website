@@ -76,12 +76,21 @@
 
             @if($user->subscription === null && $user->billingAgreement === null)
                 <div class="d-grid gap-2">
-                    <button class="btn btn-outline-success btn-lg" onclick="processPayment('paypal')">
+                    <button class="btn btn-success btn-lg" onclick="processPayment('paypal')">
                         Subscribe using PayPal
                     </button>
-                    <button class="btn btn-outline-success btn-lg" onclick="processPayment('wechat')" v>
-                        Purchase using WeChat Pay
-                    </button>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('wechat')">
+                                Purchase using WeChat Pay
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('crypto')">
+                                Purchase using Crypto
+                            </button>
+                        </div>
+                    </div>
                 </div>
             @endif
         </form>
@@ -137,7 +146,7 @@
                 return;
             }
 
-            const form = document.forms['subscription'];
+            const form = document.forms["subscription"];
             switch (mode) {
                 case "paypal": {
                     form.action = "{{ route('paypal.process') }}";
@@ -145,6 +154,10 @@
                 }
                 case "wechat": {
                     form.action = "{{ route('stripe.store') }}";
+                    break;
+                }
+                case "crypto": {
+                    form.action = "{{ route('coinbase.store') }}";
                     break;
                 }
             }
