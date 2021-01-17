@@ -9,6 +9,7 @@
             url: "{{ url("api/chart/$name") }}",
             hooks: new ChartisanHooks()
                 .tooltip(true)
+                .legend(true)
                 .datasets([
                     {
                         "stack": "stackbar",
@@ -16,10 +17,10 @@
                 ])
                 .options({
                     grid: {
-                        top: 6,
+                        top: 22,
                         bottom: 25,
-                        left: '3%',
-                        right: '3%',
+                        left: '2%',
+                        right: '2%',
                     }
                 })
         });
