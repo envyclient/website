@@ -116,9 +116,9 @@
                                         <td>{{ $config->name }}</td>
                                         <td>
                                             @if($config->public)
-                                                &#10006;
-                                            @else
                                                 &#10004;
+                                            @else
+                                                &#10006;
                                             @endif
                                         </td>
                                         <td>
