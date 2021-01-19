@@ -120,9 +120,12 @@ class ConfigsController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $request->user()->configs()->findOrFail($id)->delete();
+        $request->user()
+            ->configs()
+            ->findOrFail($id)
+            ->delete();
         return response()->json([
             'message' => '200 OK'
-        ], 200);
+        ]);
     }
 }

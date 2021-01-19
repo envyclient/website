@@ -18,6 +18,7 @@ class Config extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'official' => (bool)$this->official,
             'public' => (bool)$this->public,
             'data' => json_decode($this->data),
             'favorites' => $this->favorites_count,
