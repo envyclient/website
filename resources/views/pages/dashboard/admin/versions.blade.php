@@ -58,37 +58,39 @@
                     </label>
                 </div>
 
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Version</label>
-                    <input class="form-control @error('version') is-invalid @enderror"
-                           type="file"
-                           id="version"
-                           name="version"
-                           accept=".exe"
-                           required>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="formFile" class="form-label">Version</label>
+                        <input class="form-control @error('version') is-invalid @enderror"
+                               type="file"
+                               id="version"
+                               name="version"
+                               accept=".exe"
+                               required>
 
-                    @error('version')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                        @error('version')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="col">
+                        <label for="formFile" class="form-label">Assets</label>
+                        <input class="form-control @error('assets') is-invalid @enderror"
+                               type="file"
+                               id="assets"
+                               name="assets"
+                               accept=".jar"
+                               required>
+
+                        @error('assets')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Assets</label>
-                    <input class="form-control @error('assets') is-invalid @enderror"
-                           type="file"
-                           id="assets"
-                           name="assets"
-                           accept=".jar"
-                           required>
-
-                    @error('assets')
-                    <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                    @enderror
-                </div>
 
                 <button type="submit" class="btn btn-success">Upload</button>
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
