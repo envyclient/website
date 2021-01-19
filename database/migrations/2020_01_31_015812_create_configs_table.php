@@ -19,6 +19,7 @@ class CreateConfigsTable extends Migration
             $table->string('name', 15);
             $table->json('data'); // JSON
             $table->boolean('public')->default(false);
+            $table->boolean('official')->default(false);
             $table->timestamps();
         });
     }

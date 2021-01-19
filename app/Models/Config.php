@@ -11,6 +11,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  * @property string name
  * @property string data
  * @property boolean public
+ * @property boolean official
  */
 class Config extends Model
 {
@@ -23,6 +24,7 @@ class Config extends Model
         'name',
         'data',
         'public',
+        'official',
     ];
 
     protected $casts = [
