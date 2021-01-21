@@ -39,6 +39,6 @@ class Subscription extends Model
 
     public function billingAgreement()
     {
-        return $this->belongsTo(BillingAgreement::class, 'id', 'billing_agreement_id');
+        return $this->belongsTo(BillingAgreement::class, 'billing_agreement_id');
     }
 }
