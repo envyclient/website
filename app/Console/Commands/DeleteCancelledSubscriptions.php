@@ -24,7 +24,7 @@ class DeleteCancelledSubscriptions extends Command
         $count = 0;
 
         $subscriptions = Subscription::with(['user', 'billingAgreement'])
-            ->where('end_date', '<=', now())
+            ->where('end_date', '<=', $start)
             ->get();
 
         foreach ($subscriptions as $subscription) {

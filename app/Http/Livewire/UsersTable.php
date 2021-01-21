@@ -40,10 +40,9 @@ class UsersTable extends Component
             }
             case 'cancelled':
             {
-                /*$user->whereHas('subscription.billingAgreement', function ($q) {
+                $user->whereHas('subscription.billingAgreement', function ($q) {
                     $q->where('state', 'Cancelled');
-                });*/
-                dd('wip');
+                });
                 break;
             }
             case 'banned':
