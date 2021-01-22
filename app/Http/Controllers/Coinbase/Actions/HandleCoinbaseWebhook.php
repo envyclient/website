@@ -25,6 +25,8 @@ class HandleCoinbaseWebhook extends Controller
             ], 400);
         }
 
+        Log::debug($request->getContent());
+
         switch ($request->json('event.type')) {
             case 'charge:confirmed':
             {
@@ -50,9 +52,6 @@ class HandleCoinbaseWebhook extends Controller
                 break;
             }
         }
-
-        // TODO: handle request
-        Log::debug($request->getContent());
 
         return response()->json([
             'message' => '200 OK',
