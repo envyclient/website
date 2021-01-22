@@ -43,12 +43,12 @@ class DiscordController extends Controller
 
         $password = Str::random(24);
         $user = User::firstOrCreate([
-            'email' => $user->getEmail(),
+            'discord_id' => $user->getId(),
         ], [
             'name' => $name,
+            'email' => $user->getEmail(),
             'password' => Hash::make($password),
             'email_verified_at' => now(),
-            'discord_id' => $user->getId(),
             'discord_name' => $user->getNickname(),
         ]);
 
