@@ -25,7 +25,7 @@ class HandleCoinbaseWebhook extends Controller
             ], 400);
         }
 
-        switch ($request->json('type')) {
+        switch ($request->json('event.type')) {
             case 'charge:confirmed':
             {
                 $coinbase = Coinbase::where('charge_id', $request->json('event.data.id'))
@@ -46,7 +46,7 @@ class HandleCoinbaseWebhook extends Controller
             case 'charge:delayed':
             case 'charge:resolved':
             {
-                self::updateStatus($request->json('event.data.id'), $request->json('type'));
+                self::updateStatus($request->json('event.data.id'), $request->json('event.type'));
                 break;
             }
         }
