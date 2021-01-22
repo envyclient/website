@@ -24,6 +24,11 @@
             border-radius: 10px;
         }
 
+        .video-image iframe {
+            display: none;
+            border: 0;
+        }
+
         .video-image span {
             display: block;
             position: absolute;
@@ -170,7 +175,6 @@
                     <iframe id="video-1"
                             class="video-image"
                             data-src="https://youtube.com/embed/D3EwIXscBxk"
-                            style="display: none;border: 0;"
                             allow="autoplay; encrypted-media;"
                             allowfullscreen>
                     </iframe>
@@ -180,13 +184,12 @@
             <div class="video-container">
                 <div class="video-image">
                     <img id="video-2-image"
-                         src="https://i1.ytimg.com/vi/vdQdSpl6V4g/maxresdefault.jpg"
+                         src="https://i1.ytimg.com/vi/PrlANlbK95Q/maxresdefault.jpg"
                          alt="thumbnail">
                     <span onClick="playVideo(this, 'video-2', 'video-2-image');"></span>
                     <iframe id="video-2"
                             class="video-image"
-                            data-src="https://youtube.com/embed/vdQdSpl6V4g"
-                            style="display: none;border: 0;"
+                            data-src="https://youtube.com/embed/PrlANlbK95Q"
                             allow="autoplay; encrypted-media;"
                             allowfullscreen>
                     </iframe>
