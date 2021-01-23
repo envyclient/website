@@ -3,6 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="google" content="nositelinkssearchbox"/>
+    <meta name="google" content="notranslate"/>
+    <meta name="google" content="nopagereadaloud"/>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,8 +14,8 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- fav icon -->
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" sizes="16x16" type="image/png" href="{{ asset('favicon-16.png') }}">
+    <link rel="icon" sizes="32x32" type="image/png" href="{{ asset('favicon-32.png') }}">
 
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
