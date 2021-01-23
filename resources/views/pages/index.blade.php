@@ -1,67 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="google" content="nositelinkssearchbox">
+    <meta name="google" content="notranslate">
+    <meta name="google" content="nopagereadaloud">
 
     <title>Envy Client</title>
 
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <!-- fav icon -->
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16.png') }}">
+    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('android-chrome-192.png') }}">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ asset('android-chrome-512.png') }}">
 
-    <meta content="Envy Client" property="og:title">
-    <meta content="Official website of the Envy Client" property="og:description">
-    <meta content="{{ asset('logo.svg') }}" property="og:image">
-    <meta content="128" property="og:image:width">
-    <meta content="128" property="og:image:height">
+    <!-- open graph protocol -->
+    <meta property="og:title" content="Envy Client">
+    <meta property="og:description" content="Official website of Envy Client">
+    <meta property="og:image" content="{{ asset('android-chrome-512.png') }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
 
-    <script type="text/javascript" src="{{ asset('js/bundle.js') }}" defer></script>
+    <!-- Scripts -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+            data-cf-beacon='{"token": "84c979ca91574da6bd382f7062ce5002"}'></script>
 
-    <link rel="stylesheet" href="{{ asset('css/bundle.css') }}">
-    <style>
-        .video-image {
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        .video-image iframe {
-            display: none;
-            border: 0;
-        }
-
-        .video-image span {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            z-index: 1;
-            background: url({{ asset('assets/play.png') }}) no-repeat center center;
-            background-size: 96px 96px;
-            transition: all 0.2s;
-        }
-
-        .video-image:hover span {
-            transform: scale(1.3);
-        }
-
-        .video-image img {
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-            border-radius: 5px;
-            transition: all 0.2s;
-        }
-
-        .video-image:hover img {
-            transform: scale(1.2);
-            filter: blur(3px);
-        }
-    </style>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 </head>
 
 <body>

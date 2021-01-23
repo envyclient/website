@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta name="google" content="nositelinkssearchbox"/>
-    <meta name="google" content="notranslate"/>
-    <meta name="google" content="nopagereadaloud"/>
+    <meta name="google" content="nositelinkssearchbox">
+    <meta name="google" content="notranslate">
+    <meta name="google" content="nopagereadaloud">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,8 +14,11 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- fav icon -->
-    <link rel="icon" sizes="16x16" type="image/png" href="{{ asset('favicon-16.png') }}">
-    <link rel="icon" sizes="32x32" type="image/png" href="{{ asset('favicon-32.png') }}">
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16.png') }}">
+    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('android-chrome-192.png') }}">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ asset('android-chrome-512.png') }}">
 
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
