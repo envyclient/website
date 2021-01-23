@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="google" content="nositelinkssearchbox">
     <meta name="google" content="notranslate">
     <meta name="google" content="nopagereadaloud">
