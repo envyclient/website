@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Plan;
-use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
@@ -11,31 +11,35 @@ class PagesController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+        $this->middleware('admin')->only('sales');
     }
 
-    public function dashboard(Request $request)
+    public function dashboard()
     {
-        $user = $request->user()
+        $user = auth()->user()
             ->load(['subscription', 'configs']);
 
         return view('pages.dashboard.home', [
             'user' => $user,
-            'configs' => $user->configs()->withCount('favorites')->orderBy('updated_at', 'desc')->get(),
+            'configs' => $user->configs()
+                ->withCount('favorites')
+                ->orderBy('updated_at', 'desc')
+                ->get(),
         ]);
     }
 
-    public function security(Request $request)
+    public function security()
     {
-        $user = $request->user()
+        $user = auth()->user()
             ->load(['subscription', 'billingAgreement']);
 
         return view('pages.dashboard.security')
             ->with('user', $user);
     }
 
-    public function subscriptions(Request $request)
+    public function subscriptions()
     {
-        $user = $request->user();
+        $user = auth()->user();
         return view('pages.dashboard.subscriptions', [
             'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
@@ -43,10 +47,19 @@ class PagesController extends Controller
         ]);
     }
 
-    public function discord(Request $request)
+    public function discord()
     {
-        return view('pages.dashboard.discord', [
-            'user' => $request->user(),
+        return view('pages.dashboard.discord')
+            ->with('user', auth()->user());
+    }
+
+    public function sales()
+    {
+        return view('pages.dashboard.admin.sales', [
+            'total' => Invoice::sum('price'),
+            'paypal' => Invoice::where('method', 'paypal')->sum('price'),
+            'wechat' => Invoice::where('method', 'wechat')->sum('price'),
+            'crypto' => Invoice::where('method', 'crypto')->sum('price'),
         ]);
     }
 }
