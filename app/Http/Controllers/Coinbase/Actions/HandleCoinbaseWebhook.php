@@ -41,6 +41,7 @@ class HandleCoinbaseWebhook extends Controller
                     'end_date' => now()->addMonth(),
                 ]);
 
+                self::updateStatus($request->json('event.data.id'), 'charge:confirmed');
                 break;
             }
             case 'charge:failed':
