@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PayPal\Actions;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\BillingAgreement;
+use App\Models\Invoice;
 use App\Models\Subscription;
 use App\Notifications\Subscription\SubscriptionCreated;
 use App\Notifications\Subscription\SubscriptionUpdated;
@@ -67,7 +68,14 @@ class HandlePayPalWebhook extends Controller
 
                 if ($user->hasSubscription()) {
                     $user->subscription->update([
-                        'end_date' => $user->subscription->end_date->addMonth()
+                        'end_date' => now()->addMonth()
+                    ]);
+
+                    Invoice::create([
+                        'user_id' => $user->id,
+                        'subscription_id' => $user->subscription->id,
+                        'method' => 'paypal',
+                        'price' => $billingAgreement->plan->price,
                     ]);
 
                     $user->notify(new SubscriptionUpdated(
@@ -75,11 +83,18 @@ class HandlePayPalWebhook extends Controller
                         'Your subscription for Envy Client has been renewed.'
                     ));
                 } else {
-                    Subscription::create([
+                    $subscription = Subscription::create([
                         'user_id' => $user->id,
                         'plan_id' => $billingAgreement->plan_id,
                         'billing_agreement_id' => $billingAgreement->id,
                         'end_date' => now()->addMonth(),
+                    ]);
+
+                    Invoice::create([
+                        'user_id' => $user->id,
+                        'subscription_id' => $subscription->id,
+                        'method' => 'paypal',
+                        'price' => $billingAgreement->plan->price,
                     ]);
 
                     // email user about new subscription

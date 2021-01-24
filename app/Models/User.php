@@ -96,6 +96,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(ReferralCode::class);
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();

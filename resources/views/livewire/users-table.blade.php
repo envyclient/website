@@ -8,9 +8,10 @@
             <label class="input-group-text" for="type">Status</label>
             <select class="form-select" id="type" wire:model="type">
                 <option value="all" selected>All</option>
-                <option value="active">Active</option>
                 <option value="subscribed">Subscribed</option>
-                <option value="cancelled">Cancelled Subscription</option>
+                <option value="active-subscription">Active Subscription</option>
+                <option value="cancelled-subscription">Cancelled Subscription</option>
+                <option value="using-client">Using Client</option>
                 <option value="banned">Banned</option>
             </select>
         </div>
