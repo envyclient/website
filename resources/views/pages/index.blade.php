@@ -109,12 +109,12 @@
                 <div class="video-container">
                     <div class="video-image">
                         <img id="video-1-image"
-                             src="https://i1.ytimg.com/vi/D3EwIXscBxk/maxresdefault.jpg"
+                             src="https://i1.ytimg.com/vi/SL5BOCkN_4E/maxresdefault.jpg"
                              alt="thumbnail">
                         <span onClick="playVideo(this, 'video-1', 'video-1-image');"></span>
                         <iframe id="video-1"
                                 class="video-image"
-                                data-src="https://youtube.com/embed/D3EwIXscBxk"
+                                data-src="https://youtube.com/embed/SL5BOCkN_4E"
                                 allow="autoplay; encrypted-media;"
                                 allowfullscreen>
                         </iframe>
