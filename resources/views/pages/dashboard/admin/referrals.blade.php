@@ -1,5 +1,7 @@
 @extends('layouts.dash')
 
+@section('title', 'Referrals')
+
 @section('content')
     <div style="width:98%;margin:0 auto">
 
