@@ -1,5 +1,7 @@
 @extends('layouts.dash')
 
+@section('title', 'Subscriptions')
+
 @section('content')
     <div style="width:98%;margin:0 auto">
         <div class="alert alert-dark" style="font-size:25px;">

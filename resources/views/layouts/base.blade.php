@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -10,45 +10,44 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+    @hasSection('title')
+        <title>@yield('title') - Envy Client</title>
+    @else
+        <title>Envy Client</title>
+    @endif
 
-    <!-- fav icon -->
+<!-- Favicon -->
     <link rel="icon" sizes="16x16" href="{{ asset('favicon-16.png') }}">
     <link rel="icon" sizes="32x32" href="{{ asset('favicon-32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('android-chrome-192.png') }}">
     <link rel="apple-touch-icon" sizes="512x512" href="{{ asset('android-chrome-512.png') }}">
 
-    <!-- Cloudflare Web Analytics -->
+    <!-- Open Graph Protocol -->
+    <meta property="og:title" content="Envy Client">
+    <meta property="og:description" content="Official website of Envy Client">
+    <meta property="og:image" content="{{ asset('android-chrome-512.png') }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <!-- Scripts -->
+    @yield('scripts')
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
             data-cf-beacon='{"token": "84c979ca91574da6bd382f7062ce5002"}'></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
 
     <!-- Styles -->
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
-
+    @yield('styles')
     @livewireStyles
 </head>
+
 <body>
-<div>
-    @if(Route::is('pages.terms'))
-        @yield('content')
-    @else
-        <div class="flex flex-col justify-center min-h-screen py-12 bg-gray-50 sm:px-6 lg:px-8">
-            @yield('content')
-        </div>
-    @endif
-</div>
+@yield('body')
 
 @livewireScripts
-
 </body>
 </html>

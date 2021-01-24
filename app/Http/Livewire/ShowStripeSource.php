@@ -26,6 +26,6 @@ class ShowStripeSource extends Component
 
         return view('livewire.show-stripe-source', [
             'events' => $events,
-        ])->extends('layouts.auth');
+        ])->extends('layouts.guest');
     }
 }

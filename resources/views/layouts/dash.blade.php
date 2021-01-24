@@ -1,39 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google" content="nositelinkssearchbox">
-    <meta name="google" content="notranslate">
-    <meta name="google" content="nopagereadaloud">
+@extends('layouts.base')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name') }}</title>
-
-    <!-- fav icon -->
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16.png') }}">
-    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-    <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('android-chrome-192.png') }}">
-    <link rel="apple-touch-icon" sizes="512x512" href="{{ asset('android-chrome-512.png') }}">
-
-    <!-- Scripts -->
+@section('scripts')
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-            data-cf-beacon='{"token": "84c979ca91574da6bd382f7062ce5002"}'></script>
+@endsection
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" rel="stylesheet">
-
-    @livewireStyles
-
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css">
     <style type="text/css">
         #sidebar-wrapper {
             background-color: #303030;
@@ -94,149 +67,145 @@
             }
         }
     </style>
-</head>
-<body>
-<div class="d-flex wrapper">
+@endsection
 
-    <div class="d-inline-block" id="sidebar-wrapper">
-        <div class="list-group">
-            <a class="navbar-brand text-white">
-                <div class="container text-center">
-                    <img src="{{ asset('logo.svg') }}"
-                         style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;"
-                         alt="logo">
+@section('body')
+    <div class="d-flex wrapper">
+
+        <div class="d-inline-block" id="sidebar-wrapper">
+            <div class="list-group">
+                <a class="navbar-brand text-white">
+                    <div class="container text-center">
+                        <img src="{{ asset('logo.svg') }}"
+                             style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;"
+                             alt="logo">
+                    </div>
+                </a>
+                <div class="list-group list-group-flush">
+                    <h3 class="m-3 text-white" style="font-size:16px;">
+                        SETTINGS
+                    </h3>
+                    <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active' : null }}"
+                       href="{{ route('dashboard') }}">
+                        <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
+                        Home
+                    </a>
+                    <a class="list-group-item list-group-item-custom {{ Route::is('pages.security') ? 'active' : null }}"
+                       href="{{ route('pages.security') }}">
+                        <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
+                        Security
+                    </a>
+
+                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
+                        COMMUNITY
+                    </h3>
+                    <a class="list-group-item list-group-item-custom {{ Route::is('pages.discord') ? 'active' : null }}"
+                       href="{{ route('pages.discord') }}">
+                        <i class="fab fa-discord p-2" style="margin-right:12px;"></i>
+                        Discord
+                    </a>
+
+                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
+                        BILLING
+                    </h3>
+                    <a class="list-group-item list-group-item-custom {{ Route::is('pages.subscriptions') ? 'active': null }}"
+                       href="{{ route('pages.subscriptions') }}">
+                        <i class="fas fa-sync p-2" style="padding-right:10px;"></i>
+                        Subscription
+                    </a>
                 </div>
-            </a>
-            <div class="list-group list-group-flush">
-                <h3 class="m-3 text-white" style="font-size:16px;">
-                    SETTINGS
-                </h3>
-                <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active' : null }}"
-                   href="{{ route('dashboard') }}">
-                    <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
-                    Home
-                </a>
-                <a class="list-group-item list-group-item-custom {{ Route::is('pages.security') ? 'active' : null }}"
-                   href="{{ route('pages.security') }}">
-                    <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
-                    Security
-                </a>
-
+                @admin
                 <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
-                    COMMUNITY
+                    ADMINISTRATOR
                 </h3>
-                <a class="list-group-item list-group-item-custom {{ Route::is('pages.discord') ? 'active' : null }}"
-                   href="{{ route('pages.discord') }}">
-                    <i class="fab fa-discord p-2" style="margin-right:12px;"></i>
-                    Discord
+                <a class="list-group-item list-group-item-custom {{ Route::is('admin.users') ? 'active': null }}"
+                   href="{{ route('admin.users') }}">
+                    <i class="fas fa-users p-2" style="margin-right:10px;"></i>
+                    Users
                 </a>
-
-                <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
-                    BILLING
-                </h3>
-                <a class="list-group-item list-group-item-custom {{ Route::is('pages.subscriptions') ? 'active': null }}"
-                   href="{{ route('pages.subscriptions') }}">
-                    <i class="fas fa-sync p-2" style="padding-right:10px;"></i>
-                    Subscription
+                <a class="list-group-item list-group-item-custom {{ Route::is('admin.versions') ? 'active': null }}"
+                   href="{{ route('admin.versions') }}">
+                    <i class="fas fa-download p-2" style="margin-right:10px;"></i>
+                    Versions
                 </a>
+                <a class="list-group-item list-group-item-custom {{ Route::is('admin.referrals') ? 'active': null }}"
+                   href="{{ route('admin.referrals') }}">
+                    <i class="fas fa-qrcode p-2" style="margin-right:10px;"></i>
+                    Referrals Codes
+                </a>
+                <a class="list-group-item list-group-item-custom {{ Route::is('admin.notifications') ? 'active': null }}"
+                   href="{{ route('admin.notifications') }}">
+                    <i class="fas fa-bell p-2" style="margin-right:10px;"></i>
+                    Notifications
+                </a>
+                <a class="list-group-item list-group-item-custom {{ Route::is('admin.sales') ? 'active': null }}"
+                   href="{{ route('admin.sales') }}">
+                    <i class="fas fa-coins p-2" style="margin-right:10px;"></i>
+                    Sales
+                </a>
+                @endadmin
             </div>
-            @admin
-            <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
-                ADMINISTRATOR
-            </h3>
-            <a class="list-group-item list-group-item-custom {{ Route::is('admin.users') ? 'active': null }}"
-               href="{{ route('admin.users') }}">
-                <i class="fas fa-users p-2" style="margin-right:10px;"></i>
-                Users
-            </a>
-            <a class="list-group-item list-group-item-custom {{ Route::is('admin.versions') ? 'active': null }}"
-               href="{{ route('admin.versions') }}">
-                <i class="fas fa-download p-2" style="margin-right:10px;"></i>
-                Versions
-            </a>
-            <a class="list-group-item list-group-item-custom {{ Route::is('admin.referrals') ? 'active': null }}"
-               href="{{ route('admin.referrals') }}">
-                <i class="fas fa-qrcode p-2" style="margin-right:10px;"></i>
-                Referrals Codes
-            </a>
-            <a class="list-group-item list-group-item-custom {{ Route::is('admin.notifications') ? 'active': null }}"
-               href="{{ route('admin.notifications') }}">
-                <i class="fas fa-bell p-2" style="margin-right:10px;"></i>
-                Notifications
-            </a>
-            <a class="list-group-item list-group-item-custom {{ Route::is('admin.sales') ? 'active': null }}"
-               href="{{ route('admin.sales') }}">
-                <i class="fas fa-coins p-2" style="margin-right:10px;"></i>
-                Sales
-            </a>
-            @endadmin
+        </div>
+
+        <div id="page-content-wrapper">
+
+            <!-- top navbar -->
+            <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark"
+                 style="background-color: #303030 !important;">
+                <a class="navbar-brand text-white mx-3" href="/">
+                    Envy Client | <span class="text-muted">dashboard</span>
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown"
+                               class="nav-link dropdown-toggle text-white"
+                               href="#"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <img src="{{ auth()->user()->image }}"
+                                     class="rounded-circle mx-1"
+                                     alt="user image"
+                                     width="32px"
+                                     height="32px">
+                                {{ auth()->user()->name }} <span class="caret"></span>
+                            </a>
+                            @include('inc.navbar.dropdown')
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- notifications -->
+            <div class="container mt-3">
+                @include('inc.notifications')
+            </div>
+
+            <div class="mt-3">
+                @yield('content')
+            </div>
         </div>
     </div>
 
-    <div id="page-content-wrapper">
-
-        <!-- top navbar -->
-        <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark"
-             style="background-color: #303030 !important;">
-            <a class="navbar-brand text-white mx-3" href="{{ url('/') }}">
-                Envy Client | <span class="text-muted">dashboard</span>
-            </a>
-
-            <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown"
-                           class="nav-link dropdown-toggle text-white"
-                           href="#"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="false">
-                            <img src="{{ auth()->user()->image }}"
-                                 class="rounded-circle mx-1"
-                                 alt="user image"
-                                 width="32px"
-                                 height="32px">
-                            {{ auth()->user()->name }} <span class="caret"></span>
-                        </a>
-                        @include('inc.navbar.dropdown')
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <!-- notifications -->
-        <div class="container mt-3">
-            @include('inc.notifications')
-        </div>
-
-        <div class="mt-3">
-            @yield('content')
-        </div>
-    </div>
-</div>
-
-@livewireScripts
-
-<!-- Custom JS Scripts -->
-@yield('js')
-
-</body>
-</html>
+    @yield('js')
+@endsection

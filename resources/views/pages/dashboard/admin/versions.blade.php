@@ -1,5 +1,7 @@
 @extends('layouts.dash')
 
+@section('title', 'Versions')
+
 @section('content')
     <div style="width:98%;margin:0 auto">
 

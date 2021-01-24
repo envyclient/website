@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.guest')
 
 @section('content')
     <div class="mx-auto" style="max-width: 1280px;">
