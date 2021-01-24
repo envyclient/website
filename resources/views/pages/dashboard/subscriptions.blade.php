@@ -88,7 +88,7 @@
                             </button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('crypto')">
+                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('crypto')" disabled>
                                 Purchase using Crypto
                             </button>
                         </div>
@@ -156,10 +156,6 @@
                 }
                 case "wechat": {
                     form.action = "{{ route('stripe.store') }}";
-                    break;
-                }
-                case "crypto": {
-                    form.action = "{{ route('coinbase.store') }}";
                     break;
                 }
             }
