@@ -38,7 +38,14 @@ class UsersTable extends Component
                 $user->has('subscription');
                 break;
             }
-            case 'cancelled':
+            case 'active-subscription':
+            {
+                $user->whereHas('subscription.billingAgreement', function ($q) {
+                    $q->where('state', 'Active');
+                });
+                break;
+            }
+            case 'cancelled-subscription':
             {
                 $user->whereHas('subscription.billingAgreement', function ($q) {
                     $q->where('state', 'Cancelled');
@@ -50,7 +57,7 @@ class UsersTable extends Component
                 $user->where('banned', true);
                 break;
             }
-            case 'active':
+            case 'using-client':
             {
                 $user->where('current_account', '<>', null);
                 break;
