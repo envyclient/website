@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Stripe\Actions;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
 use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
@@ -101,8 +102,9 @@ class HandleStripeSourcesWebhook extends Controller
                     'The payment has been authorized.'
                 );
 
+                // charge the user
                 Stripe::setApiKey(config('stripe.secret'));
-                $charge = Charge::create([
+                Charge::create([
                     'amount' => $source->plan->cad_price,
                     'currency' => 'cad',
                     'source' => $source->source_id,
@@ -129,13 +131,19 @@ class HandleStripeSourcesWebhook extends Controller
                 );
 
                 // create subscription for the user
-                Subscription::create([
+                $subscription = Subscription::create([
                     'user_id' => $source->user_id,
                     'plan_id' => $source->plan_id,
                     'billing_agreement_id' => null,
                     'end_date' => now()->addMonth(),
                 ]);
 
+                Invoice::create([
+                    'user_id' => $source->user_id,
+                    'subscription_id' => $subscription->id,
+                    'method' => 'wechat',
+                    'price' => $source->plan->price,
+                ]);
                 break;
             }
             // charge back

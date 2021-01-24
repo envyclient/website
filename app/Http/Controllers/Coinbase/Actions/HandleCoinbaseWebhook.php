@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Coinbase\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Coinbase;
+use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,11 +35,18 @@ class HandleCoinbaseWebhook extends Controller
                     ->firstOrFail();
 
                 // create subscription for the user
-                Subscription::create([
+                $subscription = Subscription::create([
                     'user_id' => $coinbase->user_id,
                     'plan_id' => $coinbase->plan_id,
                     'billing_agreement_id' => null,
                     'end_date' => now()->addMonth(),
+                ]);
+
+                Invoice::create([
+                    'user_id' => $coinbase->user_id,
+                    'subscription_id' => $subscription->id,
+                    'method' => 'wechat',
+                    'price' => $coinbase->plan->price,
                 ]);
 
                 self::updateStatus($request->json('event.data.id'), 'charge:confirmed');
