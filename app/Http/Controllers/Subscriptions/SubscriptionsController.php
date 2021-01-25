@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Subscriptions;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Stripe\StripeClient;
 
 class SubscriptionsController extends Controller
 {
@@ -13,9 +14,21 @@ class SubscriptionsController extends Controller
         $this->middleware(['auth', 'verified', 'subscribed']);
     }
 
-    public function delete(Request $request)
+    public function cancel(Request $request)
     {
         $user = $request->user();
+
+        if ($user->subscription->stripe_id !== null) {
+            $stripe = new StripeClient(config('stripe.secret'));
+            $stripe->subscriptions->cancel(
+                $user->subscription->stripe_id,
+                []
+            );
+            $user->subscription->update([
+                'stripe_status' => 'Cancelled',
+            ]);
+            return back()->with('success', 'Your subscription has been queued to cancel and will not renew at the end of billing period.');
+        }
 
         // user did not subscribe using paypal
         if (!$user->hasBillingAgreement()) {

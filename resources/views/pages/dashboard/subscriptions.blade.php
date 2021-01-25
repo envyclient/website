@@ -78,26 +78,26 @@
 
             @if($user->subscription === null && $user->billingAgreement === null)
                 <div class="d-grid gap-2">
-                    <button class="btn btn-success btn-lg" onclick="processPayment('paypal')">
-                        Subscribe using PayPal
-                    </button>
                     <div class="row">
                         <div class="col">
-                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('wechat')">
-                                Purchase using WeChat Pay
+                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('paypal')">
+                                Subscribe using PayPal
                             </button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('crypto')" disabled>
-                                Purchase using Crypto
+                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('stripe')">
+                                Subscribe using Credit/Debit
                             </button>
                         </div>
                     </div>
+                    <button class="btn btn-success btn-lg" onclick="return processPayment('wechat')">
+                        Purchase using WeChat Pay
+                    </button>
                 </div>
             @endif
         </form>
 
-        @if($user->billingAgreement !== null && $user->billingAgreement->state === 'Cancelled')
+        @if(($user->billingAgreement !== null && $user->billingAgreement->state === 'Cancelled') || $user->subscription?->stripe_status === 'Cancelled')
             <div class="card" style="width: 100%;">
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-outline-danger btn-lg" disabled>
@@ -141,11 +141,25 @@
 @endsection
 
 @section('js')
-    <script type="application/javascript">
+    <script type="application/javascript" defer>
+        function createCheckoutSession(priceId) {
+            return fetch("{{ route('stripe.checkout') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: priceId
+                })
+            }).then(function (result) {
+                return result.json();
+            });
+        }
+
         function processPayment(mode) {
             // checking if a plan was selected
             if (document.querySelector("input[name=id]:checked").value === undefined) {
-                return;
+                return false;
             }
 
             const form = document.forms["subscription"];
@@ -155,14 +169,24 @@
                     break;
                 }
                 case "wechat": {
-                    form.action = "{{ route('stripe.store') }}";
+                    form.action = "{{ route('stripe-source.store') }}";
                     break;
                 }
+                case "stripe": {
+                    const stripe = Stripe("{{ config('stripe.key') }}");
+                    createCheckoutSession(document.querySelector("input[name=id]:checked").value)
+                        .then(function (data) {
+                            stripe.redirectToCheckout({
+                                sessionId: data.sessionId
+                            }).then(handleResult);
+                        });
+                    return false;
+                }
             }
-            form.submit();
+            return true;
         }
     </script>
-    <script type="application/javascript">
+    <script type="application/javascript" defer>
         const plansModal = document.getElementById('plans-modal');
         plansModal.addEventListener('show.bs.modal', function (event) {
 

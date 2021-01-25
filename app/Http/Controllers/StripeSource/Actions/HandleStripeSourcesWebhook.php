@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Stripe\Actions;
+namespace App\Http\Controllers\StripeSource\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
@@ -9,10 +9,7 @@ use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Stripe\Charge;
 use Stripe\Exception\SignatureVerificationException;
-use Stripe\Stripe;
-use Stripe\Webhook;
 use UnexpectedValueException;
 
 class HandleStripeSourcesWebhook extends Controller
@@ -20,23 +17,22 @@ class HandleStripeSourcesWebhook extends Controller
     public function __construct()
     {
         $this->middleware('valid-json-payload');
-        Stripe::setApiKey(config('stripe.secret'));
     }
 
     public function __invoke(Request $request)
     {
         $event = null;
         try {
-            $event = Webhook::constructEvent(
+            $event = \Stripe\Webhook::constructEvent(
                 $request->getContent(),
                 $request->header('stripe-signature'),
-                config('stripe.webhook.secret')
+                config('stripe.webhook.source'),
             );
-        } catch (UnexpectedValueException $e) {
+        } catch (UnexpectedValueException) {
             return response()->json([
                 'message' => 'Invalid Payload',
             ], 400);
-        } catch (SignatureVerificationException $e) {
+        } catch (SignatureVerificationException) {
             return response()->json([
                 'message' => 'Invalid Signature',
             ], 400);
@@ -87,6 +83,12 @@ class HandleStripeSourcesWebhook extends Controller
             // authorized and verified a payment
             case 'source.chargeable':
             {
+                if ($request->json('data.object.customer') !== null) {
+                    return response()->json([
+                        'message' => '200 OK',
+                    ]);
+                }
+
                 $source = StripeSource::where(
                     'source_id',
                     $event->data->object->id
@@ -103,8 +105,7 @@ class HandleStripeSourcesWebhook extends Controller
                 );
 
                 // charge the user
-                Stripe::setApiKey(config('stripe.secret'));
-                Charge::create([
+                \Stripe\Charge::create([
                     'amount' => $source->plan->cad_price,
                     'currency' => 'cad',
                     'source' => $source->source_id,

@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string name
  * @property string description
  * @property int price
+ * @property int cad_price
  * @property int paypal_id
+ * @property string stripe_id
  * @property int config_limit
  * @property bool beta_access
  * @property bool capes_access
