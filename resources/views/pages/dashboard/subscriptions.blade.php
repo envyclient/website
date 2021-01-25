@@ -90,19 +90,9 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('wechat')">
-                                Purchase using WeChat Pay
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('crypto')"
-                                    disabled>
-                                Purchase using Crypto
-                            </button>
-                        </div>
-                    </div>
+                    <button class="btn btn-success btn-lg" onclick="return processPayment('wechat')">
+                        Purchase using WeChat Pay
+                    </button>
                 </div>
             @endif
         </form>
