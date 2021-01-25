@@ -56,9 +56,12 @@ class PagesController extends Controller
     {
         return view('pages.dashboard.admin.sales', [
             'total' => Invoice::sum('price'),
-            'paypal' => Invoice::where('method', 'paypal')->sum('price'),
-            'wechat' => Invoice::where('method', 'wechat')->sum('price'),
-            'crypto' => Invoice::where('method', 'crypto')->sum('price'),
+            'methods' => [
+                'paypal' => Invoice::where('method', 'paypal')->sum('price'),
+                'wechat' => Invoice::where('method', 'wechat')->sum('price'),
+                'crypto' => Invoice::where('method', 'crypto')->sum('price'),
+                'stripe' => Invoice::where('method', 'stripe')->sum('price'),
+            ],
         ]);
     }
 }

@@ -40,7 +40,7 @@ class StripeSourcesController extends Controller
                 'plan_id' => $plan->id,
                 'status' => 'pending'
             ])->firstOrFail();
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException) {
             try {
                 $response = $this->stripe->sources->create([
                     'type' => 'wechat',
@@ -51,7 +51,7 @@ class StripeSourcesController extends Controller
                         'email' => $user->email,
                     ],
                 ]);
-            } catch (InvalidRequestException $e) {
+            } catch (InvalidRequestException) {
                 return back()->with('error', 'An error occurred.');
             }
 
