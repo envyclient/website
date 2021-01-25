@@ -32,7 +32,12 @@ class DiscordController extends Controller
             return redirect('login');
         }
 
-        $userExists = User::where('email', $user->getEmail())->exists();
+        if ($user->getEmail() === null) {
+            return redirect('login');
+        }
+
+        $userExists = User::where('email', $user->getEmail())
+            ->exists();
 
         $password = Str::random(24);
         $user = User::firstOrCreate([
