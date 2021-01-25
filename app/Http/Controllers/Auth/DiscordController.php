@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Helpers\Strng;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\AccountCreated;
@@ -29,23 +28,17 @@ class DiscordController extends Controller
     {
         try {
             $user = Socialite::driver('discord')->user();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return redirect('login');
         }
 
         $userExists = User::where('email', $user->getEmail())->exists();
 
-        // check if name is too short
-        $name = Strng::clean($user->getName());
-        if (strlen($name) < 3) {
-            $name = 'envy_' . random_int(1, 99999);
-        }
-
         $password = Str::random(24);
         $user = User::firstOrCreate([
             'discord_id' => $user->getId(),
         ], [
-            'name' => $name,
+            'name' => 'envy_' . random_int(1, 99999),
             'email' => $user->getEmail(),
             'password' => Hash::make($password),
             'email_verified_at' => now(),
