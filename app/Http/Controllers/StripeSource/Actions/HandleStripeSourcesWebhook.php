@@ -84,9 +84,7 @@ class HandleStripeSourcesWebhook extends Controller
             case 'source.chargeable':
             {
                 if ($request->json('data.object.customer') !== null) {
-                    return response()->json([
-                        'message' => '200 OK',
-                    ]);
+                    return response()->noContent();
                 }
 
                 $source = StripeSource::where(
@@ -156,9 +154,7 @@ class HandleStripeSourcesWebhook extends Controller
             }
         }
 
-        return response()->json([
-            'message' => '200 OK',
-        ]);
+        return response()->noContent();
     }
 
     private static function createEvent(int $id, string $type, string $message)

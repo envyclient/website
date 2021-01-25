@@ -62,9 +62,7 @@ class HandleCoinbaseWebhook extends Controller
             }
         }
 
-        return response()->json([
-            'message' => '200 OK',
-        ]);
+        return response()->noContent();
     }
 
     private static function updateStatus(string $id, string $status)
