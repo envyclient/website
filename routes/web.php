@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
  * Subscriptions
  */
 Route::prefix('subscriptions')->group(function () {
-    Route::post('cancel', [SubscriptionsController::class, 'delete'])->name('subscriptions.cancel');
+    Route::post('cancel', [SubscriptionsController::class, 'cancel'])->name('subscriptions.cancel');
 });
 
 /**

@@ -23,6 +23,7 @@ class CreatePlansTable extends Migration
             $table->unsignedSmallInteger('cad_price');
 
             $table->string('paypal_id')->unique()->nullable();
+            $table->string('stripe_id')->unique()->nullable();
 
             $table->unsignedTinyInteger('config_limit');
 

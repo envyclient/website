@@ -75,7 +75,7 @@ class HandlePayPalWebhook extends Controller
                         'user_id' => $user->id,
                         'subscription_id' => $user->subscription->id,
                         'method' => 'paypal',
-                        'price' => $billingAgreement->plan->price,
+                        'price' => $user->subscription->plan->price,
                     ]);
 
                     $user->notify(new SubscriptionUpdated(

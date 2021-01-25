@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         // custom
         'admin' => \App\Http\Middleware\Custom\CheckAdmin::class,
         'subscribed' => \App\Http\Middleware\Custom\CheckSubscription::class,
+        'not-subscribed' => \App\Http\Middleware\Custom\CheckNoSubscription::class,
         'valid-json-payload' => \App\Http\Middleware\Custom\CheckIfJsonPayloadIsValid::class,
     ];
 

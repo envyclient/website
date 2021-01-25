@@ -26,6 +26,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property null|Carbon referral_code_used_at
  * @property null|string discord_id
  * @property null|string discord_name
+ * @property null|string stripe_id
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -48,6 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'referral_code_used_at',
         'discord_id',
         'discord_name',
+        'stripe_id',
     ];
 
     protected $hidden = [

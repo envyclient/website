@@ -9,10 +9,7 @@ use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Stripe\Charge;
 use Stripe\Exception\SignatureVerificationException;
-use Stripe\Stripe;
-use Stripe\Webhook;
 use UnexpectedValueException;
 
 class HandleStripeSourcesWebhook extends Controller
@@ -20,14 +17,13 @@ class HandleStripeSourcesWebhook extends Controller
     public function __construct()
     {
         $this->middleware('valid-json-payload');
-        Stripe::setApiKey(config('stripe.secret'));
     }
 
     public function __invoke(Request $request)
     {
         $event = null;
         try {
-            $event = Webhook::constructEvent(
+            $event = \Stripe\Webhook::constructEvent(
                 $request->getContent(),
                 $request->header('stripe-signature'),
                 config('stripe.webhook.secret')
@@ -103,8 +99,7 @@ class HandleStripeSourcesWebhook extends Controller
                 );
 
                 // charge the user
-                Stripe::setApiKey(config('stripe.secret'));
-                Charge::create([
+                \Stripe\Charge::create([
                     'amount' => $source->plan->cad_price,
                     'currency' => 'cad',
                     'source' => $source->source_id,

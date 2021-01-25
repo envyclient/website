@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int user_id
  * @property int|null plan_id
  * @property int|null billing_agreement_id
+ * @property string|null stripe_id
+ * @property string|null stripe_status
  * @property Carbon|null end_date
  */
 class Subscription extends Model
@@ -20,6 +22,8 @@ class Subscription extends Model
         'user_id',
         'plan_id',
         'billing_agreement_id',
+        'stripe_id',
+        'stripe_status',
         'end_date',
     ];
 

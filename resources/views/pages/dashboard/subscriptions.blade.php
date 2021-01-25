@@ -107,7 +107,7 @@
             @endif
         </form>
 
-        @if($user->billingAgreement !== null && $user->billingAgreement->state === 'Cancelled')
+        @if(($user->billingAgreement !== null && $user->billingAgreement->state === 'Cancelled') || $user->subscription?->stripe_status === 'Cancelled')
             <div class="card" style="width: 100%;">
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-outline-danger btn-lg" disabled>
@@ -159,7 +159,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    price_id: priceId
+                    id: priceId
                 })
             }).then(function (result) {
                 return result.json();
@@ -184,7 +184,7 @@
                 }
                 case "stripe": {
                     const stripe = Stripe("pk_test_0sJHdHIDr3zUDN9PIoTCGxjp003rlOwMf1");
-                    createCheckoutSession("price_1IDG9TGw89K34S9abMZtpbIt")
+                    createCheckoutSession(document.querySelector("input[name=id]:checked").value)
                         .then(function (data) {
                             stripe.redirectToCheckout({
                                 sessionId: data.sessionId
