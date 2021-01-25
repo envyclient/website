@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Stripe;
+namespace App\Http\Controllers\StripeSource;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
@@ -73,7 +73,7 @@ class StripeSourcesController extends Controller
         }
 
         return redirect(
-            route('stripe.show', $source->source_id)
+            route('stripe-source.show', $source->source_id)
         );
     }
 }

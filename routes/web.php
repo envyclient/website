@@ -11,8 +11,10 @@ use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
-use App\Http\Controllers\Stripe\Actions\HandleStripeSourcesWebhook;
-use App\Http\Controllers\Stripe\StripeSourcesController;
+use App\Http\Controllers\Stripe\Actions\HandleStripeWebhook;
+use App\Http\Controllers\Stripe\StripeController;
+use App\Http\Controllers\StripeSource\Actions\HandleStripeSourcesWebhook;
+use App\Http\Controllers\StripeSource\StripeSourcesController;
 use App\Http\Controllers\Subscriptions\SubscriptionsController;
 use App\Http\Livewire\ShowStripeSource;
 use Illuminate\Support\Facades\Route;
@@ -63,8 +65,8 @@ Route::prefix('subscriptions')->group(function () {
  */
 Route::prefix('paypal')->group(function () {
     Route::post('process', [PayPalController::class, 'process'])->name('paypal.process');
-    Route::get('execute', [PayPalController::class, 'execute'])->name('paypal.execute');
-    Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+    Route::get('execute', [PayPalController::class, 'execute']);
+    Route::get('cancel', [PayPalController::class, 'cancel']);
 
     Route::post('webhook', HandlePayPalWebhook::class);
 });
@@ -104,8 +106,16 @@ Route::prefix('connect')->group(function () {
 });
 
 Route::prefix('stripe')->group(function () {
-    Route::get('{id}', ShowStripeSource::class)->name('stripe.show');
-    Route::post('/', [StripeSourcesController::class, 'store'])->name('stripe.store');
+    Route::post('checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+    Route::get('success', [StripeController::class, 'success'])->name('stripe.success');
+    Route::get('cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+
+    Route::post('webhook', HandleStripeWebhook::class);
+});
+
+Route::prefix('stripe-source')->group(function () {
+    Route::get('{id}', ShowStripeSource::class)->name('stripe-source.show');
+    Route::post('/', [StripeSourcesController::class, 'store'])->name('stripe-source.store');
 
     Route::post('webhook', HandleStripeSourcesWebhook::class);
 });

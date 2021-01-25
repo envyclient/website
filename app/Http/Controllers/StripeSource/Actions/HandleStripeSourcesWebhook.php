@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Stripe\Actions;
+namespace App\Http\Controllers\StripeSource\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
@@ -32,11 +32,11 @@ class HandleStripeSourcesWebhook extends Controller
                 $request->header('stripe-signature'),
                 config('stripe.webhook.secret')
             );
-        } catch (UnexpectedValueException $e) {
+        } catch (UnexpectedValueException) {
             return response()->json([
                 'message' => 'Invalid Payload',
             ], 400);
-        } catch (SignatureVerificationException $e) {
+        } catch (SignatureVerificationException) {
             return response()->json([
                 'message' => 'Invalid Signature',
             ], 400);

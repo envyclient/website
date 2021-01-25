@@ -78,17 +78,27 @@
 
             @if($user->subscription === null && $user->billingAgreement === null)
                 <div class="d-grid gap-2">
-                    <button class="btn btn-success btn-lg" onclick="processPayment('paypal')">
-                        Subscribe using PayPal
-                    </button>
                     <div class="row">
                         <div class="col">
-                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('wechat')">
+                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('paypal')">
+                                Subscribe using PayPal
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('stripe')">
+                                Subscribe using Credit/Debit
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('wechat')">
                                 Purchase using WeChat Pay
                             </button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-success btn-lg w-100" onclick="processPayment('crypto')" disabled>
+                            <button class="btn btn-success btn-lg w-100" onclick="return processPayment('crypto')"
+                                    disabled>
                                 Purchase using Crypto
                             </button>
                         </div>
@@ -141,11 +151,25 @@
 @endsection
 
 @section('js')
-    <script type="application/javascript">
+    <script type="application/javascript" defer>
+        function createCheckoutSession(priceId) {
+            return fetch("{{ route('stripe.checkout') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    price_id: priceId
+                })
+            }).then(function (result) {
+                return result.json();
+            });
+        }
+
         function processPayment(mode) {
             // checking if a plan was selected
             if (document.querySelector("input[name=id]:checked").value === undefined) {
-                return;
+                return false;
             }
 
             const form = document.forms["subscription"];
@@ -155,14 +179,24 @@
                     break;
                 }
                 case "wechat": {
-                    form.action = "{{ route('stripe.store') }}";
+                    form.action = "{{ route('stripe-source.store') }}";
                     break;
                 }
+                case "stripe": {
+                    const stripe = Stripe("pk_test_0sJHdHIDr3zUDN9PIoTCGxjp003rlOwMf1");
+                    createCheckoutSession("price_1IDG9TGw89K34S9abMZtpbIt")
+                        .then(function (data) {
+                            stripe.redirectToCheckout({
+                                sessionId: data.sessionId
+                            }).then(handleResult);
+                        });
+                    return false;
+                }
             }
-            form.submit();
+            return true;
         }
     </script>
-    <script type="application/javascript">
+    <script type="application/javascript" defer>
         const plansModal = document.getElementById('plans-modal');
         plansModal.addEventListener('show.bs.modal', function (event) {
 
