@@ -83,6 +83,12 @@ class HandleStripeSourcesWebhook extends Controller
             // authorized and verified a payment
             case 'source.chargeable':
             {
+                if ($request->json('data.object.customer') !== null) {
+                    return response()->json([
+                        'message' => '200 OK',
+                    ]);
+                }
+
                 $source = StripeSource::where(
                     'source_id',
                     $event->data->object->id

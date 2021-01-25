@@ -30,6 +30,7 @@ class StripeController extends Controller
             $checkout_session = Session::create([
                 'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('stripe.cancel'),
+                'customer_email' => $request->user()->email,
                 'payment_method_types' => ['card'],
                 'mode' => 'subscription',
                 'line_items' => [[
