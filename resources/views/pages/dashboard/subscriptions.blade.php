@@ -173,7 +173,7 @@
                     break;
                 }
                 case "stripe": {
-                    const stripe = Stripe("pk_test_0sJHdHIDr3zUDN9PIoTCGxjp003rlOwMf1");
+                    const stripe = Stripe("{{ config('stripe.key') }}");
                     createCheckoutSession(document.querySelector("input[name=id]:checked").value)
                         .then(function (data) {
                             stripe.redirectToCheckout({
