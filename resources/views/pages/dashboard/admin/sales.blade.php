@@ -5,7 +5,7 @@
 @section('content')
     <div class="m-0 m-auto" style="width:98%;">
         <div class="text-center w-100 mb-3" style="display:block;">
-            <div class="col-md-3 m-1" style="display:inline-block;">
+            <div class="w-50 m-1" style="display:inline-block;">
                 <div class="text-center shadow p-3 bg-light rounded">
                     <svg style="width:48px;height:48px" viewBox="0 0 24 24" class="m-auto">
                         <path fill="currentColor"
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <br>
-            <div class="col-md-3 m-1" style="display:inline-block;">
+            <div class="col-md-2 m-1" style="display:inline-block;">
                 <div class="shadow p-3 rounded text-center text-white" style="background-color: #5470C6">
                     <svg style="width:48px;height:48px" viewBox="0 0 24 24" class="m-auto">
                         <path fill="currentColor"
@@ -26,7 +26,7 @@
                     <h4>Paypal</h4>
                 </div>
             </div>
-            <div class="col-md-3 m-1" style="display:inline-block;">
+            <div class="col-md-2 m-1" style="display:inline-block;">
                 <div class="shadow p-3 rounded text-center text-white" style="background-color:#91CC75;">
                     <svg style="width:48px;height:48px" viewBox="0 0 24 24" class="m-auto">
                         <path fill="currentColor"
@@ -36,7 +36,7 @@
                     <h4>WeChat Pay</h4>
                 </div>
             </div>
-            <div class="col-md-3 m-1" style="display:inline-block;">
+            <div class="col-md-2 m-1" style="display:inline-block;">
                 <div class="shadow p-3 rounded text-center text-white" style="background-color:#FAC858;">
                     <svg style="width:48px;height:48px" viewBox="0 0 24 24" class="m-auto">
                         <path fill="currentColor"
@@ -44,6 +44,15 @@
                     </svg>
                     <h2>${{ $crypto }}</h2>
                     <h4>Crypto</h4>
+                </div>
+            </div>
+            <div class="col-md-2 m-1" style="display:inline-block;">
+                <div class="shadow p-3 rounded text-center text-white" style="background-color:#ee6666;">
+                    <svg style="width:48px;height:48px" viewBox="0 0 24 24" class="m-auto">
+                        <path fill="currentColor" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
+                    </svg>
+                    <h2>${{ $crypto }}</h2>
+                    <h4>Stripe</h4>
                 </div>
             </div>
         </div>
