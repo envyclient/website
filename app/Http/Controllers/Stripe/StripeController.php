@@ -33,7 +33,7 @@ class StripeController extends Controller
                 'payment_method_types' => ['card'],
                 'mode' => 'subscription',
                 'line_items' => [[
-                    'price' => $plan->stripe_id, // TODO: get id from plan model
+                    'price' => $plan->stripe_id,
                     'quantity' => 1,
                 ]],
             ]);

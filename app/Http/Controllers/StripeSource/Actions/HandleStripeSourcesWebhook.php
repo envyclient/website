@@ -26,7 +26,7 @@ class HandleStripeSourcesWebhook extends Controller
             $event = \Stripe\Webhook::constructEvent(
                 $request->getContent(),
                 $request->header('stripe-signature'),
-                config('stripe.webhook.secret')
+                config('stripe.webhook.source'),
             );
         } catch (UnexpectedValueException) {
             return response()->json([

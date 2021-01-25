@@ -2,6 +2,7 @@
 return [
     'secret' => env('STRIPE_SECRET'),
     'webhook' => [
-        'secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'stripe' => env('STRIPE_WEBHOOK_SECRET'),
+        'source' => env('STRIPE_SOURCE_WEBHOOK_SECRET'),
     ],
 ];
