@@ -9,6 +9,7 @@ use App\Models\Subscription;
 use App\Models\User;
 use App\Notifications\Subscription\SubscriptionCreated;
 use App\Notifications\Subscription\SubscriptionUpdated;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
@@ -107,22 +108,24 @@ class HandleStripeWebhook extends Controller
             // Sent each billing interval if there is an issue with your customer’s payment method.
             case 'invoice.payment_failed':
             {
-                $user = User::where(
-                    'stripe_id', $request->json('data.object.customer')
-                )->firstOrFail();
+                try {
+                    $user = User::where(
+                        'stripe_id', $request->json('data.object.customer')
+                    )->firstOrFail();
 
-                if ($user->hasSubscription()) {
-                    $user->subscription->update([
-                        'stripe_status' => 'Cancelled',
-                    ]);
+                    if ($user->hasSubscription()) {
+                        $user->subscription->update([
+                            'stripe_status' => 'Cancelled',
+                        ]);
+                    }
+                } catch (ModelNotFoundException) {
+                    return response()->noContent();
                 }
                 break;
             }
         }
 
-        return response()->json([
-            'message' => '200 OK',
-        ]);
+        return response()->noContent();
     }
 
 }

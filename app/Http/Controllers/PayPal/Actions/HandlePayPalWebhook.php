@@ -142,8 +142,6 @@ class HandlePayPalWebhook extends Controller
             }
         }
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return response()->noContent();
     }
 }
