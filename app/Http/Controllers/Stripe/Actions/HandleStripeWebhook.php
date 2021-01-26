@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Stripe\Actions;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\Custom\VerifyStripeWebhookSignature;
 use App\Models\Invoice;
 use App\Models\StripeSession;
 use App\Models\Subscription;
@@ -11,38 +12,18 @@ use App\Notifications\Subscription\SubscriptionCreated;
 use App\Notifications\Subscription\SubscriptionUpdated;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Stripe\Exception\SignatureVerificationException;
-use Stripe\Webhook;
-use UnexpectedValueException;
 
 class HandleStripeWebhook extends Controller
 {
     public function __construct()
     {
-        $this->middleware('valid-json-payload');
+        $this->middleware(VerifyStripeWebhookSignature::class);
     }
 
     public function __invoke(Request $request)
     {
-        $event = null;
-        try {
-            $event = Webhook::constructEvent(
-                $request->getContent(),
-                $request->header('stripe-signature'),
-                config('stripe.webhook.stripe')
-            );
-        } catch (UnexpectedValueException) {
-            return response()->json([
-                'message' => 'Invalid Payload',
-            ], 400);
-        } catch (SignatureVerificationException) {
-            return response()->json([
-                'message' => 'Invalid Signature',
-            ], 400);
-        }
-
         // Handle the event
-        switch ($event->type) {
+        switch ($request->json('type')) {
             case 'checkout.session.completed':
             {
                 // getting the stripe session
@@ -87,7 +68,6 @@ class HandleStripeWebhook extends Controller
                     $subscription = Subscription::create([
                         'user_id' => $user->id,
                         'plan_id' => $stripeSession->plan_id,
-                        'billing_agreement_id' => null,
                         'stripe_id' => $request->json('data.object.subscription'),
                         'stripe_status' => 'Active',
                         'end_date' => now()->addMonth(),

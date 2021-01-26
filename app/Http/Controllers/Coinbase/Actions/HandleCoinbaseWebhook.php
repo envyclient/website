@@ -38,7 +38,6 @@ class HandleCoinbaseWebhook extends Controller
                 $subscription = Subscription::create([
                     'user_id' => $coinbase->user_id,
                     'plan_id' => $coinbase->plan_id,
-                    'billing_agreement_id' => null,
                     'end_date' => now()->addMonth(),
                 ]);
 
