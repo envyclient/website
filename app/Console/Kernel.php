@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
             ->emailOutputOnFailure(self::EMAILS);
 
+        // clear inactive minecraft accounts
         $schedule->command('minecraft:clear')
             ->daily()
             ->emailOutputOnFailure(self::EMAILS);

@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Notifications\Subscription\SubscriptionUpdated;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class DeleteCancelledSubscriptions extends Command
@@ -31,31 +30,37 @@ class DeleteCancelledSubscriptions extends Command
             $count++;
 
             $user = $subscription->user;
-            $billingAgreement = $subscription->billingAgreement;
 
-            // user did not subscribe using paypal
-            if ($billingAgreement === null) {
+            // user subscribed using paypal
+            if ($subscription->billing_agreement_id !== null) {
+                $billingAgreement = $subscription->billingAgreement;
+
+                // skip deleting if billing plan is active
+                if ($billingAgreement->state !== 'Cancelled') {
+                    continue;
+                }
+
+                // delete the subscription and billing agreement
+                $user->subscription()->delete();
+                $user->billingAgreement()->delete();
+                self::sendNotification($user);
+            } else if ($subscription->stripe_id !== null) { // user subscribed using stripe
+
+                // skip deleting if stripe subscription is active
+                if ($subscription->stripe_status !== 'Cancelled') {
+                    continue;
+                }
+
                 $user->subscription()->delete();
                 self::sendNotification($user);
-                continue;
+            } else { // user purchased subscription
+                $user->subscription()->delete();
+                self::sendNotification($user);
             }
-
-            // skip deleting if billing plan is active
-            if ($billingAgreement->state !== 'Cancelled') {
-                continue;
-            }
-
-            // delete the subscription and billing agreement
-            $user->subscription()->delete();
-            $user->billingAgreement()->delete();
-
-            // send email to user about subscription expired
-            self::sendNotification($user);
         }
 
-        $this->info("Deleted $count subscriptions on " . now());
+        $this->info("Processed $count subscriptions on " . now());
         $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
-
         return 0;
     }
 
