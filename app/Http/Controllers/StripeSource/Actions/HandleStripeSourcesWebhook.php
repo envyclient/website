@@ -3,49 +3,31 @@
 namespace App\Http\Controllers\StripeSource\Actions;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\Custom\VerifyStripeSourceWebhookSignature;
 use App\Models\Invoice;
 use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Stripe\Exception\SignatureVerificationException;
-use UnexpectedValueException;
 
 class HandleStripeSourcesWebhook extends Controller
 {
     public function __construct()
     {
-        $this->middleware('valid-json-payload');
+        $this->middleware(VerifyStripeSourceWebhookSignature::class);
     }
 
     public function __invoke(Request $request)
     {
-        $event = null;
-        try {
-            $event = \Stripe\Webhook::constructEvent(
-                $request->getContent(),
-                $request->header('stripe-signature'),
-                config('stripe.webhook.source'),
-            );
-        } catch (UnexpectedValueException) {
-            return response()->json([
-                'message' => 'Invalid Payload',
-            ], 400);
-        } catch (SignatureVerificationException) {
-            return response()->json([
-                'message' => 'Invalid Signature',
-            ], 400);
-        }
-
         // Handle the event
-        switch ($event->type) {
+        switch ($request->json('type')) {
             // object expired
             case 'source.canceled':
             {
                 $source = StripeSource::where(
                     'source_id',
-                    $event->data->object->id
+                    $request->json('data.object.id')
                 )->firstOrFail();
 
                 $source->update([
@@ -65,7 +47,7 @@ class HandleStripeSourcesWebhook extends Controller
             {
                 $source = StripeSource::where(
                     'source_id',
-                    $event->data->object->id
+                    $request->json('data.object.id')
                 )->firstOrFail();
 
                 $source->update([
@@ -89,7 +71,7 @@ class HandleStripeSourcesWebhook extends Controller
 
                 $source = StripeSource::where(
                     'source_id',
-                    $event->data->object->id
+                    $request->json('data.object.id')
                 )->firstOrFail();
 
                 $source->update([
@@ -116,7 +98,7 @@ class HandleStripeSourcesWebhook extends Controller
             {
                 $source = StripeSource::where(
                     'source_id',
-                    $event->data->object->payment_method
+                    $request->json('data.object.payment_method')
                 )->firstOrFail();
 
                 $source->update([
@@ -133,7 +115,6 @@ class HandleStripeSourcesWebhook extends Controller
                 $subscription = Subscription::create([
                     'user_id' => $source->user_id,
                     'plan_id' => $source->plan_id,
-                    'billing_agreement_id' => null,
                     'end_date' => now()->addMonth(),
                 ]);
 
@@ -149,7 +130,7 @@ class HandleStripeSourcesWebhook extends Controller
             case 'charge.dispute.created':
             {
                 // TODO: handle dispute
-                Log::debug($event->toJSON());
+                Log::debug($request->getContent());
                 break;
             }
         }

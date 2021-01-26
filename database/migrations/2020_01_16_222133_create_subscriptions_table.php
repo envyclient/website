@@ -16,7 +16,7 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->unsignedInteger('plan_id')->nullable();
+            $table->foreignId('plan_id')->constrained();
 
             // paypal
             $table->unsignedInteger('billing_agreement_id')->nullable();
@@ -25,7 +25,7 @@ class CreateSubscriptionsTable extends Migration
             $table->string('stripe_id')->nullable();
             $table->string('stripe_status')->nullable();
 
-            $table->timestamp('end_date')->nullable();
+            $table->timestamp('end_date');
             $table->timestamps();
             $table->softDeletes();
         });

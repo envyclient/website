@@ -27,7 +27,6 @@ class UsersTest extends TestCase
         Subscription::create([
             'user_id' => $user->id,
             'plan_id' => 1,
-            'billing_agreement_id' => null,
             'end_date' => now()
         ]);
 
