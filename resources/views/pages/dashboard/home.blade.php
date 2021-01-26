@@ -7,10 +7,13 @@
 
         <div class="row">
 
+            <!--- Profile Section --->
             <div class="col">
-                <!--- Profile Section --->
                 <div class="alert alert-dark" style="font-size:25px;">
-                    <i class="fas fa-user" style="padding-right:10px;"></i>
+                    <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                    </svg>
                     Profile
                 </div>
 
@@ -93,7 +96,11 @@
             @if($user->subscription !== null)
                 <div class="col">
                     <div class="alert alert-dark" style="font-size:25px;">
-                        <i class="fas fa-file" style="padding-right:10px;"></i> Configs
+                        <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                  d="M19 2L14 6.5V17.5L19 13V2M6.5 5C4.55 5 2.45 5.4 1 6.5V21.16C1 21.41 1.25 21.66 1.5 21.66C1.6 21.66 1.65 21.59 1.75 21.59C3.1 20.94 5.05 20.5 6.5 20.5C8.45 20.5 10.55 20.9 12 22C13.35 21.15 15.8 20.5 17.5 20.5C19.15 20.5 20.85 20.81 22.25 21.56C22.35 21.61 22.4 21.59 22.5 21.59C22.75 21.59 23 21.34 23 21.09V6.5C22.4 6.05 21.75 5.75 21 5.5V19C19.9 18.65 18.7 18.5 17.5 18.5C15.8 18.5 13.35 19.15 12 20V6.5C10.55 5.4 8.45 5 6.5 5Z"/>
+                        </svg>
+                        Configs
                         <span class="badge bg-secondary">
                         {{ count($configs) }}/{{ $user->getConfigLimit() }}
                     </span>
