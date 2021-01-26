@@ -141,6 +141,7 @@
 @endsection
 
 @section('js')
+    <script src="https://js.stripe.com/v3/"></script>
     <script type="application/javascript" defer>
         function createCheckoutSession(priceId) {
             return fetch("{{ route('stripe.checkout') }}", {
