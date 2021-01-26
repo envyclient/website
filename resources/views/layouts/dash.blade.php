@@ -84,7 +84,7 @@
                     </div>
                 </a>
                 <div class="list-group list-group-flush">
-                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:25px;">
+                    <h3 class="m-3 mt-3 text-white" style="font-size:16px;">
                         SETTINGS
                     </h3>
                     <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active' : null }}"
@@ -104,7 +104,7 @@
                         Security
                     </a>
 
-                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:25px;">
+                    <h3 class="m-3 mt-5 text-white" style="font-size:16px;">
                         COMMUNITY
                     </h3>
                     <a class="list-group-item list-group-item-custom {{ Route::is('pages.discord') ? 'active' : null }}"
@@ -116,7 +116,7 @@
                         Discord
                     </a>
 
-                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
+                    <h3 class="m-3 mt-5 text-white" style="font-size:16px;">
                         BILLING
                     </h3>
                     <a class="list-group-item list-group-item-custom {{ Route::is('pages.subscriptions') ? 'active': null }}"
@@ -126,7 +126,7 @@
                     </a>
                 </div>
                 @admin
-                <h3 class="m-3 text-white" style="font-size:16px;padding-top:25px;">
+                <h3 class="m-3 mt-5 text-white" style="font-size:16px;">
                     ADMINISTRATOR
                 </h3>
                 <a class="list-group-item list-group-item-custom {{ Route::is('admin.users') ? 'active': null }}"
