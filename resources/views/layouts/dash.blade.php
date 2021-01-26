@@ -77,31 +77,42 @@
                 <a class="navbar-brand text-white">
                     <div class="container text-center">
                         <img src="{{ asset('logo.svg') }}"
-                             style="width:128px;height:128px;margin-top:10px;margin-bottom:10px;"
+                             width="128"
+                             height="128"
+                             class="mt-3 mb-3"
                              alt="logo">
                     </div>
                 </a>
                 <div class="list-group list-group-flush">
-                    <h3 class="m-3 text-white" style="font-size:16px;">
+                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:25px;">
                         SETTINGS
                     </h3>
                     <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active' : null }}"
                        href="{{ route('dashboard') }}">
-                        <i class="fas fa-user-circle p-2" style="margin-right:10px;"></i>
+                        <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                        </svg>
                         Home
                     </a>
                     <a class="list-group-item list-group-item-custom {{ Route::is('pages.security') ? 'active' : null }}"
                        href="{{ route('pages.security') }}">
-                        <i class="fas fa-lock p-2" style="margin-right:10px;"></i>
+                        <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                  d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.1 14.8,9.5V11C15.4,11 16,11.6 16,12.3V15.8C16,16.4 15.4,17 14.7,17H9.2C8.6,17 8,16.4 8,15.7V12.2C8,11.6 8.6,11 9.2,11V9.5C9.2,8.1 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,9.5V11H13.5V9.5C13.5,8.7 12.8,8.2 12,8.2Z"/>
+                        </svg>
                         Security
                     </a>
 
-                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
+                    <h3 class="m-3 text-white" style="font-size:16px;padding-top:25px;">
                         COMMUNITY
                     </h3>
                     <a class="list-group-item list-group-item-custom {{ Route::is('pages.discord') ? 'active' : null }}"
                        href="{{ route('pages.discord') }}">
-                        <i class="fab fa-discord p-2" style="margin-right:12px;"></i>
+                        <svg class="ms-1 me-3" style="width:22px;height:22px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                  d="M22,24L16.75,19L17.38,21H4.5A2.5,2.5 0 0,1 2,18.5V3.5A2.5,2.5 0 0,1 4.5,1H19.5A2.5,2.5 0 0,1 22,3.5V24M12,6.8C9.32,6.8 7.44,7.95 7.44,7.95C8.47,7.03 10.27,6.5 10.27,6.5L10.1,6.33C8.41,6.36 6.88,7.53 6.88,7.53C5.16,11.12 5.27,14.22 5.27,14.22C6.67,16.03 8.75,15.9 8.75,15.9L9.46,15C8.21,14.73 7.42,13.62 7.42,13.62C7.42,13.62 9.3,14.9 12,14.9C14.7,14.9 16.58,13.62 16.58,13.62C16.58,13.62 15.79,14.73 14.54,15L15.25,15.9C15.25,15.9 17.33,16.03 18.73,14.22C18.73,14.22 18.84,11.12 17.12,7.53C17.12,7.53 15.59,6.36 13.9,6.33L13.73,6.5C13.73,6.5 15.53,7.03 16.56,7.95C16.56,7.95 14.68,6.8 12,6.8M9.93,10.59C10.58,10.59 11.11,11.16 11.1,11.86C11.1,12.55 10.58,13.13 9.93,13.13C9.29,13.13 8.77,12.55 8.77,11.86C8.77,11.16 9.28,10.59 9.93,10.59M14.1,10.59C14.75,10.59 15.27,11.16 15.27,11.86C15.27,12.55 14.75,13.13 14.1,13.13C13.46,13.13 12.94,12.55 12.94,11.86C12.94,11.16 13.45,10.59 14.1,10.59Z"/>
+                        </svg>
                         Discord
                     </a>
 
@@ -115,32 +126,47 @@
                     </a>
                 </div>
                 @admin
-                <h3 class="m-3 text-white" style="font-size:16px;padding-top:30px;">
+                <h3 class="m-3 text-white" style="font-size:16px;padding-top:25px;">
                     ADMINISTRATOR
                 </h3>
                 <a class="list-group-item list-group-item-custom {{ Route::is('admin.users') ? 'active': null }}"
                    href="{{ route('admin.users') }}">
-                    <i class="fas fa-users p-2" style="margin-right:10px;"></i>
+                    <svg class="ms-1 me-3" style="width:24px;height:24px;" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"/>
+                    </svg>
                     Users
                 </a>
                 <a class="list-group-item list-group-item-custom {{ Route::is('admin.versions') ? 'active': null }}"
                    href="{{ route('admin.versions') }}">
-                    <i class="fas fa-download p-2" style="margin-right:10px;"></i>
+                    <svg class="ms-1 me-3" style="width:24px;height:24px;" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
+                    </svg>
                     Versions
                 </a>
                 <a class="list-group-item list-group-item-custom {{ Route::is('admin.referrals') ? 'active': null }}"
                    href="{{ route('admin.referrals') }}">
-                    <i class="fas fa-qrcode p-2" style="margin-right:10px;"></i>
+                    <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,15H9V21H3V15M5,17V19H7V17H5Z"/>
+                    </svg>
                     Referrals Codes
                 </a>
                 <a class="list-group-item list-group-item-custom {{ Route::is('admin.notifications') ? 'active': null }}"
                    href="{{ route('admin.notifications') }}">
-                    <i class="fas fa-bell p-2" style="margin-right:10px;"></i>
+                    <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"/>
+                    </svg>
                     Notifications
                 </a>
                 <a class="list-group-item list-group-item-custom {{ Route::is('admin.sales') ? 'active': null }}"
                    href="{{ route('admin.sales') }}">
-                    <i class="fas fa-coins p-2" style="margin-right:10px;"></i>
+                    <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z"/>
+                    </svg>
                     Sales
                 </a>
                 @endadmin
