@@ -4,13 +4,13 @@ namespace App\Http\Controllers\PayPal\Actions;
 
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\Custom\VerifyPaypalWebhookSignature;
 use App\Models\BillingAgreement;
 use App\Models\Invoice;
 use App\Models\Subscription;
 use App\Notifications\Subscription\SubscriptionCreated;
 use App\Notifications\Subscription\SubscriptionUpdated;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class HandlePayPalWebhook extends Controller
@@ -19,39 +19,12 @@ class HandlePayPalWebhook extends Controller
 
     public function __construct()
     {
-        $this->middleware('valid-json-payload');
+        $this->middleware(VerifyPaypalWebhookSignature::class);
         $this->endpoint = config('paypal.endpoint');
     }
 
     public function __invoke(Request $request)
     {
-        // verifying webhook
-        $response = HTTP::withToken(Paypal::getAccessToken())
-            ->withBody(json_encode([
-                'auth_algo' => $request->header('PAYPAL-AUTH-ALGO'),
-                'cert_url' => $request->header('PAYPAL-CERT-URL'),
-                'transmission_id' => $request->header('PAYPAL-TRANSMISSION-ID'),
-                'transmission_sig' => $request->header('PAYPAL-TRANSMISSION-SIG'),
-                'transmission_time' => $request->header('PAYPAL-TRANSMISSION-TIME'),
-                'webhook_id' => config('paypal.webhook_id'),
-                'webhook_event' => $request->json()
-            ]), 'application/json')
-            ->post("$this->endpoint/v1/notifications/verify-webhook-signature");
-
-        // webhook signature failed
-        if ($response->status() !== 200) {
-            return response()->json([
-                'message' => 'Failed Webhook Signature',
-            ], 400);
-        }
-
-        // invalid request
-        if ($request->json('event_type') === null) {
-            return response()->json([
-                'message' => 'Missing Billing Agreement',
-            ], 400);
-        }
-
         Log::debug($request->getContent());
 
         switch ($request->json('event_type')) {

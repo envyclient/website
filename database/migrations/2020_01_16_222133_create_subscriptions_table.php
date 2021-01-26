@@ -19,7 +19,7 @@ class CreateSubscriptionsTable extends Migration
             $table->foreignId('plan_id')->constrained();
 
             // paypal
-            $table->unsignedInteger('billing_agreement_id')->nullable();
+            $table->foreignId('billing_agreement_id')->nullable()->constrained();
 
             // stripe
             $table->string('stripe_id')->nullable();
