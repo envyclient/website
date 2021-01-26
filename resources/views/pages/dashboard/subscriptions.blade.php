@@ -142,7 +142,7 @@
 
 @section('js')
     <script src="https://js.stripe.com/v3/"></script>
-    <script type="application/javascript" defer>
+    <script type="application/javascript">
         function createCheckoutSession(priceId) {
             return fetch("{{ route('stripe.checkout') }}", {
                 method: "POST",
@@ -187,7 +187,7 @@
             return true;
         }
     </script>
-    <script type="application/javascript" defer>
+    <script type="application/javascript">
         const plansModal = document.getElementById('plans-modal');
         plansModal.addEventListener('show.bs.modal', function (event) {
 
