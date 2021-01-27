@@ -39,9 +39,9 @@ class Kernel extends ConsoleKernel
             ->emailOutputOnFailure(self::EMAILS);
 
         // clear channels every 3 days
-        $schedule->command('discord:clear')
-            ->cron('0 0 */3 * *')
-            ->emailOutputTo(self::EMAILS);
+        // $schedule->command('discord:clear')
+        //    ->cron('0 0 */3 * *')
+        //    ->emailOutputTo(self::EMAILS);
 
         // backup
         $schedule->command('backup:clean')
