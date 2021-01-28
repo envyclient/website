@@ -65,10 +65,6 @@ class HandleStripeSourcesWebhook extends Controller
             // authorized and verified a payment
             case 'source.chargeable':
             {
-                if ($request->json('data.object.customer') !== null) {
-                    return response()->noContent();
-                }
-
                 $source = StripeSource::where(
                     'source_id',
                     $request->json('data.object.id')
@@ -96,6 +92,11 @@ class HandleStripeSourcesWebhook extends Controller
             // charge succeeded and the payment is complete
             case 'charge.succeeded':
             {
+                // user subscribed using credit card not wechat pay
+                if ($request->json('data.object.customer') !== null) {
+                    return response()->noContent();
+                }
+
                 $source = StripeSource::where(
                     'source_id',
                     $request->json('data.object.payment_method')
