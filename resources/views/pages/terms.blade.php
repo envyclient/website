@@ -1,6 +1,6 @@
-@section('title', 'Terms of Service')
-
 @extends('layouts.guest')
+
+@section('title', 'Terms of Service')
 
 @section('content')
     <div class="mx-auto" style="max-width: 1280px;">
