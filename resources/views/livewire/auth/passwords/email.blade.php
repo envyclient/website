@@ -1,3 +1,5 @@
+@section('title', 'Reset Password')
+
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-lg">
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">

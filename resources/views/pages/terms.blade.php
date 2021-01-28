@@ -1,5 +1,7 @@
 @extends('layouts.guest')
 
+@section('title', 'Terms of Service')
+
 @section('content')
     <div class="mx-auto" style="max-width: 1280px;">
         <span class="my-4 h-8 inline-flex rounded-md shadow-sm">
