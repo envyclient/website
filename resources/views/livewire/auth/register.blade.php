@@ -1,3 +1,5 @@
+@section('title', 'Register')
+
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-lg">
         <a href="{{ route('index') }}">

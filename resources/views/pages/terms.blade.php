@@ -1,3 +1,5 @@
+@section('title', 'Terms of Service')
+
 @extends('layouts.guest')
 
 @section('content')
