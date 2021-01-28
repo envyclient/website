@@ -24,7 +24,6 @@
         "stripe/stripe-php": "^7.67"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "dev-master",
         "haq/seal": "^1.1",
