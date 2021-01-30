@@ -24,6 +24,8 @@
             background-color: #1c1c1c;
             text-align: inherit;
             border: none;
+            height: 50px;
+            padding-top: 12px;
         }
 
         .list-group-item-custom:hover,
