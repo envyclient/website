@@ -28,6 +28,7 @@ class HandlePayPalWebhook extends Controller
         Log::debug($request->getContent());
 
         switch ($request->json('event_type')) {
+
             // received payment so we extend or create subscription
             case 'PAYMENT.SALE.COMPLETED':
             {
@@ -76,6 +77,13 @@ class HandlePayPalWebhook extends Controller
 
                 break;
             }
+
+            // paypal could not process the payment
+            case 'PAYMENT.SALE.PENDING':
+            {
+                break;
+            }
+
             // user has cancelled their subscription
             case 'BILLING.SUBSCRIPTION.CANCELLED':
             {
@@ -98,8 +106,9 @@ class HandlePayPalWebhook extends Controller
 
                 break;
             }
-            // payment has failed for a subscription
-            case 'BILLING.SUBSCRIPTION.PAYMENT.FAILED':
+
+            case 'BILLING.SUBSCRIPTION.SUSPENDED': // subscription run out of retries
+            case 'BILLING.SUBSCRIPTION.PAYMENT.FAILED': // payment has failed for a subscription
             {
                 // send request to paypal to cancel the billing agreement
                 $response = Paypal::cancelBillingAgreement(
