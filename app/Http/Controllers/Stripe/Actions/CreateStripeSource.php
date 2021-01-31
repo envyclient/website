@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\StripeSource;
+namespace App\Http\Controllers\Stripe\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
@@ -8,10 +8,10 @@ use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Stripe\Exception\InvalidRequestException;
+use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
-class StripeSourcesController extends Controller
+class CreateStripeSource extends Controller
 {
     public StripeClient $stripe;
 
@@ -21,7 +21,7 @@ class StripeSourcesController extends Controller
         $this->stripe = new StripeClient(config('stripe.secret'));
     }
 
-    public function store(Request $request)
+    public function __invoke(Request $request)
     {
         $this->validate($request, [
             'id' => 'required|integer|exists:plans'
@@ -35,6 +35,7 @@ class StripeSourcesController extends Controller
         }
 
         try {
+            // check if the user still has an active stripe-source
             $source = StripeSource::where([
                 'user_id' => $user->id,
                 'plan_id' => $plan->id,
@@ -51,10 +52,11 @@ class StripeSourcesController extends Controller
                         'email' => $user->email,
                     ],
                 ]);
-            } catch (InvalidRequestException) {
+            } catch (ApiErrorException) {
                 return back()->with('error', 'An error occurred.');
             }
 
+            // store the stripe-source data in our database
             $source = StripeSource::create([
                 'user_id' => $user->id,
                 'plan_id' => $plan->id,
@@ -64,7 +66,7 @@ class StripeSourcesController extends Controller
                 'url' => $response->wechat['qr_code_url'],
             ]);
 
-            // creating the initial event
+            // create the initial pending event in our database
             StripeSourceEvent::create([
                 'stripe_source_id' => $source->id,
                 'type' => 'pending',
@@ -72,6 +74,7 @@ class StripeSourcesController extends Controller
             ]);
         }
 
+        // redirect the user to the stripe-source page to show the QR code
         return redirect(
             route('stripe-source.show', $source->source_id)
         );

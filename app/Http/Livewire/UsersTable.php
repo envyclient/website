@@ -75,7 +75,7 @@ class UsersTable extends Component
         }
 
         return view('livewire.users-table')->with([
-            'users' => $user->paginate(10),
+            'users' => $user->orderBy('id')->paginate(10),
         ]);
     }
 
