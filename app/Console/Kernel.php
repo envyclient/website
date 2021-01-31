@@ -51,9 +51,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')
             ->daily()
             ->at('02:00');
-
-        // gauge
-        $schedule->command('gauge:prune')->daily();
     }
 
     protected function commands()
