@@ -16,82 +16,86 @@
                     </svg>
                     Profile
                 </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="member-since">Member Since</label>
+                            <input id="member-since"
+                                   class="form-control"
+                                   value="{{ $user->created_at->format('Y-m-d') }}"
+                                   disabled>
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label" for="member-since">Member Since</label>
-                    <input id="member-since"
-                           class="form-control"
-                           value="{{ $user->created_at->format('Y-m-d') }}"
-                           disabled>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label" for="referral-code">Referral Code</label>
-                    @if($user->referral_code_id !== null)
-                        <input id="referral-code"
-                               class="form-control"
-                               value="{{ $user->referralCode->code }}"
-                               disabled>
-                    @else
-                        <form action="{{ route('users.referral-code') }}" method="post">
-                            @csrf
-                            <div class="input-group mb-3">
-                                <input type="text"
+                        <div class="mb-3">
+                            <label class="form-label" for="referral-code">Referral Code</label>
+                            @if($user->referral_code_id !== null)
+                                <input id="referral-code"
                                        class="form-control"
-                                       placeholder="code"
-                                       id="referral-code"
-                                       name="referral-code"
-                                       required>
-                                <button type="submit" class="btn btn-success">Use Code</button>
-                            </div>
-                        </form>
-                    @endif
-                </div>
+                                       value="{{ $user->referralCode->code }}"
+                                       disabled>
+                            @else
+                                <form action="{{ route('users.referral-code') }}" method="post">
+                                    @csrf
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="code"
+                                               id="referral-code"
+                                               name="referral-code"
+                                               required>
+                                        <button type="submit" class="btn btn-success">Use Code</button>
+                                    </div>
+                                </form>
+                            @endif
+                        </div>
 
-                @if($user->hasCapesAccess())
-                    <div class="mt-3">
-                        <label class="form-label">Cape</label>
-                        <br>
-                        <img src="{{ $user->cape }}"
-                             alt="cape"
-                             class="rounded"
-                             width="256px"
-                             height="128px"
-                        >
+                        @if($user->hasCapesAccess())
+                            <div class="mt-3">
+                                <label class="form-label">Cape</label>
+                                <br>
+                                <img src="{{ $user->cape }}"
+                                     alt="cape"
+                                     class="rounded"
+                                     width="256px"
+                                     height="128px"
+                                >
 
-                        <form action="{{ route('capes.store') }}"
-                              method="post"
-                              enctype="multipart/form-data">
-                            @csrf
+                                <form action="{{ route('capes.store') }}"
+                                      method="post"
+                                      enctype="multipart/form-data">
+                                    @csrf
 
-                            <div class="mb-3">
-                                <input class="form-control"
-                                       type="file"
-                                       id="cape"
-                                       name="cape"
-                                       accept=".png"
-                                       required>
-                                <div class="form-text">
-                                    The dimensions must be 2048x1048.
-                                </div>
+                                    <div class="mb-3">
+                                        <input class="form-control"
+                                               type="file"
+                                               id="cape"
+                                               name="cape"
+                                               accept=".png"
+                                               required>
+                                        <div class="form-text">
+                                            The dimensions must be 2048x1048.
+                                        </div>
 
 
-                                @error('cape')
-                                <span class="invalid-feedback" role="alert">
+                                        @error('cape')
+                                        <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-                                @enderror
+                                        @enderror
+                                    </div>
+                                    <button type="submit" class="btn btn-success inline">Upload</button>
+                                    <button type="button" class="btn btn-outline-secondary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#capes-modal">
+                                        Actions
+                                    </button>
+                                </form>
                             </div>
-                            <button type="submit" class="btn btn-success inline">Upload</button>
-                            <button type="button" class="btn btn-outline-secondary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#capes-modal">
-                                Actions
-                            </button>
-                        </form>
+                        @endif
                     </div>
-                @endif
+                </div>
             </div>
+
 
             @if($user->subscription !== null)
                 <div class="col">
