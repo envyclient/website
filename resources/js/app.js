@@ -1,3 +1,3 @@
 require('bootstrap');
-require('echarts')
-require('@chartisan/chartisan')
+require('echarts');
+require('@chartisan/echarts');
