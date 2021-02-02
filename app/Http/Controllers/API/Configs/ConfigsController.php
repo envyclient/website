@@ -30,7 +30,8 @@ class ConfigsController extends Controller
         $configs = Config::with('user')
             ->withCount('favorites')
             ->where('public', true)
-            ->orderBy('favorites_count', 'desc');
+            ->orderByDesc('official')
+            ->orderByDesc('favorites_count');
 
         if ($request->has('search')) {
             $configs->where('name', 'like', "%$request->search%");
