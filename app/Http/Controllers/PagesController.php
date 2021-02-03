@@ -42,7 +42,7 @@ class PagesController extends Controller
         return view('pages.dashboard.subscriptions', [
             'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
-            'nextSubscription' => $user->hasSubscription() ? $user->subscription->end_date->diffInDays() : null
+            'nextSubscription' => $user->hasSubscription() ? now()->diffInDays($user->subscription->end_date, false) : null
         ]);
     }
 
