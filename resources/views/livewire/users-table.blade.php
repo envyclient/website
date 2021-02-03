@@ -63,7 +63,7 @@
                     @if($user->subscription !== null)
                         Plan: <strong>{{ $user->subscription->plan->name }}</strong>
                         <br>
-                        Expires: <strong>{{ $user->subscription->end_date->diffInDays() }}</strong> days
+                        Expires: <strong>{{ now()->diffInDays($user->subscription->end_date, false) }}</strong> days
                     @else
                         &#10006;
                     @endif
