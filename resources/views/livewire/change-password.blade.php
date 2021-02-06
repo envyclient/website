@@ -75,5 +75,6 @@
         </div>
 
         <button type="submit" class="btn btn-success">Change Password</button>
+        <a type="button" class="btn btn-outline-danger" href="{{ route('password.request') }}">Forget Password</a>
     </form>
 </div>

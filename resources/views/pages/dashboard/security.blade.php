@@ -18,7 +18,7 @@
         </div>
         <div class="mt-3 mb-3 d-grid gap-2">
             <button type="button"
-                    class="btn btn-outline-danger btn-lg"
+                    class="btn btn-danger btn-lg"
                     data-bs-toggle="modal"
                     data-bs-target="#disableAccountModal">
                 Disable Account
