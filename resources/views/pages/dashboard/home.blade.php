@@ -201,7 +201,6 @@
                         <p>
                             You are downloading an <strong>unsigned version</strong> of the launcher.
                             Make sure you <strong>accept</strong> all warning messages.
-                            In future updates, these warnings will go away.
                         </p>
 
                         <div class="row">
