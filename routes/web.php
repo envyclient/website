@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
  * Home
  */
 Route::group([], function () {
-    Route::view('/', 'pages.index')->name('index');
+    Route::view('/', 'pages.index')
+        ->name('index');
+
     Route::get('dashboard', [PagesController::class, 'dashboard'])
         ->name('dashboard');
 
@@ -27,7 +29,8 @@ Route::group([], function () {
     Route::get('subscriptions', [PagesController::class, 'subscriptions'])
         ->name('pages.subscriptions');
 
-    Route::view('terms', 'pages.terms')->name('pages.terms');
+    Route::view('terms', 'pages.terms')
+        ->name('pages.terms');
 });
 
 /**
@@ -36,14 +39,18 @@ Route::group([], function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     // list users and versions
-    Route::view('users', 'pages.dashboard.admin.users')
+    Route::get('users', [PagesController::class, 'users'])
         ->name('admin.users');
+
     Route::view('versions', 'pages.dashboard.admin.versions')
         ->name('admin.versions');
+
     Route::view('referrals', 'pages.dashboard.admin.referrals')
         ->name('admin.referrals');
+
     Route::get('notifications', [PagesController::class, 'notifications'])
         ->name('admin.notifications');
+
     Route::get('sales', [PagesController::class, 'sales'])
         ->name('admin.sales');
 
