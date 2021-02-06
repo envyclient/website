@@ -10,7 +10,7 @@ class PagesController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->middleware('admin')->only('sales');
+        $this->middleware('admin')->only('notifications', 'sales');
     }
 
     public function dashboard()
@@ -50,6 +50,17 @@ class PagesController extends Controller
     {
         return view('pages.dashboard.discord')
             ->with('user', auth()->user());
+    }
+
+    public function notifications()
+    {
+        $notifications = auth()->user()
+            ->notifications()
+            ->paginate(10);
+
+        return view('pages.dashboard.admin.notifications', [
+            'notifications' => $notifications,
+        ]);
     }
 
     public function sales()
