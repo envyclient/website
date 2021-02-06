@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\Plan;
+use App\Models\Subscription;
+use App\Models\User;
 
 class PagesController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->middleware('admin')->only('notifications', 'sales');
+        $this->middleware('admin')->only('users', 'notifications', 'sales');
     }
 
     public function dashboard()
@@ -50,6 +52,31 @@ class PagesController extends Controller
     {
         return view('pages.dashboard.discord')
             ->with('user', auth()->user());
+    }
+
+    public function users()
+    {
+        return view('pages.dashboard.admin.users', [
+            'users' => [
+                'count' => User::count(),
+                'active' => User::where('current_account', '<>', null)->count(),
+            ],
+            'today' => [
+                'users' => User::whereDay('created_at', today())->count(),
+                'subscriptions' => Subscription::whereDay('created_at', today())->count()
+            ],
+            'subscriptions' => [
+                'free' => User::whereHas('subscription', function ($q) {
+                    $q->where('plan_id', 1);
+                })->count(),
+                'standard' => User::whereHas('subscription', function ($q) {
+                    $q->where('plan_id', 2);
+                })->count(),
+                'premium' => User::whereHas('subscription', function ($q) {
+                    $q->where('plan_id', 3);
+                })->count(),
+            ],
+        ]);
     }
 
     public function notifications()
