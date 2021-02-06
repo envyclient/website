@@ -8,6 +8,7 @@ use App\Http\Controllers\Coinbase\Actions\HandleCoinbaseWebhook;
 use App\Http\Controllers\Coinbase\CoinbaseController;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\LauncherController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         ->name('admin.versions');
     Route::view('referrals', 'pages.dashboard.admin.referrals')
         ->name('admin.referrals');
-    Route::view('notifications', 'pages.dashboard.admin.notifications')
+    Route::get('notifications', [PagesController::class, 'notifications'])
         ->name('admin.notifications');
     Route::get('sales', [PagesController::class, 'sales'])
         ->name('admin.sales');
@@ -60,7 +61,7 @@ Route::prefix('subscriptions')->group(function () {
 });
 
 /**
- * Payments
+ * Paypal
  */
 Route::prefix('paypal')->group(function () {
     Route::post('process', [PayPalController::class, 'process'])->name('paypal.process');
@@ -104,7 +105,6 @@ Route::prefix('connect')->group(function () {
     });
 });
 
-
 /**
  * Stripe Checkout & Stripe Source
  */
@@ -123,10 +123,21 @@ Route::group([], function () {
     });
 });
 
+/**
+ * Coinbase
+ */
 Route::prefix('coinbase')->group(function () {
     Route::get('cancel', [CoinbaseController::class, 'cancel'])->name('coinbase.cancel');
     Route::post('/', [CoinbaseController::class, 'store'])->name('coinbase.store');
     Route::post('webhook', HandleCoinbaseWebhook::class);
+});
+
+Route::prefix('notifications')->group(function () {
+    Route::post('/', [NotificationsController::class, 'store'])
+        ->name('notifications.store');
+
+    Route::delete('{id}', [NotificationsController::class, 'destroy'])
+        ->name('notifications.destroy');
 });
 
 require __DIR__ . '/auth.php';
