@@ -32,7 +32,7 @@ class DiscordController extends Controller
             return redirect('login');
         }
 
-        if ($user->getEmail() === null) {
+        if (empty($user->getEmail()) || $user->getEmail() === null) {
             return redirect('login');
         }
 
