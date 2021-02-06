@@ -62,8 +62,8 @@ class PagesController extends Controller
                 'active' => User::where('current_account', '<>', null)->count(),
             ],
             'today' => [
-                'users' => User::whereDay('created_at', today())->count(),
-                'subscriptions' => Subscription::whereDay('created_at', today())->count()
+                'users' => User::whereDate('created_at', today())->count(),
+                'subscriptions' => Subscription::whereDate('created_at', today())->count()
             ],
             'subscriptions' => [
                 'free' => User::whereHas('subscription', function ($q) {
