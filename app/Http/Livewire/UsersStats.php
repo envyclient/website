@@ -13,13 +13,14 @@ class UsersStats extends Component
     public function render()
     {
         $stats = [];
+        $subs = Subscription::where('plan_id', '<>', 1);
 
         switch ($this->period) {
             case 'all':
             {
                 $stats = [
                     'total' => User::count(),
-                    'subscriptions' => Subscription::count(),
+                    'subscriptions' => $subs->count(),
                 ];
                 break;
             }
@@ -27,7 +28,7 @@ class UsersStats extends Component
             {
                 $stats = [
                     'total' => User::whereDate('created_at', today())->count(),
-                    'subscriptions' => Subscription::whereDate('created_at', today())->count(),
+                    'subscriptions' => $subs->whereDate('created_at', today())->count(),
                 ];
                 break;
             }
@@ -35,7 +36,7 @@ class UsersStats extends Component
             {
                 $stats = [
                     'total' => User::whereDate('created_at', '>=', today()->subWeek())->count(),
-                    'subscriptions' => Subscription::whereDate('created_at', '>=', today()->subWeek())->count(),
+                    'subscriptions' => $subs->whereDate('created_at', '>=', today()->subWeek())->count(),
                 ];
                 break;
             }
@@ -43,12 +44,12 @@ class UsersStats extends Component
             {
                 $stats = [
                     'total' => User::whereDate('created_at', '>=', today()->subMonth())->count(),
-                    'subscriptions' => Subscription::whereDate('created_at', '>=', today()->subMonth())->count(),
+                    'subscriptions' => $subs->whereDate('created_at', '>=', today()->subMonth())->count(),
                 ];
                 break;
             }
         }
-        
+
         return view('livewire.users-stats', [
             'stats' => $stats,
         ]);
