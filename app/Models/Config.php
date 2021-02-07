@@ -12,6 +12,8 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  * @property string data
  * @property boolean public
  * @property boolean official
+ *
+ * @property User user
  */
 class Config extends Model
 {

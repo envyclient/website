@@ -4,6 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int user_id
+ * @property int plan_id
+ * @property int stripe_session_id
+ *
+ * @property User user
+ * @property Plan plan
+ */
 class StripeSession extends Model
 {
     protected $fillable = [
