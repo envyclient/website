@@ -39,7 +39,7 @@ Route::group([], function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     // list users and versions
-    Route::get('users', [PagesController::class, 'users'])
+    Route::view('users', 'pages.dashboard.admin.users')
         ->name('admin.users');
 
     Route::view('versions', 'pages.dashboard.admin.versions')
