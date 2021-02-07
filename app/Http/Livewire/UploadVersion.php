@@ -57,6 +57,8 @@ class UploadVersion extends Component
 
         session()->flash('message', 'Version upload.');
         $this->resetInputFields();
+
+        $this->emit('UPDATE_VERSIONS');
     }
 
     private function resetInputFields()
