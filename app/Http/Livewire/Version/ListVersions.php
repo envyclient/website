@@ -12,7 +12,7 @@ class ListVersions extends Component
 
     protected string $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['VERSION_DELETED' => '$refresh'];
+    protected $listeners = ['UPDATE_VERSIONS' => '$refresh'];
 
     public function render()
     {

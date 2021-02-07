@@ -49,6 +49,6 @@ class Version extends Component
         // deleting the row from the table
         $this->version->delete();
 
-        $this->emit('VERSION_DELETED');
+        $this->emit('UPDATE_VERSIONS');
     }
 }
