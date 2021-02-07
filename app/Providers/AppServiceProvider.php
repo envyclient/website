@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Charts\SalesChart;
 use App\Charts\UsersChart;
 use App\Charts\VersionDownloadsChart;
+use App\Models\Invoice;
 use App\Models\User;
+use App\Observers\InvoiceObserver;
 use App\Observers\UserObserver;
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -36,8 +38,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         JsonResource::withoutWrapping();
-        User::observe(UserObserver::class);
         Paginator::useBootstrap();
+
+        User::observe(UserObserver::class);
+        Invoice::observe(InvoiceObserver::class);
 
         $charts->register([
             UsersChart::class,

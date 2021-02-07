@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int subscription_id
  * @property string method
  * @property int price
+ *
+ * @property User user
+ * @property Subscription subscription
  */
 class Invoice extends Model
 {
