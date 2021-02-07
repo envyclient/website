@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int plan_id
  * @property string billing_agreement_id
  * @property string state
+ *
+ * @property User user
+ * @property Plan plan
+ * @property Subscription subscription
  */
 class BillingAgreement extends Model
 {

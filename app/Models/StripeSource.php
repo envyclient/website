@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string client_secret
  * @property string status // pending, canceled, failed, chargeable, succeeded
  * @property string url
+ *
+ * @property User user
+ * @property Plan plan
  */
 class StripeSource extends Model
 {

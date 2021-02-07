@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int user_id
+ * @property string code
+ *
+ * @property User user
+ */
 class ReferralCode extends Model
 {
     use HasFactory;

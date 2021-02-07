@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string charge_id
  * @property string status
  * @property string code
+ *
+ * @property User user
+ * @property Plan plan
  */
 class Coinbase extends Model
 {
