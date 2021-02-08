@@ -10,12 +10,12 @@
     "require": {
         "php": "^8.0",
         "consoletvs/charts": "7.*",
-        "coraxster/flysystem-aws-s3-v3-minio": "^1.0",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
+        "league/flysystem-aws-s3-v3": "1.0",
         "livewire/livewire": "^2.3",
         "overtrue/laravel-favorite": "^2.0",
         "sentry/sentry-laravel": "^2.3",
