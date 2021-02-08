@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06de56808c9a0fcd5ddbc7f95261a1ec",
+    "content-hash": "ea4e50a0309b7e6bcf2ae9858e91cbfd",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -319,56 +319,6 @@
                 }
             ],
             "time": "2020-12-11T02:13:47+00:00"
-        },
-        {
-            "name": "coraxster/flysystem-aws-s3-v3-minio",
-            "version": "1.0.16",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/coraxster/flysystem-aws-s3-v3-minio.git",
-                "reference": "963b771021be0eda570064a2a5051e1192c3afbd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/coraxster/flysystem-aws-s3-v3-minio/zipball/963b771021be0eda570064a2a5051e1192c3afbd",
-                "reference": "963b771021be0eda570064a2a5051e1192c3afbd",
-                "shasum": ""
-            },
-            "require": {
-                "aws/aws-sdk-php": "^3.0.0",
-                "league/flysystem": "^1.0.40",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "henrikbjorn/phpspec-code-coverage": "~1.0.1",
-                "phpspec/phpspec": "^2.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Flysystem\\AwsS3v3\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Frank de Jonge",
-                    "email": "info@frenky.net"
-                }
-            ],
-            "description": "Flysystem adapter for the AWS S3 SDK v3.x, forked for minio support",
-            "support": {
-                "source": "https://github.com/coraxster/flysystem-aws-s3-v3-minio/tree/1.0.15-m"
-            },
-            "time": "2017-09-26T08:08:44+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1731,6 +1681,57 @@
                 }
             ],
             "time": "2020-08-23T07:39:11+00:00"
+        },
+        {
+            "name": "league/flysystem-aws-s3-v3",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
+                "reference": "d08659da9e1fef4c628783556d074f711555af4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/d08659da9e1fef4c628783556d074f711555af4b",
+                "reference": "d08659da9e1fef4c628783556d074f711555af4b",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "3.*@dev",
+                "league/flysystem": "~1.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "~1.0.1",
+                "phpspec/phpspec": "~2.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\AwsS3v3\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Flysystem adapter for AWS S3 sdk v3",
+            "support": {
+                "issues": "https://github.com/thephpleague/flysystem-aws-s3-v3/issues",
+                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/1.0.0"
+            },
+            "time": "2015-01-21T22:19:39+00:00"
         },
         {
             "name": "league/mime-type-detection",

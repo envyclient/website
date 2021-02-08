@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+    'cloud' => env('FILESYSTEM_CLOUD', 'minio'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,12 +65,12 @@ return [
         ],
 
         'minio' => [
-            'driver' => 'minio',
+            'driver' => 's3',
             'key' => env('MINIO_KEY'),
             'secret' => env('MINIO_SECRET'),
             'region' => 'us-east-1',
             'bucket' => env('MINIO_BUCKET'),
-            'endpoint' => env('MINIO_ENDPOINT')
+            'endpoint' => env('MINIO_ENDPOINT'),
         ],
     ],
 
