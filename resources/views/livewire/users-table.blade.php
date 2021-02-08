@@ -25,7 +25,7 @@
             </select>
         </div>
         <div class="col input-group">
-            <label class="input-group-text" for="referral-code">Referral Code</label>
+            <label class="input-group-text" for="referral-code">Referral</label>
             <select class="form-select" id="referral-code" wire:model="referralCode">
                 <option value="ignore" selected>Ignore</option>
                 @foreach(\App\Models\ReferralCode::all() as $code)
