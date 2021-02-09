@@ -125,7 +125,7 @@
                                 <tbody>
                                 @foreach($configs as $config)
                                     <tr>
-                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $config->name }}</td>
                                         <td>
                                             @if($config->public)
