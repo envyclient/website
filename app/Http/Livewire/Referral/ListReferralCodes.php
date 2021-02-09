@@ -15,25 +15,33 @@ class ListReferralCodes extends Component
 
     protected $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
 
-    public bool $showModal = false;
-    public $showingUsers = [];
+    public bool $showUsersModal = false;
+    public $showingUsers;
 
-    public function showModal($code): void
+    public bool $showInvoicesModal = false;
+    public $showingInvoices;
+
+    public function showUsersModal(int $code): void
     {
-        $this->showModal = true;
+        $this->showUsersModal = true;
         $this->showingUsers = User::with('subscription')
             ->where('referral_code_id', $code)
             ->get();
     }
 
+    public function showInvoicesModal(ReferralCode $code): void
+    {
+        $this->showInvoicesModal = true;
+        $this->showingInvoices = $code->invoices()->with('user')->get();
+    }
+
     public function render()
     {
         $codes = ReferralCode::with(['user:id,name', 'subscriptions'])
-            ->orderBy('created_at')
-            ->paginate(5);
+            ->orderBy('created_at');
 
         return view('livewire.referral.list-referral-codes', [
-            'codes' => $codes
+            'codes' => $codes->paginate(5)
         ]);
     }
 }

@@ -34,4 +34,9 @@ class ReferralCode extends Model
     {
         return $this->hasManyThrough(Subscription::class, User::class, 'referral_code_id', 'user_id', 'id', 'id');
     }
+
+    public function invoices()
+    {
+        return $this->hasManyThrough(Invoice::class, User::class, 'referral_code_id', 'user_id', 'id', 'id');
+    }
 }
