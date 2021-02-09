@@ -23,7 +23,7 @@
                     <tbody>
                     @foreach($notifications as $notification)
                         <tr>
-                            <th scope="row">{{ $loop->index + 1 }}</th>
+                            <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $notification->type }}</td>
                             <td>
                                 <code>

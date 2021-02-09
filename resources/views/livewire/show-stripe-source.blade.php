@@ -42,7 +42,7 @@
                             <tr>
                                 <th scope="row"
                                     class="cursor-pointer px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                    {{ $loop->index + 1 }}
+                                    {{ $loop->iteration }}
                                 </th>
                                 <td class="cursor-pointer px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                     @if($event->type === 'pending')

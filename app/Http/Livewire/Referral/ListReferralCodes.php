@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Referral;
 
 use App\Models\ReferralCode;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,9 +15,20 @@ class ListReferralCodes extends Component
 
     protected $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
 
+    public bool $showModal = false;
+    public $showingUsers = [];
+
+    public function showModal($code): void
+    {
+        $this->showModal = true;
+        $this->showingUsers = User::with('subscription')
+            ->where('referral_code_id', $code)
+            ->get();
+    }
+
     public function render()
     {
-        $codes = ReferralCode::with('user:id,name')
+        $codes = ReferralCode::with(['user:id,name', 'subscriptions'])
             ->orderBy('created_at')
             ->paginate(5);
 
