@@ -29,4 +29,9 @@ class ReferralCode extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function subscriptions()
+    {
+        return $this->hasManyThrough(Subscription::class, User::class, 'referral_code_id', 'user_id', 'id', 'id');
+    }
 }

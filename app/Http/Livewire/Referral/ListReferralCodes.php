@@ -16,7 +16,7 @@ class ListReferralCodes extends Component
 
     public function render()
     {
-        $codes = ReferralCode::with('user:id,name')
+        $codes = ReferralCode::with(['user:id,name', 'subscriptions'])
             ->orderBy('created_at')
             ->paginate(5);
 

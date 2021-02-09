@@ -7,7 +7,8 @@
                 <th>user</th>
                 <th>code</th>
                 <th>uses</th>
-                <th>last used</th>
+                <th>subscriptions</th>
+                <th>last usage</th>
                 <th>created</th>
             </tr>
             </thead>
@@ -18,7 +19,16 @@
                     <td>{{ $code->user->name }}</td>
                     <td>{{ $code->code }}</td>
                     <td>{{ $code->users->count() }}</td>
-                    <td>{{ $code->users->last()?->referral_code_used_at->diffForHumans() }}</td>
+                    <td>{{ $code->subscriptions->count() }}</td>
+                    <td>
+                        @if($code->users->last() === null)
+                            &#10006;
+                        @else
+                            <strong>User</strong>: {{ $code->users->last()->name }}
+                            <br>
+                            <strong>Time</strong>: {{ $code->users->last()->referral_code_used_at->diffForHumans()  }}
+                        @endif
+                    </td>
                     <td>{{ $code->created_at->diffForHumans() }}</td>
                 </tr>
             @endforeach
