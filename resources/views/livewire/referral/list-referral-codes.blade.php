@@ -20,21 +20,29 @@
                     <td>{{ $code->user->name }}</td>
                     <td>{{ $code->code }}</td>
                     <td>
-                        <a href="#"
-                           data-bs-toggle="modal"
-                           data-bs-target="#list-referred-users"
-                           wire:click="showUsersModal({{ $code->id }})">
-                            {{ $code->users->count() }}
-                        </a>
+                        @if($code->users->count() === 0)
+                            0
+                        @else
+                            <a href="#"
+                               data-bs-toggle="modal"
+                               data-bs-target="#list-referred-users"
+                               wire:click="showUsersModal({{ $code->id }})">
+                                {{ $code->users->count() }}
+                            </a>
+                        @endif
                     </td>
                     <td>{{ $code->subscriptions->count() }}</td>
                     <td>
-                        <a href="#"
-                           data-bs-toggle="modal"
-                           data-bs-target="#list-referred-users"
-                           wire:click="showInvoicesModal({{ $code }})">
-                            ${{ $code->invoices()->sum('price') }}
-                        </a>
+                        @if($code->invoices()->sum('price') === 0)
+                            $0
+                        @else
+                            <a href="#"
+                               data-bs-toggle="modal"
+                               data-bs-target="#list-referred-users"
+                               wire:click="showInvoicesModal({{ $code }})">
+                                ${{ $code->invoices()->sum('price') }}
+                            </a>
+                        @endif
                     </td>
                     <td>
                         @if($code->users->last() === null)
