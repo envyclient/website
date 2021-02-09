@@ -8,6 +8,7 @@
                 <th>code</th>
                 <th>uses</th>
                 <th>subscriptions</th>
+                <th>amount</th>
                 <th>last usage</th>
                 <th>created</th>
             </tr>
@@ -19,18 +20,22 @@
                     <td>{{ $code->user->name }}</td>
                     <td>{{ $code->code }}</td>
                     <td>
-                        @if(count($code->users) > 0)
-                            <a href="#"
-                               data-bs-toggle="modal"
-                               data-bs-target="#list-referred-users"
-                               wire:click="showModal({{ $code->id }})">
-                                {{ $code->users->count() }}
-                            </a>
-                        @else
-                            &#10006;
-                        @endif
+                        <a href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#list-referred-users"
+                           wire:click="showUsersModal({{ $code->id }})">
+                            {{ $code->users->count() }}
+                        </a>
                     </td>
                     <td>{{ $code->subscriptions->count() }}</td>
+                    <td>
+                        <a href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#list-referred-users"
+                           wire:click="showInvoicesModal({{ $code }})">
+                            ${{ $code->invoices()->sum('price') }}
+                        </a>
+                    </td>
                     <td>
                         @if($code->users->last() === null)
                             &#10006;
@@ -48,9 +53,8 @@
 
         {{ $codes->links() }}
 
-        @if($showModal)
+        @if($showUsersModal)
             <div class="modal"
-                 id="list-referred-users"
                  role="dialog"
                  tabindex="-1"
                  style="display: block;">
@@ -82,7 +86,50 @@
                             </table>
                         </div>
                         <div class="modal-footer card-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">
+                            <button type="button" class="btn btn-secondary" wire:click="$set('showUsersModal', false)">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if($showInvoicesModal)
+            <div class="modal"
+                 role="dialog"
+                 tabindex="-1"
+                 style="display: block;">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Users</h5>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">user</th>
+                                    <th scope="col">method</th>
+                                    <th scope="col">amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($showingInvoices as $invoice)
+                                    <tr>
+                                        <th scope="row">{{ $loop->iteration }}</th>
+                                        <td>{{ $invoice->user->name }}</td>
+                                        <td>{{ $invoice->method }}</td>
+                                        <td>{{ $invoice->price }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer card-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    wire:click="$set('showInvoicesModal', false)">
                                 Close
                             </button>
                         </div>
