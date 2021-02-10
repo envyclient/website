@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 /**
@@ -27,6 +28,14 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property null|string discord_id
  * @property null|string discord_name
  * @property null|string stripe_id
+ *
+ * @property Collection configs
+ * @property Subscription subscription
+ * @property BillingAgreement billingAgreement
+ * @property Collection downloads
+ * @property null|ReferralCode referralCode
+ * @property Collection invoices
+ * @property null|LicenseRequest licenseRequest
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -61,8 +70,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'banned' => 'bool',
-        'email_verified_at' => 'datetime',
-        'referral_code_used_at' => 'datetime',
+    ];
+
+    protected $dates = [
+        'email_verified_at',
+        'referral_code_used_at',
     ];
 
     public function scopeName($query, $name)
@@ -103,6 +115,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Invoice::class);
     }
 
+    public function licenseRequest()
+    {
+        return $this->hasOne(LicenseRequest::class);
+    }
+
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();
@@ -136,5 +153,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasCapesAccess(): bool
     {
         return $this->admin || ($this->hasSubscription() && $this->subscription->plan->capes_access);
+    }
+
+    public function hasLicenseRequest(): bool
+    {
+        return $this->licenseRequest()->exists();
     }
 }

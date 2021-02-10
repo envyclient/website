@@ -22,7 +22,7 @@
                             <label class="form-label" for="member-since">Member Since</label>
                             <input id="member-since"
                                    class="form-control"
-                                   value="{{ $user->created_at->format('Y-m-d') }}"
+                                   value="{{ $user->created_at->format('F d, Y') }}"
                                    disabled>
                         </div>
 
@@ -57,8 +57,7 @@
                                      alt="cape"
                                      class="rounded"
                                      width="256px"
-                                     height="128px"
-                                >
+                                     height="128px">
 
                                 <form action="{{ route('capes.store') }}"
                                       method="post"
@@ -76,11 +75,10 @@
                                             The dimensions must be 2048x1048.
                                         </div>
 
-
                                         @error('cape')
                                         <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-success inline">Upload</button>
@@ -96,61 +94,121 @@
                 </div>
             </div>
 
-
-            @if($user->subscription !== null)
-                <div class="col">
-                    <div class="alert alert-dark" style="font-size:25px;">
-                        <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="M19 2L14 6.5V17.5L19 13V2M6.5 5C4.55 5 2.45 5.4 1 6.5V21.16C1 21.41 1.25 21.66 1.5 21.66C1.6 21.66 1.65 21.59 1.75 21.59C3.1 20.94 5.05 20.5 6.5 20.5C8.45 20.5 10.55 20.9 12 22C13.35 21.15 15.8 20.5 17.5 20.5C19.15 20.5 20.85 20.81 22.25 21.56C22.35 21.61 22.4 21.59 22.5 21.59C22.75 21.59 23 21.34 23 21.09V6.5C22.4 6.05 21.75 5.75 21 5.5V19C19.9 18.65 18.7 18.5 17.5 18.5C15.8 18.5 13.35 19.15 12 20V6.5C10.55 5.4 8.45 5 6.5 5Z"/>
-                        </svg>
-                        Configs
-                        <span class="badge bg-secondary">
-                        {{ count($configs) }}/{{ $user->getConfigLimit() }}
-                    </span>
-                    </div>
-                    @if(count($configs) > 0)
-                        <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 536px;">
-                            <table class="table table-bordered">
-                                <thead class="table-light">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">name</th>
-                                    <th scope="col">public</th>
-                                    <th scope="col">favorites</th>
-                                    <th scope="col">created</th>
-                                    <th scope="col">last updated</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($configs as $config)
-                                    <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $config->name }}</td>
-                                        <td>
-                                            @if($config->public)
-                                                &#10004;
-                                            @else
-                                                &#10006;
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                <path fill="currentColor"
-                                                      d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
-                                            </svg>
-                                            {{ $config->favorites_count }}
-                                        </td>
-                                        <td>{{ $config->created_at->diffForHumans() }}</td>
-                                        <td>{{ $config->updated_at->diffForHumans() }}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
+            {{--<div class="col">
+                <div class="alert alert-dark" style="font-size:25px;">
+                    <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M19 2L14 6.5V17.5L19 13V2M6.5 5C4.55 5 2.45 5.4 1 6.5V21.16C1 21.41 1.25 21.66 1.5 21.66C1.6 21.66 1.65 21.59 1.75 21.59C3.1 20.94 5.05 20.5 6.5 20.5C8.45 20.5 10.55 20.9 12 22C13.35 21.15 15.8 20.5 17.5 20.5C19.15 20.5 20.85 20.81 22.25 21.56C22.35 21.61 22.4 21.59 22.5 21.59C22.75 21.59 23 21.34 23 21.09V6.5C22.4 6.05 21.75 5.75 21 5.5V19C19.9 18.65 18.7 18.5 17.5 18.5C15.8 18.5 13.35 19.15 12 20V6.5C10.55 5.4 8.45 5 6.5 5Z"/>
+                    </svg>
+                    Configs
+                    <span class="badge bg-secondary">
+                    {{ count($configs) }}/{{ $user->getConfigLimit() }}
+                </span>
                 </div>
-            @endif
+                @if(count($configs) > 0)
+                    <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 536px;">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">name</th>
+                                <th scope="col">public</th>
+                                <th scope="col">favorites</th>
+                                <th scope="col">created</th>
+                                <th scope="col">last updated</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($configs as $config)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $config->name }}</td>
+                                    <td>
+                                        @if($config->public)
+                                            &#10004;
+                                        @else
+                                            &#10006;
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                            <path fill="currentColor"
+                                                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
+                                        </svg>
+                                        {{ $config->favorites_count }}
+                                    </td>
+                                    <td>{{ $config->created_at->diffForHumans() }}</td>
+                                    <td>{{ $config->updated_at->diffForHumans() }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>--}}
+            <div class="col">
+                <div class="alert alert-dark" style="font-size:25px;">
+                    <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"/>
+                    </svg>
+                    Media License Request
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        @if($user->licenseRequest !== null)
+                            <div class="mb-3">
+                                <label class="form-label" for="license-request-date">Request Time</label>
+                                <input id="license-request-date"
+                                       class="form-control"
+                                       value="{{ $user->licenseRequest->created_at->diffForHumans() }}"
+                                       disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="license-request-channel">Channel</label>
+                                <input id="license-request-channel"
+                                       class="form-control"
+                                       value="{{ $user->licenseRequest->channel }}"
+                                       disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="license-request-status">Status</label>
+                                <h5>
+                                    <x-license-request-status :status="$user->licenseRequest->status"/>
+                                </h5>
+                            </div>
+                            @if($user->licenseRequest->action_at !== null)
+                                <div class="mb-3">
+                                    <label class="form-label" for="license-request-action-reason">Action Reason</label>
+                                    <textarea id="license-request-action-reason"
+                                              class="form-control"
+                                              disabled>{{ $user->licenseRequest->action_reason }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="license-request-action-time">Action Time</label>
+                                    <input id="license-request-action-time"
+                                           class="form-control"
+                                           value="{{ $user->licenseRequest->action_at->diffForHumans() }}"
+                                           disabled>
+                                </div>
+                            @endif
+                        @else
+                            <form action="{{ route('users.license-request') }}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label" for="channel">Channel</label>
+                                    <input id="channel"
+                                           name="channel"
+                                           class="form-control"
+                                           type="text"
+                                           required>
+                                </div>
+                                <button type="submit" class="btn btn-success">Submit Request</button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
 
         @if($user->subscription !== null)

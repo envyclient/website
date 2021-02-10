@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Actions\DisableAccount;
+use App\Http\Controllers\Actions\StoreLicenseRequest;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\CapesController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PagesController;
+use App\Http\Livewire\ShowLicenseRequests;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -54,6 +56,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('sales', [PagesController::class, 'sales'])
         ->name('admin.sales');
 
+    Route::get('license-requests', ShowLicenseRequests::class)
+        ->name('admin.license-requests');
+
     // upload version
     Route::post('versions', UploadVersion::class)
         ->name('admin.versions.upload');
@@ -66,6 +71,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::group(['prefix' => 'user'], function () {
     Route::post('referral-code', UseReferralCode::class)
         ->name('users.referral-code');
+
+    Route::post('license-request', StoreLicenseRequest::class)
+        ->name('users.license-request');
 
     Route::delete('disable', DisableAccount::class)
         ->name('users.disable');

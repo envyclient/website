@@ -16,7 +16,7 @@ class PagesController extends Controller
     public function dashboard()
     {
         $user = auth()->user()
-            ->load(['subscription', 'configs']);
+            ->load(['subscription', 'configs', 'licenseRequest']);
 
         return view('pages.dashboard.home', [
             'user' => $user,
