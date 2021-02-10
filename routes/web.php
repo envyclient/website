@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Actions\DisableAccount;
+use App\Http\Controllers\Actions\StoreLicenseRequest;
 use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\CapesController;
@@ -66,6 +67,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::group(['prefix' => 'user'], function () {
     Route::post('referral-code', UseReferralCode::class)
         ->name('users.referral-code');
+
+    Route::post('license-request', StoreLicenseRequest::class)
+        ->name('users.license-request');
 
     Route::delete('disable', DisableAccount::class)
         ->name('users.disable');

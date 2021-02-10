@@ -61,8 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'banned' => 'bool',
-        'email_verified_at' => 'datetime',
-        'referral_code_used_at' => 'datetime',
+    ];
+
+    protected $dates = [
+        'email_verified_at',
+        'referral_code_used_at',
     ];
 
     public function scopeName($query, $name)
@@ -103,6 +106,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Invoice::class);
     }
 
+    public function licenseRequest()
+    {
+        return $this->hasOne(LicenseRequest::class);
+    }
+
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();
@@ -136,5 +144,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasCapesAccess(): bool
     {
         return $this->admin || ($this->hasSubscription() && $this->subscription->plan->capes_access);
+    }
+
+    public function hasLicenseRequest(): bool
+    {
+        return $this->licenseRequest()->exists();
     }
 }

@@ -31,8 +31,8 @@ class Subscription extends Model
         'end_date',
     ];
 
-    protected $casts = [
-        'end_date' => 'datetime',
+    protected $dates = [
+        'end_date',
     ];
 
     public function user()
