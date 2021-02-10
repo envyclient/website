@@ -9,6 +9,7 @@ use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PagesController;
+use App\Http\Livewire\ShowLicenseRequests;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -54,6 +55,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     Route::get('sales', [PagesController::class, 'sales'])
         ->name('admin.sales');
+
+    Route::get('license-requests', ShowLicenseRequests::class)
+        ->name('admin.license-requests');
 
     // upload version
     Route::post('versions', UploadVersion::class)

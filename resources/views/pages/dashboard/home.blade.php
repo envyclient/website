@@ -174,15 +174,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="license-request-status">Status</label>
                                 <h5>
-                                    @if($user->licenseRequest->status === 'pending')
-                                        <span class="badge bg-secondary">pending</span>
-                                    @elseif($user->licenseRequest->status === 'denied')
-                                        <span class="badge bg-danger">denied</span>
-                                    @elseif($user->licenseRequest->status === 'extended')
-                                        <span class="badge bg-info text-dark">extended</span>
-                                    @elseif($user->licenseRequest->status === 'approved')
-                                        <span class="badge bg-success">approved</span>
-                                    @endif
+                                    <x-license-request-status :status="$user->licenseRequest->status"/>
                                 </h5>
                             </div>
                             @if($user->licenseRequest->action_at !== null)

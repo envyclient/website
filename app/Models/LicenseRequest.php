@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string status
  * @property null|string action_reason
  * @property null|Carbon action_at
+ *
+ * @property User user
  */
 class LicenseRequest extends Model
 {
@@ -25,6 +27,14 @@ class LicenseRequest extends Model
     protected $dates = [
         'action_at'
     ];
+
+    public function scopeStatus($query, $status)
+    {
+        if ($status !== 'all') {
+            return $query->where('status', $status);
+        }
+        return $query;
+    }
 
     public function user()
     {
