@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.173.4",
+            "version": "3.173.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "1400b2d08ded25bd9c6876edb0490b8cb9aeaa60"
+                "reference": "439a161e46895cd1f7b93b4c0295f95d6a17385e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1400b2d08ded25bd9c6876edb0490b8cb9aeaa60",
-                "reference": "1400b2d08ded25bd9c6876edb0490b8cb9aeaa60",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/439a161e46895cd1f7b93b4c0295f95d6a17385e",
+                "reference": "439a161e46895cd1f7b93b4c0295f95d6a17385e",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.173.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.173.6"
             },
-            "time": "2021-02-05T19:19:35+00:00"
+            "time": "2021-02-09T19:14:22+00:00"
         },
         {
             "name": "brick/math",
@@ -1183,16 +1183,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.26.1",
+            "version": "v8.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94"
+                "reference": "a6680d98f9dadaa363aa7d5218517a08706cee64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
-                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a6680d98f9dadaa363aa7d5218517a08706cee64",
+                "reference": "a6680d98f9dadaa363aa7d5218517a08706cee64",
                 "shasum": ""
             },
             "require": {
@@ -1347,7 +1347,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-02-02T14:07:24+00:00"
+            "time": "2021-02-09T15:14:54+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -1866,16 +1866,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.3.16",
+            "version": "v2.3.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "8f027e9bc5ad1f08f0c900244e6fdb9966f7a287"
+                "reference": "1a1d43ff365301ae99ed7f0ccf02c553d4eeba03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/8f027e9bc5ad1f08f0c900244e6fdb9966f7a287",
-                "reference": "8f027e9bc5ad1f08f0c900244e6fdb9966f7a287",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/1a1d43ff365301ae99ed7f0ccf02c553d4eeba03",
+                "reference": "1a1d43ff365301ae99ed7f0ccf02c553d4eeba03",
                 "shasum": ""
             },
             "require": {
@@ -1926,7 +1926,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.3.16"
+                "source": "https://github.com/livewire/livewire/tree/v2.3.17"
             },
             "funding": [
                 {
@@ -1934,7 +1934,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-05T15:05:19+00:00"
+            "time": "2021-02-09T15:15:49+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -2167,16 +2167,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.44.0",
+            "version": "2.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd"
+                "reference": "e2ba3174ce869da1713c38340dbb36572dfacd5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
-                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e2ba3174ce869da1713c38340dbb36572dfacd5a",
+                "reference": "e2ba3174ce869da1713c38340dbb36572dfacd5a",
                 "shasum": ""
             },
             "require": {
@@ -2256,7 +2256,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-26T20:46:41+00:00"
+            "time": "2021-02-07T21:35:59+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -4175,16 +4175,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.71.0",
+            "version": "v7.72.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:stripe/stripe-php.git",
-                "reference": "5ebe39d814411594b1ff9d79f0598a0de7faa30b"
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "e502d1e97ec7857038d2131ded3134af964a55c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/5ebe39d814411594b1ff9d79f0598a0de7faa30b",
-                "reference": "5ebe39d814411594b1ff9d79f0598a0de7faa30b",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/e502d1e97ec7857038d2131ded3134af964a55c5",
+                "reference": "e502d1e97ec7857038d2131ded3134af964a55c5",
                 "shasum": ""
             },
             "require": {
@@ -4228,7 +4228,11 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2021-02-05T21:29:10+00:00"
+            "support": {
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v7.72.0"
+            },
+            "time": "2021-02-09T03:22:51+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
