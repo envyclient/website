@@ -94,58 +94,6 @@
                 </div>
             </div>
 
-            {{--<div class="col">
-                <div class="alert alert-dark" style="font-size:25px;">
-                    <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                              d="M19 2L14 6.5V17.5L19 13V2M6.5 5C4.55 5 2.45 5.4 1 6.5V21.16C1 21.41 1.25 21.66 1.5 21.66C1.6 21.66 1.65 21.59 1.75 21.59C3.1 20.94 5.05 20.5 6.5 20.5C8.45 20.5 10.55 20.9 12 22C13.35 21.15 15.8 20.5 17.5 20.5C19.15 20.5 20.85 20.81 22.25 21.56C22.35 21.61 22.4 21.59 22.5 21.59C22.75 21.59 23 21.34 23 21.09V6.5C22.4 6.05 21.75 5.75 21 5.5V19C19.9 18.65 18.7 18.5 17.5 18.5C15.8 18.5 13.35 19.15 12 20V6.5C10.55 5.4 8.45 5 6.5 5Z"/>
-                    </svg>
-                    Configs
-                    <span class="badge bg-secondary">
-                    {{ count($configs) }}/{{ $user->getConfigLimit() }}
-                </span>
-                </div>
-                @if(count($configs) > 0)
-                    <div class="table-responsive table-sticky" style="overflow-y: scroll;max-height: 536px;">
-                        <table class="table table-bordered">
-                            <thead class="table-light">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">name</th>
-                                <th scope="col">public</th>
-                                <th scope="col">favorites</th>
-                                <th scope="col">created</th>
-                                <th scope="col">last updated</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($configs as $config)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $config->name }}</td>
-                                    <td>
-                                        @if($config->public)
-                                            &#10004;
-                                        @else
-                                            &#10006;
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
-                                        </svg>
-                                        {{ $config->favorites_count }}
-                                    </td>
-                                    <td>{{ $config->created_at->diffForHumans() }}</td>
-                                    <td>{{ $config->updated_at->diffForHumans() }}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endif
-            </div>--}}
             <div class="col">
                 <div class="alert alert-dark" style="font-size:25px;">
                     <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
