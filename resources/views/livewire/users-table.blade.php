@@ -37,7 +37,11 @@
 
     <br>
 
-    <table class="table table-striped table-hover table-sm">
+    <div class="justify-content-center" wire:loading.flex>
+        <x-loading/>
+    </div>
+
+    <table class="table table-striped table-hover table-sm" wire:loading.remove>
         <thead>
         <tr>
             <th>#</th>

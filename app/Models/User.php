@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 /**
@@ -27,6 +28,14 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property null|string discord_id
  * @property null|string discord_name
  * @property null|string stripe_id
+ *
+ * @property Collection configs
+ * @property Subscription subscription
+ * @property BillingAgreement billingAgreement
+ * @property Collection downloads
+ * @property null|ReferralCode referralCode
+ * @property Collection invoices
+ * @property null|LicenseRequest licenseRequest
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
