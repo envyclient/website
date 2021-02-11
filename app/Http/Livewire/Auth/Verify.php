@@ -14,11 +14,12 @@ class Verify extends Component
 
     public function resend()
     {
-        if (auth()->user()->hasVerifiedEmail()) {
+        $user = auth()->user();
+        if ($user->hasVerifiedEmail()) {
             redirect(RouteServiceProvider::HOME);
         }
 
-        auth()->user()->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
 
         $this->emit('resent');
 

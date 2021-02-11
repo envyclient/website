@@ -92,8 +92,7 @@
                     <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active' : null }}"
                        href="{{ route('dashboard') }}">
                         <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                            <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
                         </svg>
                         Home
                     </a>
@@ -101,9 +100,9 @@
                        href="{{ route('pages.security') }}">
                         <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
                             <path fill="currentColor"
-                                  d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.1 14.8,9.5V11C15.4,11 16,11.6 16,12.3V15.8C16,16.4 15.4,17 14.7,17H9.2C8.6,17 8,16.4 8,15.7V12.2C8,11.6 8.6,11 9.2,11V9.5C9.2,8.1 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,9.5V11H13.5V9.5C13.5,8.7 12.8,8.2 12,8.2Z"/>
+                                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
                         </svg>
-                        Security
+                        Profile
                     </a>
 
                     <h3 class="m-3 mt-5 text-white" style="font-size:16px;">
@@ -222,12 +221,7 @@
                                data-bs-toggle="dropdown"
                                aria-haspopup="true"
                                aria-expanded="false">
-                                <img src="{{ auth()->user()->image }}"
-                                     class="rounded-circle mx-1"
-                                     alt="user image"
-                                     width="32px"
-                                     height="32px">
-                                {{ auth()->user()->name }} <span class="caret"></span>
+                                @livewire('user.show-profile-image')
                             </a>
                             @include('inc.navbar.dropdown')
                         </li>
