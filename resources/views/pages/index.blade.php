@@ -160,9 +160,9 @@
                 <ul>
                     <li>monthly updates</li>
                     <li>killer features</li>
-                    <li>15 configs</li>
                     <li>capes access</li>
                     <li>beta access</li>
+                    <li>15 configs</li>
                 </ul>
                 <h2 class="subscription-price">$10.00<span>/month</span></h2>
                 <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 10px;">buy now</a>
