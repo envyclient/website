@@ -153,7 +153,9 @@
                     <li>5 configs</li>
                 </ul>
                 <h2 class="subscription-price">$7.00<span>/month</span></h2>
-                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 10px;">buy now</a>
+                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 15px;">
+                    buy now
+                </a>
             </div>
             <div class="price">
                 <h1>Premium</h1>
@@ -165,7 +167,9 @@
                     <li>15 configs</li>
                 </ul>
                 <h2 class="subscription-price">$10.00<span>/month</span></h2>
-                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 10px;">buy now</a>
+                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 15px;">
+                    buy now
+                </a>
             </div>
         </div>
     </div>
