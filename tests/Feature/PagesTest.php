@@ -34,7 +34,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_guest_not_see_subscription()
     {
-        $this->get(route('pages.subscriptions'))
+        $this->get(route('pages.subscription'))
             ->assertRedirect('/login');
     }
 

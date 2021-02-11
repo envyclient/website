@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Actions\CancelSubscription;
 use App\Http\Controllers\Coinbase\Actions\HandleCoinbaseWebhook;
 use App\Http\Controllers\Coinbase\CoinbaseController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
@@ -7,14 +8,13 @@ use App\Http\Controllers\PayPal\PayPalController;
 use App\Http\Controllers\Stripe\Actions\CreateStripeSource;
 use App\Http\Controllers\Stripe\Actions\HandleStripeWebhook;
 use App\Http\Controllers\Stripe\StripeController;
-use App\Http\Controllers\Subscriptions\SubscriptionsController;
 use App\Http\Livewire\ShowStripeSource;
 
 /**
  * Subscriptions
  */
 Route::group(['prefix' => 'subscriptions'], function () {
-    Route::post('cancel', [SubscriptionsController::class, 'cancel'])
+    Route::post('cancel', CancelSubscription::class)
         ->name('subscriptions.cancel');
 });
 

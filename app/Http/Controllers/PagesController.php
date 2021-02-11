@@ -36,13 +36,15 @@ class PagesController extends Controller
             ->with('user', $user);
     }
 
-    public function subscriptions()
+    public function subscription()
     {
-        $user = auth()->user();
+        $user = auth()->user()
+            ->load(['subscription.plan', 'billingAgreement.plan']);
+
         return view('pages.dashboard.subscriptions', [
             'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
-            'nextSubscription' => $user->hasSubscription() ? now()->diffInDays($user->subscription->end_date, false) : null
+            'end' => $user->hasSubscription() ? now()->diffInDays($user->subscription->end_date, false) : null
         ]);
     }
 
