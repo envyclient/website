@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\User;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
-class ChangePassword extends Component
+class UpdatePassword extends Component
 {
     public string $current_password = '';
     public string $password = '';
@@ -20,7 +20,7 @@ class ChangePassword extends Component
 
     public function render()
     {
-        return view('livewire.change-password')
+        return view('livewire.user.update-password')
             ->with('user', auth()->user());
     }
 

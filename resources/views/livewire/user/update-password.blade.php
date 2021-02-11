@@ -9,24 +9,6 @@
         @endif
 
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input class="form-control"
-                   type="text"
-                   value="{{ $user->name }}"
-                   id="name"
-                   disabled>
-        </div>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input class="form-control"
-                   type="text"
-                   value="{{ $user->email }}"
-                   id="email"
-                   disabled>
-        </div>
-
-        <div class="mb-3">
             <label for="current-password" class="form-label">Current Password</label>
             <input class="form-control @error('current_password') is-invalid @enderror"
                    type="password"
@@ -75,7 +57,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-success">Change Password</button>
+        <button type="submit" class="btn btn-success">Update Password</button>
         <a type="button" class="btn btn-outline-danger" href="{{ route('password.request') }}">Forget Password</a>
     </form>
 </div>
