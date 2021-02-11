@@ -28,8 +28,8 @@ Route::group([], function () {
     Route::get('discord', [PagesController::class, 'discord'])
         ->name('pages.discord');
 
-    Route::get('subscriptions', [PagesController::class, 'subscriptions'])
-        ->name('pages.subscriptions');
+    Route::get('subscription', [PagesController::class, 'subscription'])
+        ->name('pages.subscription');
 
     Route::view('terms', 'pages.terms')
         ->name('pages.terms');

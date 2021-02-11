@@ -150,9 +150,12 @@
                 <ul>
                     <li>monthly updates</li>
                     <li>killer features</li>
+                    <li>5 configs</li>
                 </ul>
                 <h2 class="subscription-price">$7.00<span>/month</span></h2>
-                <a href="{{ route('pages.subscriptions') }}" class="btn" style="margin-top: 10px;">buy now</a>
+                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 15px;">
+                    buy now
+                </a>
             </div>
             <div class="price">
                 <h1>Premium</h1>
@@ -161,9 +164,12 @@
                     <li>killer features</li>
                     <li>capes access</li>
                     <li>beta access</li>
+                    <li>15 configs</li>
                 </ul>
                 <h2 class="subscription-price">$10.00<span>/month</span></h2>
-                <a href="{{ route('pages.subscriptions') }}" class="btn" style="margin-top: 10px;">buy now</a>
+                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 15px;">
+                    buy now
+                </a>
             </div>
         </div>
     </div>

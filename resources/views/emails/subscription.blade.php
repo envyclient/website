@@ -9,7 +9,7 @@ Thank you for subscribing to the {{ $user->subscription->plan->name }} plan!
 | {{ $user->subscription->plan->name }} | 30 days | {{ $user->subscription->plan->price }} |
 @endcomponent
 
-@component('mail::button', ['url' => route('pages.subscriptions')])
+@component('mail::button', ['url' => route('pages.subscription')])
 Manage Subscription
 @endcomponent
 
