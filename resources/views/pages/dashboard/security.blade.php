@@ -12,11 +12,7 @@
             Profile
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                @livewire('user.update-profile')
-            </div>
-        </div>
+        @livewire('user.update-profile')
 
         <div class="alert alert-dark mt-3" style="font-size:25px;">
             <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
@@ -26,11 +22,7 @@
             Password
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                @livewire('user.update-password')
-            </div>
-        </div>
+        @livewire('user.update-password')
 
         <div class="mt-3 mb-3 d-grid gap-2">
             <button type="button"
@@ -40,7 +32,6 @@
                 Disable Account
             </button>
         </div>
-
     </div>
 
     <!-- disable account modal -->

@@ -11,11 +11,11 @@
             <div class="col">
                 <div class="alert alert-dark" style="font-size:25px;">
                     <svg class="mb-1" style="width:32px;height:32px;" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+                        <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
                     </svg>
                     Home
                 </div>
-                <div class="card">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="member-since">Member Since</label>
@@ -101,7 +101,7 @@
                     </svg>
                     Media License Request
                 </div>
-                <div class="card">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         @if($user->licenseRequest !== null)
                             <div class="mb-3">
