@@ -78,7 +78,7 @@
 @endsection
 
 @section('body')
-    <div class="d-flex wrapper bg-gray-200">
+    <div class="d-flex">
 
         <div class="d-inline-block" id="sidebar-wrapper">
             <div class="list-group">
