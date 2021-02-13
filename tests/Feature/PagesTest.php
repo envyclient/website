@@ -27,7 +27,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_guest_not_see_security()
     {
-        $this->get(route('pages.security'))
+        $this->get(route('pages.profile'))
             ->assertRedirect('/login');
     }
 

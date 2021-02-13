@@ -6,14 +6,10 @@ use Illuminate\Notifications\Notification;
 
 class ClientNotification extends Notification
 {
-    private string $type;
-    private string $message;
-
-    public function __construct(string $type, string $message)
-    {
-        $this->type = $type;
-        $this->message = $message;
-    }
+    public function __construct(
+        public string $type,
+        public string $message,
+    ){}
 
     public function via($notifiable)
     {

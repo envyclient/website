@@ -1,7 +1,7 @@
 @component('mail::message')
 # Hello {{ $name }},
 
-Since you have used Discord to register we have provided you with your password to use with the launcher.
+Since you have used Discord to register we have provided you with your password.
 
 PLEASE CHANGE THIS PASSWORD!
 
@@ -11,8 +11,8 @@ PLEASE CHANGE THIS PASSWORD!
 ```
 
 
-@component('mail::button', ['url' => route('password.request')])
-Change Password
+@component('mail::button', ['url' => route('pages.profile')])
+Manage Profile
 @endcomponent
 
 Regards,<br>
