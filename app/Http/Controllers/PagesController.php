@@ -27,7 +27,7 @@ class PagesController extends Controller
         ]);
     }
 
-    public function security()
+    public function profile()
     {
         $user = auth()->user()
             ->load(['subscription', 'billingAgreement']);

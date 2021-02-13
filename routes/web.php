@@ -22,8 +22,8 @@ Route::group([], function () {
     Route::get('dashboard', [PagesController::class, 'dashboard'])
         ->name('dashboard');
 
-    Route::get('security', [PagesController::class, 'security'])
-        ->name('pages.security');
+    Route::get('profile', [PagesController::class, 'profile'])
+        ->name('pages.profile');
 
     Route::get('discord', [PagesController::class, 'discord'])
         ->name('pages.discord');
