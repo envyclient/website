@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\LicenseRequest;
 use App\Models\Subscription;
+use App\Models\User;
 use Livewire\Component;
 
 class ShowLicenseRequests extends Component
@@ -12,66 +13,25 @@ class ShowLicenseRequests extends Component
 
     public string $status = 'all';
 
-    public bool $editMode = false;
-    public LicenseRequest $editing;
-
-    public function editMode(LicenseRequest $licenseRequest)
+    public function approve(LicenseRequest $licenseRequest, string $type)
     {
-        $this->editMode = true;
-        $this->editing = $licenseRequest;
-    }
+        $this->handleSubscription($licenseRequest->user, $type === 'approve' ? 2 : 7);
 
-    public function approve(LicenseRequest $licenseRequest)
-    {
-        $user = $licenseRequest->user;
-        if ($user->hasSubscription()) {
-            session()->flash('error', 'This user already has a subscription.');
-            return;
-        }
-
-        Subscription::create([
-            'user_id' => $user->id,
-            'plan_id' => 1,
-            'end_date' => now()->addDays(2),
-        ]);
-
-        $licenseRequest->update([
-            'status' => 'approved',
-            'action_reason' => 'Request approved.',
-            'action_at' => now(),
-        ]);
-
-        session()->flash('success', 'Granted the user a 2 day subscription.');
-    }
-
-    // extend the users subscription by 1 week
-    public function extend(LicenseRequest $licenseRequest)
-    {
-        if ($licenseRequest->status !== 'approved') {
-            session()->flash('error', 'This request has not been approved.');
-            return;
-        }
-
-        $user = $licenseRequest->user;
-        if ($user->hasSubscription()) {
-            $user->subscription->update([
-                'end_date' => $user->subscription->end_date->addWeek(),
+        if ($type === 'approve') { // approve
+            $licenseRequest->update([
+                'status' => 'approved',
+                'action_reason' => 'Request approved.',
+                'action_at' => now(),
             ]);
-        } else {
-            Subscription::create([
-                'user_id' => $user->id,
-                'plan_id' => 1,
-                'end_date' => now()->addWeek()
+            session()->flash('success', 'Granted the user a 2 day subscription.');
+        } else { // extend
+            $licenseRequest->update([
+                'status' => 'extended',
+                'action_reason' => 'License extended.',
+                'action_at' => now(),
             ]);
+            session()->flash('success', 'Extended the users subscription by 1 week.');
         }
-
-        $licenseRequest->update([
-            'status' => 'extended',
-            'action_reason' => 'License extended.',
-            'action_at' => now(),
-        ]);
-
-        session()->flash('success', 'Extended the users subscription by 1 week.');
     }
 
     public function deny($payload)
@@ -97,5 +57,20 @@ class ShowLicenseRequests extends Component
         return view('livewire.show-license-requests', [
             'requests' => $requests->get()
         ])->extends('layouts.dash');
+    }
+
+    private function handleSubscription(User $user, int $daysToAdd)
+    {
+        if ($user->hasSubscription()) {
+            $user->subscription->update([
+                'end_date' => $user->subscription->end_date->addDays($daysToAdd),
+            ]);
+        } else {
+            Subscription::create([
+                'user_id' => $user->id,
+                'plan_id' => 1,
+                'end_date' => now()->addDays($daysToAdd)
+            ]);
+        }
     }
 }
