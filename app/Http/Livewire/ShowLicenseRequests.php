@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\LicenseRequest;
 use App\Models\Subscription;
-use App\Models\User;
 use Livewire\Component;
 
 class ShowLicenseRequests extends Component
@@ -15,17 +14,15 @@ class ShowLicenseRequests extends Component
 
     public function approve(LicenseRequest $licenseRequest, string $type)
     {
-        $this->handleSubscription($licenseRequest->user, $type === 'approve' ? 2 : 7);
-
         if ($type === 'approve') { // approve
-            $licenseRequest->update([
+            $this->handleSubscription($licenseRequest, 2, [
                 'status' => 'approved',
                 'action_reason' => 'Request approved.',
                 'action_at' => now(),
             ]);
             session()->flash('success', 'Granted the user a 2 day subscription.');
         } else { // extend
-            $licenseRequest->update([
+            $this->handleSubscription($licenseRequest, 7, [
                 'status' => 'extended',
                 'action_reason' => 'License extended.',
                 'action_at' => now(),
@@ -59,8 +56,9 @@ class ShowLicenseRequests extends Component
         ])->extends('layouts.dash');
     }
 
-    private function handleSubscription(User $user, int $daysToAdd)
+    private function handleSubscription(LicenseRequest $licenseRequest, int $daysToAdd, array $data)
     {
+        $user = $licenseRequest->user;
         if ($user->hasSubscription()) {
             $user->subscription->update([
                 'end_date' => $user->subscription->end_date->addDays($daysToAdd),
@@ -72,5 +70,7 @@ class ShowLicenseRequests extends Component
                 'end_date' => now()->addDays($daysToAdd)
             ]);
         }
+
+        $licenseRequest->update($data);
     }
 }
