@@ -88,6 +88,10 @@ class AuthController extends Controller
             'name' => $user->name,
             'api_token' => $user->api_token,
             'date' => $user->created_at->diffForHumans(),
+            'subscription' => [
+                'name' => $user->subscription->plan->name,
+                'days' => $user->subscription->end_date->diffInDays(),
+            ]
         ]);
     }
 
