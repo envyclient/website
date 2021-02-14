@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\Custom\CheckYoutubeSubCount;
 use App\Models\LicenseRequest;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class StoreLicenseRequest extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified', 'throttle:3,1', CheckYoutubeSubCount::class]);
     }
 
     public function __invoke(Request $request)
