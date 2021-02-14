@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\LicenseRequest;
-use App\Rules\CountSubs;
+use App\Rules\MinYouTubeSubs;
+use App\Rules\ValidYouTubeLink;
 use Illuminate\Http\Request;
 
 class StoreLicenseRequest extends Controller
@@ -17,7 +18,15 @@ class StoreLicenseRequest extends Controller
     public function __invoke(Request $request)
     {
         $data = $this->validate($request, [
-            'channel' => ['required', 'string', 'url', 'unique:license_requests,channel', new CountSubs],
+            'channel' => [
+                'bail',
+                'required',
+                'string',
+                'url',
+                'unique:license_requests,channel',
+                new ValidYouTubeLink,
+                new MinYouTubeSubs
+            ],
         ]);
 
         $user = $request->user();
@@ -26,11 +35,11 @@ class StoreLicenseRequest extends Controller
             return back()->with('error', 'You may only submit one request.');
         }
 
-     /*   LicenseRequest::create([
+        LicenseRequest::create([
             'user_id' => $user->id,
             'channel' => $data['channel'],
             'status' => 'pending',
-        ]);*/
+        ]);
 
         return back()->with('success', 'Request submitted.');
     }

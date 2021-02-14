@@ -6,16 +6,10 @@ use App\Util\Util;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Http;
 
-class CountSubs implements Rule
+class MinYouTubeSubs implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        // checking if the url is for youtube.com
-        $host = strtolower(parse_url($value)['host']);
-        if ($host !== 'youtube.com' && $host !== 'www.youtube.com') {
-            return false;
-        }
-
         // get the channel by visiting the url
         $id = Util::getChannelId($value);
 
