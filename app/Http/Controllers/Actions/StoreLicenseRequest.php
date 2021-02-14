@@ -3,21 +3,30 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\Custom\CheckYoutubeSubCount;
 use App\Models\LicenseRequest;
+use App\Rules\MinYouTubeSubs;
+use App\Rules\ValidYouTubeLink;
 use Illuminate\Http\Request;
 
 class StoreLicenseRequest extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'throttle:3,1', CheckYoutubeSubCount::class]);
+        $this->middleware(['auth', 'verified', 'throttle:3,1']);
     }
 
     public function __invoke(Request $request)
     {
         $data = $this->validate($request, [
-            'channel' => 'required|string|unique:license_requests,channel',
+            'channel' => [
+                'bail',
+                'required',
+                'string',
+                'url',
+                'unique:license_requests,channel',
+                new ValidYouTubeLink,
+                new MinYouTubeSubs
+            ],
         ]);
 
         $user = $request->user();
