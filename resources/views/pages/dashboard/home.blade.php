@@ -143,12 +143,15 @@
                             <form action="{{ route('users.license-request') }}" method="post">
                                 @csrf
                                 <div class="mb-3">
-                                    <label class="form-label" for="channel">Channel</label>
+                                    <label class="form-label" for="channel">YouTube Channel Link</label>
                                     <input id="channel"
                                            name="channel"
                                            class="form-control"
                                            type="text"
                                            required>
+                                    <div class="form-text">
+                                        Must be Minecraft related and have more than 200 subs.
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-success">Submit Request</button>
                             </form>
