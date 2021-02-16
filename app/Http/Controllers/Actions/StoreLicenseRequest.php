@@ -23,7 +23,6 @@ class StoreLicenseRequest extends Controller
                 'required',
                 'string',
                 'url',
-                'unique:license_requests,channel',
                 new ValidYouTubeLink,
                 new MinYouTubeSubs
             ],
