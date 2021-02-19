@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Plan;
 
-class PagesController extends Controller
+class HomeController extends Controller
 {
     public function __construct()
     {
