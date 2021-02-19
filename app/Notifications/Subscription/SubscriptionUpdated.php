@@ -29,7 +29,7 @@ class SubscriptionUpdated extends Notification implements ShouldQueue
             ->subject($this->subject)
             ->greeting("Hello $notifiable->name,")
             ->line($this->message)
-            ->action('Manage Subscription', route('pages.subscription'));
+            ->action('Manage Subscription', route('home.subscription'));
     }
 
 }

@@ -16,7 +16,7 @@
             @guest
                 <a href="{{ route('login') }}">Login</a>
             @else
-                <a href="{{ route('dashboard') }}">Dashboard</a>
+                <a href="{{ route('home') }}">Dashboard</a>
             @endguest
         </div>
     </div>
@@ -30,7 +30,7 @@
                     @guest
                         <a href="{{ route('login') }}" class="btn">Login</a>
                     @else
-                        <a href="{{ route('dashboard') }}" class="btn">Dashboard</a>
+                        <a href="{{ route('home') }}" class="btn">Dashboard</a>
                     @endguest
                     <a href="#features" class="btn">Read more</a>
                     <a href="https://discord.gg/5UrBctTnWA" class="btn">
@@ -153,7 +153,7 @@
                     <li>5 configs</li>
                 </ul>
                 <h2 class="subscription-price">$7.00<span>/month</span></h2>
-                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 15px;">
+                <a href="{{ route('home.subscription') }}" class="btn" style="margin-top: 15px;">
                     buy now
                 </a>
             </div>
@@ -167,7 +167,7 @@
                     <li>15 configs</li>
                 </ul>
                 <h2 class="subscription-price">$10.00<span>/month</span></h2>
-                <a href="{{ route('pages.subscription') }}" class="btn" style="margin-top: 15px;">
+                <a href="{{ route('home.subscription') }}" class="btn" style="margin-top: 15px;">
                     buy now
                 </a>
             </div>

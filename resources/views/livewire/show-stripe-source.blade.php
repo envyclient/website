@@ -12,7 +12,7 @@
             <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                 <div class="flex mb-4">
                         <span class="h-8 inline-flex rounded-md shadow-sm">
-                              <a href="{{ route('dashboard') }}"
+                              <a href="{{ route('home') }}"
                                  class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 text-xs leading-4 font-medium rounded text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
                                 Home
                               </a>
@@ -94,7 +94,7 @@
         </div>
     </div>
     @if($source->status !== 'pending' && $source->status !== 'chargeable')
-        <a href="{{ route('dashboard') }}"
+        <a href="{{ route('home') }}"
            class="block w-full py-2 px-6 cursor-pointer text-center text-xl text-white bg-green-600 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus:border-green-300 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out">
             Dashboard
         </a>

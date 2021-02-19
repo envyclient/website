@@ -32,7 +32,7 @@ class LicenseRequestUpdated extends Notification implements ShouldQueue
             ->greeting($this->greeting)
             ->line($this->message)
             ->line($this->message2)
-            ->action('Dashboard', route('dashboard'));
+            ->action('Dashboard', route('home'));
     }
 
 }

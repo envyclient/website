@@ -13,7 +13,7 @@ class HomeController extends Controller
         $this->middleware('admin')->only('notifications', 'sales');
     }
 
-    public function dashboard()
+    public function home()
     {
         $user = auth()->user()
             ->load(['subscription', 'configs', 'licenseRequest']);
