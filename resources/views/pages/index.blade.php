@@ -185,7 +185,7 @@
                 <a href="#features" class="menu-link">Features</a><br>
                 <a href="#media" class="menu-link">Media</a><br>
                 <a href="#pricing" class="menu-link">Pricing</a><br>
-                <a href="{{ route('pages.terms') }}" class="menu-link">Terms</a>
+                <a href="{{ route('terms') }}" class="menu-link">Terms</a>
             </div>
         </div>
     </div>

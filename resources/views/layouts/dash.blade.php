@@ -49,24 +49,17 @@
             margin-left: 0;
         }
 
-        .table-sticky thead th {
-            position: sticky;
-            top: 0;
+        #sidebar-wrapper {
+            margin-left: 0;
         }
 
-        @media (min-width: 768px) {
-            #sidebar-wrapper {
-                margin-left: 0;
-            }
+        #page-content-wrapper {
+            min-width: 0;
+            width: 100%;
+        }
 
-            #page-content-wrapper {
-                min-width: 0;
-                width: 100%;
-            }
-
-            .wrapper.toggled #sidebar-wrapper {
-                margin-left: -15rem;
-            }
+        .wrapper.toggled #sidebar-wrapper {
+            margin-left: -15rem;
         }
     </style>
     <style>
@@ -80,7 +73,7 @@
 @section('body')
     <div class="d-flex">
 
-        <div class="d-inline-block" id="sidebar-wrapper">
+        <aside class="d-inline-block collapse d-md-block" id="sidebar">
             <div class="list-group">
                 <a class="navbar-brand text-white">
                     <div class="container text-center">
@@ -189,7 +182,40 @@
                 </a>
                 @endadmin
             </div>
-        </div>
+
+            <div class="position-sticky bottom-0 start-0 list-group pt-4" style="background-color: #1c1c1c;">
+                <div class="mb-3 ms-3">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-3">
+                                {{--@livewire('user.show-profile-image')--}}
+                                <img src="{{ $user->image }}"
+                                     class="rounded-circle"
+                                     alt="user image"
+                                     width="38px"
+                                     height="38px">
+                            </div>
+                            <div class="col-md-8">
+                                <h5 class="text-white m-0">
+                                    {{ $user->name }}
+                                </h5>
+                                <a href="{{ route('logout') }}"
+                                   class="text-white text-muted m-0"
+                                   onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form"
+                                      action="{{ route('logout') }}"
+                                      method="post"
+                                      style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
 
         <div id="page-content-wrapper">
 
@@ -199,40 +225,15 @@
                 <a class="navbar-brand text-white mx-3" href="/">
                     Envy Client | <span class="text-muted">dashboard</span>
                 </a>
-
-                <button class="navbar-toggler"
+                <button class="navbar-toggler collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
+                        data-bs-target="#sidebar-wrapper"
+                        aria-controls="sidebarMenu"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown"
-                               class="nav-link dropdown-toggle text-white"
-                               href="#"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-haspopup="true"
-                               aria-expanded="false">
-                                @livewire('user.show-profile-image')
-                            </a>
-                            @include('inc.navbar.dropdown')
-                        </li>
-                    </ul>
-                </div>
             </nav>
 
             <!-- notifications -->
