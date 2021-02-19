@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\Actions\CancelSubscription;
-use App\Http\Controllers\Coinbase\Actions\HandleCoinbaseWebhook;
-use App\Http\Controllers\Coinbase\CoinbaseController;
 use App\Http\Controllers\PayPal\Actions\HandlePayPalWebhook;
 use App\Http\Controllers\PayPal\PayPalController;
 use App\Http\Controllers\Stripe\Actions\CreateStripeSource;
 use App\Http\Controllers\Stripe\Actions\HandleStripeWebhook;
 use App\Http\Controllers\Stripe\StripeController;
 use App\Http\Livewire\ShowStripeSource;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Subscriptions
@@ -55,13 +54,4 @@ Route::group([], function () {
         Route::post('/', CreateStripeSource::class)
             ->name('stripe-source.store');
     });
-});
-
-/**
- * Coinbase
- */
-Route::group(['prefix' => 'coinbase'], function () {
-    Route::get('cancel', [CoinbaseController::class, 'cancel'])->name('coinbase.cancel');
-    Route::post('/', [CoinbaseController::class, 'store'])->name('coinbase.store');
-    Route::post('webhook', HandleCoinbaseWebhook::class);
 });
