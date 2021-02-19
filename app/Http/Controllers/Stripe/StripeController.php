@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Stripe;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use App\Models\StripeSession;
-use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
@@ -60,12 +59,16 @@ class StripeController extends Controller
         if (!$request->has('session_id')) {
             abort(400);
         }
-        return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('success', 'Subscription successful. Please allow up to 5 minutes to process.');
+        return redirect()
+            ->route('home.subscription')
+            ->with('success', 'Subscription successful. Please allow up to 5 minutes to process.');
     }
 
     public function cancel()
     {
-        return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('error', 'Subscription cancelled.');
+        return redirect()
+            ->route('home.subscription')
+            ->with('error', 'Subscription cancelled.');
     }
 
     // take the user to their stripe billing portal
