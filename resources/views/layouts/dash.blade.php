@@ -259,8 +259,8 @@
                     @endadmin
                 </div>
 
-                <div class="w-100 pl-2 pt-2 pb-2"
-                     style="background-color: #1c1c1c;">
+                <div class="position-fixed bottom-0 start-0 ps-2 py-2"
+                     style="background-color: #1c1c1c; width: inherit;">
                     @livewire('user.show-profile-image')
                 </div>
             </nav>
