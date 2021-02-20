@@ -77,7 +77,7 @@
         }
     </style>
     <style>
-        .a1:hover {
+        .anim:hover {
             transition: 50ms;
             transform: scale(1.05);
         }
