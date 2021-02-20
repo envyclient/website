@@ -46,7 +46,9 @@ class PayPalController extends Controller
             ->post("$this->endpoint/v1/payments/billing-agreements/");
 
         if ($response->status() !== 201) {
-            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
+            return redirect()
+                ->route('home.subscription')
+                ->with('error', 'Subscription failed.');
         }
 
         // storing the plan id so we can retrieve it when the user returns
@@ -54,6 +56,7 @@ class PayPalController extends Controller
             'plan_id' => $request->id
         ]);
 
+        // TODO
         return redirect()->away($response->json()['links'][0]['href']);
     }
 
@@ -64,7 +67,9 @@ class PayPalController extends Controller
         session()->forget('plan_id');
 
         if (!$request->has('token')) {
-            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
+            return redirect()
+                ->route('home.subscription')
+                ->with('error', 'Subscription failed.');
         }
 
         $user = $request->user();
@@ -79,12 +84,16 @@ class PayPalController extends Controller
             ->post("$this->endpoint/v1/payments/billing-agreements/$request->token/agreement-execute");
 
         if ($response->status() !== 200) {
-            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
+            return redirect()
+                ->route('home.subscription')
+                ->with('error', 'Subscription failed.');
         }
 
         $responseData = $response->json();
         if ($responseData['state'] !== 'Active') {
-            return redirect(RouteServiceProvider::HOME)->with('error', 'Subscription failed.');
+            return redirect()
+                ->route('home.subscription')
+                ->with('error', 'Subscription failed.');
         }
 
         BillingAgreement::create([
@@ -96,13 +105,16 @@ class PayPalController extends Controller
 
         $plan = Plan::findOrFail($planId);
 
-        return redirect(RouteServiceProvider::SUBSCRIPTIONS)
+        return redirect()
+            ->route('home.subscription')
             ->with('success', "Subscribed to the $plan->name plan.");
     }
 
     public function cancel()
     {
-        return redirect(RouteServiceProvider::SUBSCRIPTIONS)->with('error', 'Subscription cancelled.');
+        return redirect()
+            ->route('home.subscription')
+            ->with('error', 'Subscription cancelled.');
     }
 
 }

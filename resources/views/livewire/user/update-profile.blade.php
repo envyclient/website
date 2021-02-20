@@ -27,10 +27,10 @@
             </div>
 
             <div>
-                <label for="password" class="form-label">Email</label>
+                <label for="email" class="form-label">Email</label>
                 <input class="form-control @error('email') is-invalid @enderror"
                        type="email"
-                       id="password"
+                       id="email"
                        wire:model.defer="email"
                        required>
 

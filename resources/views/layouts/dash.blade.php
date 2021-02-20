@@ -7,20 +7,32 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <style type="text/css">
-        #sidebar-wrapper {
+    <style>
+        /*
+         * Sidebar
+         */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding: 20px 0 0;
             background-color: #303030;
-            min-height: 100vh;
-            margin-left: -15rem;
-            transition: margin .25s ease-out;
+            height: 92%;
+            z-index: 100;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
-        #sidebar-wrapper .active {
-            background-color: #0f8c1d !important;
+        @media (max-width: 992px) {
+            .sidebar {
+                padding-top: 5rem;
+            }
         }
 
-        .list-group-item-custom {
-            color: #fff;
+        .sidebar .nav-link {
+            color: white;
             text-shadow: 1px 1px #666;
             background-color: #1c1c1c;
             text-align: inherit;
@@ -29,44 +41,40 @@
             padding-top: 12px;
         }
 
-        .list-group-item-custom:hover,
-        .list-group-item-custom:focus {
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
             color: #fff;
             text-decoration: none;
             background-color: #0f8c1d;
             border: none;
         }
 
-        #sidebar-wrapper .list-group {
-            width: 15rem;
+        .sidebar-heading {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        #page-content-wrapper {
-            min-width: 100vw;
+        /*
+         * Navbar
+         */
+
+        .navbar-brand {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            font-size: 1rem;
         }
 
-        .wrapper.toggled #sidebar-wrapper {
-            margin-left: 0;
+        .navbar .navbar-toggler {
+            top: .25rem;
+            right: 1rem;
         }
 
-        .table-sticky thead th {
-            position: sticky;
-            top: 0;
-        }
-
-        @media (min-width: 768px) {
-            #sidebar-wrapper {
-                margin-left: 0;
-            }
-
-            #page-content-wrapper {
-                min-width: 0;
-                width: 100%;
-            }
-
-            .wrapper.toggled #sidebar-wrapper {
-                margin-left: -15rem;
-            }
+        .navbar {
+            background-color: #303030 !important;
+            padding: .75rem 1rem;
+            border-width: 0;
+            border-radius: 0;
         }
     </style>
     <style>
@@ -78,173 +86,202 @@
 @endsection
 
 @section('body')
-    <div class="d-flex">
+    <div class="container-fluid">
 
-        <div class="d-inline-block" id="sidebar-wrapper">
-            <div class="list-group">
-                <a class="navbar-brand text-white">
-                    <div class="container text-center">
-                        <img src="{{ asset('logo.svg') }}"
-                             width="128"
-                             height="128"
-                             class="mt-3 mb-3"
-                             alt="logo">
-                    </div>
-                </a>
-                <div class="list-group list-group-flush">
-                    <h3 class="m-3 mt-3 text-white" style="font-size:16px;">
-                        SETTINGS
-                    </h3>
-                    <a class="list-group-item list-group-item-custom {{ Route::is('dashboard') ? 'active' : null }}"
-                       href="{{ route('dashboard') }}">
-                        <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
-                        </svg>
-                        Home
-                    </a>
-                    <a class="list-group-item list-group-item-custom {{ Route::is('pages.profile') ? 'active' : null }}"
-                       href="{{ route('pages.profile') }}">
-                        <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
-                        </svg>
-                        Profile
-                    </a>
-
-                    <h3 class="m-3 mt-5 text-white" style="font-size:16px;">
-                        COMMUNITY
-                    </h3>
-                    <a class="list-group-item list-group-item-custom {{ Route::is('pages.discord') ? 'active' : null }}"
-                       href="{{ route('pages.discord') }}">
-                        <svg class="ms-1 me-3" style="width:22px;height:22px" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="M22,24L16.75,19L17.38,21H4.5A2.5,2.5 0 0,1 2,18.5V3.5A2.5,2.5 0 0,1 4.5,1H19.5A2.5,2.5 0 0,1 22,3.5V24M12,6.8C9.32,6.8 7.44,7.95 7.44,7.95C8.47,7.03 10.27,6.5 10.27,6.5L10.1,6.33C8.41,6.36 6.88,7.53 6.88,7.53C5.16,11.12 5.27,14.22 5.27,14.22C6.67,16.03 8.75,15.9 8.75,15.9L9.46,15C8.21,14.73 7.42,13.62 7.42,13.62C7.42,13.62 9.3,14.9 12,14.9C14.7,14.9 16.58,13.62 16.58,13.62C16.58,13.62 15.79,14.73 14.54,15L15.25,15.9C15.25,15.9 17.33,16.03 18.73,14.22C18.73,14.22 18.84,11.12 17.12,7.53C17.12,7.53 15.59,6.36 13.9,6.33L13.73,6.5C13.73,6.5 15.53,7.03 16.56,7.95C16.56,7.95 14.68,6.8 12,6.8M9.93,10.59C10.58,10.59 11.11,11.16 11.1,11.86C11.1,12.55 10.58,13.13 9.93,13.13C9.29,13.13 8.77,12.55 8.77,11.86C8.77,11.16 9.28,10.59 9.93,10.59M14.1,10.59C14.75,10.59 15.27,11.16 15.27,11.86C15.27,12.55 14.75,13.13 14.1,13.13C13.46,13.13 12.94,12.55 12.94,11.86C12.94,11.16 13.45,10.59 14.1,10.59Z"/>
-                        </svg>
-                        Discord
-                    </a>
-
-                    <h3 class="m-3 mt-5 text-white" style="font-size:16px;">
-                        BILLING
-                    </h3>
-                    <a class="list-group-item list-group-item-custom {{ Route::is('pages.subscription') ? 'active': null }}"
-                       href="{{ route('pages.subscription') }}">
-                        <svg class="ms-1 me-3" style="width:22px;height:22px" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="M19,8L15,12H18A6,6 0 0,1 12,18C11,18 10.03,17.75 9.2,17.3L7.74,18.76C8.97,19.54 10.43,20 12,20A8,8 0 0,0 20,12H23M6,12A6,6 0 0,1 12,6C13,6 13.97,6.25 14.8,6.7L16.26,5.24C15.03,4.46 13.57,4 12,4A8,8 0 0,0 4,12H1L5,16L9,12"/>
-                        </svg>
-                        Subscription
-                    </a>
-                </div>
-                @admin
-                <h3 class="m-3 mt-5 text-white" style="font-size:16px;">
-                    ADMINISTRATOR
-                </h3>
-                <a class="list-group-item list-group-item-custom {{ Route::is('admin.users') ? 'active': null }}"
-                   href="{{ route('admin.users') }}">
-                    <svg class="ms-1 me-3" style="width:24px;height:24px;" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                              d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"/>
-                    </svg>
-                    Users
-                </a>
-                <a class="list-group-item list-group-item-custom {{ Route::is('admin.versions') ? 'active': null }}"
-                   href="{{ route('admin.versions') }}">
-                    <svg class="ms-1 me-3" style="width:24px;height:24px;" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                              d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z"/>
-                    </svg>
-                    Versions
-                </a>
-                <a class="list-group-item list-group-item-custom {{ Route::is('admin.referrals') ? 'active': null }}"
-                   href="{{ route('admin.referrals') }}">
-                    <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                              d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,15H9V21H3V15M5,17V19H7V17H5Z"/>
-                    </svg>
-                    Referrals Codes
-                </a>
-                <a class="list-group-item list-group-item-custom {{ Route::is('admin.notifications') ? 'active': null }}"
-                   href="{{ route('admin.notifications') }}">
-                    <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                              d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"/>
-                    </svg>
-                    Notifications
-                </a>
-                <a class="list-group-item list-group-item-custom {{ Route::is('admin.sales') ? 'active': null }}"
-                   href="{{ route('admin.sales') }}">
-                    <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                              d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z"/>
-                    </svg>
-                    Sales
-                </a>
-                <a class="list-group-item list-group-item-custom {{ Route::is('admin.license-requests') ? 'active': null }}"
-                   href="{{ route('admin.license-requests') }}">
-                    <svg class="ms-1 me-3" style="width:24px;height:24px" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                              d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"/>
-                    </svg>
-                    License Requests
-                </a>
-                @endadmin
-            </div>
-        </div>
-
-        <div id="page-content-wrapper">
-
-            <!-- top navbar -->
-            <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark"
-                 style="background-color: #303030 !important;">
-                <a class="navbar-brand text-white mx-3" href="/">
+        <div class="row">
+            <header class="navbar navbar-dark sticky-top bg-dark p-0 col-lg-10 ms-sm-auto">
+                <a class="navbar-brand me-0 px-3" href="/">
                     Envy Client | <span class="text-muted">dashboard</span>
                 </a>
-
-                <button class="navbar-toggler"
+                <button class="navbar-toggler position-absolute d-lg-none collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
+                        data-bs-target="#sidebarMenu"
+                        aria-controls="sidebarMenu"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+            </header>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <nav id="sidebarMenu" class="col-lg-2 d-lg-block sidebar collapse">
 
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                <div class="text-center">
+                    <img src="{{ asset('logo.svg') }}"
+                         width="128"
+                         height="128"
+                         alt="logo">
+                </div>
 
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown"
-                               class="nav-link dropdown-toggle text-white"
-                               href="#"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-haspopup="true"
-                               aria-expanded="false">
-                                @livewire('user.show-profile-image')
+                <div class="mt-4">
+                    <h3 class="sidebar-heading m-3 text-white">
+                        Dashboard
+                    </h3>
+                    <ul class="nav flex-column">
+                        <li>
+                            <a class="nav-link {{ Route::is('home') ? 'active' : null }}" href="{{ route('home') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path fill-rule="evenodd"
+                                          d="M8 3.293l6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                                </svg>
+                                Home
                             </a>
-                            @include('inc.navbar.dropdown')
+                        </li>
+                        <li>
+                            <a class="nav-link {{ Route::is('home.profile') ? 'active' : null }}"
+                               href="{{ route('home.profile') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                </svg>
+                                Profile
+                            </a>
                         </li>
                     </ul>
+
+                    <h3 class="sidebar-heading m-3 mt-5 text-white">
+                        Community
+                    </h3>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link {{ Route::is('home.discord') ? 'active' : null }}"
+                               href="{{ route('home.discord') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>
+                                    <path
+                                        d="M13.36 0H2.64C1.736 0 1 .736 1 1.648v10.816c0 .912.736 1.648 1.64 1.648h9.072l-.424-1.48 1.024.952.968.896L15 16V1.648C15 .736 14.264 0 13.36 0zm-3.088 10.448s-.288-.344-.528-.648c1.048-.296 1.448-.952 1.448-.952-.328.216-.64.368-.92.472-.4.168-.784.28-1.16.344a5.604 5.604 0 0 1-2.072-.008 6.716 6.716 0 0 1-1.176-.344 4.688 4.688 0 0 1-.584-.272c-.024-.016-.048-.024-.072-.04-.016-.008-.024-.016-.032-.024-.144-.08-.224-.136-.224-.136s.384.64 1.4.944c-.24.304-.536.664-.536.664-1.768-.056-2.44-1.216-2.44-1.216 0-2.576 1.152-4.664 1.152-4.664 1.152-.864 2.248-.84 2.248-.84l.08.096c-1.44.416-2.104 1.048-2.104 1.048s.176-.096.472-.232c.856-.376 1.536-.48 1.816-.504.048-.008.088-.016.136-.016a6.521 6.521 0 0 1 4.024.752s-.632-.6-1.992-1.016l.112-.128s1.096-.024 2.248.84c0 0 1.152 2.088 1.152 4.664 0 0-.68 1.16-2.448 1.216z"/>
+                                </svg>
+                                Discord
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h3 class="sidebar-heading m-3 mt-5 text-white">
+                        Billing
+                    </h3>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link {{ Route::is('home.subscription') ? 'active' : null }}"
+                               href="{{ route('home.subscription') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0V4zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7H0zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1z"/>
+                                </svg>
+                                Subscription
+                            </a>
+                        </li>
+                    </ul>
+
+                    @admin
+                    <h3 class="sidebar-heading m-3 mt-5 text-white">
+                        Administrator
+                    </h3>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link {{ Route::is('admin.users') ? 'active' : null }}"
+                               href="{{ route('admin.users') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                                </svg>
+                                Users
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link {{ Route::is('admin.versions') ? 'active' : null }}"
+                               href="{{ route('admin.versions') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 6.854l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708z"/>
+                                </svg>
+                                Versions
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link {{ Route::is('admin.referrals') ? 'active' : null }}"
+                               href="{{ route('admin.referrals') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5zM3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z"/>
+                                </svg>
+                                Referral Codes
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link {{ Route::is('admin.notifications') ? 'active' : null }}"
+                               href="{{ route('admin.notifications') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                                </svg>
+                                Notifications
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link {{ Route::is('admin.sales') ? 'active' : null }}"
+                               href="{{ route('admin.sales') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                    <path
+                                        d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6z"/>
+                                </svg>
+                                Sales
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link {{ Route::is('admin.license-requests') ? 'active' : null }}"
+                               href="{{ route('admin.license-requests') }}">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
+                                     style="margin: 0 10px 3px 0;">
+                                    <path
+                                        d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.122C.002 7.343.01 6.6.064 5.78l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+                                </svg>
+                                License Requests
+                            </a>
+                        </li>
+                    </ul>
+                    @endadmin
+                </div>
+
+                <div class="position-fixed bottom-0 start-0 ps-2 py-2"
+                     style="background-color: #1c1c1c; width: inherit;">
+                    @livewire('user.show-profile-image')
                 </div>
             </nav>
 
-            <!-- notifications -->
-            <div class="container mt-3">
-                @include('inc.notifications')
-            </div>
+            <main class="col-lg-10 ms-sm-auto">
 
-            <div class="mt-3">
-                @yield('content')
-            </div>
+                <!-- notifications -->
+                <div class="container mt-3">
+                    @include('inc.notifications')
+                </div>
+
+                <div class="mt-3">
+                    @yield('content')
+                </div>
+            </main>
+
         </div>
+
     </div>
+
 
     @yield('js')
 @endsection

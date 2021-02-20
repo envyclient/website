@@ -6,9 +6,9 @@ use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\CapesController;
 use App\Http\Controllers\DiscordController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\NotificationsController;
-use App\Http\Controllers\PagesController;
 use App\Http\Livewire\ShowLicenseRequests;
 use Illuminate\Support\Facades\Route;
 
@@ -16,27 +16,32 @@ use Illuminate\Support\Facades\Route;
  * Home
  */
 Route::group([], function () {
-    Route::view('/', 'pages.index')
-        ->name('index');
 
-    Route::get('dashboard', [PagesController::class, 'dashboard'])
-        ->name('dashboard');
+    Route::group([], function () {
+        Route::view('/', 'pages.index')
+            ->name('index');
 
-    Route::get('profile', [PagesController::class, 'profile'])
-        ->name('pages.profile');
+        Route::view('terms', 'pages.terms')
+            ->name('terms');
+    });
 
-    Route::get('discord', [PagesController::class, 'discord'])
-        ->name('pages.discord');
+    Route::group([], function () {
+        Route::get('home', [HomeController::class, 'home'])
+            ->name('home');
 
-    Route::get('subscription', [PagesController::class, 'subscription'])
-        ->name('pages.subscription');
+        Route::get('profile', [HomeController::class, 'profile'])
+            ->name('home.profile');
 
-    Route::view('terms', 'pages.terms')
-        ->name('pages.terms');
+        Route::get('discord', [HomeController::class, 'discord'])
+            ->name('home.discord');
+
+        Route::get('subscription', [HomeController::class, 'subscription'])
+            ->name('home.subscription');
+    });
 });
 
 /**
- * Admin
+ * Admin Dashboard
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
@@ -50,10 +55,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::view('referrals', 'pages.dashboard.admin.referrals')
         ->name('admin.referrals');
 
-    Route::get('notifications', [PagesController::class, 'notifications'])
+    Route::get('notifications', [HomeController::class, 'notifications'])
         ->name('admin.notifications');
 
-    Route::get('sales', [PagesController::class, 'sales'])
+    Route::get('sales', [HomeController::class, 'sales'])
         ->name('admin.sales');
 
     Route::get('license-requests', ShowLicenseRequests::class)

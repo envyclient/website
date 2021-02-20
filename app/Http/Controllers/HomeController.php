@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Plan;
 
-class PagesController extends Controller
+class HomeController extends Controller
 {
     public function __construct()
     {
@@ -13,7 +13,7 @@ class PagesController extends Controller
         $this->middleware('admin')->only('notifications', 'sales');
     }
 
-    public function dashboard()
+    public function home()
     {
         $user = auth()->user()
             ->load(['subscription', 'configs', 'licenseRequest']);

@@ -20,21 +20,21 @@ class PagesTest extends TestCase
     /** @test */
     public function can_guest_not_see_dashboard()
     {
-        $this->get(route('dashboard'))
+        $this->get(route('home'))
             ->assertRedirect('/login');
     }
 
     /** @test */
     public function can_guest_not_see_security()
     {
-        $this->get(route('pages.profile'))
+        $this->get(route('home.profile'))
             ->assertRedirect('/login');
     }
 
     /** @test */
     public function can_guest_not_see_subscription()
     {
-        $this->get(route('pages.subscription'))
+        $this->get(route('home.subscription'))
             ->assertRedirect('/login');
     }
 
@@ -46,7 +46,7 @@ class PagesTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->get(route('dashboard'))
+            ->get(route('home'))
             ->assertOk();
     }
 
@@ -58,7 +58,7 @@ class PagesTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->get(route('dashboard'))
+            ->get(route('home'))
             ->assertOk();
     }
 
@@ -70,7 +70,7 @@ class PagesTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->get(route('dashboard'))
+            ->get(route('home'))
             ->assertOk();
     }
 

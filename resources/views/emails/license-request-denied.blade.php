@@ -8,7 +8,7 @@ Your media license request has been denied. 😢
 {{ $message }}
 ```
 
-@component('mail::button', ['url' => route('dashboard')])
+@component('mail::button', ['url' => route('home')])
 Dashboard
 @endcomponent
 

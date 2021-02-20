@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Actions;
 
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 
@@ -29,18 +28,21 @@ class CancelSubscription extends Controller
             $user->subscription->update([
                 'stripe_status' => 'Cancelled',
             ]);
-            return redirect(RouteServiceProvider::SUBSCRIPTIONS)
+            return redirect()
+                ->route('home.subscription')
                 ->with('success', 'You subscription has been cancelled.');
         }
 
         // user did not subscribe using paypal or cc
         if (!$user->hasBillingAgreement()) {
-            return redirect(RouteServiceProvider::SUBSCRIPTIONS)
+            return redirect()
+                ->route('home.subscription')
                 ->with('error', 'You do not need to cancel your subscription.');
         }
 
         if ($user->isBillingAgreementCancelled()) {
-            return redirect(RouteServiceProvider::SUBSCRIPTIONS)
+            return redirect()
+                ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');
         }
 
@@ -50,11 +52,13 @@ class CancelSubscription extends Controller
         );
 
         if ($response !== 204) {
-            return redirect(RouteServiceProvider::SUBSCRIPTIONS)
+            return redirect()
+                ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');
         }
 
-        return redirect(RouteServiceProvider::SUBSCRIPTIONS)
+        return redirect()
+            ->route('home.subscription')
             ->with('success', 'Your subscription has been queued for cancellation.');
     }
 }

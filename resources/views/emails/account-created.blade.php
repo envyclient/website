@@ -11,7 +11,7 @@ PLEASE CHANGE THIS PASSWORD!
 ```
 
 
-@component('mail::button', ['url' => route('pages.profile')])
+@component('mail::button', ['url' => route('home.profile')])
 Manage Profile
 @endcomponent
 
