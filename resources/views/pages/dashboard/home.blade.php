@@ -7,7 +7,7 @@
     <div class="row">
 
         <!--- Profile Section --->
-        <div class="col">
+        <div class="col-md">
             <div class="alert alert-dark" style="font-size:25px;">
                 <svg class="pb-1" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-md">
             <div class="alert alert-dark" style="font-size:25px;">
                 <svg class="pb-1" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                     <path

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col">
+        <div class="col-md">
             <div class="alert alert-dark" style="font-size:25px;">
                 <svg class="pb-1" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                     <path
@@ -21,7 +21,7 @@
                     sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
             </iframe>
         </div>
-        <div class="col">
+        <div class="col-md">
             <div class="alert alert-dark" style="font-size:25px;">
                 <svg class="pb-1" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                     <path

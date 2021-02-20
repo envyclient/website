@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-sm">
+        <div class="col-md">
             <div class="alert alert-dark" style="font-size:25px;">
                 <svg class="pb-1" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                     <path
@@ -17,7 +17,7 @@
             @livewire('user.update-profile')
         </div>
 
-        <div class="col-sm">
+        <div class="col-md">
             <div class="alert alert-dark" style="font-size:25px;">
                 <svg class="pb-1" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
