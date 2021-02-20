@@ -105,6 +105,8 @@
 
             <nav id="sidebarMenu" class="col-lg-2 d-lg-block sidebar collapse">
 
+                <div class="d-flex flex-column h-100">
+
                 <div class="text-center">
                     <img src="{{ asset('logo.svg') }}"
                          width="128"
@@ -259,9 +261,12 @@
                     @endadmin
                 </div>
 
-                <div class="position-fixed bottom-0 start-0 ps-2 py-2"
-                     style="background-color: #1c1c1c; width: inherit;">
-                    @livewire('user.show-profile-image')
+                <footer class="footer mt-auto py-3 bg-light"
+                        style="background-color: #1c1c1c!important; width: inherit!important;">
+                    <div class="container">
+                        @livewire('user.show-profile-image')
+                    </div>
+                </footer>
                 </div>
             </nav>
 
