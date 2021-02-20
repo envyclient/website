@@ -19,7 +19,6 @@
             left: 0;
             padding: 20px 0 0;
             background-color: #303030;
-            height: 92%;
             z-index: 100;
             overflow-y: auto;
             overflow-x: hidden;
