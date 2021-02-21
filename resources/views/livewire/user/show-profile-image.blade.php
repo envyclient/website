@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-3">
         <img src="{{ $user->image }}"
-             class="rounded-circle ms-2"
+             class="rounded-circle"
              alt="user image"
              width="38px"
              height="38px">
     </div>
-    <div class="col-8">
+    <div class="col-8   ">
         <h6 class="text-white m-0">
             {{  $user->name }}
         </h6>
