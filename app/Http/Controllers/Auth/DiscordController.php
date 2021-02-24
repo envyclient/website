@@ -32,7 +32,8 @@ class DiscordController extends Controller
             return redirect('login');
         }
 
-        if (empty($user->getEmail()) || $user->getEmail() === null) {
+        // no email attached to the account
+        if (empty($user->getEmail())) {
             return redirect('login');
         }
 
@@ -41,12 +42,12 @@ class DiscordController extends Controller
 
         $password = Str::random(24);
         $user = User::firstOrCreate([
-            'discord_id' => $user->getId(),
+            'email' => $user->getEmail(),
         ], [
             'name' => 'envy_' . random_int(1, 99999),
-            'email' => $user->getEmail(),
             'password' => Hash::make($password),
             'email_verified_at' => now(),
+            'discord_id' => $user->getId(),
             'discord_name' => $user->getNickname(),
         ]);
 
