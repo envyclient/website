@@ -18,10 +18,8 @@ class CreateLicenseRequestsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('channel');
             $table->string('status', 10);
-
             $table->string('action_reason')->nullable();
             $table->timestamp('action_at')->nullable();
-
             $table->timestamps();
         });
     }
