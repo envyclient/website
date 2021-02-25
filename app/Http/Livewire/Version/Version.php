@@ -42,9 +42,9 @@ class Version extends Component
         Storage::deleteDirectory("versions/$directory");
 
         // deleting the version downloads
-        DB::table('user_downloads')
+        /*DB::table('user_downloads')
             ->where('version_id', $this->version->id)
-            ->delete();
+            ->delete();*/
 
         // deleting the row from the table
         $this->version->delete();
