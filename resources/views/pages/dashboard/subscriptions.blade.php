@@ -25,7 +25,7 @@
                     <div class="card-footer d-flex justify-content-end">
 
                         {{-- Subscribe using PayPal --}}
-                        <form action="{{ route('paypal.process') }}" method="post">
+                        {{--<form action="{{ route('paypal.process') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $plan->id }}">
                             <button type="submit" class="btn anim m-1" style="background: #0079C1;color: white;">
@@ -35,7 +35,7 @@
                                 </svg>
                                 PayPal
                             </button>
-                        </form>
+                        </form>--}}
 
                         {{-- Subscribe using Credit/Debit Card --}}
                         <button type="button" class="btn anim btn-dark m-1" onclick="stripeCheckout({{ $plan->id }})">
