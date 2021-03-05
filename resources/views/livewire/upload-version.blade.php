@@ -12,7 +12,7 @@
             <input class="form-control @error('name') is-invalid @enderror"
                    type="text"
                    id="name"
-                   wire:model="name"
+                   wire:model.defer="name"
                    required>
 
             @error('name')
@@ -26,7 +26,7 @@
             <label class="form-label" for="changelog">Changelog</label>
             <textarea class="form-control @error('name') is-invalid @enderror"
                       id="changelog"
-                      wire:model="changelog"
+                      wire:model.defer="changelog"
                       rows="3"
                       required></textarea>
 
@@ -44,16 +44,16 @@
             <input class="form-check-input"
                    type="checkbox"
                    id="beta"
-                   wire:model="beta">
+                   wire:model.defer="beta">
         </div>
 
         <div class="row mb-3">
 
             <div class="col"
-                 x-data="{ isUploading: false, progress: 0 }"
-                 x-on:livewire-upload-start="isUploading = true"
-                 x-on:livewire-upload-finish="isUploading = false"
-                 x-on:livewire-upload-error="isUploading = false"
+                 x-data="{ uploading: false, progress: 0 }"
+                 x-on:livewire-upload-start="uploading = true"
+                 x-on:livewire-upload-finish="uploading = false"
+                 x-on:livewire-upload-error="uploading = false"
                  x-on:livewire-upload-progress="progress = $event.detail.progress">
                 <label for="formFile" class="form-label">Version</label>
                 <input class="form-control @error('version') is-invalid @enderror"
@@ -63,7 +63,7 @@
                        accept=".exe"
                        required>
 
-                <div x-show="isUploading">
+                <div x-show="uploading">
                     <progress max="100" x-bind:value="progress"></progress>
                 </div>
 
@@ -75,10 +75,10 @@
             </div>
 
             <div class="col"
-                 x-data="{ isUploading: false, progress: 0 }"
-                 x-on:livewire-upload-start="isUploading = true"
-                 x-on:livewire-upload-finish="isUploading = false"
-                 x-on:livewire-upload-error="isUploading = false"
+                 x-data="{ uploading: false, progress: 0 }"
+                 x-on:livewire-upload-start="uploading = true"
+                 x-on:livewire-upload-finish="uploading = false"
+                 x-on:livewire-upload-error="uploading = false"
                  x-on:livewire-upload-progress="progress = $event.detail.progress">
                 <label for="formFile" class="form-label">Assets</label>
                 <input class="form-control @error('assets') is-invalid @enderror"
@@ -88,7 +88,7 @@
                        accept=".jar"
                        required>
 
-                <div x-show="isUploading">
+                <div x-show="uploading">
                     <progress max="100" x-bind:value="progress"></progress>
                 </div>
 
@@ -98,13 +98,19 @@
                 </span>
                 @enderror
             </div>
-
         </div>
 
-
-        <button type="submit" class="btn btn-success">Upload</button>
-        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                data-bs-target="#update-launcher">
+        <x-loading wire:loading wire:target="submit"/>
+        <button type="submit"
+                class="btn btn-success"
+                wire:loading.attr="disabled">
+            Upload
+        </button>
+        <button type="button"
+                class="btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#update-launcher"
+                wire:loading.attr="disabled">
             Update Launcher
         </button>
     </form>

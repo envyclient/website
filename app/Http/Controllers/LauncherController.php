@@ -9,7 +9,7 @@ class LauncherController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'subscribed'])->except('latest');
+        $this->middleware(['auth', 'verified', 'subscribed']);
         $this->middleware('admin')->only('store');
     }
 

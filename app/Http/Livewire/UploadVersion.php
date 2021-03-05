@@ -38,8 +38,8 @@ class UploadVersion extends Component
 
         // store version & assets
         $path = 'versions/' . bin2hex(openssl_random_pseudo_bytes(10));
-        $this->version->storeAs($path, 'version.exe');
-        $this->assets->storeAs($path, 'assets.jar');
+        $this->version->storeAs($path, 'version.exe', 'local');
+        $this->assets->storeAs($path, 'assets.jar', 'local');
 
         Version::create([
             'name' => $this->name,

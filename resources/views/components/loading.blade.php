@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => 'la-line-scale la-dark la-2x']) }}>
+<div {{ $attributes->merge(['class' => 'la-line-scale la-dark']) }}>
     <div></div>
     <div></div>
     <div></div>
