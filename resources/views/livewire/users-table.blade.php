@@ -38,7 +38,7 @@
     <br>
 
     <div class="justify-content-center" wire:loading.flex>
-        <x-loading/>
+        <x-loading class="la-2x"/>
     </div>
 
     <table class="table table-striped table-hover table-sm" wire:loading.remove>
