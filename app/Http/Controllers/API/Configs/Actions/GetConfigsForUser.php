@@ -6,7 +6,11 @@ use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class GetConfigsForUser extends ConfigsController
 {
@@ -15,9 +19,15 @@ class GetConfigsForUser extends ConfigsController
         parent::__construct();
     }
 
-    public function __invoke(Request $request, $name)
+    public function __invoke(Request $request, string $name = null): JsonResponse|AnonymousResourceCollection
     {
-        $user = User::where('name', $name)->firstOrFail();
+        return $name === null
+            ? self::getConfigsForAuthUser($request->user())
+            : self::getConfigsForSearchUser($request);
+    }
+
+    public static function getConfigsForAuthUser(User $user): AnonymousResourceCollection
+    {
         return ConfigResource::collection(
             $user->configs()
                 ->where('public', true)
@@ -26,4 +36,46 @@ class GetConfigsForUser extends ConfigsController
                 ->paginate(Config::PAGE_LIMIT)
         );
     }
+
+    public static function getConfigsForSearchUser(Request $request): JsonResponse|AnonymousResourceCollection
+    {
+        $validator = Validator::make($request->all(), [
+            'search' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => '400 Bad Request',
+            ], 400);
+        }
+
+        $data = collect();
+        foreach ($request->user()
+                     ->configs()
+                     ->withCount('favorites')
+                     ->orderBy('favorites_count', 'desc')
+                     ->get() as $config) {
+            $data->push($config);
+        }
+
+        foreach ($request->user()
+                     ->getFavoriteItems(Config::class)
+                     ->withCount('favorites')
+                     ->orderBy('favorites_count', 'desc')
+                     ->get() as $config) {
+            $data->push($config);
+        }
+
+        if ($request->has('search')) {
+            $data = $data->filter(function ($value, $key) use ($request) {
+                return Str::contains(
+                    strtolower($value['name']),
+                    strtolower($request->search)
+                );
+            });
+        }
+
+        return ConfigResource::collection($data);
+    }
+
 }

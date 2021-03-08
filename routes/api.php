@@ -3,7 +3,6 @@
 use App\Http\Controllers\API\Actions\GetLauncherVersion;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
-use App\Http\Controllers\API\Configs\Actions\GetConfigsForCurrentUser;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
 use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Controllers\API\MinecraftController;
@@ -25,8 +24,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group([], function () {
 
     Route::group(['prefix' => 'configs'], function () {
-        Route::get('user', GetConfigsForCurrentUser::class);
-        Route::get('user/{name}', GetConfigsForUser::class);
+        Route::get('user/{name?}', GetConfigsForUser::class);
         Route::put('{config}/favorite', FavoriteConfig::class);
     });
 
@@ -63,4 +61,3 @@ Route::group(['prefix' => 'notifications'], function () {
  * Launcher
  */
 Route::get('launcher/latest', GetLauncherVersion::class);
-

@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
  */
 Route::group([], function () {
 
+    /**
+     * Landing Pages
+     */
     Route::group([], function () {
         Route::view('/', 'pages.index')
             ->name('index');
@@ -25,6 +28,9 @@ Route::group([], function () {
             ->name('terms');
     });
 
+    /**
+     * Dashboard
+     */
     Route::group([], function () {
         Route::get('home', [HomeController::class, 'home'])
             ->name('home');
@@ -38,35 +44,35 @@ Route::group([], function () {
         Route::get('subscription', [HomeController::class, 'subscription'])
             ->name('home.subscription');
     });
-});
 
-/**
- * Admin Dashboard
- */
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    /**
+     * Admin Dashboard
+     */
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
-    // list users and versions
-    Route::view('users', 'pages.dashboard.admin.users')
-        ->name('admin.users');
+        // list users and versions
+        Route::view('users', 'pages.dashboard.admin.users')
+            ->name('admin.users');
 
-    Route::view('versions', 'pages.dashboard.admin.versions')
-        ->name('admin.versions');
+        Route::view('versions', 'pages.dashboard.admin.versions')
+            ->name('admin.versions');
 
-    Route::view('referrals', 'pages.dashboard.admin.referrals')
-        ->name('admin.referrals');
+        Route::view('referrals', 'pages.dashboard.admin.referrals')
+            ->name('admin.referrals');
 
-    Route::get('notifications', [HomeController::class, 'notifications'])
-        ->name('admin.notifications');
+        Route::get('notifications', [HomeController::class, 'notifications'])
+            ->name('admin.notifications');
 
-    Route::get('sales', [HomeController::class, 'sales'])
-        ->name('admin.sales');
+        Route::get('sales', [HomeController::class, 'sales'])
+            ->name('admin.sales');
 
-    Route::get('license-requests', ShowLicenseRequests::class)
-        ->name('admin.license-requests');
+        Route::get('license-requests', ShowLicenseRequests::class)
+            ->name('admin.license-requests');
 
-    // upload version
-    Route::post('versions', UploadVersion::class)
-        ->name('admin.versions.upload');
+        // upload version
+        Route::post('versions', UploadVersion::class)
+            ->name('admin.versions.upload');
+    });
 });
 
 
