@@ -36,9 +36,7 @@ class MinecraftController extends Controller
             'current_account' => $validated['uuid'],
         ]);
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return self::ok();
     }
 
     public function destroy(Request $request)
@@ -47,8 +45,6 @@ class MinecraftController extends Controller
             'current_account' => null,
         ]);
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return self::ok();
     }
 }

@@ -27,7 +27,7 @@ class ConfigsController extends Controller
             ], 400);
         }
 
-        $configs = Config::with('user')
+        $configs = Config::with(['user:id,name', 'version:id,name'])
             ->withCount('favorites')
             ->where('public', true)
             ->orderByDesc('official')
@@ -45,7 +45,7 @@ class ConfigsController extends Controller
     public function show($id)
     {
         return new ConfigResource(
-            Config::with('user:id,name')
+            Config::with(['user:id,name', 'version:id,name'])
                 ->where('id', $id)
                 ->where('public', true)
                 ->withCount('favorites')
@@ -103,30 +103,27 @@ class ConfigsController extends Controller
             ], 400);
         }
 
-        $user = $request->user();
-
         // update config
-        $config = $user->configs()->findOrFail($id);
-        $config->name = $request->name;
-        $config->data = $request->data;
-        if ($request->has('public')) {
-            $config->public = $request->public;
-        }
-        $config->save();
+        $request->user()
+            ->configs()
+            ->findOrFail($id)
+            ->update([
+                'name' => $request->name,
+                'data' => $request->data,
+                'public' => $request->has('public'),
+            ]);
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return self::ok();
     }
 
     public function destroy(Request $request, $id)
     {
+        // delete config
         $request->user()
             ->configs()
             ->findOrFail($id)
             ->delete();
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+
+        return self::ok();
     }
 }

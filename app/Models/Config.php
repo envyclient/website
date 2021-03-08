@@ -12,8 +12,10 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  * @property string data
  * @property boolean public
  * @property boolean official
+ * @property int version_id
  *
  * @property User user
+ * @property Version version
  */
 class Config extends Model
 {
@@ -23,6 +25,7 @@ class Config extends Model
 
     protected $fillable = [
         'user_id',
+        'version_id',
         'name',
         'data',
         'public',
@@ -36,5 +39,10 @@ class Config extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function version()
+    {
+        return $this->belongsTo(Version::class);
     }
 }

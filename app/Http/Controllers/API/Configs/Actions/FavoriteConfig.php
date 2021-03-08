@@ -27,8 +27,6 @@ class FavoriteConfig extends ConfigsController
 
         $user->toggleFavorite($config);
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return self::ok();
     }
 }
