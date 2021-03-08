@@ -33,7 +33,7 @@ class DiscordController extends Controller
         }
 
         // no email attached to the account
-        if (empty($user->getEmail())) {
+        if (empty($user->getEmail()) || !is_string($user->getEmail())) {
             return redirect('login');
         }
 
