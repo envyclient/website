@@ -17,7 +17,7 @@ class ClearInactiveAccounts extends Command
 
     public function handle()
     {
-        User::where('current_account', '<>', null)
+        User::whereNotNull('current_account')
             ->whereDate('updated_at', '<=', today()->subDays(3))
             ->update([
                 'current_account' => null,
