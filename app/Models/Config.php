@@ -25,11 +25,11 @@ class Config extends Model
 
     protected $fillable = [
         'user_id',
-        'version_id',
         'name',
         'data',
         'public',
         'official',
+        'version_id',
     ];
 
     protected $casts = [

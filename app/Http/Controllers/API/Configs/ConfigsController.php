@@ -54,6 +54,7 @@ class ConfigsController extends Controller
         );
     }
 
+    // TODO: add version
     public function store(Request $request)
     {
         // TODO: validate json to only be ARRAY
@@ -89,6 +90,7 @@ class ConfigsController extends Controller
         ], 201);
     }
 
+    // TODO: add version
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [

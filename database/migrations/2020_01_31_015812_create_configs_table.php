@@ -15,7 +15,7 @@ class CreateConfigsTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->string('name', 15);
             $table->json('data'); // JSON
             $table->boolean('public')->default(false);
