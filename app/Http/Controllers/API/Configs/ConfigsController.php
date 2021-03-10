@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API\Configs;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
+use App\Models\Version;
+use App\Rules\ValidVersion;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,9 +25,7 @@ class ConfigsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+            self::bad();
         }
 
         $configs = Config::with(['user:id,name', 'version:id,name'])
@@ -34,7 +35,10 @@ class ConfigsController extends Controller
             ->orderByDesc('favorites_count');
 
         if ($request->has('search')) {
-            $configs->where('name', 'like', "%$request->search%");
+            $configs->where('name', 'like', "%$request->search%")
+                ->whereHas('user', function (Builder $query) use ($request) {
+                    $query->where('name', 'like', "%$request->search%");
+                });
         }
 
         return ConfigResource::collection(
@@ -54,20 +58,18 @@ class ConfigsController extends Controller
         );
     }
 
-    // TODO: add version
     public function store(Request $request)
     {
         // TODO: validate json to only be ARRAY
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:15',
+            'version' => ['required', 'string', new ValidVersion],
             'data' => 'required|json',
             'public' => 'nullable|boolean',
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+            self::bad();
         }
 
         $user = $request->user();
@@ -80,6 +82,7 @@ class ConfigsController extends Controller
         $config = Config::create([
             'user_id' => $user->id,
             'name' => $request->name,
+            'version_id' => Version::where('name', "Envy v$request->version")->first()->id,
             'data' => $request->data,
             'public' => $request->has('public'),
         ]);
@@ -90,19 +93,17 @@ class ConfigsController extends Controller
         ], 201);
     }
 
-    // TODO: add version
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:15',
+            'version' => ['required', 'string', new ValidVersion],
             'data' => 'required|json',
             'public' => 'nullable|boolean',
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+            self::bad();
         }
 
         // update config
@@ -111,6 +112,7 @@ class ConfigsController extends Controller
             ->findOrFail($id)
             ->update([
                 'name' => $request->name,
+                'version_id' => Version::where('name', "Envy v$request->version")->first()->id,
                 'data' => $request->data,
                 'public' => $request->has('public'),
             ]);

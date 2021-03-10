@@ -14,8 +14,8 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  * @property boolean official
  * @property int version_id
  *
- * @property User user
- * @property Version version
+ * @property-read User user
+ * @property-read Version version
  */
 class Config extends Model
 {

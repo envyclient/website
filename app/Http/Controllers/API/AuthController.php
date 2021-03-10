@@ -23,9 +23,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+            self::bad();
         }
 
         if (!$token = auth()->attempt(request(['email', 'password']))) {
@@ -42,9 +40,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+            self::bad();
         }
 
         $user = User::where('hwid', $request->hwid)->firstOrFail();

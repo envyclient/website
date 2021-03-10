@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,8 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string status // pending, canceled, failed, chargeable, succeeded
  * @property string url
  *
- * @property User user
- * @property Plan plan
+ * @property-read User user
+ * @property-read Plan plan
+ * @property-read Collection events
  */
 class StripeSource extends Model
 {

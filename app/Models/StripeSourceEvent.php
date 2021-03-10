@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string type
  * @property string message
  *
- * @property StripeSource source
+ * @property-read StripeSource source
  */
 class StripeSourceEvent extends Model
 {

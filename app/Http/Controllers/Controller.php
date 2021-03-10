@@ -12,6 +12,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public static function bad(): JsonResponse
+    {
+        return response()->json([
+            'message' => '400 Bad Request'
+        ], 400);
+    }
+
     public static function ok(): JsonResponse
     {
         return response()->json([

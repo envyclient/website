@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null stripe_status
  * @property Carbon end_date
  *
- * @property User user
- * @property Plan plan
- * @property BillingAgreement billingAgreement
+ * @property-read User user
+ * @property-read Plan plan
+ * @property-read BillingAgreement billingAgreement
  */
 class Subscription extends Model
 {

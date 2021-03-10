@@ -44,9 +44,7 @@ class GetConfigsForUser extends ConfigsController
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request',
-            ], 400);
+            self::bad();
         }
 
         $data = collect();

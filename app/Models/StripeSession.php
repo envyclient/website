@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int plan_id
  * @property int stripe_session_id
  *
- * @property User user
- * @property Plan plan
+ * @property-read User user
+ * @property-read Plan plan
  */
 class StripeSession extends Model
 {

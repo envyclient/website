@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property null|string action_reason
  * @property null|Carbon action_at
  *
- * @property User user
+ * @property-read User user
  */
 class LicenseRequest extends Model
 {
