@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Notification;
 
 class NotificationsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'admin']);
-    }
-
     public function store(Request $request)
     {
         $this->validate($request, [

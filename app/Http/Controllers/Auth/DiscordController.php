@@ -14,11 +14,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 class DiscordController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
     public function login()
     {
         return Socialite::driver('discord')->redirect();
