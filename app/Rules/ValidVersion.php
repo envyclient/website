@@ -9,7 +9,7 @@ class ValidVersion implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        return Version::where('name', "Envy v$value")->exists();
+        return Version::where('name', "Envy $value")->exists();
     }
 
     public function message(): string

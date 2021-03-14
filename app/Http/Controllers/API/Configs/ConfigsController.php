@@ -66,7 +66,7 @@ class ConfigsController extends Controller
         $config = Config::create([
             'user_id' => $user->id,
             'name' => $validated['name'],
-            'version_id' => Version::where('name', "Envy v{$validated['version']}")->first()->id,
+            'version_id' => Version::where('name', "Envy {$validated['version']}")->first()->id,
             'data' => $validated['data'],
             'public' => $request->has('public'),
         ]);
@@ -87,7 +87,7 @@ class ConfigsController extends Controller
             ->findOrFail($id)
             ->update([
                 'name' => $validated['name'],
-                'version_id' => Version::where('name', "Envy v{$validated['version']}")->first()->id,
+                'version_id' => Version::where('name', "Envy {$validated['version']}")->first()->id,
                 'data' => $validated['data'],
                 'public' => $request->has('public'),
             ]);
