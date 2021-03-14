@@ -20,7 +20,7 @@ class VersionsController extends Controller
         return $versions->get();
     }
 
-    public function downloadVersion(Request $request, $id)
+    public function downloadVersion(Request $request, int $id)
     {
         $user = $request->user();
         $version = Version::findOrFail($id);
@@ -35,12 +35,12 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::download($version->version);
+        return Storage::cloud()->download($version->version);
     }
 
-    public function downloadAssets(Request $request, $id)
+    public function downloadAssets(Request $request, int $id)
     {
         $version = Version::findOrFail($id);
-        return Storage::download($version->assets);
+        return Storage::cloud()->download($version->assets);
     }
 }

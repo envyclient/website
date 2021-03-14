@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string name
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string version
  * @property string assets
  * @property string changelog
+ * @property Carbon updated_at
+ * @property Carbon created_at
  *
  * @property-read Collection users
  */

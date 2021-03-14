@@ -22,8 +22,7 @@
             @endif
         @endif
     </td>
-    <td>{{ $version->version }}</td>
-    <td>{{ $version->assets }}</td>
+    <td>{{ $version->changelog }}</td>
     <td>{{ $version->created_at->diffForHumans() }}</td>
     <td>
         @if($editMode)

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Version;
 use App\Notifications\ClientNotification;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -37,9 +38,9 @@ class UploadVersion extends Component
         $this->validate();
 
         // store version & assets
-        $path = 'versions/' . bin2hex(openssl_random_pseudo_bytes(10));
-        $this->version->storeAs($path, 'version.exe', 'local');
-        $this->assets->storeAs($path, 'assets.jar', 'local');
+        $path = 'versions/' . Str::uuid();
+        $this->version->storeAs($path, 'version.exe', 's3');
+        $this->assets->storeAs($path, 'assets.jar', 's3');
 
         Version::create([
             'name' => $this->name,

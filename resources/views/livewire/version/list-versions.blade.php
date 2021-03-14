@@ -6,9 +6,8 @@
                 <th>#</th>
                 <th>name</th>
                 <th>beta</th>
-                <th>version</th>
-                <th>assets</th>
-                <th>date</th>
+                <th>changelog</th>
+                <th>created</th>
                 <th>action</th>
             </tr>
             </thead>
