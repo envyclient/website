@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class FavoriteConfig extends ConfigsController
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function __invoke(Request $request, $id)
     {
         $config = Config::findOrFail($id);
