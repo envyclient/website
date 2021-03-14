@@ -13,7 +13,7 @@ class SyncRoles extends Command
 
     private string $endpoint;
     private string $token;
-    private int $guild;
+    private string $guild;
     private array $roles;
 
     public function __construct()
