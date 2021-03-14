@@ -7,11 +7,6 @@ use App\Models\Plan;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin')->only('notifications', 'sales');
-    }
-
     public function home()
     {
         $user = auth()
