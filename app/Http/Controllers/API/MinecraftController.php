@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class MinecraftController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:api', 'subscribed']);
-    }
-
     public function show($uuid)
     {
         $user = User::where('current_account', $uuid)

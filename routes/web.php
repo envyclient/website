@@ -31,15 +31,18 @@ Route::group([], function () {
     /**
      * Dashboard
      */
-    Route::group([], function () {
+    Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('home', [HomeController::class, 'home'])
             ->name('home');
 
         Route::get('profile', [HomeController::class, 'profile'])
             ->name('home.profile');
 
-        Route::get('discord', [HomeController::class, 'discord'])
-            ->name('home.discord');
+        Route::get('discord', function () {
+            return view('pages.dashboard.discord', [
+                'user' => auth()->user(),
+            ]);
+        })->name('home.discord');
 
         Route::get('subscription', [HomeController::class, 'subscription'])
             ->name('home.subscription');
@@ -48,7 +51,7 @@ Route::group([], function () {
     /**
      * Admin Dashboard
      */
-    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'admin']], function () {
 
         // list users and versions
         Route::view('users', 'pages.dashboard.admin.users')
@@ -79,11 +82,12 @@ Route::group([], function () {
 /**
  * Users
  */
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], function () {
     Route::post('referral-code', UseReferralCode::class)
         ->name('users.referral-code');
 
     Route::post('license-request', StoreLicenseRequest::class)
+        ->middleware('throttle:3,1')
         ->name('users.license-request');
 
     Route::delete('disable', DisableAccount::class)
@@ -93,7 +97,7 @@ Route::group(['prefix' => 'user'], function () {
 /**
  * Capes
  */
-Route::group(['prefix' => 'cape'], function () {
+Route::group(['prefix' => 'cape', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
     Route::post('/', [CapesController::class, 'store'])
         ->name('capes.store');
 
@@ -104,11 +108,12 @@ Route::group(['prefix' => 'cape'], function () {
 /**
  * Launcher
  */
-Route::group(['prefix' => 'launcher'], function () {
+Route::group(['prefix' => 'launcher', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
     Route::get('/download', [LauncherController::class, 'download'])
         ->name('launcher.show');
 
     Route::post('/', [LauncherController::class, 'store'])
+        ->middleware('admin')
         ->name('launcher.store');
 });
 
@@ -124,7 +129,10 @@ Route::group(['prefix' => 'connect'], function () {
     });
 });
 
-Route::group(['prefix' => 'notifications'], function () {
+/**
+ * Notification
+ */
+Route::group(['prefix' => 'notifications', 'middleware' => ['auth', 'verified', 'admin']], function () {
     Route::post('/', [NotificationsController::class, 'store'])
         ->name('notifications.store');
 

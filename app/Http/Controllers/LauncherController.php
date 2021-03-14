@@ -7,12 +7,6 @@ use Illuminate\Support\Facades\Storage;
 
 class LauncherController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'subscribed']);
-        $this->middleware('admin')->only('store');
-    }
-
     public function download()
     {
         return Storage::disk('local')->download('launcher/envy.exe');

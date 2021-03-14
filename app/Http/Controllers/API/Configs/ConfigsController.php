@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Configs;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
 use App\Models\Version;
 use App\Rules\ValidVersion;
@@ -12,11 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ConfigsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:api', 'subscribed']);
-    }
-
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -40,14 +34,14 @@ class ConfigsController extends Controller
                 });
         }
 
-        return ConfigResource::collection(
+        return \App\Http\Resources\Config::collection(
             $configs->paginate(Config::PAGE_LIMIT)
         );
     }
 
     public function show($id)
     {
-        return new ConfigResource(
+        return new \App\Http\Resources\Config(
             Config::with(['user:id,name', 'version:id,name'])
                 ->where('id', $id)
                 ->where('public', true)

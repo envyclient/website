@@ -9,7 +9,6 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
         $this->middleware('admin')->only('notifications', 'sales');
     }
 
@@ -49,12 +48,6 @@ class HomeController extends Controller
             'plans' => Plan::where('price', '<>', 0)->get(),
             'end' => $user->hasSubscription() ? now()->diffInDays($user->subscription->end_date, false) : null
         ]);
-    }
-
-    public function discord()
-    {
-        return view('pages.dashboard.discord')
-            ->with('user', auth()->user());
     }
 
     public function notifications()

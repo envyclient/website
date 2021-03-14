@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Auth
  */
-Route::group(['prefix' => 'auth'], function () {
+Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::get('me', [AuthController::class, 'me']);
 });
@@ -21,7 +21,7 @@ Route::group(['prefix' => 'auth'], function () {
 /**
  * Configs
  */
-Route::group([], function () {
+Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
 
     Route::group(['prefix' => 'configs'], function () {
         Route::get('user/{name?}', GetConfigsForUser::class);
@@ -34,7 +34,7 @@ Route::group([], function () {
 /**
  * Versions
  */
-Route::group(['prefix' => 'versions'], function () {
+Route::group(['prefix' => 'versions', 'middleware' => ['auth:api', 'subscribed']], function () {
     Route::get('/', [VersionsController::class, 'index']);
     Route::get('{version}/download-version', [VersionsController::class, 'downloadVersion']);
     Route::get('{version}/download-assets', [VersionsController::class, 'downloadAssets']);
@@ -43,7 +43,7 @@ Route::group(['prefix' => 'versions'], function () {
 /**
  * Minecraft
  */
-Route::group(['prefix' => 'minecraft'], function () {
+Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed']], function () {
     Route::get('{uuid}', [MinecraftController::class, 'show']);
     Route::post('/', [MinecraftController::class, 'store']);
     Route::delete('/', [MinecraftController::class, 'destroy']);
@@ -52,7 +52,7 @@ Route::group(['prefix' => 'minecraft'], function () {
 /**
  * Notifications
  */
-Route::group(['prefix' => 'notifications'], function () {
+Route::group(['prefix' => 'notifications', 'middleware' => ['auth:api', 'subscribed']], function () {
     Route::get('/', [NotificationsController::class, 'index']);
     Route::patch('{id}', [NotificationsController::class, 'update']);
 });
@@ -60,4 +60,5 @@ Route::group(['prefix' => 'notifications'], function () {
 /**
  * Launcher
  */
-Route::get('launcher/latest', GetLauncherVersion::class);
+Route::get('launcher/latest', GetLauncherVersion::class)
+    ->middleware('api');

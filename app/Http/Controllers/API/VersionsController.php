@@ -7,15 +7,9 @@ use App\Models\Version;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class VersionsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:api', 'subscribed']);
-    }
-
     public function index(Request $request)
     {
         $user = $request->user();

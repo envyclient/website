@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CapesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'subscribed']);
-    }
-
     public function store(Request $request)
     {
         $this->validate($request, [
