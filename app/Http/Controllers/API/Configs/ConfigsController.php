@@ -7,7 +7,6 @@ use App\Http\Resources\Config as ConfigResource;
 use App\Models\Config;
 use App\Models\Version;
 use App\Rules\ValidVersion;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,7 +35,7 @@ class ConfigsController extends Controller
 
         if ($request->has('search')) {
             $configs->where('name', 'like', "%$request->search%")
-                ->whereHas('user', function (Builder $query) use ($request) {
+                ->orWhereHas('user', function ($query) use ($request) {
                     $query->where('name', 'like', "%$request->search%");
                 });
         }
