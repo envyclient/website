@@ -25,7 +25,6 @@ class GetConfigsForUser extends ConfigsController
     {
         return ConfigResource::collection(
             $user->configs()
-                ->where('public', true)
                 ->withCount('favorites')
                 ->orderBy('favorites_count', 'desc')
                 ->get()
