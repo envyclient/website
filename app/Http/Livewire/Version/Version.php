@@ -2,19 +2,22 @@
 
 namespace App\Http\Livewire\Version;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Version extends Component
 {
     public int $index;
     public \App\Models\Version $version;
+
     public bool $editMode = false;
+    public string $name = '';
+    public bool $beta = false;
+    public string $changelog = '';
 
     protected array $rules = [
-        'version.name' => 'required|string|max:30',
-        'version.beta' => 'nullable|bool',
+        'name' => 'required|string|max:30',
+        'beta' => 'nullable|bool',
+        'changelog' => 'required|string',
     ];
 
     public function mount(int $index, \App\Models\Version $version)
@@ -28,27 +31,23 @@ class Version extends Component
         return view('livewire.version.version');
     }
 
+    public function editMode()
+    {
+        $this->editMode = true;
+        $this->name = $this->version->name;
+        $this->beta = $this->version->beta;
+        $this->changelog = $this->version->changelog;
+    }
+
     public function save(): void
     {
         $this->validate();
-        $this->version->save();
+
         $this->editMode = false;
-    }
-
-    public function delete(): void
-    {
-        // delete the directory in which the files are held
-        $directory = explode('/', $this->version->version)[1];
-        Storage::deleteDirectory("versions/$directory");
-
-        // deleting the version downloads
-        /*DB::table('user_downloads')
-            ->where('version_id', $this->version->id)
-            ->delete();*/
-
-        // deleting the row from the table
-        $this->version->delete();
-
-        $this->emit('UPDATE_VERSIONS');
+        $this->version->update([
+            'name' => $this->name,
+            'beta' => $this->beta,
+            'changelog' => $this->changelog
+        ]);
     }
 }
