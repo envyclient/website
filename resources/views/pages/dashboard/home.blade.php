@@ -51,45 +51,7 @@
                     </div>
 
                     @if($user->hasCapesAccess())
-                        <div class="mt-3">
-                            <label class="form-label">Cape</label>
-                            <br>
-                            <img src="{{ $user->cape }}"
-                                 alt="cape"
-                                 class="rounded"
-                                 width="256px"
-                                 height="128px">
-
-                            <form action="{{ route('capes.store') }}"
-                                  method="post"
-                                  enctype="multipart/form-data">
-                                @csrf
-
-                                <div class="mb-3">
-                                    <input class="form-control"
-                                           type="file"
-                                           id="cape"
-                                           name="cape"
-                                           accept=".png"
-                                           required>
-                                    <div class="form-text">
-                                        The dimensions must be 2048x1048.
-                                    </div>
-
-                                    @error('cape')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-success inline">Upload</button>
-                                <button type="button" class="btn btn-outline-secondary"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#capes-modal">
-                                    Actions
-                                </button>
-                            </form>
-                        </div>
+                        @livewire('upload-cape')
                     @endif
                 </div>
             </div>
@@ -230,45 +192,6 @@
                         <a role="button" class="btn btn-primary" href="{{ route('launcher.show') }}">
                             Download Launcher
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if($user->hasCapesAccess())
-        <!-- Capes Modal -->
-        <div class="modal fade" id="capes-modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Capes</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div>
-                            <h3>Cape Template</h3>
-                            <a class="btn btn-outline-dark d-inline-block"
-                               href="{{ asset('assets/capes/template.png') }}">
-                                Download
-                            </a>
-                        </div>
-
-                        <div class="mt-3">
-                            <h3>Reset to default cape</h3>
-                            <form action="{{ route('capes.delete') }}"
-                                  method="post"
-                                  class="d-inline-block">
-                                @csrf
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-outline-danger">Reset Cape</button>
-                            </form>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer card-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

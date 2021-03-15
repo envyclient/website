@@ -1,8 +1,26 @@
+@props([
+    'maxFileSize', 'maxTotalFileSize',
+    'minImageWidth', 'maxImageWidth',
+    'minImageHeight', 'maxImageHeight'
+])
+
 <div
     wire:ignore
     x-data="{ pond: null }"
     x-init="
+        FilePond.registerPlugin(
+            FilePondPluginImageValidateSize,
+            FilePondPluginFileValidateSize,
+            FilePondPluginFileValidateType
+        );
         FilePond.setOptions({
+            required: true,
+            maxFileSize: '{{ isset($maxFileSize) ? $maxFileSize : null }}',
+            maxTotalFileSize: '{{ isset($maxTotalFileSize) ? $maxTotalFileSize : null }}',
+            imageValidateSizeMinWidth: '{{ isset($minImageWidth) ? $minImageWidth : 1 }}',
+            imageValidateSizeMaxWidth: '{{ isset($maxImageWidth) ? $maxImageWidth : 65535 }}',
+            imageValidateSizeMinHeight: '{{ isset($minImageHeight) ? $minImageHeight : 1 }}',
+            imageValidateSizeMaxHeight: '{{ isset($maxImageHeight) ? $maxImageHeight : 65535 }}',
             allowMultiple: {{ isset($attributes['multiple']) ? 'true' : 'false' }},
             server: {
                 process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {

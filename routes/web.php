@@ -3,7 +3,6 @@
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\StoreLicenseRequest;
 use App\Http\Controllers\Actions\UseReferralCode;
-use App\Http\Controllers\CapesController;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
@@ -87,17 +86,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 
     Route::delete('disable', DisableAccount::class)
         ->name('users.disable');
-});
-
-/**
- * Capes
- */
-Route::group(['prefix' => 'cape', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
-    Route::post('/', [CapesController::class, 'store'])
-        ->name('capes.store');
-
-    Route::delete('/', [CapesController::class, 'destroy'])
-        ->name('capes.delete');
 });
 
 /**
