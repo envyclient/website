@@ -7,6 +7,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.css">
     <style>
         .anim:hover {
             transition: 50ms;
@@ -218,6 +219,6 @@
 
     </div>
 
-
     @yield('js')
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 @endsection

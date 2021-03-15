@@ -35,12 +35,12 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::cloud()->download($version->version);
+        return Storage::disk('local')->download($version->version);
     }
 
     public function downloadAssets(Request $request, int $id)
     {
         $version = Version::findOrFail($id);
-        return Storage::cloud()->download($version->assets);
+        return Storage::disk('local')->download($version->assets);
     }
 }

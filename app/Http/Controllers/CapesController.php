@@ -10,15 +10,15 @@ class CapesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'cape' => 'required|file|image|mimes:png|dimensions:width=2048,height=1024|max:1024',
+            'cape' => 'bail|required|file|image|mimes:png|dimensions:width=2048,height=1024|max:1024',
         ]);
 
         $file = $request->file('cape');
         $fileName = md5($request->user()->email) . '.png';
-        $path = Storage::cloud()->putFileAs('capes', $file, $fileName, 'public');
+        $path = Storage::disk('public')->putFileAs('capes', $file, $fileName);
 
         $request->user()->update([
-            'cape' => Storage::cloud()->url($path),
+            'cape' => Storage::disk('public')->url($path),
         ]);
 
         return back()->with('success', 'Cape uploaded.');
@@ -28,7 +28,7 @@ class CapesController extends Controller
     {
         // deleting the actual cape
         $hash = md5($request->user()->email);
-        Storage::cloud()->delete("capes/$hash.png");
+        Storage::disk('public')->delete("capes/$hash.png");
 
         $request->user()->update([
             'cape' => asset('assets/capes/default.png'),

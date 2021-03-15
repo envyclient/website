@@ -17,15 +17,13 @@ class UploadVersion extends Component
     public string $name = '';
     public string $changelog = '';
     public bool $beta = false;
-    public $version;
-    public $assets;
+    public $files = [];
 
     protected $rules = [
-        'name' => 'required|string|max:30|unique:versions',
+        'name' => 'bail|required|string|max:30|unique:versions',
         'changelog' => 'required|string',
         'beta' => 'nullable',
-        'version' => 'required|file|max:40000',
-        'assets' => 'required|file|max:10000',
+        'files.*' => 'bail|required|file|max:25000|min:2',
     ];
 
     public function render()
@@ -39,8 +37,13 @@ class UploadVersion extends Component
 
         // store version & assets
         $path = 'versions/' . Str::uuid();
-        $this->version->storeAs($path, 'version.exe', 's3');
-        $this->assets->storeAs($path, 'assets.jar', 's3');
+        foreach ($this->files as $file) {
+            if ($file->extension() === 'jar') {
+                $file->storeAs($path, 'assets.jar');
+            } else {
+                $file->storeAs($path, 'version.exe');
+            }
+        }
 
         Version::create([
             'name' => $this->name,
@@ -67,7 +70,7 @@ class UploadVersion extends Component
         $this->name = '';
         $this->changelog = '';
         $this->beta = false;
-        $this->version = null;
-        $this->assets = null;
+        $this->files = [];
+        $this->dispatchBrowserEvent('filepond-reset');
     }
 }
