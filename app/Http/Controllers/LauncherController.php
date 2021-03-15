@@ -9,7 +9,7 @@ class LauncherController extends Controller
 {
     public function download()
     {
-        return Storage::disk('local')->download('launcher/envy.exe');
+        return Storage::cloud()->download('launcher/envy.exe');
     }
 
     public function store(Request $request)
@@ -20,12 +20,12 @@ class LauncherController extends Controller
         ]);
 
         // updating the version file
-        Storage::put('launcher/latest.json', json_encode([
-            'version' => (double)$request->input('launcher-version'),
+        Storage::cloud()->put('launcher/latest.json', json_encode([
+            'version' => floatval($request->input('launcher-version')),
         ]));
 
         // storing the launcher
-        Storage::disk('local')->putFileAs(
+        Storage::cloud()->putFileAs(
             'launcher/',
             $request->file('launcher'),
             'envy.exe'

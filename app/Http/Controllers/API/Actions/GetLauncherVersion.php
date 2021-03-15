@@ -10,6 +10,6 @@ class GetLauncherVersion extends Controller
 {
     public function __invoke(Request $request)
     {
-        return Storage::disk('local')->get('launcher/latest.json');
+        return Storage::cloud()->get('launcher/latest.json');
     }
 }

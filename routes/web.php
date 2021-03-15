@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\StoreLicenseRequest;
-use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\CapesController;
 use App\Http\Controllers\DiscordController;
@@ -71,10 +70,6 @@ Route::group([], function () {
 
         Route::get('license-requests', ShowLicenseRequests::class)
             ->name('admin.license-requests');
-
-        // upload version
-        Route::post('versions', UploadVersion::class)
-            ->name('admin.versions.upload');
     });
 });
 
