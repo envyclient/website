@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 
 class StoreLicenseRequest extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'throttle:3,1']);
-    }
-
     public function __invoke(Request $request)
     {
         $data = $this->validate($request, [

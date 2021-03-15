@@ -13,10 +13,8 @@
         "@chartisan/echarts": "^2.2.3",
         "@popperjs/core": "^2.8.4",
         "bootstrap": "^5.0.0-beta1",
-        "cross-env": "^7.0.3",
         "echarts": "^5.0.2",
         "laravel-mix": "^6.0.11",
-        "postcss": "^8.2.4",
-        "resolve-url-loader": "^3.1.0"
+        "laravel-mix-purgecss": "^6.0.0"
     }
 }

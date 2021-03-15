@@ -12,8 +12,10 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  * @property string data
  * @property boolean public
  * @property boolean official
+ * @property int version_id
  *
- * @property User user
+ * @property-read User user
+ * @property-read Version version
  */
 class Config extends Model
 {
@@ -27,6 +29,7 @@ class Config extends Model
         'data',
         'public',
         'official',
+        'version_id',
     ];
 
     protected $casts = [
@@ -36,5 +39,10 @@ class Config extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function version()
+    {
+        return $this->belongsTo(Version::class);
     }
 }

@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\StoreLicenseRequest;
-use App\Http\Controllers\Actions\UploadVersion;
 use App\Http\Controllers\Actions\UseReferralCode;
-use App\Http\Controllers\CapesController;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
@@ -17,6 +15,9 @@ use Illuminate\Support\Facades\Route;
  */
 Route::group([], function () {
 
+    /**
+     * Landing Pages
+     */
     Route::group([], function () {
         Route::view('/', 'pages.index')
             ->name('index');
@@ -25,59 +26,62 @@ Route::group([], function () {
             ->name('terms');
     });
 
-    Route::group([], function () {
+    /**
+     * Dashboard
+     */
+    Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('home', [HomeController::class, 'home'])
             ->name('home');
 
         Route::get('profile', [HomeController::class, 'profile'])
             ->name('home.profile');
 
-        Route::get('discord', [HomeController::class, 'discord'])
-            ->name('home.discord');
+        Route::get('discord', function () {
+            return view('pages.dashboard.discord', [
+                'user' => auth()->user(),
+            ]);
+        })->name('home.discord');
 
         Route::get('subscription', [HomeController::class, 'subscription'])
             ->name('home.subscription');
     });
-});
 
-/**
- * Admin Dashboard
- */
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    /**
+     * Admin Dashboard
+     */
+    Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'admin']], function () {
 
-    // list users and versions
-    Route::view('users', 'pages.dashboard.admin.users')
-        ->name('admin.users');
+        // list users and versions
+        Route::view('users', 'pages.dashboard.admin.users')
+            ->name('admin.users');
 
-    Route::view('versions', 'pages.dashboard.admin.versions')
-        ->name('admin.versions');
+        Route::view('versions', 'pages.dashboard.admin.versions')
+            ->name('admin.versions');
 
-    Route::view('referrals', 'pages.dashboard.admin.referrals')
-        ->name('admin.referrals');
+        Route::view('referrals', 'pages.dashboard.admin.referrals')
+            ->name('admin.referrals');
 
-    Route::get('notifications', [HomeController::class, 'notifications'])
-        ->name('admin.notifications');
+        Route::get('notifications', [HomeController::class, 'notifications'])
+            ->name('admin.notifications');
 
-    Route::get('sales', [HomeController::class, 'sales'])
-        ->name('admin.sales');
+        Route::get('sales', [HomeController::class, 'sales'])
+            ->name('admin.sales');
 
-    Route::get('license-requests', ShowLicenseRequests::class)
-        ->name('admin.license-requests');
-
-    // upload version
-    Route::post('versions', UploadVersion::class)
-        ->name('admin.versions.upload');
+        Route::get('license-requests', ShowLicenseRequests::class)
+            ->name('admin.license-requests');
+    });
 });
 
 
 /**
  * Users
  */
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], function () {
     Route::post('referral-code', UseReferralCode::class)
         ->name('users.referral-code');
 
     Route::post('license-request', StoreLicenseRequest::class)
+        ->middleware('throttle:3,1')
         ->name('users.license-request');
 
     Route::delete('disable', DisableAccount::class)
@@ -85,24 +89,14 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 /**
- * Capes
- */
-Route::group(['prefix' => 'cape'], function () {
-    Route::post('/', [CapesController::class, 'store'])
-        ->name('capes.store');
-
-    Route::delete('/', [CapesController::class, 'destroy'])
-        ->name('capes.delete');
-});
-
-/**
  * Launcher
  */
-Route::group(['prefix' => 'launcher'], function () {
+Route::group(['prefix' => 'launcher', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
     Route::get('/download', [LauncherController::class, 'download'])
         ->name('launcher.show');
 
     Route::post('/', [LauncherController::class, 'store'])
+        ->middleware('admin')
         ->name('launcher.store');
 });
 
@@ -118,7 +112,10 @@ Route::group(['prefix' => 'connect'], function () {
     });
 });
 
-Route::group(['prefix' => 'notifications'], function () {
+/**
+ * Notification
+ */
+Route::group(['prefix' => 'notifications', 'middleware' => ['auth', 'verified', 'admin']], function () {
     Route::post('/', [NotificationsController::class, 'store'])
         ->name('notifications.store');
 

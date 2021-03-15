@@ -7,7 +7,7 @@
 @section('body')
     <div class="nav">
         <a href="#" class="logo">
-            <img src="{{ asset('logo.svg') }}" alt="logo">
+            <img src="{{ asset('logo.svg') }}" alt="logo" loading="lazy">
         </a>
         <div class="menu">
             <a href="#features">Features</a>
@@ -25,7 +25,7 @@
         <div class="content">
             <div class="landing-container">
                 <h1><span>Envy</span> Client</h1>
-                <p>Envy is a premium Minecraft Hacked Client with the best features in the market.</p>
+                <p>Envy is a premium Minecraft Hacked Client with the best features on the market.</p>
                 <div class="btns">
                     @guest
                         <a href="{{ route('login') }}" class="btn">Login</a>
@@ -58,24 +58,33 @@
         </h1>
         <div class="feature">
             <div class="feature-image">
-                <img src="{{ asset('assets/features/client.png') }}" alt="feature-image">
+                <img src="{{ asset('assets/features/client.png') }}" alt="feature-image" loading="lazy">
             </div>
             <div class="feature-content" style="margin-left: 30px;">
                 <h1>Client</h1>
                 <ul>
                     <li>Designed to bypass Watchdog.</li>
-                    <li>
-                        Comes with a built-in account manager baked into the multiplayer menu.
-                    </li>
-                    <li>
-                        Supports the use of
-                        <a target="_blank" href="https://thealtening.com/" style="color: white">The Altening</a>.
-                    </li>
                     <li>Features latest OptiFine to provide maximum performance.</li>
                 </ul>
             </div>
         </div>
         <div class="feature right">
+            <div class="feature-content" style="margin-left: 30px;">
+                <h1>Elegant Interface</h1>
+                <p>
+                    Fluent and Consistent design and supports the usage of <a target="_blank"
+                                                                              href="https://thealtening.com/"
+                                                                              style="color: white">The Altening</a>.
+                </p>
+            </div>
+            <div class="feature-image">
+                <img src="{{ asset('assets/features/menu.png') }}" alt="feature-image" loading="lazy">
+            </div>
+        </div>
+        <div class="feature">
+            <div class="feature-image">
+                <img src="{{ asset('assets/features/launcher.png') }}" alt="feature-image" loading="lazy">
+            </div>
             <div class="feature-content">
                 <h1>Custom Launcher</h1>
                 <p>
@@ -83,20 +92,17 @@
                     experience.
                 </p>
             </div>
-            <div class="feature-image">
-                <img src="{{ asset('assets/features/launcher.png') }}" alt="feature-image">
-            </div>
         </div>
-        <div class="feature">
-            <div class="feature-image">
-                <img src="{{ asset('assets/features/configs.png') }}" alt="feature-image">
-            </div>
+        <div class="feature right">
             <div class="feature-content">
                 <h1>Web Configs</h1>
                 <p>
                     The new config system allows the ability to store and load configs from the web, providing complete
                     unity across different versions.
                 </p>
+            </div>
+            <div class="feature-image">
+                <img src="{{ asset('assets/features/configs.png') }}" alt="feature-image" loading="lazy">
             </div>
         </div>
     </div>
@@ -113,7 +119,8 @@
                     <div class="video-image">
                         <img id="video-1-image"
                              src="https://i1.ytimg.com/vi/SL5BOCkN_4E/maxresdefault.jpg"
-                             alt="thumbnail">
+                             alt="thumbnail"
+                             loading="lazy">
                         <span onClick="playVideo(this, 'video-1', 'video-1-image');"></span>
                         <iframe id="video-1"
                                 class="video-image"
@@ -128,7 +135,8 @@
                     <div class="video-image">
                         <img id="video-2-image"
                              src="https://i1.ytimg.com/vi/PrlANlbK95Q/maxresdefault.jpg"
-                             alt="thumbnail">
+                             alt="thumbnail"
+                             loading="lazy">
                         <span onClick="playVideo(this, 'video-2', 'video-2-image');"></span>
                         <iframe id="video-2"
                                 class="video-image"

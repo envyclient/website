@@ -7,15 +7,10 @@ use App\Models\Plan;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified']);
-        $this->middleware('admin')->only('notifications', 'sales');
-    }
-
     public function home()
     {
-        $user = auth()->user()
+        $user = auth()
+            ->user()
             ->load(['subscription', 'configs', 'licenseRequest']);
 
         return view('pages.dashboard.home', [
@@ -29,7 +24,8 @@ class HomeController extends Controller
 
     public function profile()
     {
-        $user = auth()->user()
+        $user = auth()
+            ->user()
             ->load(['subscription', 'billingAgreement']);
 
         return view('pages.dashboard.security')
@@ -38,7 +34,8 @@ class HomeController extends Controller
 
     public function subscription()
     {
-        $user = auth()->user()
+        $user = auth()
+            ->user()
             ->load(['subscription.plan', 'billingAgreement.plan']);
 
         return view('pages.dashboard.subscriptions', [
@@ -48,15 +45,10 @@ class HomeController extends Controller
         ]);
     }
 
-    public function discord()
-    {
-        return view('pages.dashboard.discord')
-            ->with('user', auth()->user());
-    }
-
     public function notifications()
     {
-        $notifications = auth()->user()
+        $notifications = auth()
+            ->user()
             ->notifications()
             ->paginate(10);
 

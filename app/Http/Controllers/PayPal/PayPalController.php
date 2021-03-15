@@ -56,7 +56,6 @@ class PayPalController extends Controller
             'plan_id' => $request->id
         ]);
 
-        // TODO
         return redirect()->away($response->json()['links'][0]['href']);
     }
 

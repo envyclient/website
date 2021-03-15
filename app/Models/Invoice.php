@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string method
  * @property int price
  *
- * @property User user
- * @property Subscription subscription
+ * @property-read User user
+ * @property-read Subscription subscription
  */
 class Invoice extends Model
 {

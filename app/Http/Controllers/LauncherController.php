@@ -7,12 +7,6 @@ use Illuminate\Support\Facades\Storage;
 
 class LauncherController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'subscribed']);
-        $this->middleware('admin')->only('store');
-    }
-
     public function download()
     {
         return Storage::disk('local')->download('launcher/envy.exe');
@@ -26,8 +20,8 @@ class LauncherController extends Controller
         ]);
 
         // updating the version file
-        Storage::put('launcher/latest.json', json_encode([
-            'version' => (double)$request->input('launcher-version'),
+        Storage::disk('local')->put('launcher/latest.json', json_encode([
+            'version' => floatval($request->input('launcher-version')),
         ]));
 
         // storing the launcher

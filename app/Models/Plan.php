@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int config_limit
  * @property bool beta_access
  * @property bool capes_access
+ *
+ * @property-read Collection subscriptions
  */
 class Plan extends Model
 {

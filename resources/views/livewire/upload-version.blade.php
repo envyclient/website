@@ -37,82 +37,39 @@
             @enderror
         </div>
 
-        <div class="mb-3 form-check form-switch">
-            <label class="form-check-label" for="beta">
-                Is Beta Version?
-            </label>
-            <input class="form-check-input"
-                   type="checkbox"
-                   id="beta"
-                   wire:model.defer="beta">
-        </div>
-
-        <div class="row mb-3">
-
-            <div class="col"
-                 x-data="{ uploading: false, progress: 0 }"
-                 x-on:livewire-upload-start="uploading = true"
-                 x-on:livewire-upload-finish="uploading = false"
-                 x-on:livewire-upload-error="uploading = false"
-                 x-on:livewire-upload-progress="progress = $event.detail.progress">
-                <label for="formFile" class="form-label">Version</label>
-                <input class="form-control @error('version') is-invalid @enderror"
-                       type="file"
-                       id="version"
-                       wire:model="version"
-                       accept=".exe"
-                       required>
-
-                <div x-show="uploading">
-                    <progress max="100" x-bind:value="progress"></progress>
-                </div>
-
-                @error('version')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+            <div class="mb-3 form-check form-switch">
+                <label class="form-check-label" for="beta">
+                    Is Beta Version?
+                </label>
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="beta"
+                       wire:model.defer="beta">
             </div>
 
-            <div class="col"
-                 x-data="{ uploading: false, progress: 0 }"
-                 x-on:livewire-upload-start="uploading = true"
-                 x-on:livewire-upload-finish="uploading = false"
-                 x-on:livewire-upload-error="uploading = false"
-                 x-on:livewire-upload-progress="progress = $event.detail.progress">
-                <label for="formFile" class="form-label">Assets</label>
-                <input class="form-control @error('assets') is-invalid @enderror"
-                       type="file"
-                       id="assets"
-                       wire:model="assets"
-                       accept=".jar"
-                       required>
-
-                <div x-show="uploading">
-                    <progress max="100" x-bind:value="progress"></progress>
-                </div>
-
-                @error('assets')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+            <div class="mb-3">
+                <label class="form-label">Files</label>
+                <x-filepond wire:model="files"
+                            maxFileSize="21000KB"
+                            maxTotalFileSize="25000KB"
+                            multiple
+                            required/>
             </div>
-        </div>
 
-        <x-loading wire:loading wire:target="submit"/>
-        <button type="submit"
-                class="btn btn-success"
-                wire:loading.attr="disabled">
-            Upload
-        </button>
-        <button type="button"
-                class="btn btn-secondary"
-                data-bs-toggle="modal"
-                data-bs-target="#update-launcher"
-                wire:loading.attr="disabled">
-            Update Launcher
-        </button>
+            <x-loading wire:loading wire:target="submit"/>
+            <button type="submit"
+                    class="btn btn-success"
+                    {{ count($files) === 2 ? null : 'disabled' }}
+                    wire:loading.attr="disabled">
+                Upload
+            </button>
+            <button type="button"
+                    class="btn btn-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#update-launcher"
+                    wire:loading.attr="disabled">
+                Update Launcher
+            </button>
     </form>
 
     <!-- Update Launcher Modal -->

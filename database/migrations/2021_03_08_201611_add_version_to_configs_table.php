@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserDownloadsTable extends Migration
+class AddVersionToConfigsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateUserDownloadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_downloads', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('version_id')->constrained();
-            $table->timestamps();
+        Schema::table('configs', function (Blueprint $table) {
+            $table->unsignedBigInteger('version_id');
+            //$table->foreignId('version_id')->constrained();
         });
     }
 
@@ -28,6 +26,8 @@ class CreateUserDownloadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_downloads');
+        Schema::table('configs', function (Blueprint $table) {
+            $table->removeColumn('version_id');
+        });
     }
 }

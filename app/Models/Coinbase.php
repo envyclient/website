@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string status
  * @property string code
  *
- * @property User user
- * @property Plan plan
+ * @property-read User user
+ * @property-read Plan plan
  */
 class Coinbase extends Model
 {

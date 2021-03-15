@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class MinecraftController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:api', 'subscribed']);
-    }
-
     public function show($uuid)
     {
         $user = User::where('current_account', $uuid)
@@ -36,9 +31,7 @@ class MinecraftController extends Controller
             'current_account' => $validated['uuid'],
         ]);
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return self::ok();
     }
 
     public function destroy(Request $request)
@@ -47,8 +40,6 @@ class MinecraftController extends Controller
             'current_account' => null,
         ]);
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return self::ok();
     }
 }

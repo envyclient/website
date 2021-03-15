@@ -7,15 +7,9 @@ use App\Models\Version;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class VersionsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:api', 'subscribed']);
-    }
-
     public function index(Request $request)
     {
         $user = $request->user();
@@ -26,7 +20,7 @@ class VersionsController extends Controller
         return $versions->get();
     }
 
-    public function downloadVersion(Request $request, $id)
+    public function downloadVersion(Request $request, int $id)
     {
         $user = $request->user();
         $version = Version::findOrFail($id);
@@ -41,12 +35,12 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::download($version->version);
+        return Storage::disk('local')->download($version->version);
     }
 
-    public function downloadAssets(Request $request, $id)
+    public function downloadAssets(Request $request, int $id)
     {
         $version = Version::findOrFail($id);
-        return Storage::download($version->assets);
+        return Storage::disk('local')->download($version->assets);
     }
 }

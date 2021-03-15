@@ -11,7 +11,7 @@ class CreateReferralCode extends Component
     public $user;
     public $code;
 
-    protected $rules = [
+    protected array $rules = [
         'user' => [
             'required',
             'string',

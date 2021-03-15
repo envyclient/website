@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Version;
 use App\Notifications\ClientNotification;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -16,15 +17,13 @@ class UploadVersion extends Component
     public string $name = '';
     public string $changelog = '';
     public bool $beta = false;
-    public $version;
-    public $assets;
+    public $files = [];
 
-    protected $rules = [
-        'name' => 'required|string|max:30|unique:versions',
+    protected array $rules = [
+        'name' => 'bail|required|string|max:30|unique:versions',
         'changelog' => 'required|string',
         'beta' => 'nullable',
-        'version' => 'required|file|max:40000',
-        'assets' => 'required|file|max:10000',
+        'files.*' => 'bail|required|file|max:25000|min:2',
     ];
 
     public function render()
@@ -37,9 +36,14 @@ class UploadVersion extends Component
         $this->validate();
 
         // store version & assets
-        $path = 'versions/' . bin2hex(openssl_random_pseudo_bytes(10));
-        $this->version->storeAs($path, 'version.exe', 'local');
-        $this->assets->storeAs($path, 'assets.jar', 'local');
+        $path = 'versions/' . Str::uuid();
+        foreach ($this->files as $file) {
+            if ($file->extension() === 'jar') {
+                $file->storeAs($path, 'assets.jar');
+            } else {
+                $file->storeAs($path, 'version.exe');
+            }
+        }
 
         Version::create([
             'name' => $this->name,
@@ -66,7 +70,7 @@ class UploadVersion extends Component
         $this->name = '';
         $this->changelog = '';
         $this->beta = false;
-        $this->version = null;
-        $this->assets = null;
+        $this->files = [];
+        $this->resetFilePond();
     }
 }

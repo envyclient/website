@@ -2,17 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Config extends JsonResource
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param Request $request
-     * @return array
-     */
     public function toArray($request)
     {
         return [
@@ -24,8 +17,9 @@ class Config extends JsonResource
             'favorites' => $this->favorites_count,
             'is_favorite' => $this->isFavoritedBy(auth()->user()),
             'user' => [
-                'name' => $this->user->name
+                'name' => $this->user->name,
             ],
+            'version' => floatval(explode(' ', $this->version->name)[1]),
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];

@@ -7,75 +7,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <style>
-        /*
-         * Sidebar
-         */
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            padding: 20px 0 0;
-            background-color: #303030;
-            z-index: 100;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        @media (max-width: 992px) {
-            .sidebar {
-                padding-top: 5rem;
-            }
-        }
-
-        .sidebar .nav-link {
-            color: white;
-            text-shadow: 1px 1px #666;
-            background-color: #1c1c1c;
-            text-align: inherit;
-            border: none;
-            height: 50px;
-            padding-top: 12px;
-        }
-
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            color: #fff;
-            text-decoration: none;
-            background-color: #0f8c1d;
-            border: none;
-        }
-
-        .sidebar-heading {
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /*
-         * Navbar
-         */
-
-        .navbar-brand {
-            padding-top: .75rem;
-            padding-bottom: .75rem;
-            font-size: 1rem;
-        }
-
-        .navbar .navbar-toggler {
-            top: .25rem;
-            right: 1rem;
-        }
-
-        .navbar {
-            background-color: #303030 !important;
-            padding: .75rem 1rem;
-            border-width: 0;
-            border-radius: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.css">
     <style>
         .anim:hover {
             transition: 50ms;
@@ -287,6 +219,12 @@
 
     </div>
 
-
     @yield('js')
+    <script
+        src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script
+        src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script
+        src="https://unpkg.com/filepond-plugin-image-validate-size/dist/filepond-plugin-image-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 @endsection

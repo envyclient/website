@@ -12,7 +12,7 @@ class UpdatePassword extends Component
     public string $password = '';
     public string $password_confirmation = '';
 
-    protected $rules = [
+    protected array $rules = [
         'current_password' => 'required',
         'password' => 'required|min:8|confirmed|different:current_password',
         'password_confirmation' => 'required_with:password'

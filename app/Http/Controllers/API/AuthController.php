@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('api');
-    }
-
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -23,9 +18,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+            self::bad();
         }
 
         if (!$token = auth()->attempt(request(['email', 'password']))) {
@@ -42,9 +35,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => '400 Bad Request'
-            ], 400);
+            self::bad();
         }
 
         $user = User::where('hwid', $request->hwid)->firstOrFail();

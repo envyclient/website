@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class FavoriteConfig extends ConfigsController
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function __invoke(Request $request, $id)
     {
         $config = Config::findOrFail($id);
@@ -27,8 +22,6 @@ class FavoriteConfig extends ConfigsController
 
         $user->toggleFavorite($config);
 
-        return response()->json([
-            'message' => '200 OK'
-        ]);
+        return self::ok();
     }
 }

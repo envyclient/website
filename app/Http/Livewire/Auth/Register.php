@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Auth;
 
-use App\Models\ReferralCode;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -17,7 +16,7 @@ class Register extends Component
     public string $password = '';
     public string $passwordConfirmation = '';
 
-    protected $rules = [
+    protected array $rules = [
         'name' => [
             'required',
             'string',

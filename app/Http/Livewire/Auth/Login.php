@@ -12,7 +12,7 @@ class Login extends Component
     public string $password = '';
     public bool $remember = false;
 
-    protected $rules = [
+    protected array $rules = [
         'email' => 'required|string|email',
         'password' => 'required|string',
     ];

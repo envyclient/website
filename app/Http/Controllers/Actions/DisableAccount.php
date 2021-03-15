@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class DisableAccount extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified']);
-    }
-
     public function __invoke(Request $request): RedirectResponse
     {
         $user = $request->user();
