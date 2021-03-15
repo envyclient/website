@@ -50,6 +50,8 @@
             <div class="mb-3">
                 <label class="form-label">Files</label>
                 <x-filepond wire:model="files"
+                            maxFileSize="21000KB"
+                            maxTotalFileSize="25000KB"
                             multiple
                             required/>
             </div>
