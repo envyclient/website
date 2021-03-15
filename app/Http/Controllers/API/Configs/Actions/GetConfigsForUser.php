@@ -28,6 +28,7 @@ class GetConfigsForUser extends ConfigsController
                 ->where('public', true)
                 ->withCount('favorites')
                 ->orderBy('favorites_count', 'desc')
+                ->get()
         );
     }
 
