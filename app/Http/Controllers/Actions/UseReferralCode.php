@@ -12,7 +12,7 @@ class UseReferralCode extends Controller
     public function __invoke(Request $request): RedirectResponse
     {
         $data = $this->validate($request, [
-            'referral-code' => 'required|string|exists:referral_codes,code',
+            'referral-code' => ['required', 'string', 'exists:referral_codes,code'],
         ]);
 
         $user = $request->user();

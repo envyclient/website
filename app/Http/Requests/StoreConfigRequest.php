@@ -15,10 +15,10 @@ class StoreConfigRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:15',
+            'name' => ['required', 'string', 'max:15'],
             'version' => ['required', 'string', new ValidVersion],
-            'data' => 'required|json',
-            'public' => 'required|boolean',
+            'data' => ['required', 'json'],
+            'public' => ['required', 'boolean'],
         ];
     }
 }

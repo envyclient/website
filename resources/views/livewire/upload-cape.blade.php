@@ -14,6 +14,7 @@
                         maxFileSize="1024KB"
                         maxImageWidth="2048"
                         maxImageHeight="1024"
+                        required
             />
             <div class="form-text">
                 The dimensions must be 2048x1024.

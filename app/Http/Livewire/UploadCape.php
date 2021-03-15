@@ -13,8 +13,16 @@ class UploadCape extends Component
 
     public $cape;
 
-    public array $rules = [
-        'cape' => 'bail|required|file|image|mimes:png|dimensions:width=2048,height=1024|max:1024',
+    protected array $rules = [
+        'cape' => [
+            'bail',
+            'required',
+            'file',
+            'image',
+            'mimes:png',
+            'dimensions:width=2048,height=1024',
+            'max:1024',
+        ],
     ];
 
     public function render()
@@ -36,7 +44,7 @@ class UploadCape extends Component
             'cape' => Storage::disk('public')->url($path),
         ]);
 
-        $this->dispatchBrowserEvent('filepond-reset');
+        $this->resetFilePond();
     }
 
     public function resetCape()

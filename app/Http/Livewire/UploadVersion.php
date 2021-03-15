@@ -19,7 +19,7 @@ class UploadVersion extends Component
     public bool $beta = false;
     public $files = [];
 
-    protected $rules = [
+    protected array $rules = [
         'name' => 'bail|required|string|max:30|unique:versions',
         'changelog' => 'required|string',
         'beta' => 'nullable',
@@ -71,6 +71,6 @@ class UploadVersion extends Component
         $this->changelog = '';
         $this->beta = false;
         $this->files = [];
-        $this->dispatchBrowserEvent('filepond-reset');
+        $this->resetFilePond();
     }
 }

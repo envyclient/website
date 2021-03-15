@@ -9,7 +9,7 @@ class Confirm extends Component
 {
     public string $password = '';
 
-    protected $rules = [
+    protected array $rules = [
         'password' => 'required|string|password',
     ];
 

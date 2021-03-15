@@ -17,7 +17,7 @@ class Reset extends Component
     public string $password = '';
     public string $passwordConfirmation = '';
 
-    protected $rules = [
+    protected array $rules = [
         'token' => 'required|string',
         'email' => 'required|string|email',
         'password' => 'required|string|min:8|same:passwordConfirmation',

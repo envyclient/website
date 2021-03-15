@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Component;
 use Stripe\Stripe;
 
 class AppServiceProvider extends ServiceProvider
@@ -50,5 +51,7 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         Stripe::setApiKey(config('stripe.secret'));
+
+        Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));
     }
 }
