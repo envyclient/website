@@ -18,7 +18,7 @@ class StoreConfigRequest extends FormRequest
             'name' => 'required|string|max:15',
             'version' => ['required', 'string', new ValidVersion],
             'data' => 'required|json',
-            'public' => 'nullable|boolean',
+            'public' => 'required|boolean',
         ];
     }
 }

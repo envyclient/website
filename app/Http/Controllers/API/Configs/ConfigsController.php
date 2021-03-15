@@ -68,7 +68,7 @@ class ConfigsController extends Controller
             'name' => $validated['name'],
             'version_id' => Version::where('name', "Envy {$validated['version']}")->first()->id,
             'data' => $validated['data'],
-            'public' => $request->has('public'),
+            'public' => boolval($validated['public']),
         ]);
 
         return response()->json([
