@@ -7,7 +7,7 @@
 @section('body')
     <div class="nav">
         <a href="#" class="logo">
-            <img src="{{ asset('logo.svg') }}" alt="logo">
+            <img src="{{ asset('logo.svg') }}" alt="logo" loading="lazy">
         </a>
         <div class="menu">
             <a href="#features">Features</a>
@@ -58,7 +58,7 @@
         </h1>
         <div class="feature">
             <div class="feature-image">
-                <img src="{{ asset('assets/features/client.png') }}" alt="feature-image">
+                <img src="{{ asset('assets/features/client.png') }}" alt="feature-image" loading="lazy">
             </div>
             <div class="feature-content" style="margin-left: 30px;">
                 <h1>Client</h1>
@@ -73,17 +73,17 @@
                 <h1>Elegant Interface</h1>
                 <p>
                     Fluent and Consistent design and supports the usage of <a target="_blank"
-                                                                             href="https://thealtening.com/"
-                                                                             style="color: white">The Altening</a>.
+                                                                              href="https://thealtening.com/"
+                                                                              style="color: white">The Altening</a>.
                 </p>
             </div>
             <div class="feature-image">
-                <img src="{{ asset('assets/features/menu.png') }}" alt="feature-image">
+                <img src="{{ asset('assets/features/menu.png') }}" alt="feature-image" loading="lazy">
             </div>
         </div>
         <div class="feature">
             <div class="feature-image">
-                <img src="{{ asset('assets/features/launcher.png') }}" alt="feature-image">
+                <img src="{{ asset('assets/features/launcher.png') }}" alt="feature-image" loading="lazy">
             </div>
             <div class="feature-content">
                 <h1>Custom Launcher</h1>
@@ -102,7 +102,7 @@
                 </p>
             </div>
             <div class="feature-image">
-                <img src="{{ asset('assets/features/configs.png') }}" alt="feature-image">
+                <img src="{{ asset('assets/features/configs.png') }}" alt="feature-image" loading="lazy">
             </div>
         </div>
     </div>
@@ -119,7 +119,8 @@
                     <div class="video-image">
                         <img id="video-1-image"
                              src="https://i1.ytimg.com/vi/SL5BOCkN_4E/maxresdefault.jpg"
-                             alt="thumbnail">
+                             alt="thumbnail"
+                             loading="lazy">
                         <span onClick="playVideo(this, 'video-1', 'video-1-image');"></span>
                         <iframe id="video-1"
                                 class="video-image"
@@ -134,7 +135,8 @@
                     <div class="video-image">
                         <img id="video-2-image"
                              src="https://i1.ytimg.com/vi/PrlANlbK95Q/maxresdefault.jpg"
-                             alt="thumbnail">
+                             alt="thumbnail"
+                             loading="lazy">
                         <span onClick="playVideo(this, 'video-2', 'video-2-image');"></span>
                         <iframe id="video-2"
                                 class="video-image"

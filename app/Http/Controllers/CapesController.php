@@ -15,11 +15,11 @@ class CapesController extends Controller
 
         $file = $request->file('cape');
         $fileName = md5($request->user()->email) . '.png';
-        Storage::disk('public')->putFileAs('capes', $file, $fileName);
+        $path = Storage::cloud()->putFileAs('capes', $file, $fileName, 'public');
 
-        $request->user()->fill([
-            'cape' => asset("storage/capes/$fileName"),
-        ])->save();
+        $request->user()->update([
+            'cape' => Storage::cloud()->url($path),
+        ]);
 
         return back()->with('success', 'Cape uploaded.');
     }
@@ -28,11 +28,11 @@ class CapesController extends Controller
     {
         // deleting the actual cape
         $hash = md5($request->user()->email);
-        Storage::disk('public')->delete("capes/$hash.png");
+        Storage::cloud()->delete("capes/$hash.png");
 
-        $request->user()->fill([
+        $request->user()->update([
             'cape' => asset('assets/capes/default.png'),
-        ])->save();
+        ]);
 
         return back()->with('success', 'Cape reset.');
     }
