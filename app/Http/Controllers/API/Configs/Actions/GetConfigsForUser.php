@@ -14,9 +14,9 @@ use Illuminate\Support\Str;
 
 class GetConfigsForUser extends ConfigsController
 {
-    public function __invoke(Request $request, string $name = null): JsonResponse|AnonymousResourceCollection
+    public function __invoke(Request $request, $name = null): JsonResponse|AnonymousResourceCollection
     {
-        return $name === null
+        return is_null($name)
             ? self::getConfigsForAuthUser($request->user())
             : self::getConfigsForSearchUser($request);
     }
