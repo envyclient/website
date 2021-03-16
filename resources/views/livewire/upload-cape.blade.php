@@ -21,9 +21,23 @@
             </div>
         </div>
         <button type="submit" class="btn btn-success inline">Upload Cape</button>
-        <button class="btn btn-outline-danger" wire:click="resetCape">Reset Cape</button>
-        <a class="btn btn-outline-dark" href="{{ asset('assets/capes/template.png') }}">
+        <a type="button" class="btn btn-outline-danger" wire:click="resetCape">Reset Cape</a>
+        <a type="button" class="btn btn-outline-dark" href="{{ asset('assets/capes/template.png') }}" download>
             Download Template
         </a>
+        <span
+            x-data="{ open: false, message: null }"
+            x-init="
+                @this.on('notify-cape', (m) => {
+                    if (open === false) setTimeout(() => { open = false; message = null; }, 2500);
+                    open = true;
+                    message = m;
+                })
+            "
+            x-show.transition.out.duration.1000ms="open"
+            x-text="message"
+            style="display: none;"
+            class="text-muted"
+        ></span>
     </form>
 </div>

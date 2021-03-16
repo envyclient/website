@@ -12,7 +12,7 @@
     </div>
 
     @if($user->subscription === null)
-        {{-- Users subscription is being processed --}}
+        {{-- User's subscription is being processed --}}
         @if($user->billingAgreement !== null)
             <div class="alert alert-primary" role="alert">
                 Your subscription is currently being processed.

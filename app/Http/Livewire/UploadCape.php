@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -45,6 +44,7 @@ class UploadCape extends Component
         ]);
 
         $this->resetFilePond();
+        $this->emitSelf('notify-cape', 'Cape Uploaded!');
     }
 
     public function resetCape()
@@ -59,7 +59,6 @@ class UploadCape extends Component
             'cape' => asset('assets/capes/default.png'),
         ]);
 
-        return redirect()
-            ->intended(RouteServiceProvider::HOME);
+        $this->emitSelf('notify-cape', 'Cape Reset!');
     }
 }
