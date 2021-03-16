@@ -9,11 +9,12 @@
     x-data="{ pond: null }"
     x-init="
         FilePond.registerPlugin(
-            FilePondPluginImageValidateSize,
             FilePondPluginFileValidateSize,
-            FilePondPluginFileValidateType
+            FilePondPluginFileValidateType,
+            FilePondPluginImageValidateSize,
         );
         FilePond.setOptions({
+            credits: false,
             required: true,
             maxFileSize: '{{ isset($maxFileSize) ? $maxFileSize : null }}',
             maxTotalFileSize: '{{ isset($maxTotalFileSize) ? $maxTotalFileSize : null }}',

@@ -2,12 +2,10 @@
 
 @section('scripts')
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 @endsection
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.css">
     <style>
         .anim:hover {
             transition: 50ms;
@@ -220,11 +218,4 @@
     </div>
 
     @yield('js')
-    <script
-        src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-    <script
-        src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script
-        src="https://unpkg.com/filepond-plugin-image-validate-size/dist/filepond-plugin-image-validate-size.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 @endsection
