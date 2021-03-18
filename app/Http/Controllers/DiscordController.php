@@ -27,7 +27,7 @@ class DiscordController extends Controller
             $user = Socialite::driver('discord')
                 ->redirectUrl(config('services.discord.redirect_connect'))
                 ->user();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return redirect('discord')->with('error', 'Connection cancelled.');
         }
 
