@@ -10,11 +10,9 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@chartisan/echarts": "^2.2.3",
         "@popperjs/core": "^2.8.4",
         "alpinejs": "^2.8.1",
         "bootstrap": "^5.0.0-beta1",
-        "echarts": "^5.0.2",
         "filepond": "^4.25.3",
         "filepond-plugin-file-validate-size": "^2.2.2",
         "filepond-plugin-file-validate-type": "^1.2.5",

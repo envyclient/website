@@ -2,12 +2,6 @@ require('bootstrap');
 require('alpinejs');
 
 /**
- * Chartisan & ECharts
- */
-require('echarts');
-require('@chartisan/echarts');
-
-/**
  * FilePond
  */
 window.FilePond = require('filepond');

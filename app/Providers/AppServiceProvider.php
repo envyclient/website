@@ -2,14 +2,10 @@
 
 namespace App\Providers;
 
-use App\Charts\SalesChart;
-use App\Charts\UsersChart;
-use App\Charts\VersionDownloadsChart;
 use App\Models\Invoice;
 use App\Models\User;
 use App\Observers\InvoiceObserver;
 use App\Observers\UserObserver;
-use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -32,10 +28,9 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
-     * @param Charts $charts
      * @return void
      */
-    public function boot(Charts $charts)
+    public function boot()
     {
         Schema::defaultStringLength(191);
         JsonResource::withoutWrapping();
@@ -43,12 +38,6 @@ class AppServiceProvider extends ServiceProvider
 
         User::observe(UserObserver::class);
         Invoice::observe(InvoiceObserver::class);
-
-        $charts->register([
-            UsersChart::class,
-            VersionDownloadsChart::class,
-            SalesChart::class,
-        ]);
 
         Stripe::setApiKey(config('stripe.secret'));
 
