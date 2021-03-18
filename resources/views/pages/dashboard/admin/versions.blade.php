@@ -11,8 +11,6 @@
                 Versions
             </div>
 
-            <x-bar-chart name="version_downloads_chart"/>
-
             @livewire('version.list-versions')
         </div>
 

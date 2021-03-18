@@ -64,9 +64,6 @@ Route::group([], function () {
         Route::get('notifications', [HomeController::class, 'notifications'])
             ->name('admin.notifications');
 
-        Route::get('sales', [HomeController::class, 'sales'])
-            ->name('admin.sales');
-
         Route::get('license-requests', ShowLicenseRequests::class)
             ->name('admin.license-requests');
     });

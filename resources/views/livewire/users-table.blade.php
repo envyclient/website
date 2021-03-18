@@ -1,5 +1,4 @@
 <div>
-
     <div class="row">
         <div class="col">
             <input class="form-control" type="text" placeholder="Name" wire:model="name">
@@ -193,5 +192,4 @@
             </div>
         </form>
     @endif
-
 </div>

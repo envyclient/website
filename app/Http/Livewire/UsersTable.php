@@ -75,7 +75,7 @@ class UsersTable extends Component
         }
 
         return view('livewire.users-table')->with([
-            'users' => $user->orderBy('id')->paginate(10),
+            'users' => $user->orderBy('id')->paginate(20),
         ]);
     }
 
@@ -112,15 +112,5 @@ class UsersTable extends Component
                 'end_date' => now()->addMonth(),
             ]);
         }
-    }
-
-    public function updatingName()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingType()
-    {
-        $this->resetPage();
     }
 }
