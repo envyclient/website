@@ -6,6 +6,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">--}}
     <style>
         .anim:hover {
             transition: 50ms;
@@ -165,19 +166,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link {{ Route::is('admin.sales') ? 'active' : null }}"
-                                   href="{{ route('admin.sales') }}">
-                                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
-                                         style="margin: 0 10px 3px 0;">
-                                        <path
-                                            d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                        <path
-                                            d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6z"/>
-                                    </svg>
-                                    Sales
-                                </a>
-                            </li>
-                            <li>
                                 <a class="nav-link {{ Route::is('admin.license-requests') ? 'active' : null }}"
                                    href="{{ route('admin.license-requests') }}">
                                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"
@@ -192,8 +180,7 @@
                         @endadmin
                     </div>
 
-                    <footer class="footer mt-auto py-2"
-                            style="background-color: #1c1c1c; width: inherit;">
+                    <footer class="footer mt-auto py-2" style="background-color: #1c1c1c; width: inherit;">
                         <div class="container">
                             @livewire('user.show-profile-image')
                         </div>
@@ -216,6 +203,264 @@
         </div>
 
     </div>
+    {{--<div class="h-screen flex overflow-hidden bg-cool-gray-100" x-data="{ sidebarOpen: false }"
+         @keydown.window.escape="sidebarOpen = false">
 
+        <!-- Off-canvas menu for mobile -->
+        <div x-show="sidebarOpen" class="md:hidden" style="display: none;">
+            <div class="fixed inset-0 flex z-40">
+                <div @click="sidebarOpen = false" x-show="sidebarOpen"
+                     x-description="Off-canvas menu overlay, show/hide based on off-canvas menu state."
+                     x-transition:enter="transition-opacity ease-linear duration-300"
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition-opacity ease-linear duration-300"
+                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0"
+                     style="display: none;">
+                    <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
+                </div>
+                <div x-show="sidebarOpen" x-description="Off-canvas menu, show/hide based on off-canvas menu state."
+                     x-transition:enter="transition ease-in-out duration-300 transform"
+                     x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+                     x-transition:leave="transition ease-in-out duration-300 transform"
+                     x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full"
+                     class="relative flex-1 flex flex-col max-w-xs w-full bg-indigo-800" style="display: none;">
+                    <div class="absolute top-0 right-0 -mr-14 p-1">
+                        <button x-show="sidebarOpen" @click="sidebarOpen = false"
+                                class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
+                                aria-label="Close sidebar" style="display: none;">
+                            <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                        <div class="flex-shrink-0 flex items-center px-4">
+                            <img class="h-8 w-auto" src="/img/logos/workflow-logo-on-brand.svg" alt="Workflow">
+                        </div>
+                        <nav class="mt-5 px-2 space-y-1">
+                            <a href="/dashboard"
+                               class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                                <svg
+                                    class="mr-4 h-6 w-6 text-indigo-400 group-hover:text-indigo-300 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                    stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"></path>
+                                </svg>
+                                Dashboard
+                            </a>
+                            <a href="/dashboard"
+                               class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                                <svg
+                                    class="mr-4 h-6 w-6 text-indigo-400 group-hover:text-indigo-300 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                    stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"></path>
+                                </svg>
+                                Dashboard
+                            </a>
+                            <a href="/dashboard"
+                               class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                                <svg
+                                    class="mr-4 h-6 w-6 text-indigo-400 group-hover:text-indigo-300 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                    stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"></path>
+                                </svg>
+                                Dashboard
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="flex-shrink-0 flex border-t border-indigo-700 p-4">
+                        <a href="/profile" class="flex-shrink-0 group block focus:outline-none">
+                            <div class="flex items-center">
+                                <div>
+                                    <img class="inline-block h-10 w-10 rounded-full"
+                                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
+                                         alt="">
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base leading-6 font-medium text-white">
+                                        Paul Weamer
+                                    </p>
+                                    <p class="text-sm leading-5 font-medium text-indigo-300 group-hover:text-indigo-100 group-focus:underline transition ease-in-out duration-150">
+                                        View profile
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-shrink-0 w-14">
+                    <!-- Force sidebar to shrink to fit close icon -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Static sidebar for desktop -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 border-r border-gray-200 bg-indigo-800">
+                <div class="h-0 flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+                    <div class="flex items-center flex-shrink-0 px-4">
+                        <img class="h-7 w-auto" src="/assets/logo.svg" alt="Surge Logo">
+                    </div>
+                    <!-- Sidebar component, swap this element with another sidebar if you like -->
+                    <nav class="mt-5 space-y-1 flex-1 px-2 bg-indigo-800">
+                        <p class="px-2 text-gray-400 text-l font-semibold tracking-wide">
+                            HOME
+                        </p>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"></path>
+                            </svg>
+                            Dashboard
+                        </a>
+                        <a href="#"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                fill="none">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Profile
+                        </a>
+
+                        <p class="px-2 pt-4 text-gray-400 text-l font-semibold tracking-wide">
+                            COMMUNITY
+                        </p>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                            </svg>
+                            Discord
+                        </a>
+
+                        <p class="px-2 pt-4 text-gray-400 text-l font-semibold tracking-wide">
+                            BILLING
+                        </p>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+
+                            </svg>
+                            Subscription
+                        </a>
+
+                        <p class="px-2 pt-4 text-gray-400 text-l font-semibold tracking-wide">
+                            ADMINISTRATOR
+                        </p>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                            Users
+                        </a>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Versions
+                        </a>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                            </svg>
+                            Referral Codes
+                        </a>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            </svg>
+                            Notifications
+                        </a>
+                        <a href="/dashboard"
+                           class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                            <svg
+                                class="mr-3 h-6 w-6 text-indigo-400 group-focus:text-indigo-300 transition ease-in-out duration-150"
+                                stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            Sales
+                        </a>
+                    </nav>
+                </div>
+
+
+                <div class="flex-shrink-0 flex border-t border-indigo-700 p-4">
+                    <a href="/profile" class="flex-shrink-0 w-full group block">
+                        <div class="flex items-center">
+                            <div>
+                                <img class="inline-block h-9 w-9 rounded-full" src="{{  $user->image }}"
+                                     alt="Profile Photo">
+                            </div>
+
+                            <div class="ml-3">
+                                <p class="text-sm leading-5 font-medium text-white">
+                                    {{ $user->name }}
+                                </p>
+
+                                <p class="text-xs leading-4 font-medium text-indigo-300 group-hover:text-indigo-100 transition ease-in-out duration-150">
+                                    Logout
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col w-0 flex-1 overflow-hidden">
+            <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+                <button @click.stop="sidebarOpen = true"
+                        class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
+                        aria-label="Open sidebar">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0"
+                  x-data="" x-init="$el.focus()">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Home</h1>
+                    <hr>
+                </div>
+            </main>
+        </div>
+    </div>--}}
     @yield('js')
 @endsection
