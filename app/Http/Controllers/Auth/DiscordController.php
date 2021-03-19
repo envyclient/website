@@ -34,17 +34,17 @@ class DiscordController extends Controller
             return redirect('login');
         }
 
-        $userExists = User::where('email', $user->getEmail())
+        $userExists = User::where('discord_id', $user->getId())
             ->exists();
 
         $password = Str::random(24);
         $user = User::firstOrCreate([
-            'email' => $user->getEmail(),
+            'discord_id' => $user->getId(),
         ], [
             'name' => 'envy_' . random_int(1, 99999),
+            'email' => $user->getEmail(),
             'password' => Hash::make($password),
             'email_verified_at' => now(),
-            'discord_id' => $user->getId(),
             'discord_name' => $user->getNickname(),
         ]);
 
