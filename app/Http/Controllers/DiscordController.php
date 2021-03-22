@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UpdateDiscordRole;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -43,6 +44,8 @@ class DiscordController extends Controller
             'discord_id' => $user->getId(),
             'discord_name' => $user->getNickname(),
         ]);
+
+        event(new UpdateDiscordRole($request->user()));
 
         return redirect('discord')->with('success', 'Discord account connected.');
     }

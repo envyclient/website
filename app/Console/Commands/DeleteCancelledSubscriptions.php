@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\UpdateDiscordRole;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Notifications\Subscription\SubscriptionUpdated;
@@ -11,11 +12,6 @@ class DeleteCancelledSubscriptions extends Command
 {
     protected $signature = 'subscriptions:delete';
     protected $description = 'Delete all cancelled subscriptions.';
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function handle()
     {
@@ -70,5 +66,7 @@ class DeleteCancelledSubscriptions extends Command
             'Subscription Expired',
             'Your subscription has expired. Please renew if you wish to continue using the client.',
         ));
+
+        event(new UpdateDiscordRole($user));
     }
 }
