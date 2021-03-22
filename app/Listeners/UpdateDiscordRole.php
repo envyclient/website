@@ -26,7 +26,7 @@ class UpdateDiscordRole
         }
 
         // user has an active subscription
-        if ($user->subscription->deleted_at === null) {
+        if ($user->hasSubscription()) {
             switch ($user->subscription->plan->id) {
                 case 1:
                 case 3:

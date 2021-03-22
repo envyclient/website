@@ -24,11 +24,12 @@ class HandleDiscordWebhook extends Controller
             return self::bad();
         }
 
-        $user = User::where('discord_id', $request->json('discord_id'))
-            ->findOrFail();
+        $user = User::with('subscription')
+            ->where('discord_id', $request->input('discord_id'))
+            ->firstOrFail();
 
         // user has an active subscription
-        if ($user->subscription->deleted_at === null) {
+        if ($user->subscription !== null) {
             switch ($user->subscription->plan->id) {
                 case 1:
                 case 3:
@@ -44,7 +45,7 @@ class HandleDiscordWebhook extends Controller
                     break;
                 }
             }
-        } else { // user no longer has an active subscription
+        } else {
             Discord::updateRole($user->discord_id, $this->roles['standard'], true);
             Discord::updateRole($user->discord_id, $this->roles['premium'], true);
             Discord::sendWebhook("Removed roles from <@$user->discord_id>.");

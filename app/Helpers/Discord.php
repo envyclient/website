@@ -28,7 +28,7 @@ class Discord
                 ->delete("$endpoint/guilds/$guild/members/$user/roles/$role");
         } else {
             $response = Http::withToken($token, 'Bot')
-                ->put("$guild/guilds/$guild/members/$user/roles/$role");
+                ->put("$endpoint/guilds/$guild/members/$user/roles/$role");
         }
 
         // rate limit
