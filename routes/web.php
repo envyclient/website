@@ -4,6 +4,7 @@ use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\StoreLicenseRequest;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\DiscordController;
+use App\Http\Controllers\HandleDiscordWebhook;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\NotificationsController;
@@ -119,6 +120,8 @@ Route::group(['prefix' => 'notifications', 'middleware' => ['auth', 'verified', 
     Route::delete('{id}', [NotificationsController::class, 'destroy'])
         ->name('notifications.destroy');
 });
+
+Route::post('discord/webhook', HandleDiscordWebhook::class);
 
 require __DIR__ . '/subscriptions.php';
 require __DIR__ . '/auth.php';
