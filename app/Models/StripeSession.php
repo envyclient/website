@@ -3,11 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
+ * @property-read int id
+ *
  * @property int user_id
  * @property int plan_id
  * @property int stripe_session_id
+ *
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
  *
  * @property-read User user
  * @property-read Plan plan

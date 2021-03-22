@@ -3,39 +3,44 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 /**
+ * @property-read int id
+ *
  * @property string name
  * @property string email
- * @property null|Carbon email_verified_at
+ * @property Carbon|null email_verified_at
  * @property string password
  * @property string api_token
- * @property null|string hwid
+ * @property string|null hwid
  * @property bool admin
  * @property bool banned
  * @property bool disabled
  * @property string cape
  * @property string image
- * @property null|string current_account
- * @property null|int referral_code_id
- * @property null|Carbon referral_code_used_at
- * @property null|string discord_id
- * @property null|string discord_name
- * @property null|string stripe_id
+ * @property string|null current_account
+ * @property int|null referral_code_id
+ * @property Carbon|null referral_code_used_at
+ * @property string|null discord_id
+ * @property string|null discord_name
+ * @property string|null stripe_id
+ *
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
  *
  * @property-read Collection configs
  * @property-read Subscription subscription
  * @property-read BillingAgreement billingAgreement
  * @property-read Collection downloads
- * @property-read null|ReferralCode referralCode
+ * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
- * @property-read null|LicenseRequest licenseRequest
+ * @property-read LicenseRequest|null licenseRequest
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
+ * @property-read int id
+ *
  * @property string name
  * @property boolean beta
  * @property string version
  * @property string assets
  * @property string changelog
- * @property Carbon updated_at
- * @property Carbon created_at
+ *
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
  *
  * @property-read Collection users
  */

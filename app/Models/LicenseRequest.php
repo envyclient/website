@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
+ * @property-read int id
+ *
  * @property int user_id
  * @property string channel
  * @property string status
- * @property null|string action_reason
- * @property null|Carbon action_at
+ * @property string|null action_reason
+ * @property Carbon|null action_at
+ *
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
  *
  * @property-read User user
  */

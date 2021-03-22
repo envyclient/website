@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
+use App\Events\UpdateDiscordRole;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\Custom\VerifyStripeWebhookSignature;
 use App\Models\Invoice;
@@ -92,6 +93,8 @@ class HandleStripeWebhook extends Controller
 
                     // email user about new subscription
                     $user->notify(new SubscriptionCreated());
+
+                    event(new UpdateDiscordRole($user));
                 }
                 break;
             }

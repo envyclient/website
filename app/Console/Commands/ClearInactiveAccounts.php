@@ -10,11 +10,6 @@ class ClearInactiveAccounts extends Command
     protected $signature = 'minecraft:clear';
     protected $description = 'Reset all inactive minecraft accounts';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle()
     {
         User::whereNotNull('current_account')
