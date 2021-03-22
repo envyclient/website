@@ -4,15 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
 /**
+ * @property-read int id
+ *
  * @property int user_id
  * @property string name
  * @property string data
  * @property boolean public
  * @property boolean official
  * @property int version_id
+ *
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
  *
  * @property-read User user
  * @property-read Version version

@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
+ * @property-read int id
+ *
  * @property string name
  * @property string description
  * @property int price
@@ -15,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int config_limit
  * @property bool beta_access
  * @property bool capes_access
+ *
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
  *
  * @property-read Collection subscriptions
  */

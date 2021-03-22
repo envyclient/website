@@ -2,17 +2,23 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
+ * @property-read int id
+ *
  * @property int user_id
  * @property int plan_id
  * @property int|null billing_agreement_id
  * @property string|null stripe_id
  * @property string|null stripe_status
  * @property Carbon end_date
+ *
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
+ * @property-read Carbon deleted_at
  *
  * @property-read User user
  * @property-read Plan plan
