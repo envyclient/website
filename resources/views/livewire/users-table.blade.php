@@ -1,7 +1,8 @@
 <div>
     <div class="row">
-        <div class="col">
-            <input class="form-control" type="text" placeholder="Name" wire:model="name">
+        <div class="col input-group">
+            <label class="input-group-text" for="type">Search</label>
+            <input class="form-control" type="text" wire:model="search">
         </div>
         <div class="col input-group">
             <label class="input-group-text" for="type">Status</label>

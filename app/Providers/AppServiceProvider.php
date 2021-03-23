@@ -8,7 +8,6 @@ use App\Observers\InvoiceObserver;
 use App\Observers\UserObserver;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Component;
 use Stripe\Stripe;
@@ -32,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
         JsonResource::withoutWrapping();
         Paginator::useBootstrap();
 
