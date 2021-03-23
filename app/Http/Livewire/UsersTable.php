@@ -13,7 +13,7 @@ class UsersTable extends Component
 
     protected string $paginationTheme = 'bootstrap';
 
-    public string $name = '';
+    public string $search = '';
     public string $type = 'all';
     public string $subscription = 'ignore';
     public string $referralCode = 'ignore';
@@ -29,8 +29,10 @@ class UsersTable extends Component
 
     public function render()
     {
-        $user = User::with(['subscription.plan', 'referralCode'])
-            ->name($this->name);
+        $user = User::with(['subscription.plan', 'referralCode:id,code'])
+            ->where('name', 'like', "%$this->search%")
+            ->orWhere('email', 'like', "%$this->search%")
+            ->orWhere('discord_name', 'like', "%$this->search%");
 
         switch ($this->type) {
             case 'subscribed':
@@ -74,7 +76,7 @@ class UsersTable extends Component
             $user->where('referral_code_id', $this->referralCode);
         }
 
-        return view('livewire.users-table')->with([
+        return view('livewire.users-table', [
             'users' => $user->orderBy('id')->paginate(20),
         ]);
     }
