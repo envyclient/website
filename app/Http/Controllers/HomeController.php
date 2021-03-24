@@ -45,18 +45,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function notifications()
-    {
-        $notifications = auth()
-            ->user()
-            ->notifications()
-            ->paginate(10);
-
-        return view('pages.dashboard.admin.notifications', [
-            'notifications' => $notifications,
-        ]);
-    }
-
     public function sales()
     {
         return view('pages.dashboard.admin.sales', [

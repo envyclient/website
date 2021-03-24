@@ -61,10 +61,7 @@ Route::group([], function () {
 
         Route::view('referrals', 'pages.dashboard.admin.referrals')
             ->name('admin.referrals');
-
-        Route::get('notifications', [HomeController::class, 'notifications'])
-            ->name('admin.notifications');
-
+        
         Route::get('license-requests', ShowLicenseRequests::class)
             ->name('admin.license-requests');
     });
@@ -108,17 +105,6 @@ Route::group(['prefix' => 'connect'], function () {
 
         Route::get('redirect', [DiscordController::class, 'redirect']);
     });
-});
-
-/**
- * Notification
- */
-Route::group(['prefix' => 'notifications', 'middleware' => ['auth', 'verified', 'admin']], function () {
-    Route::post('/', [NotificationsController::class, 'store'])
-        ->name('notifications.store');
-
-    Route::delete('{id}', [NotificationsController::class, 'destroy'])
-        ->name('notifications.destroy');
 });
 
 Route::post('discord/webhook', HandleDiscordWebhook::class);

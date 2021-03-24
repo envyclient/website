@@ -50,14 +50,6 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 });
 
 /**
- * Notifications
- */
-Route::group(['prefix' => 'notifications', 'middleware' => ['auth:api', 'subscribed']], function () {
-    Route::get('/', [NotificationsController::class, 'index']);
-    Route::patch('{id}', [NotificationsController::class, 'update']);
-});
-
-/**
  * Launcher
  */
 Route::get('launcher/latest', GetLauncherVersion::class)
