@@ -4,8 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use App\Models\Version;
-use App\Notifications\ClientNotification;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -52,12 +50,6 @@ class UploadVersion extends Component
             'assets' => "$path/assets.jar",
             'changelog' => $this->changelog,
         ]);
-
-        // send the notification to all users
-        Notification::send(
-            User::all(),
-            new ClientNotification('info', "$this->name has been released."),
-        );
 
         session()->flash('message', 'Version upload.');
         $this->resetInputFields();
