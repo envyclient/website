@@ -29,7 +29,7 @@
             x-data="{ open: false, message: null }"
             x-init="
                 @this.on('notify-cape', (m) => {
-                    if (open === false) setTimeout(() => { open = false; message = null; }, 2500);
+                    if (open === false) setTimeout(() => { open = false; message = null; }, 3000);
                     open = true;
                     message = m;
                 })
