@@ -117,7 +117,7 @@
                     </button>
                     @if($user->subscription !== null)
                         <a class="btn btn-outline-dark"
-                           onclick="confirm('Remove Subscription?') || event.stopImmediatePropagation()"
+                           onclick="confirm('Remove Free Subscription?') || event.stopImmediatePropagation()"
                            wire:click="freeSubscription({{ $user->id }}, true)">
                             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                 <path fill="currentColor"
@@ -126,7 +126,7 @@
                         </a>
                     @else
                         <a class="btn btn-outline-dark"
-                           onclick="confirm('Give Subscription?') || event.stopImmediatePropagation()"
+                           onclick="confirm('Give Free Subscription?') || event.stopImmediatePropagation()"
                            wire:click="freeSubscription({{ $user->id }})">
                             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                 <path fill="currentColor"
