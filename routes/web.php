@@ -61,7 +61,7 @@ Route::group([], function () {
 
         Route::view('referrals', 'pages.dashboard.admin.referrals')
             ->name('admin.referrals');
-        
+
         Route::get('license-requests', ShowLicenseRequests::class)
             ->name('admin.license-requests');
     });
