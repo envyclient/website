@@ -18,33 +18,23 @@
     <div class="container-fluid">
 
         <div class="row">
-            <header class="navbar navbar-dark sticky-top bg-dark p-0 col-lg-10 ms-sm-auto">
-                <a class="navbar-brand me-0 px-3" href="/">
-                    Envy Client | <span class="text-muted">dashboard</span>
-                </a>
-                <button class="navbar-toggler position-absolute d-lg-none collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#sidebarMenu"
-                        aria-controls="sidebarMenu"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </header>
-
             <nav id="sidebarMenu" class="col-lg-2 d-lg-block sidebar collapse">
 
                 <div class="d-flex flex-column h-100">
 
-                    <div class="text-center">
-                        <img src="{{ asset('logo.svg') }}"
-                             width="128"
-                             height="128"
-                             alt="logo">
-                    </div>
+                    <a href="/"
+                       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <svg width="48" height="48" viewBox="0 0 29 41" class="me-2 ms-2"
+                             style="fill: rgb(33, 170, 47); stroke: rgb(244, 250, 246); stroke-width: 0.125pt;">
+                            <path fill="#21aa2f" stroke="#f4faf6" style="fill-opacity: 0.54; stroke-opacity: 0.54;"
+                                  d="M2.5 38.938c-.24 0-.438-.195-.438-.436V3.62c0-.24.196-.436.438-.436h24.38L22.344 9.59c-.087.123-.233.196-.39.196h-9.902c-.326 0-.59.25-.59.56V17.2c0 .308.264.56.59.56h8.466c.257 0 .466.196.466.436v5.73c0 .24-.21.436-.467.436h-8.467c-.326 0-.59.252-.59.562v6.852c0 .31.264.56.59.56h9.902c.156 0 .302.074.39.197l4.534 6.406H2.5z"></path>
+                            <path fill="#21aa2f" stroke="#f4faf6" style="stroke-width: 0.125pt;"
+                                  d="M2.5 37.816c-.24 0-.438-.195-.438-.436V2.5c0-.24.196-.437.438-.437h24.38L22.344 8.47c-.087.122-.232.195-.39.195h-9.902c-.326 0-.59.25-.59.56v6.853c0 .31.264.56.59.56h8.466c.257 0 .466.197.466.437v5.73c0 .24-.21.436-.467.436h-8.467c-.326 0-.59.253-.59.563v6.852c0 .31.264.56.59.56h9.902c.157 0 .303.074.39.196l4.534 6.408H2.5z"></path>
+                        </svg>
+                        <span class="fs-4">Envy Client</span>
+                    </a>
 
-                    <div class="mt-4">
+                    <div class="mt-2">
                         <h3 class="sidebar-heading m-3 text-white">
                             Dashboard
                         </h3>
@@ -191,5 +181,6 @@
         </div>
 
     </div>
+
     @yield('js')
 @endsection
