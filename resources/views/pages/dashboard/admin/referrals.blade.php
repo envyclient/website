@@ -3,23 +3,19 @@
 @section('title', 'Referrals')
 
 @section('content')
-    <div style="width:98%;margin:0 auto">
-
-        <div>
-            <div class="alert alert-dark" style="font-size:25px;">
-                Referral Codes
-            </div>
-
-            @livewire('referral.list-referral-codes')
+    <div>
+        <div class="alert alert-dark" style="font-size:25px;">
+            Referral Codes
         </div>
 
-        <div>
-            <div class="alert alert-dark" style="font-size:25px;">
-                Create Referral Code
-            </div>
+        @livewire('referral.list-referral-codes')
+    </div>
 
-            @livewire('referral.create-referral-code')
+    <div>
+        <div class="alert alert-dark" style="font-size:25px;">
+            Create Referral Code
         </div>
 
+        @livewire('referral.create-referral-code')
     </div>
 @endsection

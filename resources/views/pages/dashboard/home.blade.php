@@ -20,7 +20,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="mb-3">
-                        <label class="form-label" for="member-since">Member Since</label>
+                        <label class="form-label" for="member-since">Register Date</label>
                         <input id="member-since"
                                class="form-control"
                                value="{{ $user->created_at->format('F d, Y') }}"
