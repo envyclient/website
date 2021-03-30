@@ -4,7 +4,7 @@
 
 @section('content')
     <div>
-        <div class="alert alert-dark" style="font-size:25px;">
+        <div class="alert alert-dark fs-4">
             Referral Codes
         </div>
 
@@ -12,7 +12,7 @@
     </div>
 
     <div>
-        <div class="alert alert-dark" style="font-size:25px;">
+        <div class="alert alert-dark fs-4">
             Create Referral Code
         </div>
 

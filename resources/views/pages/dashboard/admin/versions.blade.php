@@ -4,7 +4,7 @@
 
 @section('content')
     <div>
-        <div class="alert alert-dark" style="font-size:25px;">
+        <div class="alert alert-dark fs-4">
             Versions
         </div>
 
@@ -14,7 +14,7 @@
     <br>
 
     <div>
-        <div class="alert alert-dark" style="font-size:25px;">
+        <div class="alert alert-dark fs-4">
             Create Version
         </div>
 

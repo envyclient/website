@@ -28,7 +28,7 @@ class HomeController extends Controller
             ->user()
             ->load(['subscription', 'billingAgreement']);
 
-        return view('pages.dashboard.security')
+        return view('pages.dashboard.profile')
             ->with('user', $user);
     }
 
