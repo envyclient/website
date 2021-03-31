@@ -32,16 +32,16 @@ class ListReferralCodes extends Component
     public function showInvoicesModal(ReferralCode $code): void
     {
         $this->showInvoicesModal = true;
-        $this->showingInvoices = $code->invoices()->with('user')->get();
+        $this->showingInvoices = $code->invoices()
+            ->with('user')
+            ->get();
     }
 
     public function render()
     {
         $codes = ReferralCode::with(['user:id,name', 'subscriptions'])
-            ->orderBy('created_at');
-
-        return view('livewire.referral.list-referral-codes', [
-            'codes' => $codes->paginate(5)
-        ]);
+            ->orderBy('created_at')
+            ->get();
+        return view('livewire.referral.list-referral-codes', compact('codes'));
     }
 }
