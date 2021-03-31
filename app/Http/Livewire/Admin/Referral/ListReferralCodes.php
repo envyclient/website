@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Referral;
+namespace App\Http\Livewire\Admin\Referral;
 
 use App\Models\ReferralCode;
 use App\Models\User;
@@ -42,6 +42,6 @@ class ListReferralCodes extends Component
         $codes = ReferralCode::with(['user:id,name', 'subscriptions'])
             ->orderBy('created_at')
             ->get();
-        return view('livewire.referral.list-referral-codes', compact('codes'));
+        return view('livewire.admin.referral.list-referral-codes', compact('codes'));
     }
 }

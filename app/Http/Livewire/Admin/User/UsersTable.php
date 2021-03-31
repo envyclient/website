@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin\User;
 
 use App\Models\Subscription;
 use App\Models\User;
@@ -76,7 +76,7 @@ class UsersTable extends Component
             $user->where('referral_code_id', $this->referralCode);
         }
 
-        return view('livewire.users-table', [
+        return view('livewire.admin.user.users-table', [
             'users' => $user->orderBy('id')->paginate(20),
         ]);
     }
@@ -101,13 +101,12 @@ class UsersTable extends Component
     {
         $user = User::findOrFail($id);
 
-        // removing the users subscription to the free plan
+        // remove free plan from user
         if ($removing) {
             Subscription::where('user_id', $id)
                 ->where('plan_id', 1)
                 ->delete();
-        } else {
-            // give the user free plan
+        } else { // give the user free plan
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,

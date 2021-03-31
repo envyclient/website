@@ -8,7 +8,7 @@
             Referral Codes
         </div>
 
-        @livewire('referral.list-referral-codes')
+        @livewire('admin.referral.list-referral-codes')
     </div>
 
     <div>
@@ -16,6 +16,6 @@
             Create Referral Code
         </div>
 
-        @livewire('referral.create-referral-code')
+        @livewire('admin.referral.create-referral-code')
     </div>
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin\Version;
 
 use App\Models\User;
 use App\Models\Version;
@@ -26,7 +26,7 @@ class UploadVersion extends Component
 
     public function render()
     {
-        return view('livewire.upload-version');
+        return view('livewire.admin.version.upload-version');
     }
 
     public function submit()

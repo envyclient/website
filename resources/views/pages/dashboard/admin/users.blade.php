@@ -14,6 +14,6 @@
                 </span>
         </div>
 
-        @livewire('users-table')
+        @livewire('admin.user.users-table')
     </div>
 @endsection
