@@ -53,6 +53,7 @@
             <th>current account</th>
             <th>discord</th>
             <th>referral code</th>
+            <th>downloads</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -107,6 +108,9 @@
                     @else
                         &#10006;
                     @endif
+                </td>
+                <td>
+                    {{ count($user->downloads) }}
                 </td>
                 <td>
                     <button class="btn btn-outline-dark" @click="$dispatch('edit-user-modal-open', {{ $user->id }})">
