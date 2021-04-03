@@ -8,7 +8,7 @@
             Versions
         </div>
 
-        @livewire('version.list-versions')
+        @livewire('admin.version.list-versions')
     </div>
 
     <br>
@@ -18,6 +18,6 @@
             Create Version
         </div>
 
-        @livewire('upload-version')
+        @livewire('admin.version.upload-version')
     </div>
 @endsection

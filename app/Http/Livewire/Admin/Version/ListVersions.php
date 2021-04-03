@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Version;
+namespace App\Http\Livewire\Admin\Version;
 
 use App\Models\Version;
 use Livewire\Component;
@@ -16,7 +16,7 @@ class ListVersions extends Component
 
     public function render()
     {
-        return view('livewire.version.list-versions', [
+        return view('livewire.admin.version.list-versions', [
             'versions' => Version::orderBy('created_at')->paginate(5),
         ]);
     }

@@ -1,4 +1,4 @@
-<div>
+<div x-data>
     <div class="row">
         <div class="col input-group">
             <label class="input-group-text" for="type">Search</label>
@@ -58,7 +58,7 @@
         </thead>
         <tbody>
         @foreach($users as $user)
-            <tr>
+            <tr wire:key="users-table-{{ $user->id }}">
                 <th scope="row">{{ $user->id }}</th>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
@@ -109,7 +109,7 @@
                     @endif
                 </td>
                 <td>
-                    <button class="btn btn-outline-dark" wire:click="editMode({{ $user->id }})">
+                    <button class="btn btn-outline-dark" @click="$dispatch('edit-user-modal-open', {{ $user->id }})">
                         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                             <path fill="currentColor"
                                   d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"/>
@@ -142,55 +142,5 @@
 
     {{ $users->links() }}
 
-    @if($editMode)
-        <form wire:submit.prevent="save">
-            <div class="modal"
-                 tabindex="-1"
-                 style="display: block;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Edit User</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label" for="name">Name</label>
-                                <input id="name"
-                                       class="form-control @error('editing.name') is-invalid @enderror"
-                                       wire:model.defer="editing.name">
-
-                                @error('editing.name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <label class="form-label" for="hwid">HWID</label>
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       id="hwid"
-                                       wire:model.defer="editing.hwid">
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <label class="form-label" for="banned">Banned</label>
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       id="banned"
-                                       wire:model.defer="editing.banned">
-                            </div>
-                        </div>
-                        <div class="modal-footer card-footer">
-                            <button type="button" class="btn btn-secondary" wire:click="$set('editMode', false)">
-                                Close
-                            </button>
-                            <button type="submit" class="btn btn-success">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    @endif
+    @livewire('admin.user.edit-user-modal')
 </div>

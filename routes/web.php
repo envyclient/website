@@ -7,8 +7,7 @@ use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HandleDiscordWebhook;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
-use App\Http\Controllers\NotificationsController;
-use App\Http\Livewire\ShowLicenseRequests;
+use App\Http\Livewire\Admin\ShowLicenseRequests;
 use Illuminate\Support\Facades\Route;
 
 /**

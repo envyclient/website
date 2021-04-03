@@ -50,7 +50,7 @@
                     </div>
 
                     @if($user->hasCapesAccess())
-                        @livewire('upload-cape')
+                        @livewire('user.upload-cape')
                     @endif
                 </div>
             </div>

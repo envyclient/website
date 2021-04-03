@@ -13,7 +13,7 @@
             </thead>
             <tbody>
             @foreach($versions as $version)
-                @livewire('version.version', ['index' => $loop->iteration,'version' => $version], key($version->id))
+                @livewire('admin.version.version', ['index' => $loop->iteration,'version' => $version], key($version->id))
             @endforeach
             </tbody>
         </table>

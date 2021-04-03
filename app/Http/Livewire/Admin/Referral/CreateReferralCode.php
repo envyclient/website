@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Referral;
+namespace App\Http\Livewire\Admin\Referral;
 
 use App\Models\ReferralCode;
 use App\Models\User;
@@ -34,7 +34,7 @@ class CreateReferralCode extends Component
 
     public function render()
     {
-        return view('livewire.referral.create-referral-code');
+        return view('livewire.admin.referral.create-referral-code');
     }
 
     public function submit()

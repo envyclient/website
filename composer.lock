@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.176.3",
+            "version": "3.176.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "a4f0bbeff965f67ca4dbfccfa2865de611f14c30"
+                "reference": "734dd0535f8e70ebb59be37f522af4e45d006ace"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a4f0bbeff965f67ca4dbfccfa2865de611f14c30",
-                "reference": "a4f0bbeff965f67ca4dbfccfa2865de611f14c30",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/734dd0535f8e70ebb59be37f522af4e45d006ace",
+                "reference": "734dd0535f8e70ebb59be37f522af4e45d006ace",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.176.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.176.7"
             },
-            "time": "2021-03-29T18:16:38+00:00"
+            "time": "2021-04-02T18:16:40+00:00"
         },
         {
             "name": "brick/math",
@@ -969,16 +969,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.34.0",
+            "version": "v8.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "81892ca110795a9c46c7e198cba7763bfd2af0bf"
+                "reference": "d118c0df39e7524131176aaf76493eae63a8a602"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/81892ca110795a9c46c7e198cba7763bfd2af0bf",
-                "reference": "81892ca110795a9c46c7e198cba7763bfd2af0bf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d118c0df39e7524131176aaf76493eae63a8a602",
+                "reference": "d118c0df39e7524131176aaf76493eae63a8a602",
                 "shasum": ""
             },
             "require": {
@@ -1133,7 +1133,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-03-23T15:12:51+00:00"
+            "time": "2021-03-30T21:34:17+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -3002,24 +3002,24 @@
         },
         {
             "name": "spatie/db-dumper",
-            "version": "2.21.1",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/db-dumper.git",
-                "reference": "05e5955fb882008a8947c5a45146d86cfafa10d1"
+                "reference": "1364325f3f3c5b7cdafd46bca5e9d422227a34d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/05e5955fb882008a8947c5a45146d86cfafa10d1",
-                "reference": "05e5955fb882008a8947c5a45146d86cfafa10d1",
+                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/1364325f3f3c5b7cdafd46bca5e9d422227a34d2",
+                "reference": "1364325f3f3c5b7cdafd46bca5e9d422227a34d2",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0",
-                "symfony/process": "^4.2|^5.0"
+                "php": "^8.0",
+                "symfony/process": "^5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.0|^8.0|^9.0"
+                "phpunit/phpunit": "^9.5"
             },
             "type": "library",
             "autoload": {
@@ -3050,28 +3050,32 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/db-dumper/issues",
-                "source": "https://github.com/spatie/db-dumper/tree/2.21.1"
+                "source": "https://github.com/spatie/db-dumper/tree/3.0.1"
             },
             "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
                 {
                     "url": "https://github.com/spatie",
                     "type": "github"
                 }
             ],
-            "time": "2021-02-24T14:56:42+00:00"
+            "time": "2021-04-01T07:28:47+00:00"
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "7.3.1",
+            "version": "7.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "71f6378fc48940c6a5898df24113dee65ddfee00"
+                "reference": "9f29be8f47329489afe5f4084ce735d63f7e0348"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/71f6378fc48940c6a5898df24113dee65ddfee00",
-                "reference": "71f6378fc48940c6a5898df24113dee65ddfee00",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/9f29be8f47329489afe5f4084ce735d63f7e0348",
+                "reference": "9f29be8f47329489afe5f4084ce735d63f7e0348",
                 "shasum": ""
             },
             "require": {
@@ -3084,9 +3088,9 @@
                 "illuminate/support": "^8.0",
                 "league/flysystem": "^1.0.49|^2.0",
                 "php": "^8.0",
-                "spatie/db-dumper": "^2.12",
+                "spatie/db-dumper": "^3.0",
                 "spatie/laravel-package-tools": "^1.1",
-                "spatie/temporary-directory": "^1.1",
+                "spatie/temporary-directory": "^2.0",
                 "symfony/finder": "^5.0"
             },
             "require-dev": {
@@ -3137,7 +3141,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-backup/issues",
-                "source": "https://github.com/spatie/laravel-backup/tree/7.3.1"
+                "source": "https://github.com/spatie/laravel-backup/tree/7.3.3"
             },
             "funding": [
                 {
@@ -3149,7 +3153,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-03-12T21:51:59+00:00"
+            "time": "2021-03-31T14:02:06+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -3213,23 +3217,23 @@
         },
         {
             "name": "spatie/temporary-directory",
-            "version": "1.3.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/temporary-directory.git",
-                "reference": "f517729b3793bca58f847c5fd383ec16f03ffec6"
+                "reference": "06fe0f10d068fdf145c9b2235030e568c913bb61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/f517729b3793bca58f847c5fd383ec16f03ffec6",
-                "reference": "f517729b3793bca58f847c5fd383ec16f03ffec6",
+                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/06fe0f10d068fdf145c9b2235030e568c913bb61",
+                "reference": "06fe0f10d068fdf145c9b2235030e568c913bb61",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.0|^9.0"
+                "phpunit/phpunit": "^9.5"
             },
             "type": "library",
             "autoload": {
@@ -3258,9 +3262,19 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/temporary-directory/issues",
-                "source": "https://github.com/spatie/temporary-directory/tree/1.3.0"
+                "source": "https://github.com/spatie/temporary-directory/tree/2.0.0"
             },
-            "time": "2020-11-09T15:54:21+00:00"
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-30T19:46:13+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -5989,16 +6003,16 @@
         },
         {
             "name": "facade/flare-client-php",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/flare-client-php.git",
-                "reference": "ef0f5bce23b30b32d98fd9bb49c6fa37b40eb546"
+                "reference": "9dd6f2b56486d939c4467b3f35475d44af57cf17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/ef0f5bce23b30b32d98fd9bb49c6fa37b40eb546",
-                "reference": "ef0f5bce23b30b32d98fd9bb49c6fa37b40eb546",
+                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/9dd6f2b56486d939c4467b3f35475d44af57cf17",
+                "reference": "9dd6f2b56486d939c4467b3f35475d44af57cf17",
                 "shasum": ""
             },
             "require": {
@@ -6042,7 +6056,7 @@
             ],
             "support": {
                 "issues": "https://github.com/facade/flare-client-php/issues",
-                "source": "https://github.com/facade/flare-client-php/tree/1.4.0"
+                "source": "https://github.com/facade/flare-client-php/tree/1.5.0"
             },
             "funding": [
                 {
@@ -6050,20 +6064,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-16T12:42:06+00:00"
+            "time": "2021-03-31T07:32:54+00:00"
         },
         {
             "name": "facade/ignition",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "4be10a998815f77952b9eb983fb0b64c8a4defbb"
+                "reference": "bdc8b0b32c888f6edc838ca641358322b3d9506d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/4be10a998815f77952b9eb983fb0b64c8a4defbb",
-                "reference": "4be10a998815f77952b9eb983fb0b64c8a4defbb",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/bdc8b0b32c888f6edc838ca641358322b3d9506d",
+                "reference": "bdc8b0b32c888f6edc838ca641358322b3d9506d",
                 "shasum": ""
             },
             "require": {
@@ -6127,7 +6141,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2021-03-24T18:58:31+00:00"
+            "time": "2021-03-30T15:55:38+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -6320,16 +6334,16 @@
         },
         {
             "name": "haq/seal",
-            "version": "v1.2.1",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/haq/laravel-seal.git",
-                "reference": "2e51576d3f3c5e2d91aaf4b776d9faceff2add70"
+                "reference": "dde9f767c57a1837189089ac7a93d38b8fda3e6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/haq/laravel-seal/zipball/2e51576d3f3c5e2d91aaf4b776d9faceff2add70",
-                "reference": "2e51576d3f3c5e2d91aaf4b776d9faceff2add70",
+                "url": "https://api.github.com/repos/haq/laravel-seal/zipball/dde9f767c57a1837189089ac7a93d38b8fda3e6a",
+                "reference": "dde9f767c57a1837189089ac7a93d38b8fda3e6a",
                 "shasum": ""
             },
             "require": {
@@ -6370,9 +6384,9 @@
             ],
             "support": {
                 "issues": "https://github.com/haq/laravel-seal/issues",
-                "source": "https://github.com/haq/laravel-seal/tree/v1.2.1"
+                "source": "https://github.com/haq/laravel-seal/tree/v1.2.2"
             },
-            "time": "2021-02-18T20:17:20+00:00"
+            "time": "2021-03-31T12:38:35+00:00"
         },
         {
             "name": "maximebf/debugbar",

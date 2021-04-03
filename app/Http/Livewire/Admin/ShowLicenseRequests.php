@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use App\Models\LicenseRequest;
 use App\Models\Subscription;
@@ -56,7 +56,7 @@ class ShowLicenseRequests extends Component
         $requests = LicenseRequest::with('user.subscription.plan')
             ->status($this->status);
 
-        return view('livewire.show-license-requests', [
+        return view('livewire.admin.show-license-requests', [
             'requests' => $requests->get()
         ])->extends('layouts.dash');
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Version;
+namespace App\Http\Livewire\Admin\Version;
 
 use Livewire\Component;
 
@@ -28,7 +28,7 @@ class Version extends Component
 
     public function render()
     {
-        return view('livewire.version.version');
+        return view('livewire.admin.version.version');
     }
 
     public function editMode()

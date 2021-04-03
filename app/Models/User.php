@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -82,10 +83,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'referral_code_used_at',
     ];
 
-    public function scopeName($query, $name)
+    public function scopeSearch(Builder $query, string $search)
     {
-        if (!is_null($name)) {
-            return $query->where('name', 'LIKE', "%$name%");
+        if (!empty($search)) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('discord_name', 'like', "%$search%");
+            });
         }
         return $query;
     }
