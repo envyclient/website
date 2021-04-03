@@ -24,7 +24,7 @@ class UsersTable extends Component
 
     public function render()
     {
-        $user = User::with(['subscription.plan', 'referralCode:id,code'])
+        $user = User::with(['subscription.plan', 'referralCode:id,code', 'downloads:id,name'])
             ->search($this->search);
 
         switch ($this->type) {
