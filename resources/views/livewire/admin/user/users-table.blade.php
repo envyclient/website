@@ -58,7 +58,7 @@
         </thead>
         <tbody>
         @foreach($users as $user)
-            <tr>
+            <tr wire:key="users-table-{{ $user->id }}">
                 <th scope="row">{{ $user->id }}</th>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>

@@ -69,10 +69,8 @@ class UsersTable extends Component
             $user->where('referral_code_id', $this->referralCode);
         }
 
-        info($user->orderBy('id')->toSql());
-
         return view('livewire.admin.user.users-table', [
-            'users' => $user->orderBy('id')->paginate(30),
+            'users' => $user->orderBy('id')->paginate(20),
         ]);
     }
 
