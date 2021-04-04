@@ -8,6 +8,7 @@ use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
+use App\Http\Livewire\Auth\SetupAccount;
 use App\Http\Livewire\Auth\Verify;
 
 Route::middleware('guest')->group(function () {
@@ -30,6 +31,9 @@ Route::get('forgot-password', Email::class)
 
 Route::get('reset-password/{token}', Reset::class)
     ->name('password.reset');
+
+Route::get('setup-account', SetupAccount::class)
+    ->name('setup-account');
 
 Route::middleware('auth')->group(function () {
     Route::get('email/verify', Verify::class)

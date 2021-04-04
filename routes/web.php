@@ -8,12 +8,13 @@ use App\Http\Controllers\HandleDiscordWebhook;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Livewire\Admin\ShowLicenseRequests;
+use App\Http\Middleware\Custom\CheckIfPasswordNull;
 use Illuminate\Support\Facades\Route;
 
 /**
  * Home
  */
-Route::group([], function () {
+Route::group(['middleware' => CheckIfPasswordNull::class], function () {
 
     /**
      * Landing Pages
