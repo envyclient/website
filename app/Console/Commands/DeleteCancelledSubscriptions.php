@@ -22,6 +22,7 @@ class DeleteCancelledSubscriptions extends Command
             ->where('end_date', '<=', $start)
             ->get();
 
+        /** @var Subscription $subscription */
         foreach ($subscriptions as $subscription) {
             $count++;
 

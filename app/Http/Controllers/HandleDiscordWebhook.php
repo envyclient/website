@@ -24,6 +24,7 @@ class HandleDiscordWebhook extends Controller
             return self::bad();
         }
 
+        /** @var User $user */
         $user = User::with('subscription')
             ->where('discord_id', $request->input('discord_id'))
             ->firstOrFail();
@@ -48,7 +49,6 @@ class HandleDiscordWebhook extends Controller
         } else {
             Discord::updateRole($user->discord_id, $this->roles['standard'], true);
             Discord::updateRole($user->discord_id, $this->roles['premium'], true);
-            Discord::sendWebhook("Removed roles from <@$user->discord_id>.");
         }
 
         return response()->noContent();

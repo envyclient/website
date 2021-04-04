@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ClearDiscordChannels;
 use App\Console\Commands\ClearInactiveAccounts;
 use App\Console\Commands\DeleteCancelledSubscriptions;
-use App\Console\Commands\Discord\ClearChannels;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
 
     protected $commands = [
         DeleteCancelledSubscriptions::class,
-        ClearChannels::class,
+        ClearDiscordChannels::class,
         ClearInactiveAccounts::class,
     ];
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands\Discord;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-class ClearChannels extends Command
+class ClearDiscordChannels extends Command
 {
     const CHANNELS = [
         794374280024031277,
