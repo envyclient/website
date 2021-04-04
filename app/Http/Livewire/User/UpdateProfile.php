@@ -29,8 +29,21 @@ class UpdateProfile extends Component
         $message = '';
 
         $this->validate([
-            'name' => ['required', 'string', 'min:3', 'max:255', 'alpha_dash'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                'alpha_dash',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($user->id),
+            ],
         ]);
 
         $image = 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($this->email))) . '.svg?text=' . strtoupper(substr($this->name, 0, 2));
