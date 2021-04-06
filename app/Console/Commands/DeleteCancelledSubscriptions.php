@@ -10,11 +10,12 @@ use Illuminate\Console\Command;
 
 class DeleteCancelledSubscriptions extends Command
 {
-    protected $signature = 'subscriptions:delete';
-    protected $description = 'Delete all cancelled subscriptions.';
+    protected $signature = 'envy:delete-cancelled-subscriptions';
 
     public function handle()
     {
+        $this->info('Deleting cancelled subscriptions...');
+
         $start = now();
         $count = 0;
 
@@ -56,7 +57,7 @@ class DeleteCancelledSubscriptions extends Command
             }
         }
 
-        $this->info("Processed $count subscriptions on " . now());
+        $this->comment("Processed $count subscriptions.");
         $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
         return 0;
     }
