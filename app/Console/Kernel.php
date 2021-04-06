@@ -3,7 +3,8 @@
 namespace App\Console;
 
 use App\Console\Commands\ClearDiscordChannels;
-use App\Console\Commands\ClearInactiveAccounts;
+use App\Console\Commands\DeleteOldMinecraftAccounts;
+use App\Console\Commands\DeleteOldUnverifiedUsers;
 use App\Console\Commands\DeleteCancelledSubscriptions;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,17 +18,23 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         DeleteCancelledSubscriptions::class,
         ClearDiscordChannels::class,
-        ClearInactiveAccounts::class,
+        DeleteOldMinecraftAccounts::class,
+        DeleteOldUnverifiedUsers::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('subscriptions:delete')
+        $schedule->command('envy:delete-cancelled-subscriptions')
             ->everyMinute()
             ->emailOutputOnFailure(self::EMAILS);
 
-        // clear inactive minecraft accounts
-        $schedule->command('minecraft:clear')
+        // delete any old unverified users
+        $schedule->command('envy:delete-old-unverified-users')
+            ->daily()
+            ->emailOutputOnFailure(self::EMAILS);
+
+        // delete any old  minecraft accounts
+        $schedule->command('envy:delete-old-minecraft-accounts')
             ->daily()
             ->emailOutputOnFailure(self::EMAILS);
 

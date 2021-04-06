@@ -12,7 +12,6 @@ class ClearDiscordChannels extends Command
     ];
 
     protected $signature = 'discord:clear';
-    protected $description = 'Clears the specified channels.';
 
     private string $endpoint;
     private string $token;
