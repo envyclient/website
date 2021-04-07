@@ -41,7 +41,6 @@ class HomeController extends Controller
         return view('pages.dashboard.subscriptions', [
             'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
-            'end' => $user->hasSubscription() ? now()->diffInDays($user->subscription->end_date, false) : null
         ]);
     }
 
