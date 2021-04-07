@@ -13,7 +13,7 @@ class DeleteOldMinecraftAccounts extends Command
     {
         $this->info('Deleting old minecraft accounts...');
 
-        $now = now();
+        $start = now();
 
         $count = User::whereNotNull('current_account')
             ->whereDate('updated_at', '<=', today()->subDays(3))
