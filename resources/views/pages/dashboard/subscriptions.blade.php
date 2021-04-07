@@ -66,7 +66,7 @@
     @else
         <x-plan-card class="mb-3" :plan="$user->subscription->plan">
             <div class="card-footer">
-                Next payment due in {{ $end }} days.
+                Next payment due in {{ now()->diffInDays($user->subscription->end_date, false) }} days.
             </div>
         </x-plan-card>
 
