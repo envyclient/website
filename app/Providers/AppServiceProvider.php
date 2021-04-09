@@ -32,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         JsonResource::withoutWrapping();
-        Paginator::useBootstrap();
 
         User::observe(UserObserver::class);
         Invoice::observe(InvoiceObserver::class);

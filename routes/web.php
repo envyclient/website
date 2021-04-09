@@ -8,6 +8,7 @@ use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Livewire\Admin\ShowLicenseRequests;
+use App\Http\Livewire\Admin\User\UsersTable;
 use App\Http\Middleware\Custom\CheckIfPasswordNull;
 use Illuminate\Support\Facades\Route;
 
@@ -47,7 +48,7 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'admin']], function () {
 
         // list users and versions
-        Route::view('users', 'pages.dashboard.admin.users')
+        Route::get('users',     UsersTable::class)
             ->name('admin.users');
 
         Route::view('versions', 'pages.dashboard.admin.versions')

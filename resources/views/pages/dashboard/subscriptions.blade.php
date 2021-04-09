@@ -6,7 +6,7 @@
     @if($user->subscription === null)
         {{-- User's subscription is being processed --}}
         @if($user->billingAgreement !== null)
-            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-3">
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-5">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <!-- Heroicon name: solid/exclamation -->
@@ -24,11 +24,11 @@
                     </div>
                 </div>
             </div>
-            <x-plan-card class="mb-3" :plan="$user->billingAgreement->plan"/>
+            <x-plan-card class="mb-5" :plan="$user->billingAgreement->plan"/>
         @else
             {{-- User has no subscription --}}
             @foreach($plans as $plan)
-                <x-plan-card class="mb-3" :plan="$plan">
+                <x-plan-card class="mb-5" :plan="$plan">
                     <div class="px-4 py-3 bg-gray-100 text-right sm:px-6 group flex items-center justify-end space-x-1">
 
                         {{-- Subscribe using PayPal --}}
@@ -75,7 +75,7 @@
             @endforeach
         @endif
     @else
-        <x-plan-card class="mb-3" :plan="$user->subscription->plan">
+        <x-plan-card class="mb-5" :plan="$user->subscription->plan">
             <div class="px-4 py-3 bg-gray-100 sm:px-6 text-small">
                 Next payment due in {{ now()->diffInDays($user->subscription->end_date, false) }} days.
             </div>

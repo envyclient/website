@@ -1,150 +1,198 @@
-<div x-data>
-    <div class="row">
-        <div class="col input-group">
-            <label class="input-group-text" for="type">Search</label>
-            <input class="form-control" type="text" wire:model="search">
-        </div>
-        <div class="col input-group">
-            <label class="input-group-text" for="type">Status</label>
-            <select class="form-select" id="type" wire:model="type">
-                <option value="all" selected>All</option>
-                <option value="subscribed">Subscribed</option>
-                <option value="active-subscription">Active Subscription</option>
-                <option value="cancelled-subscription">Cancelled Subscription</option>
-                <option value="using-client">Using Client</option>
-                <option value="banned">Banned</option>
-            </select>
-        </div>
-        <div class="col input-group">
-            <label class="input-group-text" for="subscription">Plan</label>
-            <select class="form-select" id="subscription" wire:model="subscription">
-                <option value="ignore" selected>Ignore</option>
-                <option value="1">Free</option>
-                <option value="2">Standard</option>
-                <option value="3">Premium</option>
-            </select>
-        </div>
-        <div class="col input-group">
-            <label class="input-group-text" for="referral-code">Referral</label>
-            <select class="form-select" id="referral-code" wire:model="referralCode">
-                <option value="ignore" selected>Ignore</option>
-                @foreach(\App\Models\ReferralCode::all() as $code)
-                    <option value="{{ $code->id }}">{{ $code->code }}</option>
-                @endforeach
-            </select>
+@section('title', 'Users')
+
+<div class="flex flex-col">
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 space-y-4">
+
+            {{--Table Filters--}}
+            <div class="grid grid-cols-4 gap-6">
+
+                {{--Search Filter--}}
+                <div class="col-span-4 sm:col-span-1">
+                    <x-input.group for="search" label="Search">
+                        <x-input.text wire:model="search" id="search"/>
+                    </x-input.group>
+                </div>
+
+                {{--Status Filter--}}
+                <div class="col-span-4 sm:col-span-1">
+                    <x-input.group for="type" label="Status">
+                        <x-input.select wire:model="type" id="type">
+                            <option value="all" selected>All</option>
+                            <option value="subscribed">Subscribed</option>
+                            <option value="active-subscription">Active Subscription</option>
+                            <option value="cancelled-subscription">Cancelled Subscription</option>
+                            <option value="using-client">Using Client</option>
+                            <option value="banned">Banned</option>
+                        </x-input.select>
+                    </x-input.group>
+                </div>
+
+                {{--Status Filter--}}
+                <div class="col-span-4 sm:col-span-1">
+                    <x-input.group for="subscription" label="Plan">
+                        <x-input.select wire:model="subscription" id="subscription">
+                            <option value="ignore" selected>Ignore</option>
+                            <option value="1">Free</option>
+                            <option value="2">Standard</option>
+                            <option value="3">Premium</option>
+                        </x-input.select>
+                    </x-input.group>
+                </div>
+
+                {{--Status Filter--}}
+                <div class="col-span-4 sm:col-span-1">
+                    <x-input.group for="referralCode" label="Referral Code">
+                        <x-input.select wire:model="referralCode" id="referralCode">
+                            <option value="ignore" selected>Ignore</option>
+                            @foreach(\App\Models\ReferralCode::all() as $code)
+                                <option value="{{ $code->id }}">{{ $code->code }}</option>
+                            @endforeach
+                        </x-input.select>
+                    </x-input.group>
+                </div>
+            </div>
+
+            {{--Table Data--}}
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Name
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Subscription
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Downloads
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Info
+                        </th>
+                        <th scope="col" class="relative px-6 py-3">
+                            <span class="sr-only">Edit</span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" x-data>
+                    @forelse ($users as $user)
+                        <tr wire:key="users-table-{{ $user->id }}" wire:loading.class.delay="opacity-50">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10">
+                                        <img class="h-10 w-10 rounded-full"
+                                             src="{{ $user->image }}"
+                                             alt="user profile picture">
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            {{ $user->name }}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            {{ $user->email }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($user->subscription !== null)
+                                    <div class="text-sm text-gray-900">
+                                        {{ $user->subscription->plan->name }} Plan
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        {{ now()->diffInDays($user->subscription->end_date, false) }} days left
+                                    </div>
+                                @else
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        No Subscription
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ count($user->downloads) }} downloads
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap space-y-1">
+                                @if($user->current_account !== null)
+                                    <span
+                                        class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Using Client
+                                    </span>
+                                @endif
+                                @if($user->hwid !== null)
+                                    <span
+                                        class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        HWID Set
+                                    </span>
+                                @endif
+                                @if($user->banned)
+                                    <span
+                                        class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        Banned
+                                    </span>
+                                @endif
+                                @if($user->discord_id !== null)
+                                    <span
+                                        class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        {{ $user->discord_name }}
+                                    </span>
+                                @endif
+                                @if($user->referralCode != null)
+                                    <span
+                                        class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                         code: {{ $user->referralCode->code }}
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="#"
+                                   class="block text-indigo-600 hover:text-indigo-900"
+                                   @click="$dispatch('edit-user-modal', {{ $user->id }})">
+                                    Edit
+                                </a>
+                                @if($user->subscription !== null)
+                                    <a href="#" class="block text-red-600 hover:text-red-900"
+                                       onclick="confirm('Remove Free Subscription?') || event.stopImmediatePropagation()"
+                                       wire:click.prevent="freeSubscription({{ $user->id }}, true)">
+                                        Remove Subscription
+                                    </a>
+                                @else
+                                    <a href="#" class="block text-indigo-600 hover:text-indigo-900"
+                                       onclick="confirm('Give Free Subscription?') || event.stopImmediatePropagation()"
+                                       wire:click.prevent="freeSubscription({{ $user->id }})">
+                                        Give Subscription
+                                    </a>
+                                @endif
+
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5">
+                                <div class="flex justify-center items-center space-x-2">
+                                    <span
+                                        class="font-medium py-8 text-cool-gray-400 text-xl">
+                                        No users found...
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            {{--Pagination Links--}}
+            {{ $users->links() }}
+
         </div>
     </div>
-
-    <br>
-
-    <div class="justify-content-center" wire:loading.flex>
-        <x-loading class="la-2x"/>
-    </div>
-
-    <table class="table table-striped table-hover table-sm" wire:loading.remove>
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>name</th>
-            <th>email</th>
-            <th>subscription</th>
-            <th>hwid</th>
-            <th>banned</th>
-            <th>current account</th>
-            <th>discord</th>
-            <th>referral code</th>
-            <th>downloads</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($users as $user)
-            <tr wire:key="users-table-{{ $user->id }}">
-                <th scope="row">{{ $user->id }}</th>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>
-                    @if($user->subscription !== null)
-                        Plan: <strong>{{ $user->subscription->plan->name }}</strong>
-                        <br>
-                        Expires: <strong>{{ now()->diffInDays($user->subscription->end_date, false) }}</strong> days
-                    @else
-                        &#10006;
-                    @endif
-                </td>
-                <td>
-                    @if($user->hwid === null)
-                        &#10006;
-                    @else
-                        &#10004;
-                    @endif
-                </td>
-                <td>
-                    @if($user->banned)
-                        &#10004;
-                    @else
-                        &#10006;
-                    @endif
-                </td>
-                <td>
-                    @if($user->current_account !== null)
-                        <img
-                            src="https://crafatar.com/avatars/{{ $user->current_account }}?size=32&default=MHF_Steve"
-                            alt="head">
-                    @else
-                        &#10006;
-                    @endif
-                </td>
-                <td>
-                    @if($user->discord_id !== null)
-                        {{ $user->discord_name }}
-                    @else
-                        &#10006;
-                    @endif
-                </td>
-                <td>
-                    @if($user->referralCode != null)
-                        {{ $user->referralCode->code }}
-                    @else
-                        &#10006;
-                    @endif
-                </td>
-                <td>
-                    {{ count($user->downloads) }}
-                </td>
-                <td>
-                    <button class="btn btn-outline-dark" @click="$dispatch('edit-user-modal-open', {{ $user->id }})">
-                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"/>
-                        </svg>
-                    </button>
-                    @if($user->subscription !== null)
-                        <a class="btn btn-outline-dark"
-                           onclick="confirm('Remove Free Subscription?') || event.stopImmediatePropagation()"
-                           wire:click="freeSubscription({{ $user->id }}, true)">
-                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                      d="M3,4.27L4.28,3L21,19.72L19.73,21L16.06,17.33C15.44,18 14.54,18.55 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15H9C9,16.08 10.37,17 12,17C13.13,17 14.14,16.56 14.65,15.92L11.68,12.95C9.58,12.42 7,11.75 7,9C7,8.77 7,8.55 7.07,8.34L3,4.27M10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C11.63,7 11.28,7.05 10.95,7.13L9.4,5.58L10.5,5.18Z"/>
-                            </svg>
-                        </a>
-                    @else
-                        <a class="btn btn-outline-dark"
-                           onclick="confirm('Give Free Subscription?') || event.stopImmediatePropagation()"
-                           wire:click="freeSubscription({{ $user->id }})">
-                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                      d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
-                            </svg>
-                        </a>
-                    @endif
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-
-    {{ $users->links() }}
 
     @livewire('admin.user.edit-user-modal')
 </div>
