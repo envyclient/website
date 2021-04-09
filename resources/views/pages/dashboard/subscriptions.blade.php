@@ -6,15 +6,30 @@
     @if($user->subscription === null)
         {{-- User's subscription is being processed --}}
         @if($user->billingAgreement !== null)
-            <div class="alert alert-primary" role="alert">
-                Your subscription is currently being processed.
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-3">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <!-- Heroicon name: solid/exclamation -->
+                        <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                             fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700">
+                            Your subscription is currently being processed.
+                        </p>
+                    </div>
+                </div>
             </div>
             <x-plan-card class="mb-3" :plan="$user->billingAgreement->plan"/>
         @else
             {{-- User has no subscription --}}
             @foreach($plans as $plan)
                 <x-plan-card class="mb-3" :plan="$plan">
-                    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 group flex items-center justify-end space-x-1">
+                    <div class="px-4 py-3 bg-gray-100 text-right sm:px-6 group flex items-center justify-end space-x-1">
 
                         {{-- Subscribe using PayPal --}}
                         <form action="{{ route('paypal.process') }}" method="post">
@@ -61,27 +76,48 @@
         @endif
     @else
         <x-plan-card class="mb-3" :plan="$user->subscription->plan">
-            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+            <div class="px-4 py-3 bg-gray-100 sm:px-6 text-small">
                 Next payment due in {{ now()->diffInDays($user->subscription->end_date, false) }} days.
             </div>
         </x-plan-card>
 
         @if($user->billingAgreement?->state === 'Cancelled' || $user->subscription?->stripe_status === 'Cancelled')
-            <div class="alert alert-danger" role="alert">
-                You subscription has been cancelled. You will not be charged at the next billing cycle.
+            <div class="bg-white shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                        Cancel Subscription
+                    </h3>
+                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                        <div class="max-w-xl text-sm text-gray-500">
+                            <p>
+                                You subscription has been cancelled. You will not be charged at the next billing cycle.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         @elseif($user->subscription !== null)
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body">
-                    <h6 class="fw-normal">
-                        Your subscription will be cancelled and will not renew at the end of billing period.
-                    </h6>
-                    <form action="{{ route('subscriptions.cancel') }}" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">
-                            Cancel Subscription
-                        </button>
-                    </form>
+            <div class="bg-white shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                        Cancel Subscription
+                    </h3>
+                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                        <div class="max-w-xl text-sm text-gray-500">
+                            <p>
+                                Your subscription will be cancelled and will not renew at the end of billing period.
+                            </p>
+                        </div>
+                        <div class="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
+                            <form action="{{ route('subscriptions.cancel') }}" method="post">
+                                @csrf
+                                <button type="submit"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm">
+                                    Cancel
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         @endif

@@ -1,29 +1,5 @@
 @props(['plan'])
 
-{{--<div class="shadow sm:rounded-md sm:overflow-hidden">
-    <div class="bg-white py-6 px-4 sm:p-6">
-        <div>
-            <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">
-                Account details
-            </h2>
-            <p class="mt-1 text-sm text-gray-500">
-                Update your account information. Please note that if you change your email you will need
-                to verify it.
-            </p>
-        </div>
-
-        <div class="mt-6 grid grid-cols-4 gap-6">
-        </div>
-    </div>
-    --}}{{--TODO: show notification--}}{{--
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-        <button type="submit"
-                class="bg-gray-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-            Save
-        </button>
-    </div>
-</div>--}}
-
 <div {{ $attributes->merge(['class' => 'shadow sm:rounded-md sm:overflow-hidden']) }}>
     <div class="bg-white py-6 px-4 sm:p-6">
         <h4 class="text-2xl font-semibold">{{ $plan->name }}</h4>

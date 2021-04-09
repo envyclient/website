@@ -506,6 +506,11 @@
                         </h1>
                     </div>
                     <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 md:px-8">
+
+                        <section class="mb-3">
+                            @include('inc.notifications')
+                        </section>
+
                         @yield('content')
                     </div>
                 </div>
