@@ -176,8 +176,7 @@
                         <tr>
                             <td colspan="5">
                                 <div class="flex justify-center items-center space-x-2">
-                                    <span
-                                        class="font-medium py-8 text-cool-gray-400 text-xl">
+                                    <span class="font-medium py-8 text-cool-gray-400 text-xl">
                                         No users found...
                                     </span>
                                 </div>

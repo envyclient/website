@@ -79,7 +79,7 @@
                     Account security
                 </h2>
                 <p class="mt-1 text-sm text-gray-500">
-                    Update your account password. Please do not reuse password.
+                    Update your account password. Please do not reuse a password.
                 </p>
             </div>
 

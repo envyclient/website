@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         $user = auth()
             ->user()
-            ->load(['subscription', 'configs', 'licenseRequest']);
+            ->load(['subscription', 'configs', 'licenseRequests']);
 
         return view('pages.dashboard.home', [
             'user' => $user,

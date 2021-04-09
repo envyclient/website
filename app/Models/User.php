@@ -41,7 +41,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read Collection downloads
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
- * @property-read LicenseRequest|null licenseRequest
+ * @property-read Collection|null licenseRequest
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -125,9 +125,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Invoice::class);
     }
 
-    public function licenseRequest()
+    public function licenseRequests()
     {
-        return $this->hasOne(LicenseRequest::class);
+        return $this->hasMany(LicenseRequest::class);
     }
 
     public function hasSubscription(): bool
@@ -163,10 +163,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasCapesAccess(): bool
     {
         return $this->admin || ($this->hasSubscription() && $this->subscription->plan->capes_access);
-    }
-
-    public function hasLicenseRequest(): bool
-    {
-        return $this->licenseRequest()->exists();
     }
 }
