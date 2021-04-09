@@ -7,9 +7,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
-        .anim:hover {
-            transition: 50ms;
-            transform: scale(1.05);
+        [x-cloak] {
+            display: none;
         }
     </style>
 @endsection
