@@ -37,12 +37,6 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
         Route::get('profile', [HomeController::class, 'profile'])
             ->name('home.profile');
 
-        Route::get('discord', function () {
-            return view('pages.dashboard.discord', [
-                'user' => auth()->user(),
-            ]);
-        })->name('home.discord');
-
         Route::get('subscription', [HomeController::class, 'subscription'])
             ->name('home.subscription');
     });
