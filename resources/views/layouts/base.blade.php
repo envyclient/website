@@ -37,8 +37,7 @@
             data-cf-beacon='{"token": "84c979ca91574da6bd382f7062ce5002"}'></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
     <!-- Styles -->
     @yield('styles')

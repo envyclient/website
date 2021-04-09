@@ -1,4 +1,3 @@
-window.Bootstrap = require('bootstrap');
 require('alpinejs');
 
 /**
