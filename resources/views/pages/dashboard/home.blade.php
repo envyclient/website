@@ -4,8 +4,29 @@
 
 @section('content')
 
+    @if($user->referral_code_id === null)
+        <section class="bg-white shadow sm:rounded-lg mb-4">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Use referral code
+                </h3>
+                <div class="mt-2 max-w-xl text-sm text-gray-500">
+                    <p>
+                        If you were referred by another user please enter their code.
+                    </p>
+                </div>
+                <form class="mt-5 sm:flex sm:items-center" action="{{ route('users.referral-code') }}" method="post">
+                    @csrf
+                    <x-input.text id="referral-code" name="referral-code" placeholder="code"
+                                  value="{{ old('referral-code') }}"/>
+                    <x-button.primary class="ml-3" type="submit">Use</x-button.primary>
+                </form>
+            </div>
+        </section>
+    @endif
+
     <!-- This example requires Tailwind CSS v2.0+ -->
-    <div class="bg-white shadow overflow-hidden sm:rounded-md" x-data>
+    <section class="bg-white shadow overflow-hidden sm:rounded-md" x-data>
 
         <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
@@ -102,7 +123,7 @@
                 </li>
             @endforelse
         </ul>
-    </div>
+    </section>
 
     {{--    <div class="row">
 
