@@ -10,17 +10,18 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.3.2",
+        "@tailwindcss/jit": "^0.1.18",
         "alpinejs": "^2.8.1",
         "autoprefixer": "^10.2.5",
+        "cookies.js": "github:madmurphy/cookies.js",
         "filepond": "^4.25.3",
         "filepond-plugin-file-validate-size": "^2.2.2",
         "filepond-plugin-file-validate-type": "^1.2.5",
         "filepond-plugin-image-validate-size": "^1.2.5",
         "laravel-mix": "^6.0.11",
         "postcss": "^8.2.9",
+        "postcss-import": "^14.0.1",
         "tailwindcss": "^2.1.1"
-    },
-    "dependencies": {
-        "@tailwindcss/forms": "^0.3.2"
     }
 }

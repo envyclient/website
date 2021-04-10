@@ -4,174 +4,200 @@
 
 @section('content')
 
+    {{--Referral Code--}}
+    <section class="bg-white shadow sm:rounded-lg mb-4">
+        <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Use referral code
+            </h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+                <p>
+                    If you were referred by another user please enter their code.
+                </p>
+            </div>
+            <form class="mt-5 sm:flex sm:items-center" action="{{ route('users.referral-code') }}" method="post">
+                @csrf
+                <x-input.text id="referral-code" name="referral-code" placeholder="code"
+                              value="{{ old('referral-code') }}"/>
+                <x-button.primary class="ml-3" type="submit">Use</x-button.primary>
+            </form>
+        </div>
+    </section>
 
     {{--Media Applications--}}
     <section class="bg-white shadow overflow-hidden sm:rounded-md" x-data>
 
-        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-            <div class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap">
-                <div class="ml-4 mt-2">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        Media Applications
-                    </h3>
-                </div>
-                <div class="ml-4 mt-2 flex-shrink-0">
-                    <x-button.primary @click="$dispatch('create-media-request')">
-                        Create new application
-                    </x-button.primary>
+        <section class="bg-white shadow overflow-hidden sm:rounded-md" x-data>
+
+            <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+                <div class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap">
+                    <div class="ml-4 mt-2">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Media Applications
+                        </h3>
+                    </div>
+                    <div class="ml-4 mt-2 flex-shrink-0">
+                        <x-button.primary @click="$dispatch('create-media-request')">
+                            Create new application
+                        </x-button.primary>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <ul class="divide-y divide-gray-200">
-            @forelse($user->licenseRequests as $licenseRequest)
-                <li>
-                    <div class="block hover:bg-gray-50">
-                        <div class="px-4 py-4 sm:px-6">
-                            <div class="flex-shrink-0">
+            <ul class="divide-y divide-gray-200">
+                @forelse($user->licenseRequests as $licenseRequest)
+                    <li>
+                        <div class="block hover:bg-gray-50">
+                            <div class="px-4 py-4 sm:px-6">
+                                <div class="flex-shrink-0">
 
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="space-x-4">
-                                    <img class="h-12 w-12 rounded-full inline"
-                                         src="{{ $licenseRequest->channel_image }}"
-                                         alt="channel image">
-                                    <p class="text-sm font-medium text-gray-600 truncate inline">
-                                        {{ $licenseRequest->channel_name }}
-                                    </p>
                                 </div>
-                                <div class="ml-2 flex-shrink-0 flex">
-                                    {{--TODO: status--}}
-                                    <x-license-request-status :status="$licenseRequest->status"/>
+                                <div class="flex items-center justify-between">
+                                    <div class="space-x-4">
+                                        <img class="h-12 w-12 rounded-full inline"
+                                             src="{{ $licenseRequest->channel_image }}"
+                                             alt="channel image">
+                                        <p class="text-sm font-medium text-gray-600 truncate inline">
+                                            {{ $licenseRequest->channel_name }}
+                                        </p>
+                                    </div>
+                                    <div class="ml-2 flex-shrink-0 flex">
+                                        {{--TODO: status--}}
+                                        <x-license-request-status :status="$licenseRequest->status"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mt-2 sm:flex sm:justify-between">
-                                <div class="sm:flex">
-                                    <a href="{{ $licenseRequest->channel }}"
-                                       class="flex items-center text-sm text-gray-500">
-                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                             fill="currentColor"
-                                             aria-hidden="true">
-                                            <path fill-rule="evenodd"
-                                                  d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
-                                                  clip-rule="evenodd"/>
-                                        </svg>
-                                        {{ $licenseRequest->channel }}
-                                    </a>
-                                    @if($licenseRequest->action_reason !== null)
-                                        <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                <div class="mt-2 sm:flex sm:justify-between">
+                                    <div class="sm:flex">
+                                        <a href="{{ $licenseRequest->channel }}"
+                                           class="flex items-center text-sm text-gray-500">
                                             <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                                                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                  fill="currentColor"
                                                  aria-hidden="true">
                                                 <path fill-rule="evenodd"
-                                                      d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+                                                      d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
                                                       clip-rule="evenodd"/>
-
                                             </svg>
-                                            {{ $licenseRequest->action_reason }}
+                                            {{ $licenseRequest->channel }}
+                                        </a>
+                                        @if($licenseRequest->action_reason !== null)
+                                            <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                     fill="currentColor"
+                                                     aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                          d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+                                                          clip-rule="evenodd"/>
+
+                                                </svg>
+                                                {{ $licenseRequest->action_reason }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                        <!-- Heroicon name: solid/calendar -->
+                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                             aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                        <p>
+                                            Updated on
+                                            <time>{{ $licenseRequest->updated_at->format('F j, Y') }}</time>
                                         </p>
-                                    @endif
-                                </div>
-                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                                    <!-- Heroicon name: solid/calendar -->
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                         aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                              d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                              clip-rule="evenodd"/>
-                                    </svg>
-                                    <p>
-                                        Updated on
-                                        <time>{{ $licenseRequest->updated_at->format('F j, Y') }}</time>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            @empty
-                <li colspan="5">
-                    <div class="flex justify-center items-center space-x-2">
+                    </li>
+                @empty
+                    <li colspan="5">
+                        <div class="flex justify-center items-center space-x-2">
                         <span class="font-medium py-8 text-cool-gray-400 text-xl">
                             No applications found...
                         </span>
-                    </div>
-                </li>
-            @endforelse
-        </ul>
-    </section>
+                        </div>
+                    </li>
+                @endforelse
+            </ul>
+        </section>
 
+        <section x-data="{ openModal: false}">
+            <button type="button"
+                    @click="openModal = true"
+                    class="mt-4 w-full px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                Download Launcher
+            </button>
 
-    <section x-data="{ openModal: false}">
-        <button type="button"
-                @click="openModal = true"
-                class="mt-4 w-full px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-            Download Launcher
-        </button>
+            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+                 aria-modal="true" x-show="openModal">
+                <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                    <!--
+                      Background overlay, show/hide based on modal state.
 
-        <!-- This example requires Tailwind CSS v2.0+ -->
-        <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-show="openModal">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <!--
-                  Background overlay, show/hide based on modal state.
+                      Entering: "ease-out duration-300"
+                        From: "opacity-0"
+                        To: "opacity-100"
+                      Leaving: "ease-in duration-200"
+                        From: "opacity-100"
+                        To: "opacity-0"
+                    -->
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
-                  Entering: "ease-out duration-300"
-                    From: "opacity-0"
-                    To: "opacity-100"
-                  Leaving: "ease-in duration-200"
-                    From: "opacity-100"
-                    To: "opacity-0"
-                -->
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                    <!-- This element is to trick the browser into centering the modal contents. -->
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-                <!-- This element is to trick the browser into centering the modal contents. -->
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                    <!--
+                      Modal panel, show/hide based on modal state.
 
-                <!--
-                  Modal panel, show/hide based on modal state.
-
-                  Entering: "ease-out duration-300"
-                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    To: "opacity-100 translate-y-0 sm:scale-100"
-                  Leaving: "ease-in duration-200"
-                    From: "opacity-100 translate-y-0 sm:scale-100"
-                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                -->
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                <!-- Heroicon name: outline/exclamation -->
-                                <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                </svg>
-                            </div>
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                    Deactivate account
-                                </h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500">
-                                        Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
-                                    </p>
+                      Entering: "ease-out duration-300"
+                        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        To: "opacity-100 translate-y-0 sm:scale-100"
+                      Leaving: "ease-in duration-200"
+                        From: "opacity-100 translate-y-0 sm:scale-100"
+                        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    -->
+                    <div
+                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <div
+                                    class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                    <!-- Heroicon name: outline/exclamation -->
+                                    <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                         viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                </div>
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                        Deactivate account
+                                    </h3>
+                                    <div class="mt-2">
+                                        <p class="text-sm text-gray-500">
+                                            Are you sure you want to deactivate your account? All of your data will be
+                                            permanently removed. This action cannot be undone.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="bg-gray-100 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <x-button.primary class="ml-3">Download</x-button.primary>
-                        <x-button.secondary @click="openModal = false">Cancel</x-button.secondary>
+                        <div class="bg-gray-100 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <x-button.primary class="ml-3">Download</x-button.primary>
+                            <x-button.secondary @click="openModal = false">Cancel</x-button.secondary>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+        </section>
 
     </section>
-
 
     {{--    <div class="row">
 
