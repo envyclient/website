@@ -6,11 +6,6 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <style>
-        [x-cloak] {
-            display: none;
-        }
-    </style>
 @endsection
 
 @section('body')
