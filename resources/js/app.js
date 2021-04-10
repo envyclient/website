@@ -1,5 +1,7 @@
 require('alpinejs');
 
+window.docCookies = require('cookies.js');
+
 /**
  * FilePond
  */

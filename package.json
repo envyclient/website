@@ -14,6 +14,7 @@
         "@tailwindcss/jit": "^0.1.18",
         "alpinejs": "^2.8.1",
         "autoprefixer": "^10.2.5",
+        "cookies.js": "github:madmurphy/cookies.js",
         "filepond": "^4.25.3",
         "filepond-plugin-file-validate-size": "^2.2.2",
         "filepond-plugin-file-validate-type": "^1.2.5",
