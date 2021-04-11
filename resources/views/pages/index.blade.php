@@ -1,23 +1,20 @@
 @extends('layouts.guest')
 
 @section('body')
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="min-h-screen bg-white">
         <header>
-            <div class="relative bg-white">
+            <div class="relative bg-white" x-data="{ open: false }">
                 <div
                     class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
                     <div class="flex justify-start lg:w-0 lg:flex-1">
-                        <a href="#">
-                            <span class="sr-only">Workflow</span>
-                            <img class="h-8 w-auto sm:h-12" src="{{asset('logo.svg')}}" alt="envy logo">
-                        </a>
+                        <img class="h-8 w-auto sm:h-12" src="{{asset('logo.svg')}}" alt="envy logo">
                     </div>
                     <div class="-mr-2 -my-2 md:hidden">
-                        <button type="button"
-                                class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                                aria-expanded="false">
-                            <span class="sr-only">Open menu</span>
+                        <button
+                            type="button"
+                            @click="open = true"
+                            class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+                        >
                             <!-- Heroicon name: outline/menu -->
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" aria-hidden="true">
@@ -52,28 +49,30 @@
                     </div>
                 </div>
 
-                <!--
-                  Mobile menu, show/hide based on mobile menu state.
-
-                  Entering: "duration-200 ease-out"
-                    From: "opacity-0 scale-95"
-                    To: "opacity-100 scale-100"
-                  Leaving: "duration-100 ease-in"
-                    From: "opacity-100 scale-100"
-                    To: "opacity-0 scale-95"
-                -->
-                <div class="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+                {{--Mobile Menu--}}
+                <div
+                    class="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+                    x-show="open"
+                    x-transition:enter="duration-200 ease-out"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="duration-100 ease-in"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                >
                     <div
                         class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
                         <div class="pt-5 pb-6 px-5">
                             <div class="flex items-center justify-between">
                                 <div class="p-2">
-                                    <img class="h-10 w-auto sm:h-20" src="{{asset('logo.svg')}}" alt="">
+                                    <img class="h-10 w-auto sm:h-20" src="{{asset('logo.svg')}}" alt="envy logo">
                                 </div>
                                 <div class="-mr-2">
-                                    <button type="button"
-                                            class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                                        <span class="sr-only">Close menu</span>
+                                    <button
+                                        type="button"
+                                        @click="open = false"
+                                        class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+                                    >
                                         <!-- Heroicon name: outline/x -->
                                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -83,63 +82,30 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="mt-6">
-                                <nav class="grid grid-cols-1 gap-7">
-                                    <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
-                                        <div
-                                            class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-green-500 text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                 viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4 text-base font-medium text-gray-900">
-                                            Home
-                                        </div>
-                                    </a>
-
-                                    <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
-                                        <div
-                                            class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-green-500 text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                                 fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>
-                                                <path
-                                                    d="M13.36 0H2.64C1.736 0 1 .736 1 1.648v10.816c0 .912.736 1.648 1.64 1.648h9.072l-.424-1.48 1.024.952.968.896L15 16V1.648C15 .736 14.264 0 13.36 0zm-3.088 10.448s-.288-.344-.528-.648c1.048-.296 1.448-.952 1.448-.952-.328.216-.64.368-.92.472-.4.168-.784.28-1.16.344a5.604 5.604 0 0 1-2.072-.008 6.716 6.716 0 0 1-1.176-.344 4.688 4.688 0 0 1-.584-.272c-.024-.016-.048-.024-.072-.04-.016-.008-.024-.016-.032-.024-.144-.08-.224-.136-.224-.136s.384.64 1.4.944c-.24.304-.536.664-.536.664-1.768-.056-2.44-1.216-2.44-1.216 0-2.576 1.152-4.664 1.152-4.664 1.152-.864 2.248-.84 2.248-.84l.08.096c-1.44.416-2.104 1.048-2.104 1.048s.176-.096.472-.232c.856-.376 1.536-.48 1.816-.504.048-.008.088-.016.136-.016a6.521 6.521 0 0 1 4.024.752s-.632-.6-1.992-1.016l.112-.128s1.096-.024 2.248.84c0 0 1.152 2.088 1.152 4.664 0 0-.68 1.16-2.448 1.216z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4 text-base font-medium text-gray-900">
-                                            Discord
-                                        </div>
-                                    </a>
-                                </nav>
-                            </div>
                         </div>
                         <div class="py-6 px-5">
                             <div class="grid grid-cols-2 gap-4">
-                                <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                <a href="#home" class="text-base font-medium text-gray-500 hover:text-gray-900">
                                     Home
                                 </a>
-                                <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                <a href="#features" class="text-base font-medium text-gray-500 hover:text-gray-900">
                                     Features
                                 </a>
-                                <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                <a href="#pricing" class="text-base font-medium text-gray-500 hover:text-gray-900">
                                     Pricing
                                 </a>
-                                <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                <a href="#team" class="text-base font-medium text-gray-500 hover:text-gray-900">
                                     Team
                                 </a>
                             </div>
                             <div class="mt-6">
-                                <a href="#"
+                                <a href="{{ route('register') }}"
                                    class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-500 hover:bg-green-700">
                                     Sign up
                                 </a>
                                 <p class="mt-6 text-center text-base font-medium text-gray-500">
                                     Existing customer?
-                                    <a href="#" class="text-gray-900">
+                                    <a href="{{ route('login') }}" class="text-gray-900">
                                         Sign in
                                     </a>
                                 </p>
@@ -147,6 +113,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </header>
 
@@ -167,7 +134,7 @@
                             <h1 class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
                                 <span class="block text-white">Envy</span>
                             </h1>
-                            <p class="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
+                            <p class="mt-6 max-w-lg mx-auto text-center text-xl text-gray-200 sm:max-w-3xl">
                                 Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
                                 commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
                             </p>
@@ -179,7 +146,7 @@
                                         Login
                                     </a>
                                     <a href="{{ config('discord.invite') }}"
-                                       class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8">
+                                       class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8">
                                             <span class="pr-2">
                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                                     fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
@@ -329,7 +296,7 @@
                                 <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
                                     <div class="px-6 py-8 bg-white sm:p-10 sm:pb-6">
                                         <div>
-                                            <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-indigo-100 text-indigo-600"
+                                            <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-gray-100 text-gray-600"
                                                 id="tier-standard">
                                                 Standard Subscription
                                             </h3>
@@ -435,7 +402,7 @@
                                 <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
                                     <div class="px-6 py-8 bg-white sm:p-10 sm:pb-6">
                                         <div>
-                                            <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-indigo-100 text-indigo-600"
+                                            <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-gray-100 text-gray-600"
                                                 id="tier-standard">
                                                 Premium Subscription
                                             </h3>
@@ -560,11 +527,13 @@
                             <h2 class="text-3xl font-extrabold text-gray-900">
                                 Frequently asked questions
                             </h2>
-                            <p class="mt-4 text-lg text-gray-500">Can’t find the answer you’re looking for? <br> Join
-                                our Discord and open a support ticket.</p>
+                            <p class="mt-4 text-lg text-gray-500">
+                                Can’t find the answer you’re looking for? <br> Join
+                                our Discord and open a support ticket.
+                            </p>
                             <a type="button"
                                href="{{ config('discord.invite') }}"
-                               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2">
+                               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-2">
                                 <span class="pr-2">
                                     <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                                         <path
@@ -766,220 +735,3 @@
 
     </div>
 @endsection
-
-{{--
-<div class="nav">
-    <a href="#" class="logo">
-        <img src="{{ asset('logo.svg') }}" alt="logo" loading="lazy">
-    </a>
-    <div class="menu">
-        <a href="#features">features</a>
-        <a href="#media">media</a>
-        <a href="#pricing">pricing</a>
-        @guest
-            <a href="{{ route('login') }}">login</a>
-        @else
-            <a href="{{ route('home') }}">dashboard</a>
-        @endguest
-    </div>
-</div>
-
-<div class="landing">
-    <div class="content">
-        <div class="landing-container">
-            <h1><span>envy</span> client</h1>
-            <p>envy is a premium minecraft hacked client with the best features on the market.</p>
-            <div class="btns">
-                @guest
-                    <a href="{{ route('login') }}" class="btn">login</a>
-                @else
-                    <a href="{{ route('home') }}" class="btn">dashboard</a>
-                @endguest
-                <a href="#features" class="btn">read more</a>
-                <a href="https://discord.gg/5urbcttnwa" class="btn">
-                    <svg width="24" height="24" fill="currentcolor"
-                         viewbox="0 0 16 16">
-                        <path
-                            d="m6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>
-                        <path
-                            d="m13.36 0h2.64c1.736 0 1 .736 1 1.648v10.816c0 .912.736 1.648 1.64 1.648h9.072l-.424-1.48 1.024.952.968.896l15 16v1.648c15 .736 14.264 0 13.36 0zm-3.088 10.448s-.288-.344-.528-.648c1.048-.296 1.448-.952 1.448-.952-.328.216-.64.368-.92.472-.4.168-.784.28-1.16.344a5.604 5.604 0 0 1-2.072-.008 6.716 6.716 0 0 1-1.176-.344 4.688 4.688 0 0 1-.584-.272c-.024-.016-.048-.024-.072-.04-.016-.008-.024-.016-.032-.024-.144-.08-.224-.136-.224-.136s.384.64 1.4.944c-.24.304-.536.664-.536.664-1.768-.056-2.44-1.216-2.44-1.216 0-2.576 1.152-4.664 1.152-4.664 1.152-.864 2.248-.84 2.248-.84l.08.096c-1.44.416-2.104 1.048-2.104 1.048s.176-.096.472-.232c.856-.376 1.536-.48 1.816-.504.048-.008.088-.016.136-.016a6.521 6.521 0 0 1 4.024.752s-.632-.6-1.992-1.016l.112-.128s1.096-.024 2.248.84c0 0 1.152 2.088 1.152 4.664 0 0-.68 1.16-2.448 1.216z"/>
-                    </svg>
-                    discord
-                </a>
-            </div>
-        </div>
-        <div class="landing-container">
-            <img src="{{ asset('logo.svg') }}" alt="logo">
-        </div>
-    </div>
-</div>
-
-<div id="features" class="features">
-    <h1>
-        features
-        <span class="separator"></span>
-    </h1>
-    <div class="feature">
-        <div class="feature-image">
-            <img src="{{ asset('assets/features/client.png') }}" alt="feature-image" loading="lazy">
-        </div>
-        <div class="feature-content" style="margin-left: 30px;">
-            <h1>client</h1>
-            <ul>
-                <li>designed to bypass watchdog.</li>
-                <li>features latest optifine to provide maximum performance.</li>
-            </ul>
-        </div>
-    </div>
-    <div class="feature right">
-        <div class="feature-content" style="margin-left: 30px;">
-            <h1>elegant interface</h1>
-            <p>
-                fluent and consistent design and supports the usage of <a target="_blank"
-                                                                          href="https://thealtening.com/"
-                                                                          style="color: white">the altening</a>.
-            </p>
-        </div>
-        <div class="feature-image">
-            <img src="{{ asset('assets/features/menu.png') }}" alt="feature-image" loading="lazy">
-        </div>
-    </div>
-    <div class="feature">
-        <div class="feature-image">
-            <img src="{{ asset('assets/features/launcher.png') }}" alt="feature-image" loading="lazy">
-        </div>
-        <div class="feature-content">
-            <h1>custom launcher</h1>
-            <p>
-                envy comes with a custom launcher written using c++ to provide the smoothest possible cheating
-                experience.
-            </p>
-        </div>
-    </div>
-    <div class="feature right">
-        <div class="feature-content">
-            <h1>web configs</h1>
-            <p>
-                the new config system allows the ability to store and load configs from the web, providing complete
-                unity across different versions.
-            </p>
-        </div>
-        <div class="feature-image">
-            <img src="{{ asset('assets/features/configs.png') }}" alt="feature-image" loading="lazy">
-        </div>
-    </div>
-</div>
-
-<div class="media" id="media">
-    <div class="media-content">
-        <h1>
-            media
-            <span class="separator"></span>
-        </h1>
-        <div class="videos">
-
-            <div class="video-container">
-                <div class="video-image">
-                    <img id="video-1-image"
-                         src="https://i1.ytimg.com/vi/sl5bockn_4e/maxresdefault.jpg"
-                         alt="thumbnail"
-                         loading="lazy">
-                    <span onclick="playvideo(this, 'video-1', 'video-1-image');"></span>
-                    <iframe id="video-1"
-                            class="video-image"
-                            data-src="https://youtube.com/embed/sl5bockn_4e"
-                            allow="autoplay; encrypted-media;"
-                            allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-
-            <div class="video-container">
-                <div class="video-image">
-                    <img id="video-2-image"
-                         src="https://i1.ytimg.com/vi/prlanlbk95q/maxresdefault.jpg"
-                         alt="thumbnail"
-                         loading="lazy">
-                    <span onclick="playvideo(this, 'video-2', 'video-2-image');"></span>
-                    <iframe id="video-2"
-                            class="video-image"
-                            data-src="https://youtube.com/embed/prlanlbk95q"
-                            allow="autoplay; encrypted-media;"
-                            allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="pricing" id="pricing">
-    <h1>
-        pricing
-        <span class="separator"></span>
-    </h1>
-    <div class="price-tables">
-        <div class="price">
-            <h1>standard</h1>
-            <ul>
-                <li>monthly updates</li>
-                <li>killer features</li>
-                <li>5 configs</li>
-            </ul>
-            <h2 class="subscription-price">$7.00<span>/month</span></h2>
-            <a href="{{ route('home.subscription') }}" class="btn" style="margin-top: 15px;">
-                buy now
-            </a>
-        </div>
-        <div class="price">
-            <h1>premium</h1>
-            <ul>
-                <li>monthly updates</li>
-                <li>killer features</li>
-                <li>capes access</li>
-                <li>beta access</li>
-                <li>15 configs</li>
-            </ul>
-            <h2 class="subscription-price">$10.00<span>/month</span></h2>
-            <a href="{{ route('home.subscription') }}" class="btn" style="margin-top: 15px;">
-                buy now
-            </a>
-        </div>
-    </div>
-</div>
-
-<div class="footer">
-    <h1>
-        <span>envy</span> client
-        <span class="separator"></span>
-    </h1>
-    <div class="footer-content">
-        <div class="content">
-            <a href="#" class="menu-link">home</a><br>
-            <a href="#features" class="menu-link">features</a><br>
-            <a href="#media" class="menu-link">media</a><br>
-            <a href="#pricing" class="menu-link">pricing</a><br>
-            <a href="{{ route('terms') }}" class="menu-link">terms</a>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-    // play the clicked video
-    function playvideo(span, frameid, imageid) {
-        const frame = document.getelementbyid(frameid);
-        const image = document.getelementbyid(imageid);
-
-        // hiding the play button
-        span.style.display = "none";
-
-        // hiding the video thumbnail
-        image.style.display = "none";
-
-        // showing the iframe and playing the video
-        frame.style.display = "block";
-        frame.src = frame.getattribute('data-src') + "?autoplay=1";
-    }
-</script>
---}}
-
