@@ -10,12 +10,12 @@
     </section>
 
     {{--Update Password--}}
-    <section class="py-4">
+    <section class="mt-4">
         @livewire('user.update-password')
     </section>
 
     <section
-        class="py-4"
+        class="mt-4"
         x-data="{
                 show: false,
                 focusables() {
