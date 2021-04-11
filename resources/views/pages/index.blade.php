@@ -43,7 +43,7 @@
                             Sign in
                         </a>
                         <a href="{{ route('register') }}"
-                           class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-700 hover:bg-green-500">
+                           class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
                             Sign up
                         </a>
                     </div>
@@ -100,7 +100,7 @@
                             </div>
                             <div class="mt-6">
                                 <a href="{{ route('register') }}"
-                                   class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-500 hover:bg-green-700">
+                                   class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
                                     Sign up
                                 </a>
                                 <p class="mt-6 text-center text-base font-medium text-gray-500">
@@ -126,7 +126,7 @@
                     <div class="relative shadow-xl sm:rounded-2xl sm:overflow-hidden">
                         <div class="absolute inset-0">
                             <img class="h-full w-full object-cover filter blur-sm"
-                                 src="{{asset("assets/hero.png")}}"
+                                 src="{{ asset('assets/hero.png') }}"
                                  alt="People working on laptops">
                             <div class="absolute inset-0 bg-green-700" style="mix-blend-mode: multiply;"></div>
                         </div>
@@ -155,8 +155,7 @@
                                     <a href="{{ config('discord.invite') }}"
                                        class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8">
                                             <span class="pr-2">
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                                    fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                                               <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                                                     <path
                                                         d="M6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>
                                                     <path
@@ -220,7 +219,7 @@
                                 <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
                                     <img
                                         class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
-                                        src="{{asset("assets/features/account_manager.png")}}"
+                                        src="{{ asset('assets/features/account_manager.png') }}"
                                         alt="envy client account manager">
                                 </div>
                             </div>
@@ -258,7 +257,7 @@
                                         <div class="mt-6">
                                             <a href="{{ route('home.subscription') }}"
                                                class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
-                                                Purchase
+                                                Subscribe
                                             </a>
                                         </div>
                                     </div>
@@ -268,7 +267,7 @@
                                 <div class="pr-4 -ml-48 sm:pr-6 md:-ml-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
                                     <img
                                         class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
-                                        src="{{asset("assets/features/client.png")}}"
+                                        src="{{ asset('assets/features/client.png') }}"
                                         alt="envy client ui">
                                 </div>
                             </div>
@@ -398,9 +397,9 @@
                                             </li>
                                         </ul>
                                         <div class="rounded-md shadow">
-                                            <a href="{{ route('register') }}"
-                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900">
-                                                Sign up
+                                            <a href="{{ route('home.subscription') }}"
+                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                                                Subscribe
                                             </a>
                                         </div>
                                     </div>
@@ -498,10 +497,7 @@
                                             <li class="flex items-start">
                                                 <div class="flex-shrink-0">
                                                     <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500"
-                                                         xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         aria-hidden="true">
+                                                    <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                               stroke-width="2"
                                                               d="M5 13l4 4L19 7"/>
@@ -513,9 +509,9 @@
                                             </li>
                                         </ul>
                                         <div class="rounded-md shadow">
-                                            <a href="{{ route('register') }}"
-                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900">
-                                                Sign up
+                                            <a href="{{ route('home.subscription') }}"
+                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                                                Subscribe
                                             </a>
                                         </div>
                                     </div>
@@ -607,7 +603,7 @@
                                 <li>
                                     <div class="flex items-center space-x-4 lg:space-x-6">
                                         <img class="w-16 h-16 rounded-full lg:w-20 lg:h-20"
-                                             src="{{asset("assets/team/haq.jfif")}}" alt="">
+                                             src="{{ asset('assets/team/haq.jfif') }}" alt="">
                                         <div class="font-medium text-lg leading-6 space-y-1">
                                             <h3>Haq</h3>
                                             <p class="text-gray-500">Founder / CEO</p>
@@ -618,7 +614,7 @@
                                 <li>
                                     <div class="flex items-center space-x-4 lg:space-x-6">
                                         <img class="w-16 h-16 rounded-full lg:w-20 lg:h-20"
-                                             src="{{asset("assets/team/mat.png")}}" alt="">
+                                             src="{{ asset('assets/team/mat.png') }}" alt="">
                                         <div class="font-medium text-lg leading-6 space-y-1">
                                             <h3>Mat</h3>
                                             <p class="text-gray-500">Developer</p>
