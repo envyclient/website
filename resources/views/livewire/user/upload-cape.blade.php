@@ -26,7 +26,7 @@
     @enderror
 
     <x-slot name="footer">
-        <x-small-notify/>
+        <x-small-notify class="mr-3"/>
         <x-button.primary type="submit" wire:click="submit">
             Upload
         </x-button.primary>

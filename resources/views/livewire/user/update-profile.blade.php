@@ -121,8 +121,8 @@
 
             </div>
         </div>
-        {{--TODO: show notification--}}
         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+            <x-small-notify class="mr-3"/>
             <x-button.primary type="submit">
                 Save
             </x-button.primary>

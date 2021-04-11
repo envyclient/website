@@ -10,5 +10,5 @@
     x-show.transition.out.duration.1000ms="open"
     x-text="message"
     style="display: none;"
-    class="text-sm mr-3"
+    {{ $attributes->merge(['class' => 'text-sm']) }}
 ></span>

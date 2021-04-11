@@ -4,16 +4,18 @@
 
 @section('content')
 
+    {{--Update Profile--}}
     <section>
         @livewire('user.update-profile')
     </section>
 
+    {{--Update Password--}}
     <section class="py-4">
         @livewire('user.update-password')
     </section>
 
-    <section 
-        class="py-4" 
+    <section
+        class="py-4"
         x-data="{
                 show: false,
                 focusables() {
@@ -64,9 +66,9 @@
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
                 <!-- Background overlay, show/hide based on modal state. -->
-                <div 
-                    x-show="show" 
-                    class="fixed inset-0 transform transition-all" 
+                <div
+                    x-show="show"
+                    class="fixed inset-0 transform transition-all"
                     x-on:click="show = false"
                     x-transition:enter="ease-out duration-300"
                     x-transition:enter-start="opacity-0"
@@ -115,15 +117,16 @@
                         </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button type="button"
-                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                            Disable
-                        </button>
-                        <button type="button"
-                                @click="show = false"
-                                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        <form action="{{ route('users.disable') }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <x-button.danger type="submit">
+                                Disable
+                            </x-button.danger>
+                        </form>
+                        <x-button.secondary type="button" @click="show = false" class="mr-2">
                             Cancel
-                        </button>
+                        </x-button.secondary>
                     </div>
                 </div>
             </div>
