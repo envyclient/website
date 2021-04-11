@@ -7,7 +7,7 @@
                 <div
                     class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
                     <div class="flex justify-start lg:w-0 lg:flex-1">
-                        <img class="h-8 w-auto sm:h-12" src="{{asset('logo.svg')}}" alt="envy logo">
+                        <img class="h-8 w-auto sm:h-10" src="{{ asset('logo.svg') }}" alt="envy logo">
                     </div>
                     <div class="-mr-2 -my-2 md:hidden">
                         <button
@@ -38,14 +38,21 @@
                         </a>
                     </nav>
                     <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                        <a href="{{ route('login') }}"
-                           class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                            Sign in
-                        </a>
-                        <a href="{{ route('register') }}"
-                           class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
-                            Sign up
-                        </a>
+                        @guest
+                            <a href="{{ route('login') }}"
+                               class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                                Sign in
+                            </a>
+                            <a href="{{ route('register') }}"
+                               class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
+                                Sign up
+                            </a>
+                        @else
+                            <a href="{{ route('home') }}"
+                               class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
+                                Home
+                            </a>
+                        @endguest
                     </div>
                 </div>
 
@@ -99,16 +106,24 @@
                                 </a>
                             </div>
                             <div class="mt-6">
-                                <a href="{{ route('register') }}"
-                                   class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
-                                    Sign up
-                                </a>
-                                <p class="mt-6 text-center text-base font-medium text-gray-500">
-                                    Existing customer?
-                                    <a href="{{ route('login') }}" class="text-gray-900">
-                                        Sign in
+                                @guest
+                                    <a href="{{ route('register') }}"
+                                       class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700">
+                                        Sign up
                                     </a>
-                                </p>
+                                    <p class="mt-6 text-center text-base font-medium text-gray-500">
+                                        Existing customer?
+                                        <a href="{{ route('login') }}" class="text-gray-900">
+                                            Sign in
+                                        </a>
+                                    </p>
+                                @else
+                                    <p class="mt-6 text-center text-base font-medium text-gray-500">
+                                        <a href="{{ route('home') }}" class="text-gray-900">
+                                            Home
+                                        </a>
+                                    </p>
+                                @endguest
                             </div>
                         </div>
                     </div>
@@ -135,8 +150,7 @@
                                 <span class="block text-white">Envy</span>
                             </h1>
                             <p class="mt-6 max-w-lg mx-auto text-center text-xl text-gray-200 sm:max-w-3xl">
-                                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
-                                commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
+                                Envy is a premium Minecraft Client with the best features on the market.
                             </p>
                             <div class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
                                 <div
@@ -195,9 +209,8 @@
                                             Account Manager
                                         </h2>
                                         <p class="mt-4 text-lg text-gray-600">
-                                            Envy offers a modern and sleek looking account manager with
-                                            built in multiplayer screen allowing you to connect to a wanted
-                                            server instantly
+                                            Envy offers a modern and sleek-looking Account Manager with a built-in
+                                            multiplayer screen, allowing you to instantly connect to a wanted server.
                                         </p>
                                         <br>
                                         <hr>
@@ -207,9 +220,9 @@
                                                 Altening</a> support
                                         </p>
                                         <div class="mt-6">
-                                            <a href="https://thealtening.com/"
+                                            <a href="{{ route('home.subscription') }}"
                                                class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
-                                                The Altening
+                                                Subscribe
                                             </a>
                                         </div>
                                     </div>
@@ -249,10 +262,9 @@
                                             ClickGui
                                         </h2>
                                         <p class="mt-4 text-lg text-gray-600">
-                                            ClickGui for the client is built on the idea of it being
-                                            easy to use, it is the old school style of click guis but with a modern
-                                            twist that includes a web config window and a console window for all the
-                                            commands
+                                            ClickGui for the client is built on the idea of it being easy to use; it
+                                            employs the old school style but with a modern twist that includes a Web
+                                            Config window and a Console window
                                         </p>
                                         <div class="mt-6">
                                             <a href="{{ route('home.subscription') }}"
@@ -497,7 +509,8 @@
                                             <li class="flex items-start">
                                                 <div class="flex-shrink-0">
                                                     <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                               stroke-width="2"
                                                               d="M5 13l4 4L19 7"/>
@@ -603,18 +616,19 @@
                                 <li>
                                     <div class="flex items-center space-x-4 lg:space-x-6">
                                         <img class="w-16 h-16 rounded-full lg:w-20 lg:h-20"
-                                             src="{{ asset('assets/team/haq.jfif') }}" alt="">
+                                             src="https://avatar.tobi.sh/avatar/7a269b15dc630d0bfcc7a4922c69eedc.svg?text=HAQ"
+                                             alt="haq proile picture">
                                         <div class="font-medium text-lg leading-6 space-y-1">
                                             <h3>Haq</h3>
                                             <p class="text-gray-500">Founder / CEO</p>
                                         </div>
                                     </div>
                                 </li>
-
                                 <li>
                                     <div class="flex items-center space-x-4 lg:space-x-6">
                                         <img class="w-16 h-16 rounded-full lg:w-20 lg:h-20"
-                                             src="{{ asset('assets/team/mat.png') }}" alt="">
+                                             src="https://avatar.tobi.sh/avatar/7f7365d0acacde6fe7fbb24abd1d0b0e.svg?text=MAT"
+                                             alt="mat profile picture">
                                         <div class="font-medium text-lg leading-6 space-y-1">
                                             <h3>Mat</h3>
                                             <p class="text-gray-500">Developer</p>
@@ -627,6 +641,7 @@
                 </div>
             </section>
 
+            {{--Footer Section--}}
             <footer class="bg-gray-800">
                 <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
                     <div class="xl:grid xl:grid-cols-3 xl:gap-8">
