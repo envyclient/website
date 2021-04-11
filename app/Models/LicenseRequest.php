@@ -11,6 +11,8 @@ use Illuminate\Support\Carbon;
  * @property int user_id
  * @property string name
  * @property string channel
+ * @property string channel_name
+ * @property string channel_image
  * @property string status
  * @property string|null action_reason
  * @property Carbon|null action_at

@@ -6,7 +6,7 @@ use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
-use App\Http\Livewire\Admin\ShowLicenseRequests;
+use App\Http\Livewire\Admin\LicenseRequestsTable;
 use App\Http\Livewire\Admin\User\UsersTable;
 use App\Http\Middleware\Custom\CheckIfPasswordNull;
 use Illuminate\Support\Facades\Route;
@@ -56,7 +56,7 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
         Route::view('referrals', 'pages.dashboard.admin.referrals')
             ->name('admin.referrals');
 
-        Route::get('license-requests', ShowLicenseRequests::class)
+        Route::get('license-requests', LicenseRequestsTable::class)
             ->name('admin.license-requests');
     });
 });
