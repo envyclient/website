@@ -5,19 +5,21 @@
 @section('content')
 
     {{--Referral Code--}}
-    <x-card title="Use referral code" subtitle="If you were referred by another user please enter their code.">
-        <form class="mt-5 sm:flex sm:items-center" action="{{ route('users.referral-code') }}" method="post">
-            @csrf
-            <x-input.text
-                id="referral-code"
-                name="referral-code"
-                placeholder="code"
-                value="{{ old('referral-code') }}"
-                required
-            />
-            <x-button.primary class="ml-3" type="submit">Use</x-button.primary>
-        </form>
-    </x-card>
+    @if($user->referral_code_id === null)
+        <x-card title="Use referral code" subtitle="If you were referred by another user please enter their code.">
+            <form class="mt-5 sm:flex sm:items-center" action="{{ route('users.referral-code') }}" method="post">
+                @csrf
+                <x-input.text
+                    id="referral-code"
+                    name="referral-code"
+                    placeholder="code"
+                    value="{{ old('referral-code') }}"
+                    required
+                />
+                <x-button.primary class="ml-3" type="submit">Use</x-button.primary>
+            </form>
+        </x-card>
+    @endif
 
     {{--Upload Cape--}}
     @if($user->hasCapesAccess())

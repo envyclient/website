@@ -59,6 +59,6 @@ class UploadCape extends Component
             'cape' => asset('assets/capes/default.png'),
         ]);
 
-        $this->emitSelf('notify-cape', 'Cape Reset!');
+        $this->emitSelf('small-notify', 'Cape Reset!');
     }
 }
