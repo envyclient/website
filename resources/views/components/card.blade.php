@@ -1,5 +1,6 @@
 @props(['title', 'subtitle'])
-<div class="shadow sm:rounded-md sm:overflow-hidden">
+
+<div {{ $attributes->merge(['class' => 'shadow sm:rounded-md sm:overflow-hidden']) }}>
     <div class="bg-white py-6 px-4 sm:p-6">
         <div>
             @if(isset($title))
