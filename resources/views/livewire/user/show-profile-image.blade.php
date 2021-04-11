@@ -1,25 +1,27 @@
-<div class="row">
-    <div class="col-3">
-        <img src="{{ $user->image }}"
-             class="rounded-circle"
-             alt="user image"
-             width="38px"
-             height="38px">
-    </div>
-    <div class="col-8   ">
-        <h6 class="text-white m-0">
-            {{  $user->name }}
-        </h6>
-        <a href="{{ route('logout') }}"
-           class="text-white text-muted m-0"
-           onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-            {{ __('Logout') }}
-        </a>
-        <form id="logout-form"
-              action="{{ route('logout') }}"
-              method="post"
-              style="display: none;">
-            @csrf
-        </form>
-    </div>
+<div>
+    <a href="{{ route('logout') }}"
+       class="flex-shrink-0 w-full group block"
+       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+        <div class="flex items-center">
+            <div>
+                <img class="inline-block h-9 w-9 rounded-full"
+                     src="{{ auth()->user()->image }}"
+                     alt="user image">
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-medium text-white">
+                    {{ auth()->user()->name }}
+                </p>
+                <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">
+                    {{ __('Logout') }}
+                </p>
+            </div>
+        </div>
+    </a>
+    <form id="logout-form"
+          action="{{ route('logout') }}"
+          method="post"
+          style="display: none;">
+        @csrf
+    </form>
 </div>

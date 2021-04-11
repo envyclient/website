@@ -1,9 +1,4 @@
-@extends('layouts.base')
-
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-@endsection
-
+@extends('layouts.guest')
 
 @section('body')
     <!-- This example requires Tailwind CSS v2.0+ -->
@@ -15,7 +10,7 @@
                     <div class="flex justify-start lg:w-0 lg:flex-1">
                         <a href="#">
                             <span class="sr-only">Workflow</span>
-                            <img class="h-8 w-auto sm:h-14" src="{{asset('logo.svg')}}" alt="">
+                            <img class="h-8 w-auto sm:h-12" src="{{asset('logo.svg')}}" alt="envy logo">
                         </a>
                     </div>
                     <div class="-mr-2 -my-2 md:hidden">
@@ -32,24 +27,25 @@
                         </button>
                     </div>
                     <nav class="hidden md:flex space-x-10">
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                        <a href="#home" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Home
                         </a>
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                        <a href="#features" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Features
                         </a>
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                        <a href="#pricing" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Pricing
                         </a>
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                        <a href="#team" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Team
                         </a>
                     </nav>
                     <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                        <a href="#" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                        <a href="{{ route('login') }}"
+                           class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                             Sign in
                         </a>
-                        <a href="#"
+                        <a href="{{ route('register') }}"
                            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-700 hover:bg-green-500">
                             Sign up
                         </a>
@@ -155,35 +151,35 @@
         </header>
 
         <main>
-            <div>
-                <!-- Hero card -->
-                <div class="relative">
-                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100"></div>
-                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div class="relative shadow-xl sm:rounded-2xl sm:overflow-hidden">
-                            <div class="absolute inset-0">
-                                <img class="h-full w-full object-cover filter blur-sm"
-                                     src="{{asset("assets/hero.png")}}"
-                                     alt="People working on laptops">
-                                <div class="absolute inset-0 bg-green-700" style="mix-blend-mode: multiply;"></div>
-                            </div>
-                            <div class="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
-                                <h1 class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-                                    <span class="block text-white">Envy</span>
-                                </h1>
-                                <p class="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
-                                    Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
-                                    commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
-                                </p>
-                                <div class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
-                                    <div
-                                        class="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
-                                        <a href="#"
-                                           class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8">
-                                            Login
-                                        </a>
-                                        <a href="#"
-                                           class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8">
+
+            {{-- Hero Section--}}
+            <section class="relative" id="home">
+                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100"></div>
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="relative shadow-xl sm:rounded-2xl sm:overflow-hidden">
+                        <div class="absolute inset-0">
+                            <img class="h-full w-full object-cover filter blur-sm"
+                                 src="{{asset("assets/hero.png")}}"
+                                 alt="People working on laptops">
+                            <div class="absolute inset-0 bg-green-700" style="mix-blend-mode: multiply;"></div>
+                        </div>
+                        <div class="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
+                            <h1 class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                                <span class="block text-white">Envy</span>
+                            </h1>
+                            <p class="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
+                                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
+                                commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
+                            </p>
+                            <div class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
+                                <div
+                                    class="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
+                                    <a href="{{ route('login') }}"
+                                       class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 sm:px-8">
+                                        Login
+                                    </a>
+                                    <a href="{{ config('discord.invite') }}"
+                                       class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8">
                                             <span class="pr-2">
                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                                     fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
@@ -193,122 +189,122 @@
                                                         d="M13.36 0H2.64C1.736 0 1 .736 1 1.648v10.816c0 .912.736 1.648 1.64 1.648h9.072l-.424-1.48 1.024.952.968.896L15 16V1.648C15 .736 14.264 0 13.36 0zm-3.088 10.448s-.288-.344-.528-.648c1.048-.296 1.448-.952 1.448-.952-.328.216-.64.368-.92.472-.4.168-.784.28-1.16.344a5.604 5.604 0 0 1-2.072-.008 6.716 6.716 0 0 1-1.176-.344 4.688 4.688 0 0 1-.584-.272c-.024-.016-.048-.024-.072-.04-.016-.008-.024-.016-.032-.024-.144-.08-.224-.136-.224-.136s.384.64 1.4.944c-.24.304-.536.664-.536.664-1.768-.056-2.44-1.216-2.44-1.216 0-2.576 1.152-4.664 1.152-4.664 1.152-.864 2.248-.84 2.248-.84l.08.096c-1.44.416-2.104 1.048-2.104 1.048s.176-.096.472-.232c.856-.376 1.536-.48 1.816-.504.048-.008.088-.016.136-.016a6.521 6.521 0 0 1 4.024.752s-.632-.6-1.992-1.016l.112-.128s1.096-.024 2.248.84c0 0 1.152 2.088 1.152 4.664 0 0-.68 1.16-2.448 1.216z"/>
                                                 </svg>
                                             </span>
-                                            Discord
-                                        </a>
-                                    </div>
+                                        Discord
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- More main page content here... -->
-            <div>
+            {{-- Features Section--}}
+            <section class="py-16 bg-gray-50 overflow-hidden lg:py-24" id="features">
+                <div class="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
 
-                <div class="py-16 bg-gray-50 overflow-hidden lg:py-24">
-                    <div class="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
-
-                        <div class="relative">
-                            <div
-                                class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
-                                <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
-                                    <div>
-                                        <div class="text-white">
-                                                <span
-                                                    class="h-12 w-12 rounded-md flex items-center justify-center bg-green-600">
-                                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                        viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          stroke-width="2"
-                                                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                                    </svg>
-                                                </span>
-                                        </div>
-                                        <div class="mt-6">
-                                            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
-                                                Account Manager
-                                            </h2>
-                                            <p class="mt-4 text-lg text-gray-600">
-                                                Envy offers a modern and sleek looking account manager with
-                                                built in multiplayer screen allowing you to connect to a wanted
-                                                server instantly
-                                            </p>
-                                            <br>
-                                            <hr>
-                                            <p class="mt-2 text-lg text-gray-600">
-                                                The account manager also has a built in <a
-                                                    href="https://thealtening.com/" class="text-blue-500">The
-                                                    Altening</a> support
-                                            </p>
-                                            <div class="mt-6">
-                                                <a href="https://stackjobs.dev/register"
-                                                   class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
-                                                    The Altening
-                                                </a>
-                                            </div>
-                                        </div>
+                    <div class="relative">
+                        <div
+                            class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
+                            <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
+                                <div>
+                                    <div class="text-white">
+                                        <span
+                                            class="h-12 w-12 rounded-md flex items-center justify-center bg-green-600">
+                                           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  stroke-width="2"
+                                                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                            </svg>
+                                        </span>
                                     </div>
-                                </div>
-                                <div class="mt-12 sm:mt-16 lg:mt-0">
-                                    <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
-                                        <img
-                                            class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
-                                            src="{{asset("assets/features/account_manager.png")}}"
-                                            alt="Matched jobs">
+                                    <div class="mt-6">
+                                        <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
+                                            Account Manager
+                                        </h2>
+                                        <p class="mt-4 text-lg text-gray-600">
+                                            Envy offers a modern and sleek looking account manager with
+                                            built in multiplayer screen allowing you to connect to a wanted
+                                            server instantly
+                                        </p>
+                                        <br>
+                                        <hr>
+                                        <p class="mt-2 text-lg text-gray-600">
+                                            The account manager also has a built in <a
+                                                href="https://thealtening.com/" class="text-blue-500">The
+                                                Altening</a> support
+                                        </p>
+                                        <div class="mt-6">
+                                            <a href="https://thealtening.com/"
+                                               class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+                                                The Altening
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="mt-12 sm:mt-16 lg:mt-0">
+                                <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
+                                    <img
+                                        class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                                        src="{{asset("assets/features/account_manager.png")}}"
+                                        alt="envy client account manager">
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
 
-                        <div class="mt-24">
+                    <div class="mt-24">
+                        <div
+                            class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
                             <div
-                                class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
-                                <div
-                                    class="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
-                                    <div>
-                                        <div class="text-white">
+                                class="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
+                                <div>
+                                    <div class="text-white">
                                                 <span
                                                     class="h-12 w-12 rounded-md flex items-center justify-center bg-green-600">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                       viewBox="0 0 24 24" stroke="currentColor">
+                                                      <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
                                                 </svg>
                                                 </span>
-                                        </div>
+                                    </div>
+                                    <div class="mt-6">
+                                        <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
+                                            ClickGui
+                                        </h2>
+                                        <p class="mt-4 text-lg text-gray-600">
+                                            ClickGui for the client is built on the idea of it being
+                                            easy to use, it is the old school style of click guis but with a modern
+                                            twist that includes a web config window and a console window for all the
+                                            commands
+                                        </p>
                                         <div class="mt-6">
-                                            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
-                                                ClickGui
-                                            </h2>
-                                            <p class="mt-4 text-lg text-gray-600">
-                                                ClickGui for the client is built on the idea of it being
-                                                easy to use, it is the old school style of click guis but with a modern
-                                                twist that includes a web config window and a console window for all the
-                                                commands
-                                            </p>
-                                            <div class="mt-6">
-                                                <a href="https://stackjobs.dev/register"
-                                                   class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
-                                                    Purchase
-                                                </a>
-                                            </div>
+                                            <a href="{{ route('home.subscription') }}"
+                                               class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+                                                Purchase
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
-                                    <div class="pr-4 -ml-48 sm:pr-6 md:-ml-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
-                                        <img
-                                            class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
-                                            src="{{asset("assets/features/client.png")}}"
-                                            alt="Profile detail">
-                                    </div>
+                            </div>
+                            <div class="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
+                                <div class="pr-4 -ml-48 sm:pr-6 md:-ml-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
+                                    <img
+                                        class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
+                                        src="{{asset("assets/features/client.png")}}"
+                                        alt="envy client ui">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="bg-gray-800">
+            </section>
+
+            {{-- Pricing Section --}}
+            <section class="bg-gray-800" id="pricing">
                 <div class="pt-12 sm:pt-16 lg:pt-24">
                     <div class="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
                         <div class="max-w-3xl mx-auto space-y-2 lg:max-w-none">
@@ -428,9 +424,8 @@
                                             </li>
                                         </ul>
                                         <div class="rounded-md shadow">
-                                            <a href="https://stackjobs.dev/register"
-                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900"
-                                               aria-describedby="tier-standard">
+                                            <a href="{{ route('register') }}"
+                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900">
                                                 Sign up
                                             </a>
                                         </div>
@@ -544,9 +539,8 @@
                                             </li>
                                         </ul>
                                         <div class="rounded-md shadow">
-                                            <a href="https://stackjobs.dev/register"
-                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900"
-                                               aria-describedby="tier-standard">
+                                            <a href="{{ route('register') }}"
+                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900">
                                                 Sign up
                                             </a>
                                         </div>
@@ -556,10 +550,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- This example requires Tailwind CSS v2.0+ -->
-            <div class="bg-gray-50">
+            {{-- FAQ Section --}}
+            <section class="bg-gray-50" id="faq">
                 <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8">
                     <div class="lg:grid lg:grid-cols-3 lg:gap-8">
                         <div>
@@ -568,19 +562,19 @@
                             </h2>
                             <p class="mt-4 text-lg text-gray-500">Can’t find the answer you’re looking for? <br> Join
                                 our Discord and open a support ticket.</p>
-                            <button type="button"
-                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2">
-                        <span class="pr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                 fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
-                                <path
-                                    d="M6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>
-                                <path
-                                    d="M13.36 0H2.64C1.736 0 1 .736 1 1.648v10.816c0 .912.736 1.648 1.64 1.648h9.072l-.424-1.48 1.024.952.968.896L15 16V1.648C15 .736 14.264 0 13.36 0zm-3.088 10.448s-.288-.344-.528-.648c1.048-.296 1.448-.952 1.448-.952-.328.216-.64.368-.92.472-.4.168-.784.28-1.16.344a5.604 5.604 0 0 1-2.072-.008 6.716 6.716 0 0 1-1.176-.344 4.688 4.688 0 0 1-.584-.272c-.024-.016-.048-.024-.072-.04-.016-.008-.024-.016-.032-.024-.144-.08-.224-.136-.224-.136s.384.64 1.4.944c-.24.304-.536.664-.536.664-1.768-.056-2.44-1.216-2.44-1.216 0-2.576 1.152-4.664 1.152-4.664 1.152-.864 2.248-.84 2.248-.84l.08.096c-1.44.416-2.104 1.048-2.104 1.048s.176-.096.472-.232c.856-.376 1.536-.48 1.816-.504.048-.008.088-.016.136-.016a6.521 6.521 0 0 1 4.024.752s-.632-.6-1.992-1.016l.112-.128s1.096-.024 2.248.84c0 0 1.152 2.088 1.152 4.664 0 0-.68 1.16-2.448 1.216z"/>
-                            </svg>
-                        </span>
+                            <a type="button"
+                               href="{{ config('discord.invite') }}"
+                               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2">
+                                <span class="pr-2">
+                                    <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>
+                                        <path
+                                            d="M13.36 0H2.64C1.736 0 1 .736 1 1.648v10.816c0 .912.736 1.648 1.64 1.648h9.072l-.424-1.48 1.024.952.968.896L15 16V1.648C15 .736 14.264 0 13.36 0zm-3.088 10.448s-.288-.344-.528-.648c1.048-.296 1.448-.952 1.448-.952-.328.216-.64.368-.92.472-.4.168-.784.28-1.16.344a5.604 5.604 0 0 1-2.072-.008 6.716 6.716 0 0 1-1.176-.344 4.688 4.688 0 0 1-.584-.272c-.024-.016-.048-.024-.072-.04-.016-.008-.024-.016-.032-.024-.144-.08-.224-.136-.224-.136s.384.64 1.4.944c-.24.304-.536.664-.536.664-1.768-.056-2.44-1.216-2.44-1.216 0-2.576 1.152-4.664 1.152-4.664 1.152-.864 2.248-.84 2.248-.84l.08.096c-1.44.416-2.104 1.048-2.104 1.048s.176-.096.472-.232c.856-.376 1.536-.48 1.816-.504.048-.008.088-.016.136-.016a6.521 6.521 0 0 1 4.024.752s-.632-.6-1.992-1.016l.112-.128s1.096-.024 2.248.84c0 0 1.152 2.088 1.152 4.664 0 0-.68 1.16-2.448 1.216z"/>
+                                    </svg>
+                                </span>
                                 Join Discord
-                            </button>
+                            </a>
                         </div>
                         <div class="mt-12 lg:mt-0 lg:col-span-2">
                             <dl class="space-y-12">
@@ -622,10 +616,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- This example requires Tailwind CSS v2.0+ -->
-            <div class="bg-gray-75">
+            {{-- Team Section --}}
+            <section class="bg-gray-75" id="team">
                 <div class="mx-auto py-12 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-24">
                     <div class="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8">
                         <div class="space-y-5 sm:space-y-4">
@@ -659,26 +653,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!--
-         This example requires Tailwind CSS v2.0+
-
-         This example requires some changes to your config:
-
-         ```
-         // tailwind.config.js
-         module.exports = {
-           // ...
-           plugins: [
-             // ...
-             require('@tailwindcss/forms'),
-           ]
-         }
-         ```
-       -->
-            <footer class="bg-gray-800" aria-labelledby="footerHeading">
-                <h2 id="footerHeading" class="sr-only">Footer</h2>
+            <footer class="bg-gray-800">
                 <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
                     <div class="xl:grid xl:grid-cols-3 xl:gap-8">
                         <div class="grid grid-cols-2 gap-8 xl:col-span-2">
@@ -689,25 +666,25 @@
                                     </h3>
                                     <ul class="mt-4 space-y-4">
                                         <li>
-                                            <a href="#" class="text-base text-gray-300 hover:text-white">
+                                            <a href="#home" class="text-base text-gray-300 hover:text-white">
                                                 Home
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="#" class="text-base text-gray-300 hover:text-white">
+                                            <a href="#features" class="text-base text-gray-300 hover:text-white">
                                                 Features
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="#" class="text-base text-gray-300 hover:text-white">
+                                            <a href="#pricing" class="text-base text-gray-300 hover:text-white">
                                                 Pricing
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="#" class="text-base text-gray-300 hover:text-white">
+                                            <a href="#team" class="text-base text-gray-300 hover:text-white">
                                                 Team
                                             </a>
                                         </li>
@@ -719,13 +696,15 @@
                                     </h3>
                                     <ul class="mt-4 space-y-4">
                                         <li>
-                                            <a href="#" class="text-base text-gray-300 hover:text-white">
+                                            <a href="mailto:contact@envyclient.com"
+                                               class="text-base text-gray-300 hover:text-white">
                                                 Email
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="#" class="text-base text-gray-300 hover:text-white">
+                                            <a href="{{ config('discord.invite') }}"
+                                               class="text-base text-gray-300 hover:text-white">
                                                 Discord
                                             </a>
                                         </li>
@@ -739,7 +718,8 @@
                                     </h3>
                                     <ul class="mt-4 space-y-4">
                                         <li>
-                                            <a href="#" class="text-base text-gray-300 hover:text-white">
+                                            <a href="{{ route('terms') }}"
+                                               class="text-base text-gray-300 hover:text-white">
                                                 Terms
                                             </a>
                                         </li>
@@ -750,7 +730,7 @@
                     </div>
                     <div class="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between">
                         <div class="flex space-x-6 md:order-2">
-                            <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <a href="https://github.com/envyclient" class="text-gray-400 hover:text-gray-300">
                                 <span class="sr-only">GitHub</span>
                                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path fill-rule="evenodd"
@@ -758,18 +738,16 @@
                                           clip-rule="evenodd"/>
                                 </svg>
                             </a>
-                            <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <a href="mailto:contact@envyclient.com" class="text-gray-400 hover:text-gray-300">
                                 <span class="sr-only">Mail</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <a href="{{ config('discord.invite') }}" class="text-gray-400 hover:text-gray-300">
                                 <span class="sr-only">Discord</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                     fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 16 16">
                                     <path
                                         d="M6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>
                                     <path
@@ -778,7 +756,7 @@
                             </a>
                         </div>
                         <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-                            &copy; 2021 Envy, Inc. All rights reserved.
+                            &copy; 2021 Envy Client. All rights reserved.
                         </p>
                     </div>
                 </div>
@@ -787,7 +765,6 @@
         </main>
 
     </div>
-
 @endsection
 
 {{--

@@ -2417,6 +2417,10 @@ select {
 		height: 2.5rem;
 	}
 
+	.sm\:h-12 {
+		height: 3rem;
+	}
+
 	.sm\:w-full {
 		width: 100%;
 	}

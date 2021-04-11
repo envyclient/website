@@ -9,5 +9,6 @@ return [
             'premium' => env('DISCORD_GUILD_PREMIUM_ROLE'),
         ]
     ],
-    'webhook' => env('DISCORD_WEBHOOK')
+    'webhook' => env('DISCORD_WEBHOOK'),
+    'invite' => 'https://discord.gg/kusdsKtcr5',
 ];
