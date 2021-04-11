@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\User;
 
 use App\Helpers\Youtube;
 use App\Models\LicenseRequest;
@@ -8,13 +8,24 @@ use App\Rules\MinYouTubeSubs;
 use App\Rules\ValidYouTubeLink;
 use Livewire\Component;
 
-class CreateMediaRequest extends Component
+class MediaRequests extends Component
 {
     public bool $open = false;
     public string $channel = '';
 
     public function submit()
     {
+        // do basic validation
+        $this->validate([
+            'channel' => [
+                'bail',
+                'required',
+                'string',
+                'url',
+                new ValidYouTubeLink,
+            ],
+        ]);
+
         $user = auth()->user();
 
         // checking if the user has an request pending
@@ -23,14 +34,10 @@ class CreateMediaRequest extends Component
             return;
         }
 
+        // do sub count validation
         $this->validate([
             'channel' => [
-                'bail',
-                'required',
-                'string',
-                'url',
-                new ValidYouTubeLink,
-                new MinYouTubeSubs
+                new MinYouTubeSubs,
             ],
         ]);
 
@@ -59,6 +66,7 @@ class CreateMediaRequest extends Component
 
     public function render()
     {
-        return view('livewire.create-media-request');
+        $licenseRequests = auth()->user()->licenseRequests;
+        return view('livewire.user.media-requests', compact('licenseRequests'));
     }
 }

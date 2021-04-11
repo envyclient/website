@@ -176,8 +176,13 @@
         </div>
         {{--TODO: show notification--}}
         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+            <x-button.danger>
+                <a href="{{ route('password.request') }}">
+                    Forget Password
+                </a>
+            </x-button.danger>
             <x-button.primary type="submit">
-                Update
+                Save
             </x-button.primary>
         </div>
     </div>
