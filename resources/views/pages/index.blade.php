@@ -16,8 +16,7 @@
                             class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
                         >
                             <!-- Heroicon name: outline/menu -->
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor" aria-hidden="true">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M4 6h16M4 12h16M4 18h16"/>
                             </svg>
@@ -311,224 +310,97 @@
                         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div
                                 class="max-w-md mx-auto space-y-4 lg:max-w-5xl lg:grid lg:grid-cols-2 lg:gap-5 lg:space-y-0">
-                                <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
-                                    <div class="px-6 py-8 bg-white sm:p-10 sm:pb-6">
-                                        <div>
-                                            <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-gray-100 text-gray-600"
-                                                id="tier-standard">
-                                                Standard Subscription
-                                            </h3>
-                                        </div>
-                                        <div class="mt-4 flex items-baseline text-6xl font-extrabold">
-                                            <span class="text-5xl">$7</span>
-                                            <span class="ml-1 text-2xl font-medium text-gray-500">
+                                @foreach(\App\Models\Plan::where('price', '<>', 0)->get() as $plan)
+                                    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+                                        <div class="px-6 py-8 bg-white sm:p-10 sm:pb-6">
+                                            <div>
+                                                <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-gray-100 text-gray-600">
+                                                    {{ $plan->name }} Subscription
+                                                </h3>
+                                            </div>
+                                            <div class="mt-4 flex items-baseline text-6xl font-extrabold">
+                                                <span class="text-5xl">${{ $plan->price }}</span>
+                                                <span class="ml-1 text-2xl font-medium text-gray-500">
                                                     / month
                                                 </span>
+                                            </div>
+                                            <p class="mt-5 text-lg text-gray-500">
+                                                @if($plan->name === 'Standard')
+                                                    Standard licence
+                                                @else
+                                                    For users that want to give extra support
+                                                @endif
+                                            </p>
                                         </div>
-                                        <p class="mt-5 text-lg text-gray-500">
-                                            Standard licence
-                                        </p>
-                                    </div>
-                                    <div
-                                        class="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6">
-                                        <ul class="space-y-4">
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500"
-                                                         xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Monthly Updates
-                                                </p>
-                                            </li>
+                                        <div
+                                            class="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6">
+                                            <ul class="space-y-4">
+                                                <li class="flex items-start">
+                                                    <div class="flex-shrink-0">
+                                                        <x-icons.o-check class="text-green-500"/>
+                                                    </div>
+                                                    <p class="ml-3 text-base text-gray-700">
+                                                        Monthly Updates
+                                                    </p>
+                                                </li>
 
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500"
-                                                         xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Cloud based configs (5 slots)
-                                                </p>
-                                            </li>
+                                                <li class="flex items-start">
+                                                    <div class="flex-shrink-0">
+                                                        <x-icons.o-check class="text-green-500"/>
+                                                    </div>
+                                                    <p class="ml-3 text-base text-gray-700">
+                                                        Cloud Based Configs ({{ $plan->config_limit }} slots)
+                                                    </p>
+                                                </li>
 
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M6 18L18 6M6 6l12 12"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Access to Beta builds
-                                                </p>
-                                            </li>
+                                                <li class="flex items-start">
+                                                    <div class="flex-shrink-0">
+                                                        @if($plan->beta_access)
+                                                            <x-icons.o-check class="text-green-500"/>
+                                                        @else
+                                                            <x-icons.o-x class="text-red-700"/>
+                                                        @endif
+                                                    </div>
+                                                    <p class="ml-3 text-base text-gray-700">
+                                                        Access to Beta Builds
+                                                    </p>
+                                                </li>
 
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M6 18L18 6M6 6l12 12"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Cape visibility
-                                                </p>
-                                            </li>
+                                                <li class="flex items-start">
+                                                    <div class="flex-shrink-0">
+                                                        @if($plan->capes_access)
+                                                            <x-icons.o-check class="text-green-500"/>
+                                                        @else
+                                                            <x-icons.o-x class="text-red-700"/>
+                                                        @endif
+                                                    </div>
+                                                    <p class="ml-3 text-base text-gray-700">
+                                                        Cape Visibility
+                                                    </p>
+                                                </li>
 
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M6 18L18 6M6 6l12 12"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Access to modify your cape
-                                                </p>
-                                            </li>
-                                        </ul>
-                                        <div class="rounded-md shadow">
-                                            <a href="{{ route('home.subscription') }}"
-                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
-                                                Subscribe
-                                            </a>
+                                                <li class="flex items-start">
+                                                    <div class="flex-shrink-0">
+                                                        @if($plan->capes_access)
+                                                            <x-icons.o-check class="text-green-500"/>
+                                                        @else
+                                                            <x-icons.o-x class="text-red-700"/>
+                                                        @endif
+                                                    </div>
+                                                    <p class="ml-3 text-base text-gray-700">
+                                                        Access to modify your cape
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                            <div class="rounded-md shadow">
+                                                <a href="{{ route('home.subscription') }}"
+                                                   class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                                                    Subscribe
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
-                                    <div class="px-6 py-8 bg-white sm:p-10 sm:pb-6">
-                                        <div>
-                                            <h3 class="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-gray-100 text-gray-600"
-                                                id="tier-standard">
-                                                Premium Subscription
-                                            </h3>
-                                        </div>
-                                        <div class="mt-4 flex items-baseline text-6xl font-extrabold">
-                                            <span class="text-5xl">$10</span>
-                                            <span class="ml-1 text-2xl font-medium text-gray-500">
-                                                    / month
-                                                </span>
-                                        </div>
-                                        <p class="mt-5 text-lg text-gray-500">
-                                            For users that want to give extra support
-                                        </p>
-                                    </div>
-                                    <div
-                                        class="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6">
-                                        <ul class="space-y-4">
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500"
-                                                         xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Monthly Updates
-                                                </p>
-                                            </li>
-
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500"
-                                                         xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Cloud based configs (15 slots)
-                                                </p>
-                                            </li>
-
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500"
-                                                         xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Access to Beta builds
-                                                </p>
-                                            </li>
-
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500"
-                                                         xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                         aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Cape visibility
-                                                </p>
-                                            </li>
-
-                                            <li class="flex items-start">
-                                                <div class="flex-shrink-0">
-                                                    <!-- Heroicon name: outline/check -->
-                                                    <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24"
-                                                         stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M5 13l4 4L19 7"/>
-                                                    </svg>
-                                                </div>
-                                                <p class="ml-3 text-base text-gray-700">
-                                                    Access to modify your cape
-                                                </p>
-                                            </li>
-                                        </ul>
-                                        <div class="rounded-md shadow">
-                                            <a href="{{ route('home.subscription') }}"
-                                               class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
-                                                Subscribe
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
