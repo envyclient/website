@@ -14,7 +14,7 @@
                     maxImageHeight="1024"
                     required
         />
-        <div class="text-sm">
+        <div class="text-sm text-gray-600">
             The dimensions must be 2048x1024.
         </div>
     </div>

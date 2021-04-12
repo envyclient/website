@@ -68,7 +68,7 @@ class UsersTable extends Component
         }
 
         return view('livewire.admin.user.users-table', [
-            'users' => $user->orderBy('id')->paginate(20),
+            'users' => $user->orderBy('id')->paginate(2 ),
         ])->extends('layouts.dash');
     }
 

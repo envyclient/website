@@ -61,9 +61,9 @@
                                           clip-rule="evenodd"></path>
                                 </svg>
                                 <p>
-                                    Updated on
+                                    Submitted on
                                     <time
-                                        datetime="{{ $licenseRequest->updated_at->format('Y-m-d') }}">{{ $licenseRequest->updated_at->format('F j, Y') }}</time>
+                                        datetime="{{ $licenseRequest->created_at->format('Y-m-d') }}">{{ $licenseRequest->created_at->format('F j, Y') }}</time>
                                 </p>
                             </div>
                         </div>

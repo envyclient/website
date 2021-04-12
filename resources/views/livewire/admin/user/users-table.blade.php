@@ -1,8 +1,48 @@
 @section('title', 'Users')
 
 <div class="flex flex-col">
-    <div class="flex-col space-y-4">
 
+    {{--Total Stats--}}
+    <dl class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+
+        {{--Total Users Stats--}}
+        <x-stats-card title="Total Users">
+            <x-slot name="icon">
+                <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+            </x-slot>
+            {{ \App\Models\User::count() }}
+        </x-stats-card>
+
+        {{--Subscriptions Stats--}}
+        <x-stats-card title="Subscriptions">
+            <x-slot name="icon">
+                <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                </svg>
+            </x-slot>
+            {{ \App\Models\Subscription::count() }}
+        </x-stats-card>
+
+        {{--Total Transactions Stats--}}
+        <x-stats-card title="Total Transactions">
+            <x-slot name="icon">
+                <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+            </x-slot>
+            ${{ \App\Models\Invoice::sum('price') }} <span class="text-gray-500 ">USD</span>
+        </x-stats-card>
+    </dl>
+
+    {{--Users Table--}}
+    <div class="flex-col space-y-4 mt-4">
+
+        {{--Table Filters--}}
         <div class="grid grid-cols-4 gap-6">
 
             {{--Search Filter--}}
@@ -26,7 +66,7 @@
                 </x-input.group>
             </div>
 
-            {{--Status Filter--}}
+            {{--Plan Filter--}}
             <div class="col-span-4 sm:col-span-1">
                 <x-input.group for="subscription" label="Plan">
                     <x-input.select wire:model="subscription" id="subscription">
@@ -38,7 +78,7 @@
                 </x-input.group>
             </div>
 
-            {{--Status Filter--}}
+            {{--Referral Code Filter--}}
             <div class="col-span-4 sm:col-span-1">
                 <x-input.group for="referralCode" label="Referral Code">
                     <x-input.select wire:model="referralCode" id="referralCode">
@@ -51,6 +91,7 @@
             </div>
         </div>
 
+        {{--Users Table Data--}}
         <x-table>
             <x-slot name="head">
                 <x-table.heading>Name</x-table.heading>
@@ -166,10 +207,10 @@
             </x-slot>
         </x-table>
 
-        <div>
-            {{ $users->links() }}
-        </div>
+        {{--Users Table Pagination Links--}}
+        {{ $users->links() }}
     </div>
 
+    {{--Edit User Modal--}}
     @livewire('admin.user.edit-user-modal')
 </div>
