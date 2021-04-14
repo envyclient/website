@@ -44,7 +44,7 @@ class UploadCape extends Component
         ]);
 
         $this->resetFilePond();
-        $this->emitSelf('notify-cape', 'Cape Uploaded!');
+        $this->emitSelf('small-notify', 'Cape Uploaded!');
     }
 
     public function resetCape()
@@ -59,6 +59,6 @@ class UploadCape extends Component
             'cape' => asset('assets/capes/default.png'),
         ]);
 
-        $this->emitSelf('notify-cape', 'Cape Reset!');
+        $this->emitSelf('small-notify', 'Cape Reset!');
     }
 }

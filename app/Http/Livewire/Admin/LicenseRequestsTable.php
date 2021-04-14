@@ -8,7 +8,7 @@ use App\Notifications\LicenseRequest\LicenseRequestDenied;
 use App\Notifications\LicenseRequest\LicenseRequestUpdated;
 use Livewire\Component;
 
-class ShowLicenseRequests extends Component
+class LicenseRequestsTable extends Component
 {
     protected $listeners = ['DENY_REQUEST' => 'deny'];
 
@@ -17,12 +17,12 @@ class ShowLicenseRequests extends Component
     public function approve(LicenseRequest $licenseRequest, string $type)
     {
         if ($type === 'approve') { // approve
-            $this->handleSubscription($licenseRequest, 2, [
+            $this->handleSubscription($licenseRequest, 3, [
                 'status' => 'approved',
                 'action_reason' => 'Request approved.',
                 'action_at' => now(),
             ]);
-            session()->flash('success', 'Granted the user a 2 day subscription.');
+            session()->flash('success', 'Granted the user a 3 day subscription.');
         } else { // extend
             $this->handleSubscription($licenseRequest, 7, [
                 'status' => 'extended',
@@ -54,11 +54,11 @@ class ShowLicenseRequests extends Component
     public function render()
     {
         $requests = LicenseRequest::with('user.subscription.plan')
-            ->status($this->status);
+            ->status($this->status)
+            ->get();
 
-        return view('livewire.admin.show-license-requests', [
-            'requests' => $requests->get()
-        ])->extends('layouts.dash');
+        return view('livewire.admin.license-requests-table', compact('requests'))
+            ->extends('layouts.dash');
     }
 
     private function handleSubscription(LicenseRequest $licenseRequest, int $daysToAdd, array $data)
@@ -78,11 +78,11 @@ class ShowLicenseRequests extends Component
 
         $licenseRequest->update($data);
 
-        if ($daysToAdd === 2) { //approved
+        if ($daysToAdd === 3) { //approved
             $user->notify(new LicenseRequestUpdated(
                 "Congrats $user->name,",
                 'Media License Approved',
-                'Your media license request has been approved and you have 2 days to use and publish a video of the client.',
+                'Your media license request has been approved and you have 3 days to use and publish a video of the client.',
                 'Please visit the dashboard to download the launcher.',
             ));
         } else { // extended

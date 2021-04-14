@@ -1,5 +1,6 @@
-window.Bootstrap = require('bootstrap');
 require('alpinejs');
+
+window.docCookies = require('cookies.js');
 
 /**
  * FilePond

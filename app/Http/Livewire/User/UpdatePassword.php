@@ -39,7 +39,7 @@ class UpdatePassword extends Component
             'password' => Hash::make($this->password)
         ])->save();
 
-        session()->flash('message', 'Your password has been updated.');
+        $this->emitSelf('small-notify', 'Your password has been updated.');
         $this->resetInputFields();
     }
 

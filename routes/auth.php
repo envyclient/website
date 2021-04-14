@@ -32,7 +32,8 @@ Route::get('forgot-password', Email::class)
 Route::get('reset-password/{token}', Reset::class)
     ->name('password.reset');
 
-Route::get('setup-account', SetupAccount::class)
+Route::get('setup', SetupAccount::class)
+    ->middleware('auth')
     ->name('setup-account');
 
 Route::middleware('auth')->group(function () {

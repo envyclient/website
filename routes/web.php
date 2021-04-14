@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\Actions\DisableAccount;
 use App\Http\Controllers\Actions\HandleDiscordWebhook;
-use App\Http\Controllers\Actions\StoreLicenseRequest;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
-use App\Http\Livewire\Admin\ShowLicenseRequests;
+use App\Http\Livewire\Admin\LicenseRequestsTable;
+use App\Http\Livewire\Admin\User\UsersTable;
 use App\Http\Middleware\Custom\CheckIfPasswordNull;
 use Illuminate\Support\Facades\Route;
 
@@ -37,12 +37,6 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
         Route::get('profile', [HomeController::class, 'profile'])
             ->name('home.profile');
 
-        Route::get('discord', function () {
-            return view('pages.dashboard.discord', [
-                'user' => auth()->user(),
-            ]);
-        })->name('home.discord');
-
         Route::get('subscription', [HomeController::class, 'subscription'])
             ->name('home.subscription');
     });
@@ -53,7 +47,7 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'admin']], function () {
 
         // list users and versions
-        Route::view('users', 'pages.dashboard.admin.users')
+        Route::get('users', UsersTable::class)
             ->name('admin.users');
 
         Route::view('versions', 'pages.dashboard.admin.versions')
@@ -62,7 +56,7 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
         Route::view('referrals', 'pages.dashboard.admin.referrals')
             ->name('admin.referrals');
 
-        Route::get('license-requests', ShowLicenseRequests::class)
+        Route::get('license-requests', LicenseRequestsTable::class)
             ->name('admin.license-requests');
     });
 });
@@ -74,10 +68,6 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], function () {
     Route::post('referral-code', UseReferralCode::class)
         ->name('users.referral-code');
-
-    Route::post('license-request', StoreLicenseRequest::class)
-        ->middleware('throttle:3,1')
-        ->name('users.license-request');
 
     Route::delete('disable', DisableAccount::class)
         ->name('users.disable');
