@@ -18,15 +18,9 @@
     <x-table class="mt-4">
 
         <x-slot name="head">
-            <x-table.heading>
-                Account
-            </x-table.heading>
-            <x-table.heading>
-                Status
-            </x-table.heading>
-            <x-table.heading>
-
-            </x-table.heading>
+            <x-table.heading>Account</x-table.heading>
+            <x-table.heading>Status</x-table.heading>
+            <x-table.heading/>
         </x-slot>
 
         <x-slot name="body">
@@ -74,7 +68,7 @@
                 </x-table.row>
             @empty
                 <x-table.row>
-                    <x-table.cell colspan="5">
+                    <x-table.cell colspan="3">
                         <div class="flex justify-center items-center space-x-2">
                             <span class="font-medium py-8 text-cool-gray-400 text-xl">
                                 No License Requests...

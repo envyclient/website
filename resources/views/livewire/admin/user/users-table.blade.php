@@ -98,7 +98,7 @@
                 <x-table.heading>Subscription</x-table.heading>
                 <x-table.heading>Downloads</x-table.heading>
                 <x-table.heading>Info</x-table.heading>
-                <x-table.heading><span class="sr-only">Edit</span></x-table.heading>
+                <x-table.heading/>
             </x-slot>
 
             <x-slot name="body">
