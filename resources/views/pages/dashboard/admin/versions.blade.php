@@ -3,13 +3,10 @@
 @section('title', 'Versions')
 
 @section('content')
-    <div>
-        <div class="alert alert-dark fs-4">
-            Versions
-        </div>
 
-        @livewire('admin.version.list-versions')
-    </div>
+    <section>
+        @livewire('admin.version.versions-table')
+    </section>
 
     <br>
 
@@ -20,4 +17,8 @@
 
         @livewire('admin.version.upload-version')
     </div>
+
+    <section>
+        @livewire('admin.upload-launcher')
+    </section>
 @endsection

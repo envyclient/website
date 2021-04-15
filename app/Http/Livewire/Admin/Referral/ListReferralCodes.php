@@ -13,7 +13,7 @@ class ListReferralCodes extends Component
 
     protected string $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
+    protected array $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
 
     public bool $showUsersModal = false;
     public $showingUsers = [];

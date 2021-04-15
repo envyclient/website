@@ -12,7 +12,7 @@ class UsersTable extends Component
 {
     use WithPagination;
 
-    protected $listeners = ['users-update' => '$refresh'];
+    protected array $listeners = ['users-update' => '$refresh'];
 
     // filters
     public string $search = '';

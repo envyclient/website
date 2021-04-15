@@ -8,7 +8,7 @@
         </x-input.group>
 
         {{-- Referral Code Input--}}
-        <x-input.group for="code" label="Code" class="mt-3">
+        <x-input.group for="code" label="Code" class="mt-4">
             <x-input.text wire:model.defer="code" id="code"/>
         </x-input.group>
 

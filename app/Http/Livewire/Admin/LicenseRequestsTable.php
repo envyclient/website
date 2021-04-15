@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class LicenseRequestsTable extends Component
 {
-    protected $listeners = ['DENY_REQUEST' => 'deny'];
+    protected array $listeners = ['DENY_REQUEST' => 'deny'];
 
     public string $status = 'all';
 

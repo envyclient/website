@@ -79,10 +79,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 Route::group(['prefix' => 'launcher', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
     Route::get('/download', [LauncherController::class, 'download'])
         ->name('launcher.show');
-
-    Route::post('/', [LauncherController::class, 'store'])
-        ->middleware('admin')
-        ->name('launcher.store');
 });
 
 /**
