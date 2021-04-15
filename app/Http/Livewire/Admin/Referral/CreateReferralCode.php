@@ -8,29 +8,13 @@ use Livewire\Component;
 
 class CreateReferralCode extends Component
 {
-    public $user;
-    public $code;
+    public string $user = '';
+    public string $code = '';
 
     protected array $rules = [
-        'user' => [
-            'required',
-            'string',
-            'exists:users,name'
-        ],
-        'code' => [
-            'required',
-            'string',
-            'min:3',
-            'max:15',
-            'alpha_dash',
-            'unique:referral_codes'
-        ],
+        'user' => ['required', 'string', 'exists:users,name'],
+        'code' => ['required', 'string', 'min:3', 'max:15', 'alpha_dash', 'unique:referral_codes'],
     ];
-
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
 
     public function render()
     {
@@ -54,5 +38,6 @@ class CreateReferralCode extends Component
         $this->code = '';
 
         $this->emit('REFERRAL_CODE_CREATED');
+        $this->smallNotify('Referral Code Created.');
     }
 }

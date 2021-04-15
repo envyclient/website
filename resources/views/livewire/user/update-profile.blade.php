@@ -1,55 +1,3 @@
-{{--<form wire:submit.prevent="submit">
-
-    <div class="card shadow-sm">
-
-        <div class="card-body">
-
-            @if (session()->has('message'))
-                <div class="alert alert-success show" role="alert">
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="mb-1 me-1">
-                        <path
-                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                    </svg>
-                    {{ session('message') }}
-                </div>
-            @endif
-
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input class="form-control @error('name') is-invalid @enderror"
-                       type="text"
-                       id="name"
-                       wire:model.defer="name"
-                       required>
-
-                @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-
-            <div>
-                <label for="email" class="form-label">Email</label>
-                <input class="form-control @error('email') is-invalid @enderror"
-                       type="email"
-                       id="email"
-                       wire:model.defer="email"
-                       required>
-
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success">Update Profile</button>
-        </div>
-    </div>
-</form>--}}
 <form wire:submit.prevent="submit">
     <div class="shadow sm:rounded-md sm:overflow-hidden">
         <div class="bg-white py-6 px-4 sm:p-6">
@@ -75,8 +23,7 @@
 
                         @error('name')
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd"
                                       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                                       clip-rule="evenodd"/>
