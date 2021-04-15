@@ -71,7 +71,7 @@ class UpdateProfile extends Component
             $message = 'Profile updated.';
         }
 
-        $this->emitSelf('small-notify', $message);
+        $this->smallNotify($message);
         $this->resetInputFields($user);
 
         $this->emit('PROFILE_UPDATE');

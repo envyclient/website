@@ -13,15 +13,14 @@ class UpdatePassword extends Component
     public string $password_confirmation = '';
 
     protected array $rules = [
-        'current_password' => 'required',
-        'password' => 'required|min:8|confirmed|different:current_password',
-        'password_confirmation' => 'required_with:password'
+        'current_password' => ['required'],
+        'password' => ['required', 'min:8', 'confirmed', 'different:current_password'],
+        'password_confirmation' => ['required_with:password'],
     ];
 
     public function render()
     {
-        return view('livewire.user.update-password')
-            ->with('user', auth()->user());
+        return view('livewire.user.update-password');
     }
 
     public function submit()
@@ -39,7 +38,7 @@ class UpdatePassword extends Component
             'password' => Hash::make($this->password)
         ])->save();
 
-        $this->emitSelf('small-notify', 'Your password has been updated.');
+        $this->smallNotify('Your password has been updated.');
         $this->resetInputFields();
     }
 

@@ -13,7 +13,7 @@
         </x-input.group>
 
         <x-slot name="footer">
-            <x-small-notify/>
+            <x-small-notify class="mr-2"/>
             <x-button.primary type="submit">Create</x-button.primary>
         </x-slot>
 
