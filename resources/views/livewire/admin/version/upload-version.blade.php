@@ -1,120 +1,38 @@
-<div>
-    <form wire:submit.prevent="submit">
+<form wire:submit.prevent="submit">
+    <x-card title="Upload Version" subtitle="Upload a new version to the server.">
 
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
+        {{--Name Input--}}
+        <x-input.group for="name" label="Name">
+            <x-input.text wire:model.defer="name" id="name"/>
+        </x-input.group>
 
-        <div class="mb-3">
-            <label class="form-label" for="name">Name</label>
-            <input class="form-control @error('name') is-invalid @enderror"
-                   type="text"
-                   id="name"
-                   wire:model.defer="name"
-                   required>
+        {{--Changelog Input--}}
+        <x-input.group for="changelog" label="Changelog" class="mt-4">
+            <x-input.textarea wire:model.defer="changelog"
+                              id="changelog"
+                              rows="3"
+            />
+        </x-input.group>
 
-            @error('name')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+        {{--Beta Input--}}
+        <x-input.group for="beta" label="Beta" class="mt-4">
+            <x-input.toggle wire:model.defer="beta" id="beta"/>
+        </x-input.group>
 
-        <div class="mb-3">
-            <label class="form-label" for="changelog">Changelog</label>
-            <textarea class="form-control @error('name') is-invalid @enderror"
-                      id="changelog"
-                      wire:model.defer="changelog"
-                      rows="3"
-                      required></textarea>
+        {{--Version & Assets Input--}}
+        <x-input.group for="files" label="Files" class="mt-4">
+            <x-filepond wire:model="files"
+                        multiple
+                        required
+            />
+        </x-input.group>
 
-            @error('changelog')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+        {{--Footer--}}
+        <x-slot name="footer">
+            <x-small-notify class="mr-2"/>
+            <x-button.primary type="submit" wire:loading.disabled>Upload</x-button.primary>
+        </x-slot>
 
-            <div class="mb-3 form-check form-switch">
-                <label class="form-check-label" for="beta">
-                    Is Beta Version?
-                </label>
-                <input class="form-check-input"
-                       type="checkbox"
-                       id="beta"
-                       wire:model.defer="beta">
-            </div>
+    </x-card>
+</form>
 
-            <div class="mb-3">
-                <label class="form-label">Files</label>
-                <x-filepond wire:model="files"
-                            multiple
-                            required/>
-            </div>
-
-            <x-loading wire:loading wire:target="submit"/>
-            <button type="submit"
-                    class="btn btn-success"
-                    {{ count($files) === 2 ? null : 'disabled' }}
-                    wire:loading.attr="disabled">
-                Upload
-            </button>
-            <button type="button"
-                    class="btn btn-secondary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#update-launcher"
-                    wire:loading.attr="disabled">
-                Update Launcher
-            </button>
-    </form>
-
-    <!-- Update Launcher Modal -->
-    <div class="modal fade" id="update-launcher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Launcher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('launcher.store') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="mb-3">
-                            <label for="launcher-version" class="form-label">Version</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="launcher-version"
-                                   name="launcher-version"
-                                   required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="launcher" class="form-label">Launcher</label>
-                            <input class="form-control @error('launcher') is-invalid @enderror"
-                                   type="file"
-                                   id="launcher"
-                                   name="launcher"
-                                   accept=".exe"
-                                   required>
-
-                            @error('launcher')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="btn btn-success">Upload</button>
-                    </form>
-                </div>
-                <div class="modal-footer card-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

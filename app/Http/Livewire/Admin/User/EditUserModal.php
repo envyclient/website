@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class EditUserModal extends Component
 {
+    public bool $edit;
     public User $user;
 
     protected array $rules = [
@@ -16,23 +17,35 @@ class EditUserModal extends Component
         'user.banned' => 'required|bool',
     ];
 
+    // make empty user
+    public function mount()
+    {
+        $this->user = User::make();
+    }
+
+    // open the edit user modal
     public function edit(User $user): void
     {
+        $this->edit = true;
         $this->user = $user;
     }
 
     public function save(): void
     {
+        // update hwid to use strings
         $this->user->hwid = match ($this->user->hwid) {
             true => Str::random(40),
             default => null
         };
 
+        // validate the user & save
         $this->validate();
         $this->user->save();
 
-        $this->dispatchBrowserEvent('edit-user-modal-close');
+        // disable edit mode
+        $this->edit = false;
 
+        // update the users table
         $this->emitUp('users-update');
     }
 

@@ -1,35 +1,22 @@
-<div>
-    <form wire:submit.prevent="submit">
-        <div class="mb-3">
-            <label class="form-label" for="user">User</label>
-            <input class="form-control @error('user') is-invalid @enderror"
-                   type="text"
-                   id="user"
-                   wire:model="user"
-                   required>
+<form wire:submit.prevent="submit" class="mt-4">
 
-            @error('user')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+    <x-card title="Create Referral Code" subtitle="Create a referral code for a user">
 
-        <div class="mb-3">
-            <label class="form-label" for="code">Code</label>
-            <input class="form-control @error('code') is-invalid @enderror"
-                   type="text"
-                   id="code"
-                   wire:model="code"
-                   required>
+        {{-- User Input--}}
+        <x-input.group for="user" label="User">
+            <x-input.text wire:model.defer="user" id="user"/>
+        </x-input.group>
 
-            @error('code')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+        {{-- Referral Code Input--}}
+        <x-input.group for="code" label="Code" class="mt-4">
+            <x-input.text wire:model.defer="code" id="code"/>
+        </x-input.group>
 
-        <button type="submit" class="btn btn-success">Create</button>
-    </form>
-</div>
+        <x-slot name="footer">
+            <x-small-notify class="mr-2"/>
+            <x-button.primary type="submit">Create</x-button.primary>
+        </x-slot>
+
+    </x-card>
+
+</form>

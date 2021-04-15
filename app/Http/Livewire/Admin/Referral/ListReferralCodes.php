@@ -16,10 +16,10 @@ class ListReferralCodes extends Component
     protected $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
 
     public bool $showUsersModal = false;
-    public $showingUsers;
+    public $showingUsers = [];
 
     public bool $showInvoicesModal = false;
-    public $showingInvoices;
+    public $showingInvoices = [];
 
     public function showUsersModal(int $code): void
     {
@@ -39,7 +39,7 @@ class ListReferralCodes extends Component
 
     public function render()
     {
-        $codes = ReferralCode::with(['user:id,name', 'subscriptions'])
+        $codes = ReferralCode::with(['user:id,name,image,email', 'subscriptions'])
             ->orderBy('created_at')
             ->get();
         return view('livewire.admin.referral.list-referral-codes', compact('codes'));

@@ -10,7 +10,6 @@ class ShowProfileImage extends Component
 
     public function render()
     {
-        return view('livewire.user.show-profile-image')
-            ->with('user', auth()->user());
+        return view('livewire.user.show-profile-image');
     }
 }

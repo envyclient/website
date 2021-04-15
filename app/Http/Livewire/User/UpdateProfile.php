@@ -47,8 +47,7 @@ class UpdateProfile extends Component
         ]);
 
         $image = 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($this->email))) . '.svg?text=' . strtoupper(substr($this->name, 0, 2));
-        if ($this->email !== $user->email &&
-            $user instanceof MustVerifyEmail) {
+        if ($this->email !== $user->email && $user instanceof MustVerifyEmail) {
 
             // update the user information
             $user->forceFill([
@@ -72,7 +71,7 @@ class UpdateProfile extends Component
             $message = 'Profile updated.';
         }
 
-        session()->flash('message', $message);
+        $this->smallNotify($message);
         $this->resetInputFields($user);
 
         $this->emit('PROFILE_UPDATE');

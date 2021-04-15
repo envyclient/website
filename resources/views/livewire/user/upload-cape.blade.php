@@ -1,43 +1,43 @@
-<div class="mt-3">
-    <label class="form-label">Cape</label>
-    <br>
+<x-card class="mt-4" title="Upload Cape" subtitle="Upload a custom cape for use">
+
     <img src="{{ $user->cape }}"
          alt="cape"
          class="rounded"
          width="256px"
          height="128px">
 
-    <form wire:submit.prevent="submit">
-        <div class="mb-3">
-            <x-filepond wire:model="cape"
-                        accept="image/png"
-                        maxFileSize="1024KB"
-                        maxImageWidth="2048"
-                        maxImageHeight="1024"
-                        required
-            />
-            <div class="form-text">
-                The dimensions must be 2048x1024.
-            </div>
+    <div class="mb-3">
+        <x-filepond wire:model="cape"
+                    accept="image/png"
+                    maxFileSize="1024KB"
+                    maxImageWidth="2048"
+                    maxImageHeight="1024"
+                    required
+        />
+        <div class="text-sm text-gray-600">
+            The dimensions must be 2048x1024.
         </div>
-        <button type="submit" class="btn btn-success inline">Upload Cape</button>
-        <a type="button" class="btn btn-outline-danger" wire:click="resetCape">Reset Cape</a>
-        <a type="button" class="btn btn-outline-dark" href="{{ asset('assets/capes/template.png') }}" download>
-            Download Template
-        </a>
-        <span
-            x-data="{ open: false, message: null }"
-            x-init="
-                @this.on('notify-cape', (m) => {
-                    if (open === false) setTimeout(() => { open = false; message = null; }, 3000);
-                    open = true;
-                    message = m;
-                })
-            "
-            x-show.transition.out.duration.1000ms="open"
-            x-text="message"
-            style="display: none;"
-            class="text-muted"
-        ></span>
-    </form>
-</div>
+    </div>
+
+    @error('cape')
+    <p class="mt-2 text-sm text-red-600">
+        {{ $message }}
+    </p>
+    @enderror
+
+    <x-slot name="footer">
+        <x-small-notify class="mr-2"/>
+        <x-button.primary type="submit" wire:click="submit">
+            Upload
+        </x-button.primary>
+        <x-button.danger wire:click="resetCape">
+            Reset Cape
+        </x-button.danger>
+        <x-button.secondary>
+            <a href="{{ asset('assets/capes/template.png') }}" download>
+                Download Template
+            </a>
+        </x-button.secondary>
+    </x-slot>
+
+</x-card>

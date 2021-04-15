@@ -14,8 +14,6 @@ class UsersTable extends Component
 
     protected $listeners = ['users-update' => '$refresh'];
 
-    protected string $paginationTheme = 'bootstrap';
-
     // filters
     public string $search = '';
     public string $type = 'all';
@@ -71,7 +69,7 @@ class UsersTable extends Component
 
         return view('livewire.admin.user.users-table', [
             'users' => $user->orderBy('id')->paginate(20),
-        ]);
+        ])->extends('layouts.dash');
     }
 
     public function freeSubscription(int $id, bool $removing = false): void

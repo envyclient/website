@@ -9,7 +9,10 @@ use Illuminate\Support\Carbon;
  * @property-read int id
  *
  * @property int user_id
+ * @property string name
  * @property string channel
+ * @property string channel_name
+ * @property string channel_image
  * @property string status
  * @property string|null action_reason
  * @property Carbon|null action_at
@@ -24,6 +27,8 @@ class LicenseRequest extends Model
     protected $fillable = [
         'user_id',
         'channel',
+        'channel_name',
+        'channel_image',
         'status',
         'action_reason',
         'action_at',

@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Version;
 
-use App\Models\User;
 use App\Models\Version;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -33,7 +32,7 @@ class UploadVersion extends Component
     {
         $this->validate();
 
-        // store version & assets
+        // store the version & assets
         $path = 'versions/' . Str::uuid();
         foreach ($this->files as $file) {
             if ($file->extension() === 'jar') {
@@ -43,6 +42,7 @@ class UploadVersion extends Component
             }
         }
 
+        // create the version
         Version::create([
             'name' => $this->name,
             'beta' => $this->beta,
@@ -51,18 +51,23 @@ class UploadVersion extends Component
             'changelog' => $this->changelog,
         ]);
 
-        session()->flash('message', 'Version upload.');
-        $this->resetInputFields();
-
-        $this->emit('UPDATE_VERSIONS');
+        $this->done();
     }
 
-    private function resetInputFields()
+    private function done()
     {
+        // reset inputs
         $this->name = '';
         $this->changelog = '';
         $this->beta = false;
         $this->files = [];
+
+        // clear the filepond file
         $this->resetFilePond();
+
+        $this->smallNotify('Version upload.');
+
+        // tell the versions table to update
+        $this->emit('UPDATE_VERSIONS');
     }
 }
