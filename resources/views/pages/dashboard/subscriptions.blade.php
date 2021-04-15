@@ -97,29 +97,16 @@
                 </div>
             </div>
         @elseif($user->subscription !== null)
-            <div class="bg-white shadow sm:rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        Cancel Subscription
-                    </h3>
-                    <div class="mt-2 sm:flex sm:items-start sm:justify-between">
-                        <div class="max-w-xl text-sm text-gray-500">
-                            <p>
-                                Your subscription will be cancelled and will not renew at the end of billing period.
-                            </p>
-                        </div>
-                        <div class="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
-                            <form action="{{ route('subscriptions.cancel') }}" method="post">
-                                @csrf
-                                <button type="submit"
-                                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm">
-                                    Cancel
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <x-card title="Cancel Subscription"
+                    subtitle="Your subscription will be cancelled and will not renew at the end of billing period.">
+                <form action="{{ route('subscriptions.cancel') }}" method="post">
+                    @csrf
+                    <button type="submit"
+                            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm">
+                        Cancel
+                    </button>
+                </form>
+            </x-card>
         @endif
     @endif
 @endsection
