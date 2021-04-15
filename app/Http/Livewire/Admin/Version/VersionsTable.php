@@ -19,7 +19,13 @@ class VersionsTable extends Component
         'editVersion.changelog' => ['required', 'string'],
     ];
 
-    protected array $listeners = ['UPDATE_VERSIONS' => '$refresh'];
+    protected $listeners = ['UPDATE_VERSIONS' => '$refresh'];
+
+    // make empty user
+    public function mount()
+    {
+        $this->editVersion = Version::make();
+    }
 
     public function edit(Version $version)
     {

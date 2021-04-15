@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class ShowProfileImage extends Component
 {
-    protected array $listeners = ['PROFILE_UPDATE' => '$refresh'];
+    protected $listeners = ['PROFILE_UPDATE' => '$refresh'];
 
     public function render()
     {

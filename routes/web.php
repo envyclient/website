@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\Actions\DisableAccount;
+use App\Http\Controllers\Actions\DownloadLauncher;
 use App\Http\Controllers\Actions\HandleDiscordWebhook;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LauncherController;
 use App\Http\Livewire\Admin\LicenseRequestsTable;
 use App\Http\Livewire\Admin\User\UsersTable;
 use App\Http\Middleware\Custom\CheckIfPasswordNull;
@@ -74,12 +74,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 });
 
 /**
- * Launcher
+ * Download Launcher
  */
-Route::group(['prefix' => 'launcher', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
-    Route::get('/download', [LauncherController::class, 'download'])
-        ->name('launcher.show');
-});
+Route::get('/download', DownloadLauncher::class)
+    ->middleware('auth', 'verified', 'subscribed')
+    ->name('launcher.download');
 
 /**
  * OAuth Connect

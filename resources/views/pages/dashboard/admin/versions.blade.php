@@ -8,17 +8,11 @@
         @livewire('admin.version.versions-table')
     </section>
 
-    <br>
-
-    <div>
-        <div class="alert alert-dark fs-4">
-            Create Version
-        </div>
-
+    <section class="mt-4">
         @livewire('admin.version.upload-version')
-    </div>
+    </section>
 
-    <section>
+    <section class="mt-4">
         @livewire('admin.upload-launcher')
     </section>
 @endsection

@@ -32,8 +32,7 @@
     {{--Download Launcher Button--}}
     @if($user->subscription !== null)
         <a type="button"
-           @click="openModal = true"
-           href="{{ route('launcher.show') }}"
+           href="{{ route('launcher.download') }}"
            class="mt-4 w-full px-6 py-3 text-center border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
             Download Launcher
         </a>

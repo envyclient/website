@@ -1,72 +1,38 @@
-<div>
-    <form wire:submit.prevent="submit">
+<form wire:submit.prevent="submit">
+    <x-card title="Upload Version" subtitle="Upload a new version to the server.">
 
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
+        {{--Name Input--}}
+        <x-input.group for="name" label="Name">
+            <x-input.text wire:model.defer="name" id="name"/>
+        </x-input.group>
 
-        <div class="mb-3">
-            <label class="form-label" for="name">Name</label>
-            <input class="form-control @error('name') is-invalid @enderror"
-                   type="text"
-                   id="name"
-                   wire:model.defer="name"
-                   required>
+        {{--Changelog Input--}}
+        <x-input.group for="changelog" label="Changelog" class="mt-4">
+            <x-input.textarea wire:model.defer="changelog"
+                              id="changelog"
+                              rows="3"
+            />
+        </x-input.group>
 
-            @error('name')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+        {{--Beta Input--}}
+        <x-input.group for="beta" label="Beta" class="mt-4">
+            <x-input.toggle wire:model.defer="beta" id="beta"/>
+        </x-input.group>
 
-        <div class="mb-3">
-            <label class="form-label" for="changelog">Changelog</label>
-            <textarea class="form-control @error('name') is-invalid @enderror"
-                      id="changelog"
-                      wire:model.defer="changelog"
-                      rows="3"
-                      required></textarea>
-
-            @error('changelog')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-
-        <div class="mb-3 form-check form-switch">
-            <label class="form-check-label" for="beta">
-                Is Beta Version?
-            </label>
-            <input class="form-check-input"
-                   type="checkbox"
-                   id="beta"
-                   wire:model.defer="beta">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Files</label>
+        {{--Version & Assets Input--}}
+        <x-input.group for="files" label="Files" class="mt-4">
             <x-filepond wire:model="files"
                         multiple
-                        required/>
-        </div>
+                        required
+            />
+        </x-input.group>
 
-        <x-loading wire:loading wire:target="submit"/>
-        <button type="submit"
-                class="btn btn-success"
-                {{ count($files) === 2 ? null : 'disabled' }}
-                wire:loading.attr="disabled">
-            Upload
-        </button>
-        <button type="button"
-                class="btn btn-secondary"
-                data-bs-toggle="modal"
-                data-bs-target="#update-launcher"
-                wire:loading.attr="disabled">
-            Update Launcher
-        </button>
-    </form>
-</div>
+        {{--Footer--}}
+        <x-slot name="footer">
+            <x-small-notify class="mr-2"/>
+            <x-button.primary type="submit" wire:loading.disabled>Upload</x-button.primary>
+        </x-slot>
+
+    </x-card>
+</form>
+
