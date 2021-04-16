@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\UpdateDiscordRole;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
@@ -29,14 +30,14 @@ class DiscordController extends Controller
                 ->redirectUrl(config('services.discord.redirect_connect'))
                 ->user();
         } catch (Exception) {
-            return redirect('discord')->with('error', 'Connection cancelled.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Connection cancelled.');
         }
 
         // check if discord account is already used
         if (User::where('discord_id', $user->getId())
             ->where('id', '<>', $request->user()->id)
             ->exists()) {
-            return redirect('discord')->with('error', 'Discord already linked to another account.');
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Discord already linked to another account.');
         }
 
         // update user account with discord account info
@@ -47,7 +48,7 @@ class DiscordController extends Controller
 
         event(new UpdateDiscordRole($request->user()));
 
-        return redirect('discord')->with('success', 'Discord account connected.');
+        return redirect(RouteServiceProvider::HOME)->with('success', 'Discord account connected.');
     }
 
 }
