@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.178.3",
+            "version": "3.178.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "cfeed02f14b0fb3cba8bb75f2ae28cb8c9807369"
+                "reference": "5a268a20272c0c9171570ed57f68b629e966deab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/cfeed02f14b0fb3cba8bb75f2ae28cb8c9807369",
-                "reference": "cfeed02f14b0fb3cba8bb75f2ae28cb8c9807369",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5a268a20272c0c9171570ed57f68b629e966deab",
+                "reference": "5a268a20272c0c9171570ed57f68b629e966deab",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.178.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.178.5"
             },
-            "time": "2021-04-13T18:16:44+00:00"
+            "time": "2021-04-15T18:12:46+00:00"
         },
         {
             "name": "brick/math",
@@ -3028,16 +3028,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "7.4.0",
+            "version": "7.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "f15a67767b05b9d88c30120ff99b56db28b92681"
+                "reference": "f6be7328249d6e8557f9e2fee7ffa4446461793b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/f15a67767b05b9d88c30120ff99b56db28b92681",
-                "reference": "f15a67767b05b9d88c30120ff99b56db28b92681",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/f6be7328249d6e8557f9e2fee7ffa4446461793b",
+                "reference": "f6be7328249d6e8557f9e2fee7ffa4446461793b",
                 "shasum": ""
             },
             "require": {
@@ -3107,7 +3107,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-backup/issues",
-                "source": "https://github.com/spatie/laravel-backup/tree/7.4.0"
+                "source": "https://github.com/spatie/laravel-backup/tree/7.5.1"
             },
             "funding": [
                 {
@@ -3119,7 +3119,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-04-09T20:30:06+00:00"
+            "time": "2021-04-15T09:37:45+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -3183,16 +3183,16 @@
         },
         {
             "name": "spatie/laravel-signal-aware-command",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-signal-aware-command.git",
-                "reference": "70dc33d58ccc73e2791ec4403c335a94908d6e80"
+                "reference": "8c605808028943da9f6c0064d3fd16358526bcad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-signal-aware-command/zipball/70dc33d58ccc73e2791ec4403c335a94908d6e80",
-                "reference": "70dc33d58ccc73e2791ec4403c335a94908d6e80",
+                "url": "https://api.github.com/repos/spatie/laravel-signal-aware-command/zipball/8c605808028943da9f6c0064d3fd16358526bcad",
+                "reference": "8c605808028943da9f6c0064d3fd16358526bcad",
                 "shasum": ""
             },
             "require": {
@@ -3216,7 +3216,7 @@
                         "Spatie\\SignalAwareCommand\\SignalAwareCommandServiceProvider"
                     ],
                     "aliases": {
-                        "Siignal": "Spatie\\SignalAwareCommand\\Facades\\Signal"
+                        "Signal": "Spatie\\SignalAwareCommand\\Facades\\Signal"
                     }
                 }
             },
@@ -3245,7 +3245,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-signal-aware-command/issues",
-                "source": "https://github.com/spatie/laravel-signal-aware-command/tree/1.1.0"
+                "source": "https://github.com/spatie/laravel-signal-aware-command/tree/1.1.1"
             },
             "funding": [
                 {
@@ -3253,7 +3253,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-05T09:00:34+00:00"
+            "time": "2021-04-14T20:35:49+00:00"
         },
         {
             "name": "spatie/temporary-directory",
