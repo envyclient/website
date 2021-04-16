@@ -39,7 +39,7 @@ class CreateStripeSource extends Controller
             $source = StripeSource::where([
                 'user_id' => $user->id,
                 'plan_id' => $plan->id,
-                'status' => 'pending'
+                'status' => StripeSource::PENDING,
             ])->firstOrFail();
         } catch (ModelNotFoundException) {
             try {
@@ -69,14 +69,12 @@ class CreateStripeSource extends Controller
             // create the initial pending event in our database
             StripeSourceEvent::create([
                 'stripe_source_id' => $source->id,
-                'type' => 'pending',
+                'type' => StripeSource::PENDING,
                 'message' => 'Payment initialized.',
             ]);
         }
 
         // redirect the user to the stripe-source page to show the QR code
-        return redirect(
-            route('stripe-source.show', $source->source_id)
-        );
+        return redirect()->route('stripe-source.show', $source->source_id);
     }
 }

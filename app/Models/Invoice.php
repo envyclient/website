@@ -21,6 +21,10 @@ use Illuminate\Support\Carbon;
  */
 class Invoice extends Model
 {
+    const STRIPE = 'stripe';
+    const PAYPAL = 'paypal';
+    const WECHAT = 'wechat';
+
     protected $fillable = [
         'user_id',
         'subscription_id',

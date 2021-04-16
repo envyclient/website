@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Actions;
 
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 
@@ -26,7 +27,7 @@ class CancelSubscription extends Controller
                 []
             );
             $user->subscription->update([
-                'stripe_status' => 'Cancelled',
+                'stripe_status' => Subscription::CANCELED,
             ]);
             return redirect()
                 ->route('home.subscription')

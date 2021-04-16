@@ -80,7 +80,7 @@
             </div>
         </x-plan-card>
 
-        @if($user->billingAgreement?->state === 'Cancelled' || $user->subscription?->stripe_status === 'Cancelled')
+        @if($user->billingAgreement?->state === \App\Models\Subscription::CANCELED || $user->subscription?->stripe_status === \App\Models\Subscription::CANCELED)
             <div class="bg-white shadow sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">

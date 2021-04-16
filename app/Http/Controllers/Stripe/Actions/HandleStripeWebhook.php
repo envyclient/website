@@ -67,7 +67,7 @@ class HandleStripeWebhook extends Controller
                     Invoice::create([
                         'user_id' => $user->id,
                         'subscription_id' => $user->subscription->id,
-                        'method' => 'stripe',
+                        'method' => Invoice::STRIPE,
                         'price' => $user->subscription->plan->price,
                     ]);
 
@@ -80,14 +80,14 @@ class HandleStripeWebhook extends Controller
                         'user_id' => $user->id,
                         'plan_id' => $stripeSession->plan_id,
                         'stripe_id' => $request->json('data.object.subscription'),
-                        'stripe_status' => 'Active',
+                        'stripe_status' => Subscription::ACTIVE,
                         'end_date' => now()->addMonth(),
                     ]);
 
                     Invoice::create([
                         'user_id' => $user->id,
                         'subscription_id' => $subscription->id,
-                        'method' => 'stripe',
+                        'method' => Invoice::STRIPE,
                         'price' => $subscription->plan->price,
                     ]);
 
@@ -109,7 +109,7 @@ class HandleStripeWebhook extends Controller
 
                     if ($user->hasSubscription()) {
                         $user->subscription->update([
-                            'stripe_status' => 'Cancelled',
+                            'stripe_status' => Subscription::CANCELED,
                         ]);
                     }
                 } catch (ModelNotFoundException) {
@@ -131,12 +131,12 @@ class HandleStripeWebhook extends Controller
                 )->firstOrFail();
 
                 $source->update([
-                    'status' => 'cancelled',
+                    'status' => StripeSource::CANCELED,
                 ]);
 
                 self::createEvent(
                     $source->id,
-                    'canceled',
+                    StripeSource::CANCELED,
                     'The payment has expired. Please create a new one to continue your purchase.'
                 );
 
@@ -152,12 +152,12 @@ class HandleStripeWebhook extends Controller
                 )->firstOrFail();
 
                 $source->update([
-                    'status' => 'failed',
+                    'status' => StripeSource::FAILED,
                 ]);
 
                 self::createEvent(
                     $source->id,
-                    'failed',
+                    StripeSource::FAILED,
                     'The payment has been canceled.'
                 );
 
@@ -173,12 +173,12 @@ class HandleStripeWebhook extends Controller
                 )->firstOrFail();
 
                 $source->update([
-                    'status' => 'chargeable',
+                    'status' => StripeSource::CHARGEABLE,
                 ]);
 
                 self::createEvent(
                     $source->id,
-                    'chargeable',
+                    StripeSource::CHARGEABLE,
                     'The payment has been authorized.'
                 );
 
@@ -206,12 +206,12 @@ class HandleStripeWebhook extends Controller
                 )->firstOrFail();
 
                 $source->update([
-                    'status' => 'succeeded',
+                    'status' => StripeSource::SUCCEEDED,
                 ]);
 
                 self::createEvent(
                     $source->id,
-                    'succeeded',
+                    StripeSource::SUCCEEDED,
                     'You have successfully subscribed using WeChat Pay.'
                 );
 
@@ -225,7 +225,7 @@ class HandleStripeWebhook extends Controller
                 Invoice::create([
                     'user_id' => $source->user_id,
                     'subscription_id' => $subscription->id,
-                    'method' => 'wechat',
+                    'method' => Invoice::WECHAT,
                     'price' => $source->plan->price,
                 ]);
                 break;

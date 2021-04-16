@@ -29,7 +29,7 @@ class MediaRequests extends Component
         $user = auth()->user();
 
         // checking if the user has an request pending
-        if (LicenseRequest::where('user_id', $user->id)->where('status', 'pending')->exists()) {
+        if (LicenseRequest::where('user_id', $user->id)->where('status', LicenseRequest::PENDING)->exists()) {
             $this->addError('channel', 'You may only have one request at a time.');
             return;
         }
@@ -56,7 +56,7 @@ class MediaRequests extends Component
             'channel' => $this->channel,
             'channel_name' => $youtubeData->json('items.0.snippet.title'),
             'channel_image' => $youtubeData->json('items.0.snippet.thumbnails.default.url'),
-            'status' => 'pending',
+            'status' => LicenseRequest::PENDING,
         ]);
 
         session()->flash('success', 'Request submitted.');

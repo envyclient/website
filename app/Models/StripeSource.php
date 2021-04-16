@@ -25,6 +25,12 @@ use Illuminate\Support\Carbon;
  */
 class StripeSource extends Model
 {
+    const PENDING = 'pending';
+    const CANCELED = 'canceled';
+    const FAILED = 'failed';
+    const CHARGEABLE = 'chargeable';
+    const SUCCEEDED = 'succeeded';
+
     protected $fillable = [
         'user_id',
         'plan_id',

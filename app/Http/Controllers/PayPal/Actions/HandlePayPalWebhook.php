@@ -49,7 +49,7 @@ class HandlePayPalWebhook extends Controller
                     Invoice::create([
                         'user_id' => $user->id,
                         'subscription_id' => $user->subscription->id,
-                        'method' => 'paypal',
+                        'method' => Invoice::PAYPAL,
                         'price' => $user->subscription->plan->price,
                     ]);
 
@@ -68,7 +68,7 @@ class HandlePayPalWebhook extends Controller
                     Invoice::create([
                         'user_id' => $user->id,
                         'subscription_id' => $subscription->id,
-                        'method' => 'paypal',
+                        'method' => Invoice::PAYPAL,
                         'price' => $billingAgreement->plan->price,
                     ]);
 
