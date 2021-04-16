@@ -39,7 +39,8 @@
                         @if($code->users->count() === 0)
                             0
                         @else
-                            <x-button.link wire:click="showUsersModal({{ $code->id }})">
+                            <x-button.link class="text-blue-600 hover:text-blue-900"
+                                           wire:click="showUsersModal({{ $code->id }})">
                                 {{ $code->users->count() }}
                             </x-button.link>
                         @endif
@@ -53,7 +54,8 @@
                         @if($code->invoices()->sum('price') === 0)
                             $0
                         @else
-                            <x-button.link wire:click="showInvoicesModal({{ $code }})">
+                            <x-button.link class="text-blue-600 hover:text-blue-900"
+                                           wire:click="showInvoicesModal({{ $code }})">
                                 ${{ $code->invoices()->sum('price') }}
                             </x-button.link>
                         @endif

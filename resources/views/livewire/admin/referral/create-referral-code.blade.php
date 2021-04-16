@@ -1,4 +1,4 @@
-<form wire:submit.prevent="submit" class="mt-4">
+<form wire:submit.prevent="submit">
 
     <x-card title="Create Referral Code" subtitle="Create a referral code for a user">
 
