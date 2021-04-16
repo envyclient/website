@@ -10,6 +10,7 @@ use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\SetupAccount;
 use App\Http\Livewire\Auth\Verify;
+use App\Http\Middleware\Custom\Setup\RedirectIfSetup;
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
@@ -33,7 +34,7 @@ Route::get('reset-password/{token}', Reset::class)
     ->name('password.reset');
 
 Route::get('setup', SetupAccount::class)
-    ->middleware('auth')
+    ->middleware(['auth', RedirectIfSetup::class])
     ->name('setup-account');
 
 Route::middleware('auth')->group(function () {

@@ -49,8 +49,8 @@
                     </x-table.cell>
 
                     <x-table.cell>
-                        @if($request->status === 'pending')
-                            <x-button.link class="block"
+                        @if($request->status === \App\Models\LicenseRequest::PENDING)
+                            <x-button.link class="block text-indigo-600 hover:text-indigo-900"
                                            wire:click="approve({{ $request->id }}, 'approve')">
                                 Approve
                             </x-button.link>
@@ -58,8 +58,8 @@
                                            onclick="window.livewire.emit('DENY_REQUEST', {id : {{ $request->id }}, message: prompt('Reason')});">
                                 Deny
                             </x-button.link>
-                        @elseif($request->status === 'approved')
-                            <x-button.link class="block"
+                        @elseif($request->status === \App\Models\LicenseRequest::APPROVED)
+                            <x-button.link class="text-blue-600 hover:text-blue-900"
                                            wire:click="approve({{ $request->id }}, 'extend')">
                                 Extend
                             </x-button.link>

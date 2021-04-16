@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Middleware\Custom;
+namespace App\Http\Middleware\Custom\Setup;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckIfPasswordNull
+class RedirectIfSetup
 {
     /**
      * Handle an incoming request.
@@ -20,8 +21,8 @@ class CheckIfPasswordNull
             return $next($request);
         }
 
-        if (is_null(auth()->user()->password)) {
-            return redirect()->route('setup-account');
+        if (!is_null(auth()->user()->password)) {
+            return redirect(RouteServiceProvider::HOME);
         } else {
             return $next($request);
         }

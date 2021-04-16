@@ -6,8 +6,7 @@
         <x-table>
             <x-slot name="head">
                 <x-table.heading>Name</x-table.heading>
-                <x-table.heading>Status</x-table.heading>
-                <x-table.heading>Changelog</x-table.heading>
+                <x-table.heading>State</x-table.heading>
                 <x-table.heading>Created</x-table.heading>
                 <x-table.heading/>
             </x-slot>
@@ -33,15 +32,12 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            changelog
-                        </x-table.cell>
-
-                        <x-table.cell>
                             {{ $version->created_at->diffForHumans() }}
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-button.link wire:click="edit({{ $version->id }})">
+                            <x-button.link class="text-indigo-600 hover:text-indigo-900"
+                                           wire:click="edit({{ $version->id }})">
                                 Edit
                             </x-button.link>
                         </x-table.cell>
@@ -83,7 +79,7 @@
 
                 {{--Changelog Input--}}
                 <x-input.group for="editVersion.changelog" label="Changelog" class="mt-4">
-                    <x-input.text wire:model.defer="editVersion.changelog" id="channel"/>
+                    <x-input.textarea wire:model.defer="editVersion.changelog" id="channel" rows="7"/>
                 </x-input.group>
 
             </x-slot>

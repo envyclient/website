@@ -45,7 +45,7 @@ class DeleteCancelledSubscriptions extends Command
             } else if ($subscription->stripe_id !== null) { // user subscribed using stripe
 
                 // skip deleting if stripe subscription is active
-                if ($subscription->stripe_status !== 'Cancelled') {
+                if ($subscription->stripe_status !== Subscription::CANCELED) {
                     continue;
                 }
 

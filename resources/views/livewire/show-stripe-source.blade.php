@@ -4,7 +4,8 @@
             WeChat Pay
         </h1>
         <h5 class="text-lg text-gray-500 mt-1">
-            {{ $source->plan->name }} Plan - (${{ $source->plan->price }} USD, ${{ number_format($source->plan->cad_price / 100) }} CAD)
+            {{ $source->plan->name }} Plan - (${{ $source->plan->price }} USD,
+            ${{ number_format($source->plan->cad_price / 100) }} CAD)
         </h5>
     </div>
     <div class="p-5 flex flex-col md:flex-row">
@@ -45,28 +46,28 @@
                                     {{ $loop->iteration }}
                                 </th>
                                 <td class="cursor-pointer px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                    @if($event->type === 'pending')
+                                    @if($event->type === \App\Models\StripeSource::PENDING)
                                         <span
                                             class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-blue-100 text-blue-800">
                                      pending
                                     </span>
-                                    @elseif($event->type === 'canceled')
+                                    @elseif($event->type === \App\Models\StripeSource::CANCELED)
                                         <span
                                             class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-yellow-100 text-yellow-800">
                                       expired
                                     </span>
-                                    @elseif($event->type === 'failed')
+                                    @elseif($event->type === \App\Models\StripeSource::FAILED)
                                         <span
                                             class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-red-100 text-red-800">
                                      failed
                                     </span>
-                                    @elseif($event->type === 'chargeable')
-                                        <span
-                                            class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800">
+                                    @elseif($event->type === \App\Models\StripeSource::CHARGEABLE))
+                                    <span
+                                        class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800">
                                      authorized
                                     </span>
-                                        <span class="badge rounded-pill bg-info text-dark"></span>
-                                    @elseif($event->type === 'succeeded')
+                                    <span class="badge rounded-pill bg-info text-dark"></span>
+                                    @elseif($event->type === \App\Models\StripeSource::SUCCEEDED)
                                         <span
                                             class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-green-100 text-green-800">
                                      succeeded
@@ -93,7 +94,7 @@
             </div>
         </div>
     </div>
-    @if($source->status !== 'pending' && $source->status !== 'chargeable')
+    @if($source->status !== \App\Models\StripeSource::PENDING && $source->status !== \App\Models\StripeSource::CHARGEABLE)
         <a href="{{ route('home') }}"
            class="block w-full py-2 px-6 cursor-pointer text-center text-xl text-white bg-green-600 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus:border-green-300 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out">
             Dashboard
