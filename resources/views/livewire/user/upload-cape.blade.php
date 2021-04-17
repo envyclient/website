@@ -33,11 +33,11 @@
         <x-button.danger wire:click="resetCape">
             Reset Cape
         </x-button.danger>
-        <x-button.secondary>
-            <a href="{{ asset('assets/capes/template.png') }}" download>
+        <a href="{{ asset('assets/capes/template.png') }}" download>
+            <x-button.secondary>
                 Download Template
-            </a>
-        </x-button.secondary>
+            </x-button.secondary>
+        </a>
     </x-slot>
 
 </x-card>
