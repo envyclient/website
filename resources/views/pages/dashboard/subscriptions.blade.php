@@ -34,7 +34,7 @@
                         <form action="{{ route('paypal.process') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $plan->id }}">
-                            <button type="button"
+                            <button type="submit"
                                     class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 <svg class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 1792 1792" fill="currentColor">
                                     <path
@@ -59,7 +59,7 @@
                         <form action="{{ route('stripe-source.store') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $plan->id }}">
-                            <button type="button"
+                            <button type="submit"
                                     class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                 <svg class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
                                     <path
