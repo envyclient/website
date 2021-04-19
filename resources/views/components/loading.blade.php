@@ -1,7 +1,3 @@
-<div {{ $attributes->merge(['class' => 'la-line-scale la-dark']) }}>
+<span {{ $attributes->merge(['class' => 'la-ball-clip-rotate']) }}>
     <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
+</span>

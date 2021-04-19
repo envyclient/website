@@ -20,85 +20,43 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
             <form wire:submit.prevent="register">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 leading-5">
-                        Name
-                    </label>
 
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="name"
-                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-gray focus:border-gray-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror"
-                               id="name"
-                               type="text"
-                               autocomplete="username"
-                               autofocus
-                               required>
-                    </div>
+                <x-input.group for="name" label="Name">
+                    <x-input.text wire:model.defer="name"
+                                  id="name"
+                                  type="text"
+                                  autocomplete="username"
+                                  autofocus
+                                  required/>
+                </x-input.group>
 
-                    @error('name')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                <x-input.group for="email" label="Email address" class="mt-4">
+                    <x-input.text wire:model.defer="email"
+                                  id="email"
+                                  type="email"
+                                  autocomplete="email"
+                                  required/>
+                </x-input.group>
 
-                <div class="mt-6">
-                    <label for="email" class="block text-sm font-medium text-gray-700 leading-5">
-                        Email address
-                    </label>
+                <x-input.group for="password" label="Password" class="mt-4">
+                    <x-input.text wire:model.defer="password"
+                                  id="password"
+                                  type="password"
+                                  autocomplete="new-password"
+                                  required/>
+                </x-input.group>
 
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="email"
-                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-gray focus:border-gray-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('email') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror"
-                               id="email"
-                               type="email"
-                               autocomplete="email"
-                               required>
-                    </div>
+                <x-input.group for="password_confirmation" label="Confirm Password" class="mt-4">
+                    <x-input.text wire:model.defer="passwordConfirmation"
+                                  id="password_confirmation"
+                                  type="password"
+                                  required/>
+                </x-input.group>
 
-                    @error('email')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mt-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 leading-5">
-                        Password
-                    </label>
-
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="password"
-                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-gray focus:border-gray-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror"
-                               id="password"
-                               type="password"
-                               autocomplete="new-password"
-                               required>
-                    </div>
-
-                    @error('password')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mt-6">
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 leading-5">
-                        Confirm Password
-                    </label>
-
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="passwordConfirmation"
-                               class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 appearance-none rounded-md focus:outline-none focus:shadow-outline-gray focus:border-gray-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                               id="password_confirmation"
-                               type="password"
-                               required>
-                    </div>
-                </div>
-
-                <div class="mt-6">
-                    <span class="block w-full rounded-md shadow-sm">
-                        <button type="submit"
-                                class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out">
-                            Register
-                        </button>
-                    </span>
+                <div class="mt-4">
+                    <x-auth.button type="submit" wire:loading.attr="disabled" wire:target="register">
+                        Register
+                    </x-auth.button>
                 </div>
             </form>
         </div>
