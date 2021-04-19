@@ -3,9 +3,9 @@
 namespace App\Console;
 
 use App\Console\Commands\ClearDiscordChannels;
+use App\Console\Commands\DeleteCancelledSubscriptions;
 use App\Console\Commands\DeleteOldMinecraftAccounts;
 use App\Console\Commands\DeleteOldUnverifiedUsers;
-use App\Console\Commands\DeleteCancelledSubscriptions;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,7 +17,6 @@ class Kernel extends ConsoleKernel
 
     protected $commands = [
         DeleteCancelledSubscriptions::class,
-        ClearDiscordChannels::class,
         DeleteOldMinecraftAccounts::class,
         DeleteOldUnverifiedUsers::class,
     ];
