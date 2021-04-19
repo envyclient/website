@@ -14,8 +14,7 @@ class AddVersionToConfigsTable extends Migration
     public function up()
     {
         Schema::table('configs', function (Blueprint $table) {
-            $table->unsignedBigInteger('version_id');
-            //$table->foreignId('version_id')->constrained();
+            $table->foreignId('version_id')->constrained();
         });
     }
 

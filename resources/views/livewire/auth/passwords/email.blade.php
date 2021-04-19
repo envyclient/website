@@ -11,7 +11,7 @@
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
 
             @if (session('status'))
-                <div class="rounded-md bg-green-50 p-4 mb-3">
+                <div class="rounded-md bg-green-100 p-4 mb-3">
                     <div class="flex">
                         <div class="flex-shrink-0">
                             <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
@@ -31,28 +31,20 @@
             @endif
 
             <form wire:submit.prevent="sendResetPasswordLink">
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 leading-5">
-                        Email address
-                    </label>
 
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="email" id="email" name="email" type="email" required autofocus
-                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-gray focus:border-gray-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('email') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror"/>
-                    </div>
+                <x-input.group for="email" label="Email">
+                    <x-input.text wire:model.defer="email"
+                                  id="email"
+                                  type="email"
+                                  autocomplete="email"
+                                  autofocus
+                                  required/>
+                </x-input.group>
 
-                    @error('email')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mt-6">
-                        <span class="block w-full rounded-md shadow-sm">
-                            <button type="submit"
-                                    class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out">
-                                Send password reset link
-                            </button>
-                        </span>
+                <div class="mt-4">
+                    <x-auth.button type="submit" wire:loading.attr="disabled" wire:target="sendResetPasswordLink">
+                        Send password reset link
+                    </x-auth.button>
                 </div>
             </form>
         </div>
