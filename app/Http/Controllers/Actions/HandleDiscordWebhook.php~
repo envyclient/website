@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Http\Controllers\Actions;
 
 use App\Helpers\Discord;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
 
-class UpdateDiscordRole
+class HandleDiscordWebhook extends Controller
 {
     private array $roles;
 
@@ -16,17 +19,19 @@ class UpdateDiscordRole
         ];
     }
 
-    public function handle(\App\Events\UpdateDiscordRole $event)
+    public function __invoke(Request $request)
     {
-        $user = $event->user;
-
-        // check if user does not discord linked
-        if ($user->discord_id === null) {
-            return;
+        if (!$request->has('discord_id')) {
+            return self::bad();
         }
 
+        /** @var User $user */
+        $user = User::with('subscription')
+            ->where('discord_id', $request->input('discord_id'))
+            ->firstOrFail();
+
         // user has an active subscription
-        if ($user->hasSubscription()) {
+        if ($user->subscription !== null) {
             switch ($user->subscription->plan->id) {
                 case 1:
                 case 3:
@@ -42,11 +47,11 @@ class UpdateDiscordRole
                     break;
                 }
             }
-        } else { // user no longer has an active subscription
+        } else {
             Discord::updateRole($user->discord_id, $this->roles['standard'], true);
             Discord::updateRole($user->discord_id, $this->roles['premium'], true);
-            Discord::sendWebhook("Removed roles from <@$user->discord_id>.");
         }
-    }
 
+        return response()->noContent();
+    }
 }

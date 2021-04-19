@@ -36,12 +36,13 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read Carbon updated_at
  *
  * @property-read Collection configs
- * @property-read Subscription subscription
- * @property-read BillingAgreement billingAgreement
+ * @property-read Subscription|null subscription
+ * @property-read Plan|null plan
+ * @property-read BillingAgreement|null billingAgreement
  * @property-read Collection downloads
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
- * @property-read Collection|null licenseRequest
+ * @property-read Collection licenseRequest
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -103,6 +104,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscription()
     {
         return $this->hasOne(Subscription::class);
+    }
+
+    public function plan()
+    {
+        return $this->hasOneThrough(Plan::class, Subscription::class, 'user_id', 'id', 'id', 'plan_id');
     }
 
     public function billingAgreement()
