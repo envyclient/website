@@ -80,8 +80,7 @@
                                         class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
                                     >
                                         <!-- Heroicon name: outline/x -->
-                                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M6 18L18 6M6 6l12 12"/>
                                         </svg>
@@ -187,7 +186,6 @@
             {{-- Features Section--}}
             <section class="py-16 bg-gray-50 overflow-hidden lg:py-24" id="features">
                 <div class="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
-
                     <div class="relative">
                         <div
                             class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
@@ -231,13 +229,12 @@
                                 <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
                                     <img
                                         class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
-                                        src="{{ asset('assets/features/account_manager.png') }}"
+                                        src="{{ asset('assets/features/menu.png') }}"
                                         alt="envy client account manager">
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div class="mt-24">
                         <div
@@ -246,15 +243,15 @@
                                 class="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
                                 <div>
                                     <div class="text-white">
-                                                <span
-                                                    class="h-12 w-12 rounded-md flex items-center justify-center bg-green-600">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                       viewBox="0 0 24 24" stroke="currentColor">
-                                                      <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
-                                                </svg>
-                                                </span>
+                                        <span
+                                            class="h-12 w-12 rounded-md flex items-center justify-center bg-green-600">
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                  <path stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                                            </svg>
+                                        </span>
                                     </div>
                                     <div class="mt-6">
                                         <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
@@ -274,12 +271,53 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
+                            <div class="mt-12 sm:mt-16 lg:mt-0">
                                 <div class="pr-4 -ml-48 sm:pr-6 md:-ml-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
                                     <img
                                         class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
                                         src="{{ asset('assets/features/client.png') }}"
                                         alt="envy client ui">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-24 relative">
+                        <div
+                            class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
+                            <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
+                                <div>
+                                    <div class="text-white">
+                                        <span
+                                            class="h-12 w-12 rounded-md flex items-center justify-center bg-green-600">
+                                           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/>
+                                            </svg>
+                                    </div>
+                                    <div class="mt-6">
+                                        <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
+                                            Custom Launcher
+                                        </h2>
+                                        <p class="mt-4 text-lg text-gray-600">
+                                            Envy comes with a custom launcher written using C++ to provide the smoothest
+                                            possible experience.
+                                        </p>
+                                        <div class="mt-6">
+                                            <a href="{{ route('home.subscription') }}"
+                                               class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+                                                Subscribe
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-12 sm:mt-16 lg:mt-0">
+                                <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
+                                    <img
+                                        class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                                        src="{{ asset('assets/features/launcher.png') }}"
+                                        alt="envy client launcher">
                                 </div>
                             </div>
                         </div>
@@ -467,8 +505,6 @@
                                         the client again.
                                     </dd>
                                 </div>
-
-                                <!-- More items... -->
                             </dl>
                         </div>
                     </div>
@@ -596,9 +632,9 @@
                                 </svg>
                             </a>
                             <a href="mailto:contact@envyclient.com" class="text-gray-400 hover:text-gray-300">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 16 16">
+                                    <path
+                                        d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
                                 </svg>
                             </a>
                             <a href="{{ config('discord.invite') }}" class="text-gray-400 hover:text-gray-300">
@@ -611,7 +647,7 @@
                             </a>
                         </div>
                         <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-                            &copy; 2021 Envy Client. All rights reserved.
+                            &copy; 2021 {{ config('app.name') }}
                         </p>
                     </div>
                 </div>
