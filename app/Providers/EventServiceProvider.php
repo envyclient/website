@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
-use App\Events\UpdateDiscordRole;
+use App\Events\DiscordAccountConnected;
+use App\Events\SubscriptionCreated;
+use App\Events\SubscriptionExpired;
+use App\Listeners\UpdateDiscordRole;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,8 +26,14 @@ class EventServiceProvider extends ServiceProvider
         SocialiteWasCalled::class => [
             DiscordExtendSocialite::class,
         ],
-        UpdateDiscordRole::class => [
-            \App\Listeners\UpdateDiscordRole::class,
+        SubscriptionCreated::class => [
+            UpdateDiscordRole::class,
+        ],
+        SubscriptionExpired::class => [
+            UpdateDiscordRole::class,
+        ],
+        DiscordAccountConnected::class => [
+            UpdateDiscordRole::class,
         ],
     ];
 

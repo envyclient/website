@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\PayPal\Actions;
 
-use App\Events\UpdateDiscordRole;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\Custom\VerifyPaypalWebhookSignature;
@@ -75,7 +74,7 @@ class HandlePayPalWebhook extends Controller
                     // email user about new subscription
                     $user->notify(new SubscriptionCreated());
 
-                    event(new UpdateDiscordRole($user));
+                    event(new \App\Events\SubscriptionCreated($subscription));
                 }
 
                 break;

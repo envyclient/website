@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\UpdateDiscordRole;
+use App\Events\DiscordAccountConnected;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
@@ -11,11 +11,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 class DiscordController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified']);
-    }
-
     public function login()
     {
         return Socialite::driver('discord')
@@ -46,7 +41,7 @@ class DiscordController extends Controller
             'discord_name' => $user->getNickname(),
         ]);
 
-        event(new UpdateDiscordRole($request->user()));
+        event(new DiscordAccountConnected($request->user()));
 
         return redirect(RouteServiceProvider::HOME)->with('success', 'Discord account connected.');
     }

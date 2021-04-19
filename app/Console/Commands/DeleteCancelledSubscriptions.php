@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Events\UpdateDiscordRole;
+use App\Events\SubscriptionExpired;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Notifications\Subscription\SubscriptionUpdated;
@@ -41,7 +41,7 @@ class DeleteCancelledSubscriptions extends Command
                 // delete the subscription and billing agreement
                 $user->subscription()->delete();
                 $user->billingAgreement()->delete();
-                self::sendNotification($user);
+                self::sendNotification($user, $subscription);
             } else if ($subscription->stripe_id !== null) { // user subscribed using stripe
 
                 // skip deleting if stripe subscription is active
@@ -50,10 +50,10 @@ class DeleteCancelledSubscriptions extends Command
                 }
 
                 $user->subscription()->delete();
-                self::sendNotification($user);
+                self::sendNotification($user, $subscription);
             } else { // user purchased subscription
                 $user->subscription()->delete();
-                self::sendNotification($user);
+                self::sendNotification($user, $subscription);
             }
         }
 
@@ -62,13 +62,13 @@ class DeleteCancelledSubscriptions extends Command
         return 0;
     }
 
-    private static function sendNotification(User $user)
+    private static function sendNotification(User $user, Subscription $subscription)
     {
         $user->notify(new SubscriptionUpdated(
             'Subscription Expired',
-            'Your subscription has expired. Please renew if you wish to continue using the client.',
+            'Your subscription has expired. Please renew it if you wish to continue using the client.',
         ));
 
-        event(new UpdateDiscordRole($user));
+        event(new SubscriptionExpired($subscription));
     }
 }

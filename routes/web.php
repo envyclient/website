@@ -84,7 +84,8 @@ Route::get('/download', DownloadLauncher::class)
  * OAuth Connect
  */
 Route::group(['prefix' => 'connect'], function () {
-    Route::group(['prefix' => 'discord'], function () {
+
+    Route::group(['prefix' => 'discord', 'middleware' => ['auth', 'verified']], function () {
         Route::get('/', [DiscordController::class, 'login'])
             ->name('connect.discord');
 
