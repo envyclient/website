@@ -11,8 +11,8 @@ class DiscordRoleSubscriber
 {
     public function handleDiscordConnected(DiscordAccountConnected $event)
     {
-        Discord::handleDiscordRoles($event->user, function (string $discord, string $plan) {
-            return "<@$discord> has connected their account, so I updated their role.";
+        Discord::handleDiscordRoles($event->user, function (string $discord, string $plan = null) {
+            return "<@$discord> has connected their account, so I synchronized their role.";
         });
     }
 
@@ -25,7 +25,7 @@ class DiscordRoleSubscriber
 
     public function handleSubscriptionExpired(SubscriptionExpired $event)
     {
-        Discord::handleDiscordRoles($event->user, function (string $discord, string $plan) {
+        Discord::handleDiscordRoles($event->user, function (string $discord, string $plan = null) {
             return "<@$discord> subscription has expired, so I removed their role.";
         });
     }
