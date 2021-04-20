@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\ClearDiscordChannels;
 use App\Console\Commands\DeleteCancelledSubscriptions;
 use App\Console\Commands\DeleteOldMinecraftAccounts;
 use App\Console\Commands\DeleteOldUnverifiedUsers;
