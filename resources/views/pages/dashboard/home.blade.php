@@ -7,7 +7,8 @@
     {{--Discord Account Connect--}}
     @if($user->discord_id === null)
         <x-card title="Connect Discord Account"
-                subtitle="Connect your discord account to enable role syncing with the server.">
+                subtitle="Connect your discord account to enable role syncing with the server."
+                class="mb-4">
             <a href="{{ route('connect.discord') }}">
                 <x-button.primary>Connect</x-button.primary>
             </a>
@@ -17,7 +18,7 @@
     {{--Referral Code--}}
     @if($user->referral_code_id === null)
         <x-card title="Use referral code" subtitle="If you were referred by another user please enter their code.">
-            <form class="mt-5 sm:flex sm:items-center" action="{{ route('users.referral-code') }}" method="post">
+            <form class="sm:flex sm:items-center" action="{{ route('users.referral-code') }}" method="post">
                 @csrf
                 <x-input.text
                     id="referral-code"

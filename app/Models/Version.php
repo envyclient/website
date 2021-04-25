@@ -12,12 +12,12 @@ use Illuminate\Support\Carbon;
  *
  * @property string name
  * @property boolean beta
- * @property string version
- * @property string assets
+ * @property string manifest
  * @property string changelog
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
+ * @property Carbon processed_at
  *
  * @property-read Collection users
  */
@@ -28,18 +28,14 @@ class Version extends Model
     protected $fillable = [
         'name',
         'beta',
-        'version',
-        'assets',
+        'manifest',
         'changelog',
-    ];
-
-    protected $hidden = [
-        'version',
-        'assets',
+        'processed_at',
     ];
 
     protected $casts = [
         'beta' => 'bool',
+        'processed_at' => 'datetime',
     ];
 
     public function users()
