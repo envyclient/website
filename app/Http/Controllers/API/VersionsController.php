@@ -13,11 +13,17 @@ class VersionsController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $versions = Version::orderBy('created_at', 'desc');
+        $versions = Version::orderBy('created_at', 'desc')->whereNotNull('processed_at');
         if (!$user->hasBetaAccess()) {
             $versions->where('beta', false);
         }
         return $versions->get();
+    }
+
+    public function download(Version $version, string $file)
+    {
+        $folder = explode('/', $version)[1];
+        return Storage::disk('local')->download("versions/$folder/data/$file");
     }
 
     public function downloadVersion(Request $request, int $id)

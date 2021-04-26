@@ -19,12 +19,9 @@
             <x-input.toggle wire:model.defer="beta" id="beta"/>
         </x-input.group>
 
-        {{--Version & Assets Input--}}
-        <x-input.group for="files" label="Files" class="mt-4">
-            <x-filepond wire:model="files"
-                        multiple
-                        required
-            />
+        {{--Version Input--}}
+        <x-input.group for="version" label="Version" class="mt-4">
+            <x-filepond wire:model="version" id="version" required/>
         </x-input.group>
 
         {{--Footer--}}

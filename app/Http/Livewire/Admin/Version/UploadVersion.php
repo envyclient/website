@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Version;
 
+use App\Jobs\ProcessVersion;
 use App\Models\Version;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -14,13 +15,13 @@ class UploadVersion extends Component
     public string $name = '';
     public string $changelog = '';
     public bool $beta = false;
-    public $files = [];
+    public $version;
 
     protected array $rules = [
-        'name' => 'bail|required|string|max:30|unique:versions',
-        'changelog' => 'required|string',
-        'beta' => 'nullable',
-        'files.*' => 'bail|required|file|max:25000|min:2',
+        'name' => ['required', 'string', 'max:30', 'unique:versions'],
+        'changelog' => ['required', 'string'],
+        'beta' => ['nullable'],
+        'version' => ['required', 'file', 'max:25000'],
     ];
 
     public function render()
@@ -34,22 +35,17 @@ class UploadVersion extends Component
 
         // store the version & assets
         $path = 'versions/' . Str::uuid();
-        foreach ($this->files as $file) {
-            if ($file->extension() === 'jar') {
-                $file->storeAs($path, 'assets.jar');
-            } else {
-                $file->storeAs($path, 'version.exe');
-            }
-        }
+        $this->version->storeAs($path, 'version.jar');
 
         // create the version
-        Version::create([
+        $version = Version::create([
             'name' => $this->name,
             'beta' => $this->beta,
-            'version' => "$path/version.exe",
-            'assets' => "$path/assets.jar",
             'changelog' => $this->changelog,
         ]);
+
+        // dispatch the job
+        ProcessVersion::dispatch($version, $path);
 
         $this->done();
     }
@@ -60,7 +56,7 @@ class UploadVersion extends Component
         $this->name = '';
         $this->changelog = '';
         $this->beta = false;
-        $this->files = [];
+        $this->version = null;
 
         // clear the filepond file
         $this->resetFilePond();

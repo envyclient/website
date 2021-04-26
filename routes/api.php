@@ -6,7 +6,6 @@ use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
 use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Controllers\API\MinecraftController;
-use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\API\VersionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +35,7 @@ Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
  */
 Route::group(['prefix' => 'versions', 'middleware' => ['auth:api', 'subscribed']], function () {
     Route::get('/', [VersionsController::class, 'index']);
+    Route::get('{version}/{file}', [VersionsController::class, 'download']);
     Route::get('{version}/download-version', [VersionsController::class, 'downloadVersion']);
     Route::get('{version}/download-assets', [VersionsController::class, 'downloadAssets']);
 });

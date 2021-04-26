@@ -18,6 +18,11 @@ class UploadLauncher extends Component
         'launcher' => ['required', 'file', 'max:3072'],
     ];
 
+    public function render()
+    {
+        return view('livewire.admin.upload-launcher');
+    }
+
     public function submit()
     {
         $this->validate();
@@ -31,11 +36,6 @@ class UploadLauncher extends Component
         Storage::disk('local')->putFileAs('launcher/', $this->launcher, 'envy.exe');
 
         $this->done();
-    }
-
-    public function render()
-    {
-        return view('livewire.admin.upload-launcher');
     }
 
     private function done()

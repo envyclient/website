@@ -27,8 +27,8 @@ class AddDiscordIdToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->removeColumn('discord_id');
-            $table->removeColumn('discord_name');
+            $table->dropColumn('discord_id');
+            $table->dropColumn('discord_name');
         });
     }
 }
