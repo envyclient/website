@@ -15,8 +15,8 @@ class UpdateVersionsTable extends Migration
     {
         Schema::table('versions', function (Blueprint $table) {
             // remove unused columns
-            $table->removeColumn('version');
-            $table->removeColumn('assets');
+            $table->dropColumn('version');
+            $table->dropColumn('assets');
 
             // add new columns
             $table->string('manifest')->nullable();
@@ -37,8 +37,8 @@ class UpdateVersionsTable extends Migration
             $table->string('assets')->unique();
 
             // remove the new columns
-            $table->removeColumn('manifest');
-            $table->removeColumn('processed_at');
+            $table->dropColumn('manifest');
+            $table->dropColumn('processed_at');
         });
     }
 }

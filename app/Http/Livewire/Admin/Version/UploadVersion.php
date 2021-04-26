@@ -15,13 +15,13 @@ class UploadVersion extends Component
     public string $name = '';
     public string $changelog = '';
     public bool $beta = false;
-    public $file;
+    public $version;
 
     protected array $rules = [
-        'name' => 'bail|required|string|max:30|unique:versions',
-        'changelog' => 'required|string',
-        'beta' => 'nullable',
-        'file' => 'bail|required|file|max:25000',
+        'name' => ['required', 'string', 'max:30', 'unique:versions'],
+        'changelog' => ['required', 'string'],
+        'beta' => ['nullable'],
+        'version' => ['required', 'file', 'max:25000'],
     ];
 
     public function render()
@@ -35,7 +35,7 @@ class UploadVersion extends Component
 
         // store the version & assets
         $path = 'versions/' . Str::uuid();
-        $this->file->storeAs($path, 'version.jar');
+        $this->version->storeAs($path, 'version.jar');
 
         // create the version
         $version = Version::create([

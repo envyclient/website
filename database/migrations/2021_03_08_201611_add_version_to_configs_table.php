@@ -26,7 +26,7 @@ class AddVersionToConfigsTable extends Migration
     public function down()
     {
         Schema::table('configs', function (Blueprint $table) {
-            $table->removeColumn('version_id');
+            $table->dropColumn('version_id');
         });
     }
 }

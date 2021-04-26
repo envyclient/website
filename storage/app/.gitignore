@@ -1,5 +1,4 @@
 *
+!extract.jar
 !public/
-!versions/
-!livewire-tmp/
 !.gitignore

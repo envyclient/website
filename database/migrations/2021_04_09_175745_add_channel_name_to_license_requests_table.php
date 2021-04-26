@@ -27,8 +27,8 @@ class AddChannelNameToLicenseRequestsTable extends Migration
     public function down()
     {
         Schema::table('license_requests', function (Blueprint $table) {
-            $table->removeColumn('channel_name');
-            $table->removeColumn('channel_image');
+            $table->dropColumn('channel_name');
+            $table->dropColumn('channel_image');
         });
     }
 }

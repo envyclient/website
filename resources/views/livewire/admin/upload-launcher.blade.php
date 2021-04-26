@@ -8,7 +8,10 @@
 
         {{--Launcher Input--}}
         <x-input.group for="launcher" label="Launcher" class="mt-4">
-            <x-filepond wire:model="launcher" required/>
+            <x-filepond wire:model="launcher"
+                        id="launcher"
+                        required
+            />
         </x-input.group>
 
         {{--Footer--}}

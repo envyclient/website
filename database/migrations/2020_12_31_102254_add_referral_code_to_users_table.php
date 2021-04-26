@@ -27,7 +27,7 @@ class AddReferralCodeToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->removeColumn('referral_code_id');
+            $table->dropColumn('referral_code_id');
         });
     }
 }

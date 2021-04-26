@@ -19,9 +19,9 @@
             <x-input.toggle wire:model.defer="beta" id="beta"/>
         </x-input.group>
 
-        {{--Version--}}
-        <x-input.group for="file" label="Version" class="mt-4">
-            <x-filepond wire:model="file" required/>
+        {{--Version Input--}}
+        <x-input.group for="version" label="Version" class="mt-4">
+            <x-filepond wire:model="version" id="version" required/>
         </x-input.group>
 
         {{--Footer--}}
