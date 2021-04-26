@@ -20,9 +20,14 @@ class VersionsController extends Controller
         return $versions->get();
     }
 
-    public function download(Version $version, string $file)
+    public function downloadManifest(Version $version)
     {
-        $folder = explode('/', $version)[1];
+        return Storage::disk('local')->download($version->manifest);
+    }
+
+    public function downloadFiles(Version $version, string $file)
+    {
+        $folder = explode('/', $version->manifest)[1];
         return Storage::disk('local')->download("versions/$folder/data/$file");
     }
 
