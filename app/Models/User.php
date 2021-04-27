@@ -24,7 +24,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property bool banned
  * @property bool disabled
  * @property string cape
- * @property string image
  * @property string|null current_account
  * @property int|null referral_code_id
  * @property Carbon|null referral_code_used_at
@@ -32,6 +31,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string|null discord_name
  * @property string|null stripe_id
  *
+ * @property-read string image
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
  *
@@ -59,7 +59,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'banned',
         'disabled',
         'cape',
-        'image',
         'current_account',
         'referral_code_id',
         'referral_code_used_at',
@@ -77,11 +76,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'banned' => 'bool',
-    ];
-
-    protected $dates = [
-        'email_verified_at',
-        'referral_code_used_at',
+        'email_verified_at' => 'datetime',
+        'referral_code_used_at' => 'datetime',
     ];
 
     public function scopeSearch(Builder $query, string $search)
@@ -94,6 +90,11 @@ class User extends Authenticatable implements MustVerifyEmail
             });
         }
         return $query;
+    }
+
+    public function getImageAttribute(): string
+    {
+        return 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($this->email))) . '.svg?text=' . strtoupper(substr($this->name, 0, 2));
     }
 
     public function configs()

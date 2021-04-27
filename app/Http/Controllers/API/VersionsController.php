@@ -25,7 +25,7 @@ class VersionsController extends Controller
         return Storage::disk('local')->download($version->manifest);
     }
 
-    public function downloadFiles(Version $version, string $file)
+    public function downloadFile(Version $version, string $file)
     {
         $folder = explode('/', $version->manifest)[1];
         return Storage::disk('local')->download("versions/$folder/data/$file");
@@ -47,11 +47,5 @@ class VersionsController extends Controller
         ]);
 
         return Storage::disk('local')->download($version->version);
-    }
-
-    public function downloadAssets(Request $request, int $id)
-    {
-        $version = Version::findOrFail($id);
-        return Storage::disk('local')->download($version->assets);
     }
 }

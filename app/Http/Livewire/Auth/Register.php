@@ -17,26 +17,9 @@ class Register extends Component
     public string $passwordConfirmation = '';
 
     protected array $rules = [
-        'name' => [
-            'required',
-            'string',
-            'min:3',
-            'max:255',
-            'alpha_dash',
-        ],
-        'email' => [
-            'required',
-            'string',
-            'email',
-            'max:255',
-            'unique:users',
-        ],
-        'password' => [
-            'required',
-            'string',
-            'min:8',
-            'same:passwordConfirmation',
-        ],
+        'name' => ['required', 'string', 'min:3', 'max:255', 'alpha_dash', 'unique:users'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'same:passwordConfirmation'],
     ];
 
     public function render()

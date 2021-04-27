@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\Actions\GetLauncherVersion;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
@@ -8,6 +7,7 @@ use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Controllers\API\MinecraftController;
 use App\Http\Controllers\API\VersionsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Auth
@@ -37,7 +37,7 @@ Route::group(['prefix' => 'versions', 'middleware' => ['auth:api', 'subscribed']
     Route::get('/', [VersionsController::class, 'index']);
 
     Route::get('{version}', [VersionsController::class, 'downloadManifest']);
-    Route::get('{version}/{file}', [VersionsController::class, 'downloadFiles']);
+    Route::get('{version}/{file}', [VersionsController::class, 'downloadFile']);
 });
 
 /**
@@ -50,7 +50,8 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 });
 
 /**
- * Launcher
+ * Get Latest Launcher Version
  */
-Route::get('launcher/latest', GetLauncherVersion::class)
-    ->middleware('api');
+Route::get('launcher/latest', function () {
+    return Storage::disk('local')->get('launcher/latest.json');
+})->middleware('api');

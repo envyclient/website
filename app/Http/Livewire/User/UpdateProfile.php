@@ -26,7 +26,6 @@ class UpdateProfile extends Component
     public function submit()
     {
         $user = auth()->user();
-        $message = '';
 
         $this->validate([
             'name' => [
@@ -46,7 +45,6 @@ class UpdateProfile extends Component
             ],
         ]);
 
-        $image = 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($this->email))) . '.svg?text=' . strtoupper(substr($this->name, 0, 2));
         if ($this->email !== $user->email && $user instanceof MustVerifyEmail) {
 
             // update the user information
@@ -54,7 +52,6 @@ class UpdateProfile extends Component
                 'name' => $this->name,
                 'email' => $this->email,
                 'email_verified_at' => null,
-                'image' => $image,
             ])->save();
 
             // resend the email verification
@@ -65,15 +62,23 @@ class UpdateProfile extends Component
             $user->forceFill([
                 'name' => $this->name,
                 'email' => $this->email,
-                'image' => $image,
             ])->save();
 
             $message = 'Profile updated.';
         }
 
+        $this->done($user, $message);
+    }
+
+    private function done(User $user, string $message)
+    {
+        // show small notification
         $this->smallNotify($message);
+
+        // reset the inputs
         $this->resetInputFields($user);
 
+        // update the profile component
         $this->emit('PROFILE_UPDATE');
     }
 
@@ -82,4 +87,5 @@ class UpdateProfile extends Component
         $this->name = $user->name;
         $this->email = $user->email;
     }
+
 }

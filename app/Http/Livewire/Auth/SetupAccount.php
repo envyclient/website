@@ -9,24 +9,14 @@ use Livewire\Component;
 class SetupAccount extends Component
 {
     public string $name = '';
+    public string $email = '';
     public string $password = '';
     public string $passwordConfirmation = '';
 
     protected array $rules = [
-        'name' => [
-            'required',
-            'string',
-            'min:3',
-            'max:255',
-            'alpha_dash',
-            'unique:users',
-        ],
-        'password' => [
-            'required',
-            'string',
-            'min:8',
-            'same:passwordConfirmation',
-        ],
+        'name' => ['required', 'string', 'min:3', 'max:255', 'alpha_dash', 'unique:users'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'same:passwordConfirmation'],
     ];
 
     public function render()
@@ -38,10 +28,18 @@ class SetupAccount extends Component
     {
         $this->validate();
 
-        auth()->user()->forceFill([
+        $user = auth()->user();
+
+        // updated the user info
+        $user->forceFill([
             'name' => $this->name,
-            'password' => Hash::make($this->password)
+            'email' => $this->email,
+            'password' => Hash::make($this->password),
+            'email_verified_at' => null,
         ])->save();
+
+        // send the user an confirmation email
+        $user->sendEmailVerificationNotification();
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
