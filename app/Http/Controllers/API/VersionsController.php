@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Version;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,7 +42,7 @@ class VersionsController extends Controller
         $folder = md5($version->id);
 
         // get the file name
-        $file = Crypt::decryptString($hash);
+        $file = base64_decode($hash);
 
         return Storage::disk('local')->download("versions/$folder/data/$file");
     }
