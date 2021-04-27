@@ -8,7 +8,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
@@ -44,12 +43,12 @@ class ProcessVersion implements ShouldQueue
         )->map(function (string $line) {
             return substr($line, 51);
         })->map(function (string $line) {
-            return Crypt::encryptString($line);
+            return base64_encode($line);
         })->toArray();
 
         // saving the manifest file
         Storage::disk('local')->put("versions/$this->folder/manifest.json", json_encode([
-            'main' => Crypt::encryptString(str_replace('.', '/', $this->mainClass)),
+            'main' => base64_encode(str_replace('.', '/', $this->mainClass)),
             'files' => $files,
         ], JSON_UNESCAPED_SLASHES));
 
