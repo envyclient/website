@@ -42,7 +42,7 @@ class UploadVersion extends Component
         $folder = md5($version->id);
 
         // store the version
-        $this->version->storeAs($folder, 'version.jar');
+        $this->version->storeAs("versions/$folder", 'version.jar');
 
         // dispatch the job
         ProcessVersion::dispatch($version, $folder);
