@@ -69,25 +69,30 @@
 
                 {{--Name Input--}}
                 <x-input.group for="editVersion.name" label="Name">
-                    <x-input.text wire:model.defer="editVersion.name" id="editVersion.name"/>
+                    <x-input.text wire:model.defer="editVersion.name" id="editVersion.name" required/>
                 </x-input.group>
 
                 {{--Beta Input--}}
                 <x-input.group for="version.beta" label="Beta" class="mt-4">
-                    <x-input.toggle wire:model.defer="editVersion.beta" id="version.beta"/>
+                    <x-input.toggle wire:model.defer="editVersion.beta" id="editVersion.beta"/>
                 </x-input.group>
 
                 {{--Changelog Input--}}
                 <x-input.group for="editVersion.changelog" label="Changelog" class="mt-4">
-                    <x-input.textarea wire:model.defer="editVersion.changelog" id="channel" rows="7"/>
+                    <x-input.textarea wire:model.defer="editVersion.changelog"
+                                      id="editVersion.changelog"
+                                      rows="7"
+                                      required/>
                 </x-input.group>
 
             </x-slot>
 
+            {{--Footer--}}
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('edit', false)">Cancel</x-button.secondary>
                 <x-button.primary type="submit" wire:loading.disabled>Save</x-button.primary>
             </x-slot>
+
         </x-modal.dialog>
     </form>
 

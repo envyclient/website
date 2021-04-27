@@ -21,7 +21,7 @@ class VersionsTable extends Component
 
     protected $listeners = ['UPDATE_VERSIONS' => '$refresh'];
 
-    // make empty user
+    // make empty version
     public function mount()
     {
         $this->editVersion = Version::make();
@@ -35,8 +35,6 @@ class VersionsTable extends Component
 
     public function save()
     {
-        dd($this->editVersion->name);
-
         $this->edit = false;
         $this->editVersion->save();
     }
