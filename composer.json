@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-zip": "*",
+        "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "larabug/larabug": "^2.3",

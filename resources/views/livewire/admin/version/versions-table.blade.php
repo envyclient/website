@@ -1,6 +1,6 @@
 <div>
 
-    <div>
+    <div class="space-y-4">
 
         {{--Versions Table--}}
         <x-table>

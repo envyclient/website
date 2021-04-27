@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class ProcessVersion implements ShouldQueue
 {
@@ -23,12 +24,27 @@ class ProcessVersion implements ShouldQueue
 
     public function handle()
     {
-        $jar = storage_path('app/extract.jar');
         $version = storage_path("app/$this->path/version.jar");
-        $path = storage_path("app/$this->path");
+        $data_dir = storage_path("app/$this->path/data");
 
-        // TODO: handle version
-        exec("java -jar $jar $path $version data -1");
+        // extract the version file
+        $zip = new ZipArchive();
+        if ($zip->open($version) === TRUE) {
+            $zip->extractTo($data_dir);
+            $zip->close();
+        } else {
+            $this->fail();
+        }
+
+        // generating the manifest data
+        $manifest = collect(
+            Storage::disk('local')->allFiles("$this->path/data")
+        )->map(function (string $path) {
+            return substr($path, 51);
+        })->toJson(JSON_UNESCAPED_SLASHES);
+
+        // saving the manifest file
+        Storage::disk('local')->put("$this->path/manifest.json", $manifest);
 
         // TODO: send discord webhook
 
@@ -37,8 +53,9 @@ class ProcessVersion implements ShouldQueue
 
         // mark the version as processed
         $this->version->update([
-            'manifest' => "$this->path/data.json",
-            'processed_at' => now()
+            'manifest' => "$this->path/manifest.json",
+            'processed_at' => now(),
         ]);
     }
 }
+
