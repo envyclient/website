@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
@@ -17,15 +18,15 @@ class ProcessVersion implements ShouldQueue
 
     public function __construct(
         private Version $version,
-        private string $path,
+        private string $folder,
     )
     {
     }
 
     public function handle()
     {
-        $version = storage_path("app/$this->path/version.jar");
-        $data_dir = storage_path("app/$this->path/data");
+        $version = storage_path("app/versions/$this->folder/version.jar");
+        $data_dir = storage_path("app/versions/$this->folder/data");
 
         // extract the version file
         $zip = new ZipArchive();
@@ -38,22 +39,23 @@ class ProcessVersion implements ShouldQueue
 
         // generating the manifest data
         $manifest = collect(
-            Storage::disk('local')->allFiles("$this->path/data")
-        )->map(function (string $path) {
-            return substr($path, 51);
+            Storage::disk('local')->allFiles("versions/$this->folder/data")
+        )->map(function (string $line) {
+            return substr($line, 51);
+        })->map(function (string $line) {
+            return Crypt::encryptString($line);
         })->toJson(JSON_UNESCAPED_SLASHES);
 
         // saving the manifest file
-        Storage::disk('local')->put("$this->path/manifest.json", $manifest);
+        Storage::disk('local')->put("versions/$this->folder/manifest.json", $manifest);
 
         // TODO: send discord webhook
 
         // deleting the version.jar
-        Storage::disk('local')->delete("$this->path/version.jar");
+        Storage::disk('local')->delete("versions/$this->folder/version.jar");
 
         // mark the version as processed
         $this->version->update([
-            'manifest' => "$this->path/manifest.json",
             'processed_at' => now(),
         ]);
     }

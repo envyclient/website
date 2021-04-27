@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Version;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,17 +18,33 @@ class VersionsController extends Controller
         if (!$user->hasBetaAccess()) {
             $versions->where('beta', false);
         }
-        return $versions->get();
+        return $versions->get(['id', 'name', 'beta', 'changelog']);
     }
 
     public function downloadManifest(Version $version)
     {
-        return Storage::disk('local')->download($version->manifest);
+        if ($version->processed_at === null) {
+            return self::bad();
+        }
+
+        // get the versions folder path
+        $folder = md5($version->id);
+
+        return Storage::disk('local')->download("versions/$folder/manifest.json");
     }
 
-    public function downloadFile(Version $version, string $file)
+    public function downloadFile(Version $version, string $hash)
     {
-        $folder = explode('/', $version->manifest)[1];
+        if ($version->processed_at === null) {
+            return self::bad();
+        }
+
+        // get the versions folder path
+        $folder = md5($version->id);
+
+        // get the file name
+        $file = Crypt::decryptString($hash);
+
         return Storage::disk('local')->download("versions/$folder/data/$file");
     }
 

@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Version;
 
 use App\Jobs\ProcessVersion;
 use App\Models\Version;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -33,10 +32,6 @@ class UploadVersion extends Component
     {
         $this->validate();
 
-        // store the version & assets
-        $path = 'versions/' . Str::uuid();
-        $this->version->storeAs($path, 'version.jar');
-
         // create the version
         $version = Version::create([
             'name' => $this->name,
@@ -44,8 +39,13 @@ class UploadVersion extends Component
             'changelog' => $this->changelog,
         ]);
 
+        $folder = md5($version->id);
+
+        // store the version
+        $this->version->storeAs($folder, 'version.jar');
+
         // dispatch the job
-        ProcessVersion::dispatch($version, $path);
+        ProcessVersion::dispatch($version, $folder);
 
         $this->done();
     }

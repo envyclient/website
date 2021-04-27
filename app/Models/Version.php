@@ -12,7 +12,6 @@ use Illuminate\Support\Carbon;
  *
  * @property string name
  * @property boolean beta
- * @property string manifest
  * @property string changelog
  *
  * @property-read Carbon created_at
@@ -28,7 +27,6 @@ class Version extends Model
     protected $fillable = [
         'name',
         'beta',
-        'manifest',
         'changelog',
         'processed_at',
     ];
