@@ -41,7 +41,7 @@ class ProcessVersion implements ShouldQueue
         $files = collect(
             Storage::disk('local')->allFiles("versions/$this->folder/data")
         )->map(function (string $line) {
-            return substr($line, 51);
+            return substr($line, 47);
         })->map(function (string $line) {
             return base64_encode($line);
         })->toArray();
