@@ -16,7 +16,6 @@ class UpdateVersionsTable extends Migration
         Schema::table('versions', function (Blueprint $table) {
             $table->dropColumn(['version', 'assets']);
             $table->tinyText('processed_at')->nullable();
-            $table->timestamp('processed_at')->nullable();
         });
     }
 
