@@ -1,13 +1,13 @@
-    @props([
-    'maxFileSize', 'maxTotalFileSize',
-    'minImageWidth', 'maxImageWidth',
-    'minImageHeight', 'maxImageHeight'
+@props([
+'maxFileSize', 'maxTotalFileSize',
+'minImageWidth', 'maxImageWidth',
+'minImageHeight', 'maxImageHeight'
 ])
 
-    <div
-        wire:ignore
-        x-data="{ pond: null }"
-        x-init="
+<div
+    wire:ignore
+    x-data="{ pond: null }"
+    x-init="
         FilePond.registerPlugin(
             FilePondPluginFileValidateSize,
             FilePondPluginFileValidateType,
