@@ -3,7 +3,12 @@
 
         {{--Name Input--}}
         <x-input.group for="name" label="Name">
-            <x-input.text wire:model.defer="name" id="name"/>
+            <x-input.text wire:model.defer="name" id="name" required/>
+        </x-input.group>
+
+        {{--Main Class Input--}}
+        <x-input.group for="main" label="Main Class" class="mt-4">
+            <x-input.text wire:model.defer="main" id="main" required/>
         </x-input.group>
 
         {{--Changelog Input--}}
@@ -11,12 +16,13 @@
             <x-input.textarea wire:model.defer="changelog"
                               id="changelog"
                               rows="3"
+                              required
             />
         </x-input.group>
 
         {{--Beta Input--}}
         <x-input.group for="beta" label="Beta" class="mt-4">
-            <x-input.toggle wire:model.defer="beta" id="beta"/>
+            <x-input.toggle wire:model.defer="beta" id="beta" required/>
         </x-input.group>
 
         {{--Version Input--}}

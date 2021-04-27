@@ -19,6 +19,7 @@ class ProcessVersion implements ShouldQueue
     public function __construct(
         private Version $version,
         private string $folder,
+        private string $mainClass,
     )
     {
     }
@@ -38,16 +39,19 @@ class ProcessVersion implements ShouldQueue
         }
 
         // generating the manifest data
-        $manifest = collect(
+        $files = collect(
             Storage::disk('local')->allFiles("versions/$this->folder/data")
         )->map(function (string $line) {
             return substr($line, 51);
         })->map(function (string $line) {
             return Crypt::encryptString($line);
-        })->toJson(JSON_UNESCAPED_SLASHES);
+        })->toArray();
 
         // saving the manifest file
-        Storage::disk('local')->put("versions/$this->folder/manifest.json", $manifest);
+        Storage::disk('local')->put("versions/$this->folder/manifest.json", json_encode([
+            'main' => Crypt::encryptString(str_replace('.', '/', $this->mainClass)),
+            'files' => $files,
+        ], JSON_UNESCAPED_SLASHES));
 
         // TODO: send discord webhook
 

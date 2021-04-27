@@ -3,7 +3,7 @@
 
         {{--Version Input--}}
         <x-input.group for="version" label="Version">
-            <x-input.text wire:model.defer="version" id="version"/>
+            <x-input.text wire:model.defer="version" id="version" required/>
         </x-input.group>
 
         {{--Launcher Input--}}

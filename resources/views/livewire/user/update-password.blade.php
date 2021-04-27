@@ -3,17 +3,29 @@
 
         {{--Current Password Input--}}
         <x-input.group for="current_password" label="Password">
-            <x-input.text wire:model.defer="current_password" id="current_password" type="password"/>
+            <x-input.text wire:model.defer="current_password"
+                          id="current_password"
+                          type="password"
+                          required
+            />
         </x-input.group>
 
         {{--New Passowrd Input--}}
         <x-input.group for="password" label="New Password" class="mt-4">
-            <x-input.text wire:model.defer="password" id="password" type="password"/>
+            <x-input.text wire:model.defer="password"
+                          id="password"
+                          type="password"
+                          required
+            />
         </x-input.group>
 
         {{--Password Confirmation Input--}}
         <x-input.group for="password_confirmation" label="Password Confirmation" class="mt-4">
-            <x-input.text wire:model.defer="password_confirmation" id="password_confirmation" type="password"/>
+            <x-input.text wire:model.defer="password_confirmation"
+                          id="password_confirmation"
+                          type="password"
+                          required
+            />
         </x-input.group>
 
         {{--Footer--}}

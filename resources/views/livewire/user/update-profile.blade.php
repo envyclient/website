@@ -4,12 +4,12 @@
 
         {{--Name Input--}}
         <x-input.group for="name" label="Name">
-            <x-input.text wire:model.defer="name" id="name"/>
+            <x-input.text wire:model.defer="name" id="name" required/>
         </x-input.group>
 
         {{--Email Input--}}
         <x-input.group for="email" label="Email" class="mt-4">
-            <x-input.text wire:model.defer="email" id="email" type="email"/>
+            <x-input.text wire:model.defer="email" id="email" type="email" required/>
         </x-input.group>
 
         {{--Footer--}}
