@@ -48,7 +48,7 @@ class ProcessVersion implements ShouldQueue
 
         // saving the manifest file
         Storage::disk('local')->put("versions/$this->folder/manifest.json", json_encode([
-            'main' => base64_encode(str_replace('.', '/', $this->mainClass)),
+            'main' => $this->mainClass,
             'files' => $files,
         ], JSON_UNESCAPED_SLASHES));
 
