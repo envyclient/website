@@ -28,7 +28,10 @@
             {{-- User has no subscription --}}
             @foreach($plans as $plan)
                 <x-plan-card class="mb-5" :plan="$plan">
-                    <div class="px-4 py-3 bg-gray-100 text-right sm:px-6 group flex items-center justify-end space-x-1">
+
+                    {{--Card Footer--}}
+                    <div
+                        class="px-4 py-3 bg-gray-100 text-right group flex items-center justify-end space-x-1 flex flex-wrap">
 
                         {{-- Subscribe using PayPal --}}
                         <form action="{{ route('paypal.process') }}" method="post">

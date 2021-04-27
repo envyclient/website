@@ -27,7 +27,7 @@
                     value="{{ old('referral-code') }}"
                     required
                 />
-                <x-button.primary class="ml-3" type="submit">Use</x-button.primary>
+                <x-button.primary class="mt-3 sm:mt-0 sm:ml-3" type="submit">Use</x-button.primary>
             </form>
         </x-card>
     @endif
