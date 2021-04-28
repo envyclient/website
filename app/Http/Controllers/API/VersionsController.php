@@ -7,6 +7,7 @@ use App\Models\Version;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use SoareCostin\FileVault\Facades\FileVault;
 
 class VersionsController extends Controller
 {
@@ -44,7 +45,9 @@ class VersionsController extends Controller
         // get the file name
         $file = base64_decode($hash);
 
-        return Storage::disk('local')->download("versions/$folder/data/$file");
+        return response()->streamDownload(function () use ($folder, $file) {
+            FileVault::disk('local')->streamDecrypt("versions/$folder/data/$file");
+        });
     }
 
     public function downloadVersion(Request $request, int $id)
