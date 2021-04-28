@@ -47,7 +47,7 @@ class UploadVersion extends Component
         $this->version->storeAs("versions/$folder", 'version.jar');
 
         // dispatch the job
-        ProcessVersion::dispatch($version, $folder, $this->main);
+        ProcessVersion::dispatch($version, $folder, $this->main)->delay(5);
 
         $this->done();
     }

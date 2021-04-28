@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use SoareCostin\FileVault\Facades\FileVault;
 use ZipArchive;
 
 class ProcessVersion implements ShouldQueue
@@ -25,16 +26,18 @@ class ProcessVersion implements ShouldQueue
 
     public function handle()
     {
-        $version = storage_path("app/versions/$this->folder/version.jar");
-        $data_dir = storage_path("app/versions/$this->folder/data");
-
         // extract the version file
         $zip = new ZipArchive();
-        if ($zip->open($version) === TRUE) {
-            $zip->extractTo($data_dir);
+        if ($zip->open(storage_path("app/versions/$this->folder/version.jar")) === true) {
+            $zip->extractTo(storage_path("app/versions/$this->folder/data"));
             $zip->close();
         } else {
             $this->fail();
+        }
+
+        // encrypt the files
+        foreach (Storage::disk('local')->allFiles("versions/$this->folder/data") as $file) {
+            FileVault::encrypt($file);
         }
 
         // generating the manifest data
@@ -56,6 +59,8 @@ class ProcessVersion implements ShouldQueue
 
         // deleting the version.jar
         Storage::disk('local')->delete("versions/$this->folder/version.jar");
+
+        sleep(2);
 
         // mark the version as processed
         $this->version->update([

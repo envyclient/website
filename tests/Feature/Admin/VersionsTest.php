@@ -7,7 +7,6 @@ use App\Models\Version;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Livewire;
 use Tests\TestCase;
 
 // TODO
@@ -40,21 +39,5 @@ class VersionsTest extends TestCase
         Storage::disk('local')
             ->assertExists($version->version)
             ->assertExists($version->assets);
-    }
-
-    /** @test */
-    public function can_admin_delete_version()
-    {
-        $this->can_admin_upload_version();
-
-        $version = Version::find(1);
-
-        Livewire::test(ListVersions::class)
-            ->call('deleteVersion', 1);
-
-        $this->assertFalse($version->exists());
-        Storage::disk('local')
-            ->assertMissing($version->version)
-            ->assertMissing($version->assets);
     }
 }
