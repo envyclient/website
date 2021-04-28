@@ -34,7 +34,24 @@ return [
         'client_id' => env('DISCORD_ID'),
         'client_secret' => env('DISCORD_SECRET'),
         'redirect' => env('DISCORD_RETURN_URL'),
-        'redirect_connect' => env('DISCORD_RETURN_URL_CONNECT')
+        'redirect_connect' => env('DISCORD_RETURN_URL_CONNECT'),
+
+        'token' => env('DISCORD_TOKEN'),
+        'webhook' => env('DISCORD_WEBHOOK'),
+        'invite' => 'https://discord.gg/kusdsKtcr5',
+    ],
+
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+
+    'paypal' => [
+        'endpoint' => env('PAYPAL_ENDPOINT'),
+        'webhook_id' => env('PAYPAL_WEBHOOK_ID'),
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'secret' => env('PAYPAL_SECRET'),
     ],
 
 ];

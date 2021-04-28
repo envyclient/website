@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Invoice::observe(InvoiceObserver::class);
 
-        Stripe::setApiKey(config('stripe.secret'));
+        Stripe::setApiKey(config('services.stripe.secret'));
 
         Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));
         Component::macro('smallNotify', fn($message) => $this->emitSelf('small-notify', $message));

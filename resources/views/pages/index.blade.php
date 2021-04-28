@@ -164,7 +164,7 @@
                                             Home
                                         </a>
                                     @endif
-                                    <a href="{{ config('discord.invite') }}"
+                                    <a href="{{ config('services.discord.invite') }}"
                                        class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8">
                                             <span class="pr-2">
                                                <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
@@ -458,7 +458,7 @@
                                 our Discord and open a support ticket.
                             </p>
                             <a type="button"
-                               href="{{ config('discord.invite') }}"
+                               href="{{ config('services.discord.invite') }}"
                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-2">
                                 <span class="pr-2">
                                     <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
@@ -598,7 +598,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="{{ config('discord.invite') }}"
+                                            <a href="{{ config('services.discord.invite') }}"
                                                class="text-base text-gray-300 hover:text-white">
                                                 Discord
                                             </a>
@@ -637,7 +637,7 @@
                                         d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
                                 </svg>
                             </a>
-                            <a href="{{ config('discord.invite') }}" class="text-gray-400 hover:text-gray-300">
+                            <a href="{{ config('services.discord.invite') }}" class="text-gray-400 hover:text-gray-300">
                                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 16 16">
                                     <path
                                         d="M6.552 6.712c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888.008-.488-.36-.888-.816-.888zm2.92 0c-.456 0-.816.4-.816.888s.368.888.816.888c.456 0 .816-.4.816-.888s-.36-.888-.816-.888z"/>

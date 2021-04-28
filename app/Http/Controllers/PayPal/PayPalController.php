@@ -6,18 +6,16 @@ use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\BillingAgreement;
 use App\Models\Plan;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class PayPalController extends Controller
 {
-    private $endpoint;
+    private string $endpoint;
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
-        $this->endpoint = config('paypal.endpoint');
+        $this->endpoint = config('services.paypal.endpoint');
     }
 
     public function process(Request $request)

@@ -25,10 +25,10 @@ class VerifyPaypalWebhookSignature
                 'transmission_id' => $request->header('PAYPAL-TRANSMISSION-ID'),
                 'transmission_sig' => $request->header('PAYPAL-TRANSMISSION-SIG'),
                 'transmission_time' => $request->header('PAYPAL-TRANSMISSION-TIME'),
-                'webhook_id' => config('paypal.webhook_id'),
+                'webhook_id' => config('services.paypal.webhook_id'),
                 'webhook_event' => $request->json()
             ]), 'application/json')
-            ->post(config('paypal.endpoint') . '/v1/notifications/verify-webhook-signature');
+            ->post(config('services.paypal.endpoint') . '/v1/notifications/verify-webhook-signature');
 
         // webhook signature failed
         if ($response->status() !== 200) {

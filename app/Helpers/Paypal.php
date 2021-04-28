@@ -9,9 +9,9 @@ class Paypal
 {
     public static function getAccessToken(): string
     {
-        $response = Http::withBasicAuth(config('paypal.client_id'), config('paypal.secret'))
+        $response = Http::withBasicAuth(config('services.paypal.client_id'), config('services.paypal.secret'))
             ->asForm()
-            ->post(config('paypal.endpoint') . '/v1/oauth2/token', [
+            ->post(config('services.paypal.endpoint') . '/v1/oauth2/token', [
                 'grant_type' => 'client_credentials',
             ]);
 
@@ -28,7 +28,7 @@ class Paypal
             ->withBody(json_encode([
                 'note' => $message
             ]), 'application/json')
-            ->post(config('paypal.endpoint') . "/v1/payments/billing-agreements/$id/cancel")
+            ->post(config('services.paypal.endpoint') . "/v1/payments/billing-agreements/$id/cancel")
             ->status();
     }
 }

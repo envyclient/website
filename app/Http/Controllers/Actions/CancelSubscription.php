@@ -21,7 +21,7 @@ class CancelSubscription extends Controller
 
         // cancel stripe subscription
         if ($user->subscription->stripe_id !== null) {
-            $stripe = new StripeClient(config('stripe.secret'));
+            $stripe = new StripeClient(config('services.stripe.secret'));
             $stripe->subscriptions->cancel(
                 $user->subscription->stripe_id,
                 []

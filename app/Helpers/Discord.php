@@ -19,7 +19,7 @@ class Discord
             'tts' => false,
             'content' => $message,
         ]), 'application/json')
-            ->post(config('discord.webhook'));
+            ->post(config('services.discord.webhook'));
     }
 
     public static function handleDiscordRoles(User $user, callable $callback)
@@ -54,7 +54,7 @@ class Discord
 
     private static function updateRole(int $user, int $role, bool $remove = false): void
     {
-        $token = config('discord.token');
+        $token = config('services.discord.token');
         $endpoint = 'https://discord.com/api';
         $guild = self::GUILD;
 

@@ -131,7 +131,7 @@
         }
 
         function stripeCheckout(planId) {
-            const stripe = Stripe("{{ config('stripe.key') }}");
+            const stripe = Stripe("{{ config('services.stripe.key') }}");
             createCheckoutSession(planId)
                 .then(function (data) {
                     stripe.redirectToCheckout({
