@@ -10,11 +10,6 @@ use Stripe\StripeClient;
 
 class CancelSubscription extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified', 'subscribed']);
-    }
-
     public function __invoke(Request $request)
     {
         $user = $request->user();

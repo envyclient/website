@@ -11,14 +11,14 @@ use App\Http\Middleware\Custom\VerifyPaypalWebhookSignature;
 use Illuminate\Support\Facades\Route;
 
 /**
- * Subscriptions
+ * Cancel Subscription
  */
-Route::group(['prefix' => 'subscriptions'], function () {
-    Route::post('cancel', CancelSubscription::class)
-        ->name('subscriptions.cancel');
-});
+Route::post('cancel', CancelSubscription::class)
+    ->prefix('subscriptions')
+    ->middleware(['auth', 'verified', 'subscribed'])
+    ->name('subscriptions.cancel');
 
-/**
+/**v
  * Paypal
  */
 Route::group(['prefix' => 'paypal'], function () {

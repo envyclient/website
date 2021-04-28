@@ -77,7 +77,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
  * Download Launcher
  */
 Route::get('/download', DownloadLauncher::class)
-    ->middleware('auth', 'verified', 'subscribed')
+    ->middleware(['auth', 'verified', 'subscribed'])
     ->name('launcher.download');
 
 /**

@@ -54,4 +54,4 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
  */
 Route::get('launcher/latest', function () {
     return Storage::disk('local')->get('launcher/latest.json');
-})->middleware('api');
+});
