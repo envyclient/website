@@ -3,19 +3,19 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\Custom\CheckAdmin;
 use App\Http\Middleware\Custom\CheckBanned;
 use App\Http\Middleware\Custom\CheckDisabled;
-use App\Http\Middleware\Custom\CheckIfJsonPayloadIsValid;
 use App\Http\Middleware\Custom\CheckNoSubscription;
 use App\Http\Middleware\Custom\CheckReferral;
 use App\Http\Middleware\Custom\CheckSubscription;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
+use Fruitcake\Cors\HandleCors;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -28,7 +28,6 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Middleware\ValidateSignature;
-use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
@@ -42,8 +41,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        // \App\Http\Middleware\TrustHosts::class,
         TrustProxies::class,
-        CheckForMaintenanceMode::class,
+        HandleCors::class,
+        PreventRequestsDuringMaintenance::class,
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
@@ -54,7 +55,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    protected $vmiddlewareGroups = [
+    protected $middlewareGroups = [
         'web' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
@@ -71,8 +72,8 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            //'throttle:120,1',
-            'bindings',
+            'throttle:api',
+            SubstituteBindings::class,
         ],
     ];
 
@@ -86,7 +87,6 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
-        'bindings' => SubstituteBindings::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,
         'guest' => RedirectIfAuthenticated::class,
@@ -99,23 +99,5 @@ class Kernel extends HttpKernel
         'admin' => CheckAdmin::class,
         'subscribed' => CheckSubscription::class,
         'not-subscribed' => CheckNoSubscription::class,
-        'valid-json-payload' => CheckIfJsonPayloadIsValid::class,
-    ];
-
-    /**
-     * The priority-sorted list of middleware.
-     *
-     * This forces non-global middleware to always be in the given order.
-     *
-     * @var array
-     */
-    protected $middlewarePriority = [
-        StartSession::class,
-        ShareErrorsFromSession::class,
-        Authenticate::class,
-        ThrottleRequests::class,
-        AuthenticateSession::class,
-        SubstituteBindings::class,
-        Authorize::class,
     ];
 }
