@@ -164,7 +164,7 @@ return [
         'discord' => [
             'webhook_url' => env('DISCORD_WEBHOOK'),
             'username' => env('APP_NAME', 'Laravel'),
-            'avatar_url' => asset('android-chrome-512.png'),
+            'avatar_url' => base_path('pubic/android-chrome-512.png'),
         ],
     ],
 
