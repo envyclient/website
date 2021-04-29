@@ -35,9 +35,7 @@ Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
  */
 Route::group(['prefix' => 'versions', 'middleware' => ['auth:api', 'subscribed']], function () {
     Route::get('/', [VersionsController::class, 'index']);
-
-    Route::get('{version}', [VersionsController::class, 'downloadManifest']);
-    Route::get('{version}/{hash}', [VersionsController::class, 'downloadFile']);
+    Route::get('{version}', [VersionsController::class, 'show']);
 });
 
 /**

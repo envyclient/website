@@ -61,7 +61,6 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
     });
 });
 
-
 /**
  * Users
  */

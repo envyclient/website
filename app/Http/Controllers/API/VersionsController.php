@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class VersionsController extends Controller
 {
+    // get all versions
     public function index(Request $request)
     {
         $user = $request->user();
@@ -20,48 +21,22 @@ class VersionsController extends Controller
         return $versions->get(['id', 'name', 'beta', 'changelog']);
     }
 
-    public function downloadManifest(Version $version)
+    // download a version
+    public function show(Version $version)
     {
-        if ($version->processed_at === null) {
-            return self::bad();
-        }
-
         // get the versions folder path
         $folder = md5($version->id);
-
-        return Storage::disk('local')->download("versions/$folder/manifest.json");
-    }
-
-    public function downloadFile(Version $version, string $hash)
-    {
-        if ($version->processed_at === null) {
-            return self::bad();
-        }
-
-        // get the versions folder path
-        $folder = md5($version->id);
-
-        // get the file name
-        $file = base64_decode($hash);
-
-        return Storage::disk('local')->download("versions/$folder/data/$file");
-    }
-
-    public function downloadVersion(Request $request, int $id)
-    {
-        $user = $request->user();
-        $version = Version::findOrFail($id);
 
         $now = now();
         DB::table('user_downloads')->insert([
             [
-                'user_id' => $user->id,
+                'user_id' => auth()->id(),
                 'version_id' => $version->id,
                 'created_at' => $now,
                 'updated_at' => $now
             ]
         ]);
 
-        return Storage::disk('local')->download($version->version);
+        return Storage::disk('local')->download("versions/$folder/version.jar");
     }
 }

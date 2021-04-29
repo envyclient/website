@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Version;
 
-use App\Jobs\ProcessVersion;
 use App\Models\Version;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -45,9 +44,6 @@ class UploadVersion extends Component
 
         // store the version
         $this->version->storeAs("versions/$folder", 'version.jar');
-
-        // dispatch the job
-        ProcessVersion::dispatch($version, $folder, $this->main)->delay(5);
 
         $this->done();
     }
