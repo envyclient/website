@@ -2,7 +2,7 @@
     class="bottom-0 inset-x-0 pb-2 sm:pb-5"
     x-data="{ show: true }"
     x-show="show"
-    x-init="show = !docCookies.hasItem('hide_banner')"
+    x-init="show = !docCookies.hasItem('banner')"
     :class="[show ? 'fixed' : 'hidden']"
 >
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
