@@ -50,6 +50,12 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 /**
  * Get Latest Launcher Version
  */
-Route::get('launcher/latest', function () {
-    return Storage::disk('local')->get('launcher/latest.json');
+Route::get('launcher/latest', fn() => Storage::get('launcher/latest.json'));
+
+/**
+ * Latest Loader Version & Download Loader
+ */
+Route::group(['prefix' => 'loader', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
+    Route::get('latest', fn() => Storage::get('loader/latest.json'));
+    Route::get('download', fn() => Storage::download('loader/loader.exe'));
 });

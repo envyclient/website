@@ -16,4 +16,8 @@
         @livewire('admin.upload-launcher')
     </section>
 
+    <section class="mt-4">
+        @livewire('admin.upload-loader')
+    </section>
+
 @endsection

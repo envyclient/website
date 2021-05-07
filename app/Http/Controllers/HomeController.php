@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
 use App\Models\Plan;
 
 class HomeController extends Controller
@@ -42,19 +41,6 @@ class HomeController extends Controller
         return view('pages.dashboard.subscriptions', [
             'user' => $user,
             'plans' => Plan::where('price', '<>', 0)->get(),
-        ]);
-    }
-
-    public function sales()
-    {
-        return view('pages.dashboard.admin.sales', [
-            'total' => Invoice::sum('price'),
-            'methods' => [
-                'paypal' => Invoice::where('method', 'paypal')->sum('price'),
-                'wechat' => Invoice::where('method', 'wechat')->sum('price'),
-                'crypto' => Invoice::where('method', 'crypto')->sum('price'),
-                'stripe' => Invoice::where('method', 'stripe')->sum('price'),
-            ],
         ]);
     }
 }
