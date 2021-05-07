@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Auth
  */
-Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
+Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::get('me', [AuthController::class, 'me']);
 });
@@ -55,7 +55,7 @@ Route::get('launcher/latest', fn() => Storage::get('launcher/latest.json'));
 /**
  * Latest Loader Version & Download Loader
  */
-Route::group(['prefix' => 'loader', 'middleware' => ['auth', 'verified', 'subscribed']], function () {
+Route::group(['prefix' => 'loader', 'middleware' => ['auth:api', 'verified', 'subscribed']], function () {
     Route::get('latest', fn() => Storage::get('loader/latest.json'));
     Route::get('download', fn() => Storage::download('loader/loader.exe'));
 });

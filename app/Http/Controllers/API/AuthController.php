@@ -18,7 +18,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            self::bad();
+            return self::bad();
         }
 
         if (!auth()->attempt(request(['email', 'password']))) {
@@ -35,7 +35,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            self::bad();
+            return self::bad();
         }
 
         $user = User::where('hwid', $request->hwid)->firstOrFail();
