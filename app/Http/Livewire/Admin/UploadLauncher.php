@@ -20,7 +20,12 @@ class UploadLauncher extends Component
 
     public function render()
     {
-        return view('livewire.admin.upload-launcher');
+        $latest = null;
+        if (Storage::disk('public')->exists('manifest/launcher.json')) {
+            $manifest = Storage::disk('public')->get('manifest/launcher.json');
+            $latest = json_decode($manifest)->version;
+        }
+        return view('livewire.admin.upload-launcher', compact('latest'));
     }
 
     public function submit()

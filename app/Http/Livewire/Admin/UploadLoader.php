@@ -20,7 +20,12 @@ class UploadLoader extends Component
 
     public function render()
     {
-        return view('livewire.admin.upload-loader');
+        $latest = null;
+        if (Storage::disk('public')->exists('manifest/loader.json')) {
+            $manifest = Storage::disk('public')->get('manifest/loader.json');
+            $latest = json_decode($manifest)->version;
+        }
+        return view('livewire.admin.upload-loader', compact('latest'));
     }
 
     public function submit()
