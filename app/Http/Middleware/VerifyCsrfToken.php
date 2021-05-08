@@ -19,7 +19,5 @@ class VerifyCsrfToken extends Middleware
 
         // stripe & stripe-source webhook
         'stripe/webhook',
-
-        'discord/webhook',
     ];
 }

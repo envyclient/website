@@ -89,7 +89,5 @@ Route::group(['prefix' => 'connect'], function () {
     });
 });
 
-Route::post('discord/webhook', HandleDiscordWebhook::class);
-
 require __DIR__ . '/subscriptions.php';
 require __DIR__ . '/auth.php';

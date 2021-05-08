@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Actions\HandleDiscordWebhook;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
@@ -21,7 +22,6 @@ Route::group(['prefix' => 'auth'], function () {
  * Configs
  */
 Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
-
     Route::group(['prefix' => 'configs'], function () {
         Route::get('user/{name?}', GetConfigsForUser::class);
         Route::put('{config}/favorite', FavoriteConfig::class);
@@ -50,5 +50,7 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 /**
  * Download Loader
  */
-Route::get('download-loader', fn() => Storage::download('loader/loader.exe'))
+Route::get('download-loader', fn() => Storage::download('loader.exe'))
     ->middleware(['auth:api', 'subscribed']);
+
+Route::post('discord/webhook', HandleDiscordWebhook::class);
