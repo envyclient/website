@@ -25,7 +25,7 @@ class VersionsController extends Controller
     public function show(Version $version)
     {
         // get the versions folder path
-        $folder = md5($version->id);
+        $hash = md5($version->id);
 
         $now = now();
         DB::table('user_downloads')->insert([
@@ -37,6 +37,6 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::disk('local')->download("versions/$folder/version.jar");
+        return Storage::download("versions/$hash.jar");
     }
 }

@@ -12,13 +12,11 @@ class UploadVersion extends Component
 
     public string $name = '';
     public string $changelog = '';
-    public string $main = '';
     public bool $beta = false;
     public $version;
 
     protected array $rules = [
         'name' => ['required', 'string', 'max:30', 'unique:versions'],
-        'main' => ['required', 'string', 'max:255'],
         'changelog' => ['required', 'string'],
         'beta' => ['nullable'],
         'version' => ['required', 'file', 'max:25000'],
@@ -40,10 +38,11 @@ class UploadVersion extends Component
             'beta' => $this->beta,
         ]);
 
-        $folder = md5($version->id);
+        // generate hash for version file
+        $hash = md5($version->id);
 
         // store the version
-        $this->version->storeAs("versions/$folder", 'version.jar');
+        $this->version->storeAs("versions", "$hash.jar");
 
         $this->done();
     }
@@ -52,7 +51,6 @@ class UploadVersion extends Component
     {
         // reset inputs
         $this->name = '';
-        $this->main = '';
         $this->changelog = '';
         $this->beta = false;
         $this->version = null;
