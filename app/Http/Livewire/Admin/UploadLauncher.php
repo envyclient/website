@@ -27,13 +27,14 @@ class UploadLauncher extends Component
     {
         $this->validate();
 
-        // updating the version file
-        Storage::put('launcher/latest.json', json_encode([
+        // generating the manifest file for the launcher
+        Storage::disk('public')->put('manifest/launcher.json', json_encode([
             'version' => floatval($this->version),
+            'size' => $this->launcher->getSize(),
         ]));
 
         // storing the launcher
-        $this->launcher->storeAs('launcher', 'launcher.exe');
+        $this->launcher->storeAs('', 'launcher.exe');
 
         $this->done();
     }

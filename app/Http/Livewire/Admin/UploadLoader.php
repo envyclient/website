@@ -27,13 +27,14 @@ class UploadLoader extends Component
     {
         $this->validate();
 
-        // updating the version file
-        Storage::put('loader/latest.json', json_encode([
+        // generating the manifest file for the loader
+        Storage::disk('public')->put('manifest/loader.json', json_encode([
             'version' => floatval($this->version),
+            'size' => $this->loader->getSize(),
         ]));
 
         // storing the loader
-        $this->loader->storeAs('loader', 'loader.exe');
+        $this->loader->storeAs('', 'loader.exe');
 
         $this->done();
     }
