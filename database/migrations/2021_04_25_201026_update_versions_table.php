@@ -15,7 +15,7 @@ class UpdateVersionsTable extends Migration
     {
         Schema::table('versions', function (Blueprint $table) {
             $table->dropColumn(['version', 'assets']);
-            $table->tinyText('processed_at')->nullable();
+            $table->string('main_class')->nullable();
         });
     }
 
@@ -29,7 +29,7 @@ class UpdateVersionsTable extends Migration
         Schema::table('versions', function (Blueprint $table) {
             $table->string('version')->unique();
             $table->string('assets')->unique();
-            $table->dropColumn('processed_at');
+            $table->dropColumn('main_class');
         });
     }
 }

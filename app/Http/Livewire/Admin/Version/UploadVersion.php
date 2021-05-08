@@ -11,6 +11,7 @@ class UploadVersion extends Component
     use WithFileUploads;
 
     public string $name = '';
+    public string $main = '';
     public string $changelog = '';
     public bool $beta = false;
     public $version;
@@ -18,6 +19,7 @@ class UploadVersion extends Component
     protected array $rules = [
         'name' => ['required', 'string', 'max:30', 'unique:versions'],
         'changelog' => ['required', 'string'],
+        'main' => ['required', 'string', 'max:255'],
         'beta' => ['nullable'],
         'version' => ['required', 'file', 'max:25000'],
     ];
@@ -34,6 +36,7 @@ class UploadVersion extends Component
         // create the version
         $version = Version::create([
             'name' => $this->name,
+            'main_class' => $this->main,
             'changelog' => $this->changelog,
             'beta' => $this->beta,
         ]);
@@ -51,6 +54,7 @@ class UploadVersion extends Component
     {
         // reset inputs
         $this->name = '';
+        $this->main = '';
         $this->changelog = '';
         $this->beta = false;
         $this->version = null;

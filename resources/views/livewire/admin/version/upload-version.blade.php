@@ -6,6 +6,11 @@
             <x-input.text wire:model.defer="name" id="name" required/>
         </x-input.group>
 
+        {{--Main Class Input--}}
+        <x-input.group for="main" label="Main Class" class="mt-4">
+            <x-input.text wire:model.defer="main" id="main" required/>
+        </x-input.group>
+
         {{--Changelog Input--}}
         <x-input.group for="changelog" label="Changelog" class="mt-4">
             <x-input.textarea wire:model.defer="changelog"

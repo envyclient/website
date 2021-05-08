@@ -18,7 +18,7 @@ class VersionsController extends Controller
         if (!$user->hasBetaAccess()) {
             $versions->where('beta', false);
         }
-        return $versions->get(['id', 'name', 'beta', 'changelog']);
+        return $versions->select(['id', 'name', 'main_class', 'beta', 'changelog']);
     }
 
     // download a version
