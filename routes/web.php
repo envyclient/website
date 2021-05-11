@@ -51,6 +51,9 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
         Route::view('versions', 'pages.dashboard.admin.versions')
             ->name('admin.versions');
 
+        Route::view('launcher-loader', 'pages.dashboard.admin.launcher-loader')
+            ->name('admin.launcher-loader');
+
         Route::view('referrals', 'pages.dashboard.admin.referrals')
             ->name('admin.referrals');
 

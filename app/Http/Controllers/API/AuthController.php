@@ -82,7 +82,7 @@ class AuthController extends Controller
             'subscription' => [
                 'name' => $user->subscription->plan->name,
                 'days' => $user->subscription->end_date->diffInDays(),
-            ]
+            ],
         ]);
     }
 

@@ -1,15 +1,15 @@
 @extends('layouts.dash')
 
-@section('title', 'Versions')
+@section('title', 'Launcher & Loader')
 
 @section('content')
 
     <section>
-        @livewire('admin.version.versions-table')
+        @livewire('admin.upload-launcher')
     </section>
 
     <section class="mt-4">
-        @livewire('admin.version.upload-version')
+        @livewire('admin.upload-loader')
     </section>
 
 @endsection

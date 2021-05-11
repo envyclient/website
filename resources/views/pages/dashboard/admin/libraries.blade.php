@@ -9,7 +9,7 @@
     </section>
 
     <section class="mt-4">
-        @livewire('admin.version.upload-version')
+        @livewire('admin.version.upload-libraries')
     </section>
 
 @endsection
