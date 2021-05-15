@@ -53,4 +53,20 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 Route::get('download-loader', fn() => Storage::download('loader.exe'))
     ->middleware(['auth:api', 'subscribed']);
 
+/**
+ * Handle Discord webhook from bot
+ */
 Route::post('discord/webhook', HandleDiscordWebhook::class);
+
+/**
+ * Ban User
+ */
+Route::post('user/ban', function (Request $request) {
+
+    // ban the user
+    $request->user()->update([
+        'banned' => true,
+    ]);
+
+    return response()->noContent();
+})->middleware(['auth:api', 'admin']);
