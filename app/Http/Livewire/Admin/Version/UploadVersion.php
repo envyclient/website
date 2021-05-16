@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Admin\Version;
 
 use App\Models\Version;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use SoareCostin\FileVault\Facades\FileVault;
 
 class UploadVersion extends Component
 {
@@ -48,8 +48,17 @@ class UploadVersion extends Component
         // store the version
         $this->version->storeAs("versions", "$hash.jar");
 
-        // encrypt the version
-        FileVault::encrypt("versions/$hash.jar");
+        $jar = storage_path('app/encrypt.jar');
+        $key = 'bHCKAIix';
+        $iv = 'uic0OcbYLP55wYe3';
+        $version = storage_path("app/versions/$hash.jar");
+        $out = storage_path("app/versions/$hash.jar.enc");
+
+        // encrypt the uploaded version
+        exec("java -jar $jar $key $iv $version $out");
+
+        // delete the uploaded version
+        Storage::delete("versions/$hash.jar");
 
         $this->done();
     }
