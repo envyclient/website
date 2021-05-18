@@ -3,7 +3,7 @@
 
         {{--Version Input--}}
         <x-input.group for="libraries" label="Libraries" class="mt-4">
-            <x-filepond wire:model="libraries" id="version" multiple required/>
+            <x-input.filepond wire:model="libraries" id="version" multiple required/>
         </x-input.group>
 
         {{--Footer--}}

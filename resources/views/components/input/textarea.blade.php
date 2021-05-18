@@ -3,7 +3,8 @@
 @if($errors->has($id))
     <div class="relative">
         <textarea
-            {{ $attributes->merge(['class' => 'block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500', 'type' => 'text']) }}
+            id="{{ $id }}"
+            {{ $attributes->merge(['class' => 'block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500']) }}
         ></textarea>
 
         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -16,7 +17,8 @@
     </div>
 @else
     <textarea
-        {{ $attributes->merge(['class' => 'block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm', 'type' => 'text']) }}
+        id="{{ $id }}"
+        {{ $attributes->merge(['class' => 'block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm']) }}
     ></textarea>
 @endif
 

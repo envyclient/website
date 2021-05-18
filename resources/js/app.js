@@ -1,5 +1,16 @@
+/**
+ * Alpine.js
+ */
 require('alpinejs');
 
+/**
+ * EasyMDE
+ */
+window.EasyMDE = require('easymde');
+
+/**
+ * Cookies.js
+ */
 window.docCookies = require('cookies.js');
 
 /**

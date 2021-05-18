@@ -16,7 +16,7 @@
         pond = FilePond.create($refs.input);
         pond.setOptions({
             credits: false,
-            required: true,
+            required: {{ isset($attributes['required'])  ? 'true' : 'false' }},
             maxFileSize: '{{ isset($maxFileSize) ? $maxFileSize : null }}',
             maxTotalFileSize: '{{ isset($maxTotalFileSize) ? $maxTotalFileSize : null }}',
             imageValidateSizeMinWidth: '{{ isset($minImageWidth) ? $minImageWidth : 1 }}',

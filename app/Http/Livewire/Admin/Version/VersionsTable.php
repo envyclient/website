@@ -10,13 +10,13 @@ class VersionsTable extends Component
 {
     use WithPagination;
 
-    public bool $edit;
+    public bool $edit = false;
     public Version $editVersion;
 
     protected array $rules = [
         'editVersion.name' => ['required', 'string', 'max:30'],
         'editVersion.beta' => ['nullable', 'bool'],
-        'editVersion.changelog' => ['required', 'string'],
+        'editVersion.changelog' => ['required', 'string', 'max:65535'],
     ];
 
     protected $listeners = ['UPDATE_VERSIONS' => '$refresh'];

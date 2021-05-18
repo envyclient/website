@@ -79,10 +79,8 @@
 
                 {{--Changelog Input--}}
                 <x-input.group for="editVersion.changelog" label="Changelog" class="mt-4">
-                    <x-input.textarea wire:model.defer="editVersion.changelog"
-                                      id="editVersion.changelog"
-                                      rows="7"
-                                      required/>
+                    <x-input.easymde wire:model.defer="editVersion.changelog" id="editVersion.changelog"
+                                     maxlength="65535"/>
                 </x-input.group>
 
             </x-slot>

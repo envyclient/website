@@ -1,7 +1,4 @@
-@props([
-'label',
-'for',
-])
+@props(['label', 'for'])
 
 <div {{ $attributes }}>
     @if(isset($label))

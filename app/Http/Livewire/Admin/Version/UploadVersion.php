@@ -19,9 +19,9 @@ class UploadVersion extends Component
 
     protected array $rules = [
         'name' => ['required', 'string', 'max:30', 'unique:versions'],
-        'changelog' => ['required', 'string'],
+        'changelog' => ['required', 'string', 'max:65535'],
         'main' => ['required', 'string', 'max:255'],
-        'beta' => ['nullable'],
+        'beta' => ['nullable', 'bool'],
         'version' => ['required', 'file', 'max:25000'],
     ];
 
@@ -71,6 +71,9 @@ class UploadVersion extends Component
         $this->changelog = '';
         $this->beta = false;
         $this->version = null;
+
+        // reset the easymde text
+        $this->resetEasyMDE();
 
         // clear the filepond file
         $this->resetFilePond();

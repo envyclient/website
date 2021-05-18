@@ -14,10 +14,10 @@
 
         {{--Launcher Input--}}
         <x-input.group for="loader" label="Loader" class="mt-4">
-            <x-filepond wire:model="loader"
-                        id="loader"
-                        maxFileSize="3072KB"
-                        required
+            <x-input.filepond wire:model="loader"
+                              id="loader"
+                              maxFileSize="3072KB"
+                              required
             />
         </x-input.group>
 
