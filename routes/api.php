@@ -9,6 +9,7 @@ use App\Http\Controllers\API\MinecraftController;
 use App\Http\Controllers\API\VersionsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 /**
  * Auth
