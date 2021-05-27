@@ -15,7 +15,7 @@ class UploadLauncher extends Component
 
     protected array $rules = [
         'version' => ['required', 'string', 'numeric'],
-        'launcher' => ['required', 'file', 'max:3072'],
+        'launcher' => ['required', 'file', 'max:10240'],
     ];
 
     public function render()
