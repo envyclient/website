@@ -16,7 +16,7 @@
         <x-input.group for="launcher" label="Launcher" class="mt-4">
             <x-input.filepond wire:model="launcher"
                               id="launcher"
-                              maxFileSize="3072KB"
+                              maxFileSize="10240KB"
                               required
             />
         </x-input.group>
