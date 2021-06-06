@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
@@ -12,30 +12,24 @@ use Illuminate\Support\Carbon;
  *
  * @property string name
  * @property boolean beta
- * @property string version
- * @property string assets
  * @property string changelog
+ * @property string main_class
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
+ * @property-read Carbon deleted_at
  *
  * @property-read Collection users
  */
 class Version extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
         'beta',
-        'version',
-        'assets',
         'changelog',
-    ];
-
-    protected $hidden = [
-        'version',
-        'assets',
+        'main_class',
     ];
 
     protected $casts = [

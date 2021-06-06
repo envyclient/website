@@ -13,12 +13,10 @@ class MinecraftController extends Controller
         $user = User::where('current_account', $uuid)
             ->firstOrFail();
 
-        $response = [
+        return response()->json([
             'using' => true,
             'cape' => $user->hasCapesAccess() ? $user->cape : null,
-        ];
-
-        return response()->json($response);
+        ]);
     }
 
     public function store(Request $request)

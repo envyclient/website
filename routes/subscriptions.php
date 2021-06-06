@@ -7,27 +7,32 @@ use App\Http\Controllers\Stripe\Actions\CreateStripeSource;
 use App\Http\Controllers\Stripe\Actions\HandleStripeWebhook;
 use App\Http\Controllers\Stripe\StripeController;
 use App\Http\Livewire\ShowStripeSource;
+use App\Http\Middleware\Custom\VerifyPaypalWebhookSignature;
 use Illuminate\Support\Facades\Route;
 
 /**
- * Subscriptions
+ * Cancel Subscription
  */
-Route::group(['prefix' => 'subscriptions'], function () {
-    Route::post('cancel', CancelSubscription::class)
-        ->name('subscriptions.cancel');
-});
+Route::post('cancel', CancelSubscription::class)
+    ->prefix('subscriptions')
+    ->middleware(['auth', 'verified', 'subscribed'])
+    ->name('subscriptions.cancel');
 
-/**
+/**v
  * Paypal
  */
 Route::group(['prefix' => 'paypal'], function () {
-    Route::post('process', [PayPalController::class, 'process'])
-        ->name('paypal.process');
 
-    Route::get('execute', [PayPalController::class, 'execute']);
-    Route::get('cancel', [PayPalController::class, 'cancel']);
+    Route::group(['middleware' => ['auth', 'verified']], function () {
+        Route::post('process', [PayPalController::class, 'process'])
+            ->name('paypal.process');
 
-    Route::post('webhook', HandlePayPalWebhook::class);
+        Route::get('execute', [PayPalController::class, 'execute']);
+        Route::get('cancel', [PayPalController::class, 'cancel']);
+    });
+
+    Route::post('webhook', HandlePayPalWebhook::class)
+        ->middleware(VerifyPaypalWebhookSignature::class);
 });
 
 /**

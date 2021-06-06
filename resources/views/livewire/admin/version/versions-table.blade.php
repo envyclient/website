@@ -1,6 +1,6 @@
 <div>
 
-    <div>
+    <div class="space-y-4">
 
         {{--Versions Table--}}
         <x-table>
@@ -40,6 +40,10 @@
                                            wire:click="edit({{ $version->id }})">
                                 Edit
                             </x-button.link>
+                            <x-button.link class="block text-red-600 hover:text-red-900"
+                                           wire:click="delete({{ $version->id }})">
+                                Delete
+                            </x-button.link>
                         </x-table.cell>
                     </x-table.row>
                 @empty
@@ -69,25 +73,28 @@
 
                 {{--Name Input--}}
                 <x-input.group for="editVersion.name" label="Name">
-                    <x-input.text wire:model.defer="editVersion.name" id="editVersion.name"/>
+                    <x-input.text wire:model.defer="editVersion.name" id="editVersion.name" required/>
                 </x-input.group>
 
                 {{--Beta Input--}}
                 <x-input.group for="version.beta" label="Beta" class="mt-4">
-                    <x-input.toggle wire:model.defer="editVersion.beta" id="version.beta"/>
+                    <x-input.toggle wire:model.defer="editVersion.beta" id="editVersion.beta"/>
                 </x-input.group>
 
                 {{--Changelog Input--}}
                 <x-input.group for="editVersion.changelog" label="Changelog" class="mt-4">
-                    <x-input.textarea wire:model.defer="editVersion.changelog" id="channel" rows="7"/>
+                    <x-input.easymde wire:model.defer="editVersion.changelog" id="editVersion.changelog"
+                                     maxlength="65535"/>
                 </x-input.group>
 
             </x-slot>
 
+            {{--Footer--}}
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('edit', false)">Cancel</x-button.secondary>
                 <x-button.primary type="submit" wire:loading.disabled>Save</x-button.primary>
             </x-slot>
+
         </x-modal.dialog>
     </form>
 

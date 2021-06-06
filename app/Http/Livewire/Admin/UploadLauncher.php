@@ -15,27 +15,33 @@ class UploadLauncher extends Component
 
     protected array $rules = [
         'version' => ['required', 'string', 'numeric'],
-        'launcher' => ['required', 'file', 'max:3072'],
+        'launcher' => ['required', 'file', 'max:10240'],
     ];
+
+    public function render()
+    {
+        $latest = null;
+        if (Storage::disk('public')->exists('manifest/launcher.json')) {
+            $manifest = Storage::disk('public')->get('manifest/launcher.json');
+            $latest = json_decode($manifest)->version;
+        }
+        return view('livewire.admin.upload-launcher', compact('latest'));
+    }
 
     public function submit()
     {
         $this->validate();
 
-        // updating the version file
-        Storage::disk('local')->put('launcher/latest.json', json_encode([
+        // generating the manifest file for the launcher
+        Storage::disk('public')->put('manifest/launcher.json', json_encode([
             'version' => floatval($this->version),
+            'size' => $this->launcher->getSize(),
         ]));
 
         // storing the launcher
-        Storage::disk('local')->putFileAs('launcher/', $this->launcher, 'envy.exe');
+        $this->launcher->storeAs('', 'launcher.exe');
 
         $this->done();
-    }
-
-    public function render()
-    {
-        return view('livewire.admin.upload-launcher');
     }
 
     private function done()

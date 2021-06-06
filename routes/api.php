@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\API\Actions\GetLauncherVersion;
+use App\Http\Controllers\API\Actions\HandleDiscordWebhook;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
 use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Controllers\API\MinecraftController;
-use App\Http\Controllers\API\NotificationsController;
 use App\Http\Controllers\API\VersionsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 /**
  * Auth
  */
-Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
+Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::get('me', [AuthController::class, 'me']);
 });
@@ -22,7 +23,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
  * Configs
  */
 Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
-
     Route::group(['prefix' => 'configs'], function () {
         Route::get('user/{name?}', GetConfigsForUser::class);
         Route::put('{config}/favorite', FavoriteConfig::class);
@@ -36,8 +36,7 @@ Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
  */
 Route::group(['prefix' => 'versions', 'middleware' => ['auth:api', 'subscribed']], function () {
     Route::get('/', [VersionsController::class, 'index']);
-    Route::get('{version}/download-version', [VersionsController::class, 'downloadVersion']);
-    Route::get('{version}/download-assets', [VersionsController::class, 'downloadAssets']);
+    Route::get('{version}', [VersionsController::class, 'show']);
 });
 
 /**
@@ -50,7 +49,25 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 });
 
 /**
- * Launcher
+ * Download Loader
  */
-Route::get('launcher/latest', GetLauncherVersion::class)
-    ->middleware('api');
+Route::get('download-loader', fn() => Storage::download('loader.exe'))
+    ->middleware(['auth:api', 'subscribed']);
+
+/**
+ * Handle Discord webhook from bot
+ */
+Route::post('discord/webhook', HandleDiscordWebhook::class);
+
+/**
+ * Ban User
+ */
+Route::post('user/ban', function (Request $request) {
+
+    // ban the user
+    $request->user()->update([
+        'banned' => true,
+    ]);
+
+    return response()->noContent();
+})->middleware(['auth:api', 'admin']);

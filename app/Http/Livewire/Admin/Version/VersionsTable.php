@@ -10,18 +10,18 @@ class VersionsTable extends Component
 {
     use WithPagination;
 
-    public bool $edit;
+    public bool $edit = false;
     public Version $editVersion;
 
     protected array $rules = [
         'editVersion.name' => ['required', 'string', 'max:30'],
         'editVersion.beta' => ['nullable', 'bool'],
-        'editVersion.changelog' => ['required', 'string'],
+        'editVersion.changelog' => ['required', 'string', 'max:65535'],
     ];
 
     protected $listeners = ['UPDATE_VERSIONS' => '$refresh'];
 
-    // make empty user
+    // make empty version
     public function mount()
     {
         $this->editVersion = Version::make();
@@ -33,10 +33,13 @@ class VersionsTable extends Component
         $this->editVersion = $version;
     }
 
+    public function delete(Version $version)
+    {
+        $version->delete();
+    }
+
     public function save()
     {
-        dd($this->editVersion->name);
-
         $this->edit = false;
         $this->editVersion->save();
     }

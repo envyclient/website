@@ -1,7 +1,7 @@
 @props([
-    'maxFileSize', 'maxTotalFileSize',
-    'minImageWidth', 'maxImageWidth',
-    'minImageHeight', 'maxImageHeight'
+'maxFileSize', 'maxTotalFileSize',
+'minImageWidth', 'maxImageWidth',
+'minImageHeight', 'maxImageHeight'
 ])
 
 <div
@@ -13,9 +13,10 @@
             FilePondPluginFileValidateType,
             FilePondPluginImageValidateSize,
         );
-        FilePond.setOptions({
+        pond = FilePond.create($refs.input);
+        pond.setOptions({
             credits: false,
-            required: true,
+            required: {{ isset($attributes['required'])  ? 'true' : 'false' }},
             maxFileSize: '{{ isset($maxFileSize) ? $maxFileSize : null }}',
             maxTotalFileSize: '{{ isset($maxTotalFileSize) ? $maxTotalFileSize : null }}',
             imageValidateSizeMinWidth: '{{ isset($minImageWidth) ? $minImageWidth : 1 }}',
@@ -32,7 +33,6 @@
                 },
             },
         });
-        pond = FilePond.create($refs.input);
     "
     @filepond-reset.window="pond.removeFiles()"
 >

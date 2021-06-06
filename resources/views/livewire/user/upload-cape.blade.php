@@ -7,12 +7,12 @@
          height="128px">
 
     <div class="mb-3">
-        <x-filepond wire:model="cape"
-                    accept="image/png"
-                    maxFileSize="1024KB"
-                    maxImageWidth="2048"
-                    maxImageHeight="1024"
-                    required
+        <x-input.filepond wire:model="cape"
+                          accept="image/png"
+                          maxFileSize="1024KB"
+                          maxImageWidth="2048"
+                          maxImageHeight="1024"
+                          required
         />
         <div class="text-sm text-gray-600">
             The dimensions must be 2048x1024.

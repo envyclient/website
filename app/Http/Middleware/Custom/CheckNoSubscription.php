@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\Custom;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class CheckNoSubscription
     public function handle($request, Closure $next)
     {
         if (auth()->check() && auth()->user()->hasSubscription()) {
-            return back();
+            return redirect(RouteServiceProvider::HOME);
         }
         return $next($request);
     }

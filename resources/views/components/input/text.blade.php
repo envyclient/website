@@ -3,6 +3,7 @@
 @if($errors->has($id))
     <div class="relative">
         <input
+            id="{{ $id }}"
             {{ $attributes->merge(['class' => 'block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500', 'type' => 'text']) }}
         />
 
@@ -16,6 +17,7 @@
     </div>
 @else
     <input
+        id="{{ $id }}"
         {{ $attributes->merge(['class' => 'block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm', 'type' => 'text']) }}
     />
 @endif

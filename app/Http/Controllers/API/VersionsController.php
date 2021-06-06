@@ -17,30 +17,24 @@ class VersionsController extends Controller
         if (!$user->hasBetaAccess()) {
             $versions->where('beta', false);
         }
-        return $versions->get();
+        return $versions->get(['id', 'name', 'beta', 'changelog', 'main_class']);
     }
 
-    public function downloadVersion(Request $request, int $id)
+    public function show(Version $version)
     {
-        $user = $request->user();
-        $version = Version::findOrFail($id);
+        // get the versions folder path
+        $hash = md5($version->id);
 
         $now = now();
         DB::table('user_downloads')->insert([
             [
-                'user_id' => $user->id,
+                'user_id' => auth()->id(),
                 'version_id' => $version->id,
                 'created_at' => $now,
                 'updated_at' => $now
             ]
         ]);
 
-        return Storage::disk('local')->download($version->version);
-    }
-
-    public function downloadAssets(Request $request, int $id)
-    {
-        $version = Version::findOrFail($id);
-        return Storage::disk('local')->download($version->assets);
+        return Storage::download("versions/$hash.jar.enc");
     }
 }

@@ -15,14 +15,14 @@ class Controller extends BaseController
     public static function bad(): JsonResponse
     {
         return response()->json([
-            'message' => '400 Bad Request'
+            'message' => '400 Bad Request',
         ], 400);
     }
 
     public static function ok(): JsonResponse
     {
         return response()->json([
-            'message' => '200 OK'
+            'message' => '200 OK',
         ]);
     }
 }

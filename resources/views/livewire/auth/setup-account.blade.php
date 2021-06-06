@@ -6,7 +6,7 @@
             Setup your account
         </h2>
         <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
-            Please choose your name and password before continuing
+            Please choose your name, email and password before continuing
         </p>
     </div>
 
@@ -20,6 +20,14 @@
                                   type="text"
                                   autocomplete="username"
                                   autofocus
+                                  required/>
+                </x-input.group>
+
+                <x-input.group for="email" label="Email" class="mt-4">
+                    <x-input.text wire:model.defer="email"
+                                  id="email"
+                                  type="email"
+                                  autocomplete="email"
                                   required/>
                 </x-input.group>
 

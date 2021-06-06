@@ -1,8 +1,8 @@
-<div
+<section
     class="bottom-0 inset-x-0 pb-2 sm:pb-5"
     x-data="{ show: true }"
     x-show="show"
-    x-init="show = !docCookies.hasItem('hide_banner')"
+    x-init="show = !docCookies.hasItem('banner')"
     :class="[show ? 'fixed' : 'hidden']"
 >
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -22,14 +22,14 @@
                     </p>
                 </div>
                 <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
-                    <a href="{{ config('discord.invite') }}"
+                    <a href="{{ config('services.discord.invite') }}"
                        class="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-600 bg-white hover:bg-gray-50">
                         Join now
                     </a>
                 </div>
                 <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
                     <button type="button"
-                            @click="show = false; docCookies.setItem('hide_banner', true, 60 * 60 * 24 * 3);"
+                            @click="show = false; docCookies.setItem('banner', true, 60 * 60 * 24 * 3);"
                             class="-mr-1 flex p-2 rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
                         <!-- Heroicon name: outline/x -->
                         <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,4 +41,4 @@
             </div>
         </div>
     </div>
-</div>
+</section>

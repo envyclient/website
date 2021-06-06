@@ -9,7 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-openssl": "*",
+        "ext-zip": "*",
+        "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.0",
+        "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "larabug/larabug": "^2.3",
         "laravel/framework": "^8.0",

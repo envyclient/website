@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'laravel-backup'),
+        'name' => env('APP_NAME', 'Laravel'),
 
         'source' => [
 
@@ -29,6 +29,7 @@ return [
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
+                    base_path('storage/app/versions'),
                 ],
 
                 /*
@@ -131,9 +132,9 @@ return [
             \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['mail'],
             \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['mail'],
             \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['discord'],
             \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['discord'],
         ],
 
         /*
@@ -144,7 +145,6 @@ return [
 
         'mail' => [
             'to' => 'haqgamer66@gmail.com',
-
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS'),
                 'name' => env('MAIL_FROM_NAME'),
@@ -153,16 +153,18 @@ return [
 
         'slack' => [
             'webhook_url' => '',
-
             /*
              * If this is set to null the default channel of the webhook will be used.
              */
             'channel' => null,
-
             'username' => null,
-
             'icon' => null,
+        ],
 
+        'discord' => [
+            'webhook_url' => env('DISCORD_WEBHOOK'),
+            'username' => env('APP_NAME', 'Laravel'),
+            'avatar_url' => base_path('pubic/android-chrome-512.png'),
         ],
     ],
 
@@ -173,8 +175,8 @@ return [
      */
     'monitor_backups' => [
         [
-            'name' => env('APP_NAME', 'laravel-backup'),
-            'disks' => ['local'],
+            'name' => env('APP_NAME', 'Laravel'),
+            'disks' => ['minio'],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,

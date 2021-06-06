@@ -23,7 +23,7 @@ class VerifyStripeWebhookSignature
             WebhookSignature::verifyHeader(
                 $request->getContent(),
                 $request->header('stripe-signature'),
-                config('stripe.webhook_secret'),
+                config('services.stripe.webhook_secret'),
             );
         } catch (SignatureVerificationException $exception) {
             throw new AccessDeniedHttpException($exception->getMessage(), $exception);

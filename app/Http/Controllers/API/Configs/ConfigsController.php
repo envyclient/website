@@ -18,7 +18,7 @@ class ConfigsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            self::bad();
+            return self::bad();
         }
 
         $validated = $validator->validated();

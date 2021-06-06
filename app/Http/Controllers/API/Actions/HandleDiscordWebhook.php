@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Actions;
+namespace App\Http\Controllers\API\Actions;
 
 use App\Helpers\Discord;
 use App\Http\Controllers\Controller;

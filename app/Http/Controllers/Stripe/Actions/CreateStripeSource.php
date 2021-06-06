@@ -18,7 +18,7 @@ class CreateStripeSource extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->stripe = new StripeClient(config('stripe.secret'));
+        $this->stripe = new StripeClient(config('services.stripe.secret'));
     }
 
     public function __invoke(Request $request)

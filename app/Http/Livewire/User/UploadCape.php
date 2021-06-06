@@ -13,15 +13,7 @@ class UploadCape extends Component
     public $cape;
 
     protected array $rules = [
-        'cape' => [
-            'bail',
-            'required',
-            'file',
-            'image',
-            'mimes:png',
-            'dimensions:width=2048,height=1024',
-            'max:1024',
-        ],
+        'cape' => ['bail', 'required', 'file', 'image', 'mimes:png', 'dimensions:width=2048,height=1024', 'max:1024'],
     ];
 
     public function render()

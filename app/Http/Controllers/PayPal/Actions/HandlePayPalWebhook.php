@@ -4,7 +4,6 @@ namespace App\Http\Controllers\PayPal\Actions;
 
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\Custom\VerifyPaypalWebhookSignature;
 use App\Models\BillingAgreement;
 use App\Models\Invoice;
 use App\Models\Subscription;
@@ -15,14 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 class HandlePayPalWebhook extends Controller
 {
-    private $endpoint;
-
-    public function __construct()
-    {
-        $this->middleware(VerifyPaypalWebhookSignature::class);
-        $this->endpoint = config('paypal.endpoint');
-    }
-
     public function __invoke(Request $request)
     {
         Log::debug($request->getContent());

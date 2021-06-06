@@ -23,6 +23,6 @@ class InvoiceObserver
             'tts' => false,
             'content' => $content,
         ]), 'application/json')
-            ->post(config('discord.webhook'));
+            ->post(config('services.discord.webhook'));
     }
 }

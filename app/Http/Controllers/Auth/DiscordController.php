@@ -24,18 +24,15 @@ class DiscordController extends Controller
             return redirect('login');
         }
 
-        // no email attached to the account
-        if (empty($user->getEmail())
-            || is_null($user->getEmail())
-            || !is_string($user->getEmail())) {
-            return redirect('login');
-        }
+        // generate a random number
+        $rand = random_int(1, 99999);
 
+        // create the user
         $user = User::firstOrCreate([
             'discord_id' => $user->getId(),
         ], [
-            'name' => 'envy_' . random_int(1, 99999),
-            'email' => $user->getEmail(),
+            'name' => "envy_$rand",
+            'email' => "envy_$rand@envyclient.com",
             'password' => null,
             'email_verified_at' => now(),
             'discord_name' => $user->getNickname(),

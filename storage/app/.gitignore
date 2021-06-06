@@ -1,5 +1,4 @@
 *
 !public/
-!versions/
-!livewire-tmp/
 !.gitignore
+!encrypt.jar

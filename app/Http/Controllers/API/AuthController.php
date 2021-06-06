@@ -12,16 +12,16 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'hwid' => 'required|string|min:40|max:40',
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+            'hwid' => ['required', 'string', 'min:40', 'max:40'],
         ]);
 
         if ($validator->fails()) {
-            self::bad();
+            return self::bad();
         }
 
-        if (!$token = auth()->attempt(request(['email', 'password']))) {
+        if (!auth()->attempt(request(['email', 'password']))) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
@@ -31,18 +31,18 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'hwid' => 'required|string|min:40|max:40',
+            'hwid' => ['required', 'string', 'min:40', 'max:40'],
         ]);
 
         if ($validator->fails()) {
-            self::bad();
+            return self::bad();
         }
 
         $user = User::where('hwid', $request->hwid)->firstOrFail();
         return $this->returnUserObject($user, $user->hwid);
     }
 
-    private static function returnUserObject($user, string $hwid)
+    private static function returnUserObject(User $user, string $hwid)
     {
         // check for duplicate hwid
         $userCheck = User::where('hwid', $hwid)->where('id', '<>', $user->id);
@@ -82,7 +82,7 @@ class AuthController extends Controller
             'subscription' => [
                 'name' => $user->subscription->plan->name,
                 'days' => $user->subscription->end_date->diffInDays(),
-            ]
+            ],
         ]);
     }
 

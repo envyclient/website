@@ -8,13 +8,13 @@ use Livewire\Component;
 
 class Login extends Component
 {
-    public $email = '';
-    public $password = '';
+    public string $email = '';
+    public string $password = '';
     public bool $remember = false;
 
     protected array $rules = [
-        'email' => 'required|string|email',
-        'password' => 'required|string',
+        'email' => ['required', 'string', 'email'],
+        'password' => ['required', 'string'],
     ];
 
     public function render()

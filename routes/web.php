@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Actions\DisableAccount;
-use App\Http\Controllers\Actions\DownloadLauncher;
 use App\Http\Controllers\Actions\HandleDiscordWebhook;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\DiscordController;
@@ -10,6 +9,7 @@ use App\Http\Livewire\Admin\LicenseRequestsTable;
 use App\Http\Livewire\Admin\User\UsersTable;
 use App\Http\Middleware\Custom\Setup\CheckIfPasswordNull;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Home
@@ -45,13 +45,14 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
      * Admin Dashboard
      */
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'admin']], function () {
-
-        // list users and versions
         Route::get('users', UsersTable::class)
             ->name('admin.users');
 
         Route::view('versions', 'pages.dashboard.admin.versions')
             ->name('admin.versions');
+
+        Route::view('launcher-loader', 'pages.dashboard.admin.launcher-loader')
+            ->name('admin.launcher-loader');
 
         Route::view('referrals', 'pages.dashboard.admin.referrals')
             ->name('admin.referrals');
@@ -60,7 +61,6 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
             ->name('admin.license-requests');
     });
 });
-
 
 /**
  * Users
@@ -76,15 +76,14 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 /**
  * Download Launcher
  */
-Route::get('/download', DownloadLauncher::class)
-    ->middleware('auth', 'verified', 'subscribed')
+Route::get('/download', fn() => Storage::download('launcher/launcher.exe', 'envy.exe'))
+    ->middleware(['auth', 'verified', 'subscribed'])
     ->name('launcher.download');
 
 /**
  * OAuth Connect
  */
 Route::group(['prefix' => 'connect'], function () {
-
     Route::group(['prefix' => 'discord', 'middleware' => ['auth', 'verified']], function () {
         Route::get('/', [DiscordController::class, 'login'])
             ->name('connect.discord');
@@ -92,8 +91,6 @@ Route::group(['prefix' => 'connect'], function () {
         Route::get('redirect', [DiscordController::class, 'redirect']);
     });
 });
-
-Route::post('discord/webhook', HandleDiscordWebhook::class);
 
 require __DIR__ . '/subscriptions.php';
 require __DIR__ . '/auth.php';

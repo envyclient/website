@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Version;
 
 use App\Models\Version;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -12,15 +12,17 @@ class UploadVersion extends Component
     use WithFileUploads;
 
     public string $name = '';
+    public string $main = '';
     public string $changelog = '';
     public bool $beta = false;
-    public $files = [];
+    public $version;
 
     protected array $rules = [
-        'name' => 'bail|required|string|max:30|unique:versions',
-        'changelog' => 'required|string',
-        'beta' => 'nullable',
-        'files.*' => 'bail|required|file|max:25000|min:2',
+        'name' => ['required', 'string', 'max:30', 'unique:versions'],
+        'changelog' => ['required', 'string', 'max:65535'],
+        'main' => ['required', 'string', 'max:255'],
+        'beta' => ['nullable', 'bool'],
+        'version' => ['required', 'file', 'max:25000'],
     ];
 
     public function render()
@@ -32,24 +34,31 @@ class UploadVersion extends Component
     {
         $this->validate();
 
-        // store the version & assets
-        $path = 'versions/' . Str::uuid();
-        foreach ($this->files as $file) {
-            if ($file->extension() === 'jar') {
-                $file->storeAs($path, 'assets.jar');
-            } else {
-                $file->storeAs($path, 'version.exe');
-            }
-        }
-
         // create the version
-        Version::create([
+        $version = Version::create([
             'name' => $this->name,
-            'beta' => $this->beta,
-            'version' => "$path/version.exe",
-            'assets' => "$path/assets.jar",
+            'main_class' => $this->main,
             'changelog' => $this->changelog,
+            'beta' => $this->beta,
         ]);
+
+        // generate hash for version file
+        $hash = md5($version->id);
+
+        // store the version
+        $this->version->storeAs("versions", "$hash.jar");
+
+        $jar = storage_path('app/encrypt.jar');
+        $key = 'bHCKAIix';
+        $iv = 'uic0OcbYLP55wYe3';
+        $version = storage_path("app/versions/$hash.jar");
+        $out = storage_path("app/versions/$hash.jar.enc");
+
+        // encrypt the uploaded version
+        exec("java -jar $jar $key $iv $version $out");
+
+        // delete the uploaded version
+        Storage::delete("versions/$hash.jar");
 
         $this->done();
     }
@@ -58,9 +67,13 @@ class UploadVersion extends Component
     {
         // reset inputs
         $this->name = '';
+        $this->main = '';
         $this->changelog = '';
         $this->beta = false;
-        $this->files = [];
+        $this->version = null;
+
+        // reset the easymde text
+        $this->resetEasyMDE();
 
         // clear the filepond file
         $this->resetFilePond();
