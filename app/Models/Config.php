@@ -49,6 +49,6 @@ class Config extends Model
 
     public function version()
     {
-        return $this->belongsTo(Version::class);
+        return $this->belongsTo(Version::class)->withTrashed();
     }
 }
