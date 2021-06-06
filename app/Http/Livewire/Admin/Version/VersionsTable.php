@@ -33,6 +33,11 @@ class VersionsTable extends Component
         $this->editVersion = $version;
     }
 
+    public function delete(Version $version)
+    {
+        $version->delete();
+    }
+
     public function save()
     {
         $this->edit = false;

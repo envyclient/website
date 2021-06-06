@@ -40,6 +40,10 @@
                                            wire:click="edit({{ $version->id }})">
                                 Edit
                             </x-button.link>
+                            <x-button.link class="block text-red-600 hover:text-red-900"
+                                           wire:click="delete({{ $version->id }})">
+                                Delete
+                            </x-button.link>
                         </x-table.cell>
                     </x-table.row>
                 @empty

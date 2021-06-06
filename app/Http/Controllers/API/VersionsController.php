@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class VersionsController extends Controller
 {
-    // get all versions
     public function index(Request $request)
     {
         $user = $request->user();
@@ -21,7 +20,6 @@ class VersionsController extends Controller
         return $versions->get(['id', 'name', 'beta', 'changelog', 'main_class']);
     }
 
-    // download a version
     public function show(Version $version)
     {
         // get the versions folder path
