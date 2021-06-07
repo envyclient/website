@@ -39,7 +39,7 @@ class ListReferralCodes extends Component
 
     public function render()
     {
-        $codes = ReferralCode::with(['user:id,name,image,email', 'subscriptions'])
+        $codes = ReferralCode::with(['user:id,name,email', 'subscriptions'])
             ->orderBy('created_at')
             ->get();
         return view('livewire.admin.referral.list-referral-codes', compact('codes'));
