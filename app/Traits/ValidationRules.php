@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Validation\Rules\Password;
+
 trait ValidationRules
 {
     function nameRules(): array
@@ -16,7 +18,6 @@ trait ValidationRules
 
     function passwordRules(): array
     {
-        return ['required', 'string', 'min:8', 'same:passwordConfirmation'];
+        return ['required', 'string', Password::defaults()];
     }
-
 }
