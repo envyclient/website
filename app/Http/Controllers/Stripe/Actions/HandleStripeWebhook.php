@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
+use App\Events\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\Custom\VerifyStripeWebhookSignature;
 use App\Models\Invoice;
@@ -10,8 +11,8 @@ use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
 use App\Models\User;
-use App\Notifications\Subscription\SubscriptionCreated;
-use App\Notifications\Subscription\SubscriptionUpdated;
+use App\Notifications\Subscription\SubscriptionCreatedNotification;
+use App\Notifications\Subscription\SubscriptionUpdatedNotification;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -70,7 +71,7 @@ class HandleStripeWebhook extends Controller
                         'price' => $user->subscription->plan->price,
                     ]);
 
-                    $user->notify(new SubscriptionUpdated(
+                    $user->notify(new SubscriptionUpdatedNotification(
                         'Subscription Renewed',
                         'Your subscription for Envy Client has been renewed.'
                     ));
@@ -91,9 +92,9 @@ class HandleStripeWebhook extends Controller
                     ]);
 
                     // email user about new subscription
-                    $user->notify(new SubscriptionCreated());
+                    $user->notify(new SubscriptionCreatedNotification());
 
-                    event(new \App\Events\SubscriptionCreated($subscription));
+                    event(new SubscriptionCreatedEvent($subscription));
                 }
                 break;
             }

@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Events\SubscriptionExpired;
+use App\Events\SubscriptionExpiredEvent;
 use App\Models\Subscription;
 use App\Models\User;
-use App\Notifications\Subscription\SubscriptionUpdated;
+use App\Notifications\Subscription\SubscriptionUpdatedNotification;
 use Illuminate\Console\Command;
 
-class DeleteCancelledSubscriptions extends Command
+class DeleteCancelledSubscriptionsCommand extends Command
 {
     protected $signature = 'envy:delete-cancelled-subscriptions';
 
@@ -64,11 +64,11 @@ class DeleteCancelledSubscriptions extends Command
 
     private static function sendNotification(User $user, Subscription $subscription)
     {
-        $user->notify(new SubscriptionUpdated(
+        $user->notify(new SubscriptionUpdatedNotification(
             'Subscription Expired',
             'Your subscription has expired. Please renew it if you wish to continue using the client.',
         ));
 
-        event(new SubscriptionExpired($subscription));
+        event(new SubscriptionExpiredEvent($subscription));
     }
 }

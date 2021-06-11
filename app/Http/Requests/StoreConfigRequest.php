@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\ValidVersion;
+use App\Rules\ValidVersionRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreConfigRequest extends FormRequest
@@ -16,7 +16,7 @@ class StoreConfigRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:15'],
-            'version' => ['required', 'string', new ValidVersion],
+            'version' => ['required', 'string', new ValidVersionRule],
             'data' => ['required', 'json'],
             'public' => ['required', 'boolean'],
         ];

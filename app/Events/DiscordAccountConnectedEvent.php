@@ -5,7 +5,7 @@ namespace App\Events;
 use App\Models\User;
 use Illuminate\Queue\SerializesModels;
 
-class DiscordAccountConnected
+class DiscordAccountConnectedEvent
 {
     use SerializesModels;
 

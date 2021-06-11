@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Notifications\LicenseRequest;
+namespace App\Notifications\Subscription;
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LicenseRequestDenied extends Notification implements ShouldQueue
+class SubscriptionUpdatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public function __construct(
+        public string $subject,
         public string $message,
     ){}
 
@@ -25,8 +25,10 @@ class LicenseRequestDenied extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->from('noreply@envyclient.com')
-            ->subject('Media License Denied')
-            ->markdown('emails.license-request-denied', ['user' => $notifiable, 'message' => $this->message]);
+            ->subject($this->subject)
+            ->greeting("Hello $notifiable->name,")
+            ->line($this->message)
+            ->action('Manage Subscription', route('home.subscription'));
     }
 
 }

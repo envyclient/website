@@ -5,7 +5,7 @@ namespace App\Rules;
 use App\Helpers\Youtube;
 use Illuminate\Contracts\Validation\Rule;
 
-class MinYouTubeSubs implements Rule
+class MinYouTubeSubsRule implements Rule
 {
     public function passes($attribute, $value): bool
     {

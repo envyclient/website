@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 
-class DeleteOldMinecraftAccounts extends Command
+class DeleteOldMinecraftAccountsCommand extends Command
 {
     protected $signature = 'envy:delete-old-minecraft-accounts';
 
@@ -20,7 +20,7 @@ class DeleteOldMinecraftAccounts extends Command
             ->update([
                 'current_account' => null,
             ]);
-        
+
         $this->comment("Deleted $count minecraft accounts.");
         $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
 

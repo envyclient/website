@@ -5,7 +5,7 @@ namespace App\Rules;
 use App\Models\Version;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidVersion implements Rule
+class ValidVersionRule implements Rule
 {
     public function passes($attribute, $value): bool
     {
