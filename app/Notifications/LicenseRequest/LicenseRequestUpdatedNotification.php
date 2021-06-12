@@ -2,13 +2,12 @@
 
 namespace App\Notifications\LicenseRequest;
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LicenseRequestUpdated extends Notification implements ShouldQueue
+class LicenseRequestUpdatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

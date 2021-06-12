@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\DiscordAccountConnected;
+use App\Events\DiscordAccountConnectedEvent;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
@@ -41,7 +41,7 @@ class DiscordController extends Controller
             'discord_name' => $user->getNickname(),
         ]);
 
-        event(new DiscordAccountConnected($request->user()));
+        event(new DiscordAccountConnectedEvent($request->user()));
 
         return redirect(RouteServiceProvider::HOME)->with('success', 'Discord account connected.');
     }

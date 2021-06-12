@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\LicenseRequest;
 use App\Models\Subscription;
-use App\Notifications\LicenseRequest\LicenseRequestDenied;
-use App\Notifications\LicenseRequest\LicenseRequestUpdated;
+use App\Notifications\LicenseRequest\LicenseRequestDeniedNotification;
+use App\Notifications\LicenseRequest\LicenseRequestUpdatedNotification;
 use Livewire\Component;
 
 class LicenseRequestsTable extends Component
@@ -46,7 +46,7 @@ class LicenseRequestsTable extends Component
             'action_at' => now(),
         ]);
 
-        $licenseRequest->user->notify(new LicenseRequestDenied($payload['message']));
+        $licenseRequest->user->notify(new LicenseRequestDeniedNotification($payload['message']));
 
         session()->flash('success', 'Request denied.');
     }
@@ -79,14 +79,14 @@ class LicenseRequestsTable extends Component
         $licenseRequest->update($data);
 
         if ($daysToAdd === 3) { //approved
-            $user->notify(new LicenseRequestUpdated(
+            $user->notify(new LicenseRequestUpdatedNotification(
                 "Congrats $user->name,",
                 'Media License Approved',
                 'Your media license request has been approved and you have 3 days to use and publish a video of the client.',
                 'Please visit the dashboard to download the launcher.',
             ));
         } else { // extended
-            $user->notify(new LicenseRequestUpdated(
+            $user->notify(new LicenseRequestUpdatedNotification(
                 "Congrats $user->name,",
                 'Media License Extended',
                 'Your media license has been extended by 7 days.',

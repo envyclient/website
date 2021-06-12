@@ -6,7 +6,7 @@ use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Queue\SerializesModels;
 
-class SubscriptionCreated
+class SubscriptionExpiredEvent
 {
     use SerializesModels;
 

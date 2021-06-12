@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 
-class DeleteOldUnverifiedUsers extends Command
+class DeleteOldUnverifiedUsersCommand extends Command
 {
     protected $signature = 'envy:delete-old-unverified-users';
 

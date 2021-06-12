@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
-use App\Console\Commands\DeleteCancelledSubscriptions;
-use App\Console\Commands\DeleteOldMinecraftAccounts;
-use App\Console\Commands\DeleteOldUnverifiedUsers;
+use App\Console\Commands\DeleteCancelledSubscriptionsCommand;
+use App\Console\Commands\DeleteOldMinecraftAccountsCommand;
+use App\Console\Commands\DeleteOldUnverifiedUsersCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,9 +15,9 @@ class Kernel extends ConsoleKernel
     ];
 
     protected $commands = [
-        DeleteCancelledSubscriptions::class,
-        DeleteOldMinecraftAccounts::class,
-        DeleteOldUnverifiedUsers::class,
+        DeleteCancelledSubscriptionsCommand::class,
+        DeleteOldMinecraftAccountsCommand::class,
+        DeleteOldUnverifiedUsersCommand::class,
     ];
 
     protected function schedule(Schedule $schedule)

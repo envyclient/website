@@ -4,8 +4,8 @@ namespace App\Http\Livewire\User;
 
 use App\Helpers\Youtube;
 use App\Models\LicenseRequest;
-use App\Rules\MinYouTubeSubs;
-use App\Rules\ValidYouTubeLink;
+use App\Rules\MinYouTubeSubsRule;
+use App\Rules\ValidYouTubeLinkRule;
 use Livewire\Component;
 
 class MediaRequests extends Component
@@ -22,7 +22,7 @@ class MediaRequests extends Component
                 'required',
                 'string',
                 'url',
-                new ValidYouTubeLink,
+                new ValidYouTubeLinkRule,
             ],
         ]);
 
@@ -37,7 +37,7 @@ class MediaRequests extends Component
         // do sub count validation
         $this->validate([
             'channel' => [
-                new MinYouTubeSubs,
+                new MinYouTubeSubsRule,
             ],
         ]);
 

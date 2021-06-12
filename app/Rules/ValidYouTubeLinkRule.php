@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidYouTubeLink implements Rule
+class ValidYouTubeLinkRule implements Rule
 {
     public function passes($attribute, $value): bool
     {

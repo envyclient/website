@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\PayPal\Actions;
 
+use App\Events\SubscriptionCreatedEvent;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\BillingAgreement;
 use App\Models\Invoice;
 use App\Models\Subscription;
-use App\Notifications\Subscription\SubscriptionCreated;
-use App\Notifications\Subscription\SubscriptionUpdated;
+use App\Notifications\Subscription\SubscriptionCreatedNotification;
+use App\Notifications\Subscription\SubscriptionUpdatedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -43,7 +44,7 @@ class HandlePayPalWebhook extends Controller
                         'price' => $user->subscription->plan->price,
                     ]);
 
-                    $user->notify(new SubscriptionUpdated(
+                    $user->notify(new SubscriptionUpdatedNotification(
                         'Subscription Renewed',
                         'Your subscription for Envy Client has been renewed.'
                     ));
@@ -63,9 +64,9 @@ class HandlePayPalWebhook extends Controller
                     ]);
 
                     // email user about new subscription
-                    $user->notify(new SubscriptionCreated());
+                    $user->notify(new SubscriptionCreatedNotification());
 
-                    event(new \App\Events\SubscriptionCreated($subscription));
+                    event(new SubscriptionCreatedEvent($subscription));
                 }
 
                 break;
@@ -92,7 +93,7 @@ class HandlePayPalWebhook extends Controller
                 ]);
 
                 // email user about subscription cancellation
-                $billingAgreement->user->notify(new SubscriptionUpdated(
+                $billingAgreement->user->notify(new SubscriptionUpdatedNotification(
                     'Subscription Cancelled',
                     'Your subscription has been cancelled and you will not be charged at the next billing cycle.'
                 ));
@@ -110,7 +111,7 @@ class HandlePayPalWebhook extends Controller
                 );
 
                 if ($response !== 204) {
-                    Log::debug($response->json());
+                    Log::debug($response);
                     die(-1);
                 }
                 break;
