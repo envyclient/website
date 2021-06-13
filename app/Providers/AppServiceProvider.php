@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\User;
 use App\Observers\InvoiceObserver;
 use App\Observers\UserObserver;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -23,15 +24,11 @@ class AppServiceProvider extends ServiceProvider
     {
         JsonResource::withoutWrapping();
 
-        User::observe(UserObserver::class);
-        Invoice::observe(InvoiceObserver::class);
-
         // setting the stripe api key
         Stripe::setApiKey(config('services.stripe.secret'));
 
-        Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));
-        Component::macro('resetEasyMDE', fn() => $this->dispatchBrowserEvent('easymde-reset'));
-        Component::macro('smallNotify', fn($message) => $this->emitSelf('small-notify', $message));
+        self::registerObservers();
+        self::registerMacros();
 
         // blade @admin
         Blade::if('admin', function () {
@@ -46,5 +43,22 @@ class AppServiceProvider extends ServiceProvider
                 ? $rule->mixedCase()->uncompromised()
                 : $rule;
         });
+
+        // enable n+1 problem check
+        Model::preventLazyLoading(!app()->isProduction());
     }
+
+    private static function registerObservers()
+    {
+        User::observe(UserObserver::class);
+        Invoice::observe(InvoiceObserver::class);
+    }
+
+    private static function registerMacros()
+    {
+        Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));
+        Component::macro('resetEasyMDE', fn() => $this->dispatchBrowserEvent('easymde-reset'));
+        Component::macro('smallNotify', fn($message) => $this->emitSelf('small-notify', $message));
+    }
+
 }
