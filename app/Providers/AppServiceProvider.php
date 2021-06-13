@@ -24,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
     {
         JsonResource::withoutWrapping();
 
-
         // setting the stripe api key
         Stripe::setApiKey(config('services.stripe.secret'));
 
