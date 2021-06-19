@@ -1,13 +1,5 @@
 @extends('layouts.base')
 
-@section('scripts')
-    <script src="{{ asset('js/app.js') }}" defer></script>
-@endsection
-
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-@endsection
-
 @section('body')
     <div class="h-screen flex overflow-hidden bg-gray-100" x-data="{ open: false}">
 

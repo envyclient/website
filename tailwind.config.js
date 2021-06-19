@@ -1,8 +1,12 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: ['./resources/views/**/*.{js,vue,blade.php}'],
-    darkMode: false, // or 'media' or 'class'
+    purge: [
+        './resources/**/*.blade.php',
+        './resources/**/*.js',
+        './resources/**/*.vue',
+    ],
+    darkMode: false,
     theme: {
         extend: {
             fontFamily: {
@@ -16,4 +20,4 @@ module.exports = {
     plugins: [
         require('@tailwindcss/forms'),
     ],
-}
+};
