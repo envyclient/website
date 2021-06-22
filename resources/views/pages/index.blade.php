@@ -473,7 +473,7 @@
                         </div>
                         <div class="mt-12 lg:mt-0 lg:col-span-2">
                             <dl class="space-y-12">
-                                <div>
+                                {{--<div>
                                     <dt class="text-lg leading-6 font-medium text-gray-900">
                                         No Java detected
                                     </dt>
@@ -486,7 +486,7 @@
                                         <p class="text-gray-800">(Dont download java through Edge browser it will not
                                             work)</p>
                                     </dd>
-                                </div>
+                                </div>--}}
                                 <div>
                                     <dt class="text-lg leading-6 font-medium text-gray-900">
                                         My game is crashing on startup
