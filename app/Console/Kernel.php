@@ -4,7 +4,6 @@ namespace App\Console;
 
 use App\Console\Commands\DeleteCancelledSubscriptionsCommand;
 use App\Console\Commands\DeleteOldMinecraftAccountsCommand;
-use App\Console\Commands\DeleteOldUnverifiedUsersCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,7 +16,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         DeleteCancelledSubscriptionsCommand::class,
         DeleteOldMinecraftAccountsCommand::class,
-        DeleteOldUnverifiedUsersCommand::class,
     ];
 
     protected function schedule(Schedule $schedule)
@@ -25,6 +23,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('envy:delete-cancelled-subscriptions')
             ->everyMinute()
             ->emailOutputOnFailure(self::EMAILS);
+
+        $schedule->command('model:prune')->daily();
 
         // delete any old unverified users
         $schedule->command('envy:delete-old-unverified-users')

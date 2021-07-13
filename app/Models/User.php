@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -46,7 +47,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Favoriter, HasFactory;
+    use Notifiable, Favoriter, HasFactory, Prunable;
 
     protected $fillable = [
         'name',
@@ -79,6 +80,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'referral_code_used_at' => 'datetime',
     ];
+
+    public function prunable()
+    {
+        return static::whereNull('email_verified_at')
+            ->where('created_at', '<', now()->subDays(10));
+    }
 
     public function scopeSearch(Builder $query, string $search)
     {
