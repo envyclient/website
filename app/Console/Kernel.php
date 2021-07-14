@@ -24,12 +24,8 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
             ->emailOutputOnFailure(self::EMAILS);
 
+        // prune models
         $schedule->command('model:prune')->daily();
-
-        // delete any old unverified users
-        $schedule->command('envy:delete-old-unverified-users')
-            ->daily()
-            ->emailOutputOnFailure(self::EMAILS);
 
         // delete any old  minecraft accounts
         $schedule->command('envy:delete-old-minecraft-accounts')
