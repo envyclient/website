@@ -3,25 +3,25 @@
 namespace App\Rules;
 
 use App\Helpers\Youtube;
+use Exception;
 use Illuminate\Contracts\Validation\Rule;
 
 class MinYouTubeSubsRule implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        // get the channel by visiting the url
-        $id = Youtube::getChannelId($value);
-
-        // checking if we were able to get the channel id
-        if (empty($id)) {
+        // get channel data
+        try {
+            $response = Youtube::getChannelData($value);
+        } catch (Exception) {
             return false;
         }
 
-        // getting the amount of subs for the channel
-        $subs = Youtube::getYoutubeSubs($id);
+        // get subscriber count
+        $sub = intval($response->json('items.0.statistics.subscriberCount'));
 
         // checking the sub count is less than 200
-        if (intval($subs) < 200) {
+        if ($sub < 200) {
             return false;
         }
 

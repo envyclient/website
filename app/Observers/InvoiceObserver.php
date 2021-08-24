@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
+use App\Helpers\Discord;
 use App\Models\Invoice;
-use Illuminate\Support\Facades\Http;
 
 class InvoiceObserver
 {
@@ -17,12 +17,6 @@ class InvoiceObserver
         $content = $content . '**Amount**: ' . $invoice->price;
 
         // sending the webhook
-        HTTP::withBody(json_encode([
-            'username' => 'Envy Client',
-            'avatar_url' => asset('android-chrome-512.png'),
-            'tts' => false,
-            'content' => $content,
-        ]), 'application/json')
-            ->post(config('services.discord.webhook'));
+        Discord::sendWebhook($content);
     }
 }

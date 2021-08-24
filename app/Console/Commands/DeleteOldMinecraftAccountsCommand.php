@@ -15,6 +15,7 @@ class DeleteOldMinecraftAccountsCommand extends Command
 
         $start = now();
 
+        // clear all the accounts that have been updated in 3 days
         $count = User::whereNotNull('current_account')
             ->whereDate('updated_at', '<=', today()->subDays(3))
             ->update([
