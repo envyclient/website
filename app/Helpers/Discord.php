@@ -11,6 +11,11 @@ class Discord
     const STANDARD = '794384676113481738';
     const PREMIUM = '794384624092446730';
 
+    /**
+     * Send a discord webhook.
+     *
+     * @param string $message the message contained in the webhook
+     */
     public static function sendWebhook(string $message)
     {
         HTTP::withBody(json_encode([
@@ -52,24 +57,25 @@ class Discord
         self::sendWebhook($callback($user->discord_id, $user->plan?->name));
     }
 
+    /**
+     * Update a users discord role.
+     *
+     * @param int $user the id of the user
+     * @param int $role the id of the role
+     * @param bool $remove whether to remove the specified role
+     */
     private static function updateRole(int $user, int $role, bool $remove = false): void
     {
         $token = config('services.discord.token');
         $endpoint = 'https://discord.com/api';
         $guild = self::GUILD;
 
-        if ($remove) {
-            $response = Http::withToken($token, 'Bot')
-                ->delete("$endpoint/guilds/$guild/members/$user/roles/$role");
-        } else {
-            $response = Http::withToken($token, 'Bot')
-                ->put("$endpoint/guilds/$guild/members/$user/roles/$role");
-        }
+        $request = Http::withToken($token, 'Bot');
 
-        // rate limit
-        /*if ($response->header('X-RateLimit-Remaining') == 0) {
-            $sleep = $response->header('X-RateLimit-Reset-After');
-            sleep(intval($sleep));
-        }*/
+        if ($remove) {
+            $request->delete("$endpoint/guilds/$guild/members/$user/roles/$role");
+        } else {
+            $request->put("$endpoint/guilds/$guild/members/$user/roles/$role");
+        }
     }
 }

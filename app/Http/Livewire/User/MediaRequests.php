@@ -6,6 +6,7 @@ use App\Helpers\Youtube;
 use App\Models\LicenseRequest;
 use App\Rules\MinYouTubeSubsRule;
 use App\Rules\ValidYouTubeLinkRule;
+use Exception;
 use Livewire\Component;
 
 class MediaRequests extends Component
@@ -28,7 +29,7 @@ class MediaRequests extends Component
 
         $user = auth()->user();
 
-        // checking if the user has an request pending
+        // checking if the user has a request pending
         if (LicenseRequest::where('user_id', $user->id)->where('status', LicenseRequest::PENDING)->exists()) {
             $this->addError('channel', 'You may only have one request at a time.');
             return;
@@ -42,10 +43,9 @@ class MediaRequests extends Component
         ]);
 
         // getting the channel data
-        $youtubeData = Youtube::getChannelData($this->channel);
-
-        // show error
-        if ($youtubeData === null) {
+        try {
+            $youtubeData = Youtube::getChannelData($this->channel);
+        } catch (Exception) {
             $this->addError('channel', 'Unable to fetch data from YouTube.');
             return;
         }
