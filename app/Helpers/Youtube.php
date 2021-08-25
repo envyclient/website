@@ -28,7 +28,7 @@ class Youtube
     {
         $response = Http::get('https://www.googleapis.com/youtube/v3/channels', [
             'id' => self::getChannelId($url),
-            'key' => 'AIzaSyDHSzqM0rrkbR19PALpeu9ewZ-41A52Ryc', // TODO: use config to get key
+            'key' => config('services.youtube.key'),
             'part' => 'snippet,statistics',
         ]);
 
