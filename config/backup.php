@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'Laravel'),
+        'name' => '',
 
         'source' => [
 
@@ -81,7 +81,7 @@ return [
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
              */
             'databases' => [
-                'mysql',
+                //'mysql',
             ],
         ],
 
@@ -109,7 +109,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                'minio',
+                'google',
             ],
         ],
 
@@ -176,7 +176,7 @@ return [
     'monitor_backups' => [
         [
             'name' => env('APP_NAME', 'Laravel'),
-            'disks' => ['minio'],
+            'disks' => ['google'],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Actions\DisableAccount;
-use App\Http\Controllers\Actions\HandleDiscordWebhook;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
