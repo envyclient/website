@@ -54,4 +54,8 @@ return [
         'secret' => env('PAYPAL_SECRET'),
     ],
 
+    'youtube' => [
+        'key' => env('YOUTUBE_KEY'),
+    ],
+
 ];
