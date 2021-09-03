@@ -24,6 +24,7 @@
         "overtrue/laravel-favorite": "^2.0",
         "socialiteproviders/discord": "^4.1",
         "spatie/laravel-backup": "^7.2",
+        "spatie/laravel-support-bubble": "^1.0",
         "stripe/stripe-php": "^7.67"
     },
     "require-dev": {
