@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('body')
-    <div class="h-screen flex overflow-hidden bg-gray-100" x-data="{ open: false}">
+    <div class="h-screen flex overflow-hidden bg-gray-100" x-data="{ open: false }">
 
         {{-- Mobile Sidebar --}}
         <div class="fixed inset-0 flex z-40 md:hidden" x-show="open">
@@ -39,8 +39,8 @@
                     <button
                         class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <!-- Heroicon name: outline/x -->
-                        <svg class="h-6 w-6 text-white" fill="none"
-                             viewBox="0 0 24 24" stroke="currentColor" @click="open = false">
+                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             @click="open = false">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -154,6 +154,8 @@
     </div>
 
     @include('inc.banner')
+
+    <x-support-bubble/>
 
     @yield('js')
 @endsection
