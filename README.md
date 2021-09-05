@@ -15,7 +15,6 @@ The official website of Envy Client.
 - [spatie/laravel-support-bubble](https://github.com/spatie/laravel-support-bubble) (support contact bubble. only
   visible to authenticated users)
 - [stripe/stripe-php](https://github.com/stripe/stripe-php) (stripe payments)
-- [aws/aws-sdk-php](https://github.com/aws/aws-sdk-php) (aws ses)
 - [guzzlehttp/guzzle](https://github.com/guzzle/guzzle) (http requests)
 - [barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar) (used to debug in development mode)
 
