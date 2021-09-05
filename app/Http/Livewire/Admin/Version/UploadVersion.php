@@ -48,8 +48,10 @@ class UploadVersion extends Component
         // store the version
         $this->version->storeAs("versions", "$hash.jar");
 
+        // TODO: dispatch job
+
         $jar = storage_path('app/encrypt.jar');
-        $key = 'bHCKAIix';
+        $key = 'bHCKAIix'; // TODO: get using config()
         $iv = 'uic0OcbYLP55wYe3';
         $version = storage_path("app/versions/$hash.jar");
         $out = storage_path("app/versions/$hash.jar.enc");
