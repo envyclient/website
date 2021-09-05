@@ -1,5 +1,5 @@
 <section
-    class="bottom-0 inset-x-0 pb-2 sm:pb-5"
+    class="bottom-0 inset-x-0 pb-2 sm:pb-5 z-20"
     x-data="{ show: true }"
     x-show="show"
     x-init="show = !docCookies.hasItem('banner')"
