@@ -41,6 +41,6 @@ return [
     'classes' => [
         'bubble' => 'hidden sm:block | bg-gray-600 hover:bg-gray-700 active:bg-gray-700 rounded-full shadow-lg w-14 h-14 text-white p-4',
         'input' => 'border bg-gray-100 border-gray-200 w-full max-w-full p-2 rounded-md shadow-sm text-gray-800 text-base focus:ring-gray-900 focus:border-gray-900',
-        'button' => 'inline-flex place-center px-4 py-3 h-10 border-0 bg-green-600 hover:bg-green-700 active:bg-green-700 overflow-hidden rounded-sm text-white leading-none no-underline rounded-md shadow-sm',
+        'button' => 'inline-flex place-center px-4 py-3 h-10 border-0 bg-gray-600 hover:bg-gray-700 active:bg-gray-700 overflow-hidden rounded-sm text-white leading-none no-underline rounded-md shadow-sm',
     ],
 ];
