@@ -66,4 +66,4 @@ Route::post('user/ban', function (Request $request) {
     ]);
 
     return response()->noContent();
-})->middleware(['auth:api', 'admin']);
+})->middleware('auth:api');
