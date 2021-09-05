@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\API\Actions\HandleDiscordWebhook;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Configs\Actions\FavoriteConfig;
 use App\Http\Controllers\API\Configs\Actions\GetConfigsForUser;
 use App\Http\Controllers\API\Configs\ConfigsController;
 use App\Http\Controllers\API\MinecraftController;
 use App\Http\Controllers\API\VersionsController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 
 Route::supportBubble();
 
@@ -55,11 +54,6 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
  */
 Route::get('download-loader', fn() => Storage::download('loader.exe'))
     ->middleware(['auth:api', 'subscribed']);
-
-/**
- * Handle Discord webhook from bot
- */
-Route::post('discord/webhook', HandleDiscordWebhook::class);
 
 /**
  * Ban User
