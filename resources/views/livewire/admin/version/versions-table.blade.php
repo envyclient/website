@@ -15,7 +15,7 @@
                 @forelse($versions as $version)
                     <x-table.row wire:loading.class.delay="opacity-50" wire:key="row-{{ $version->id }}">
 
-                        <x-table.cell class="flex items-center">
+                        <x-table.cell>
                             {{ $version->name }}
                         </x-table.cell>
 
