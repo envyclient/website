@@ -45,7 +45,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read Collection invoices
  * @property-read Collection licenseRequest
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable, Favoriter, HasFactory, Prunable;
 
