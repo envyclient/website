@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Admin\Version;
 
+use App\Jobs\EncryptVersion;
 use App\Models\Version;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -49,18 +49,7 @@ class UploadVersion extends Component
         $this->version->storeAs("versions", "$hash.jar");
 
         // TODO: dispatch job
-
-        $jar = storage_path('app/encrypt.jar');
-        $key = 'bHCKAIix'; // TODO: get using config()
-        $iv = 'uic0OcbYLP55wYe3';
-        $version = storage_path("app/versions/$hash.jar");
-        $out = storage_path("app/versions/$hash.jar.enc");
-
-        // encrypt the uploaded version
-        exec("java -jar $jar $key $iv $version $out");
-
-        // delete the uploaded version
-        Storage::delete("versions/$hash.jar");
+        EncryptVersion::dispatch($version, $hash);
 
         $this->done();
     }
