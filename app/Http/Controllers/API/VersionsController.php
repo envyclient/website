@@ -12,9 +12,8 @@ class VersionsController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
-        $versions = Version::orderBy('created_at', 'desc');
-        if (!$user->hasBetaAccess()) {
+        $versions = Version::whereNotNull('processed_at')->orderBy('created_at', 'desc');
+        if (!$request->user()->hasBetaAccess()) {
             $versions->where('beta', false);
         }
         return $versions->get(['id', 'name', 'beta', 'changelog', 'main_class']);

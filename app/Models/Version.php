@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property boolean beta
  * @property string changelog
  * @property string main_class
+ * @property Carbon processed_at
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
@@ -30,10 +31,12 @@ class Version extends Model
         'beta',
         'changelog',
         'main_class',
+        'processed_at',
     ];
 
     protected $casts = [
         'beta' => 'bool',
+        'processed_at' => 'datetime',
     ];
 
     public function users()
