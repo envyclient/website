@@ -59,6 +59,7 @@ class StripeController extends Controller
         if (!$request->has('session_id')) {
             abort(400);
         }
+
         return redirect()
             ->route('home.subscription')
             ->with('success', 'Subscription successful. Please allow up to 5 minutes to process.');
@@ -69,21 +70,5 @@ class StripeController extends Controller
         return redirect()
             ->route('home.subscription')
             ->with('error', 'Subscription cancelled.');
-    }
-
-    // take the user to their stripe billing portal
-    public function billingPortal(Request $request)
-    {
-        $user = $request->user();
-        if ($user->stripe_id === null) {
-            return back();
-        }
-
-        $session = \Stripe\BillingPortal\Session::create([
-            'customer' => $user->stripe_id,
-            'return_url' => url('/'),
-        ]);
-
-        return redirect()->away($session->url);
     }
 }
