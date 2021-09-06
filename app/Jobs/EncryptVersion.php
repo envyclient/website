@@ -27,7 +27,7 @@ class EncryptVersion implements ShouldQueue
         $jar = storage_path('app/encrypt.jar');
 
         // get the encryption info
-        [$key, $iv] = config('version');
+        ['key' => $key, 'iv' => $iv] = config('version');
 
         $version = storage_path("app/versions/$this->hash.jar");
         $out = storage_path("app/versions/$this->hash.jar.enc");
@@ -40,7 +40,7 @@ class EncryptVersion implements ShouldQueue
 
         // mark version as processed
         $this->version->update([
-           'processed_at' => now(),
+            'processed_at' => now(),
         ]);
     }
 }
