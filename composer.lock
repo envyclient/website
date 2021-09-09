@@ -1694,16 +1694,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.58.0",
+            "version": "v8.60.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1b819bf99d87bd543a4d4895e5b3350f61ea7a23"
+                "reference": "44f16a31a1d4ac8a51605550d7796e2273984a48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1b819bf99d87bd543a4d4895e5b3350f61ea7a23",
-                "reference": "1b819bf99d87bd543a4d4895e5b3350f61ea7a23",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/44f16a31a1d4ac8a51605550d7796e2273984a48",
+                "reference": "44f16a31a1d4ac8a51605550d7796e2273984a48",
                 "shasum": ""
             },
             "require": {
@@ -1858,7 +1858,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-08-31T13:55:57+00:00"
+            "time": "2021-09-08T13:37:21+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -4652,16 +4652,16 @@
         },
         {
             "name": "spatie/laravel-support-bubble",
-            "version": "1.0.3",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-support-bubble.git",
-                "reference": "53925d33023f4f044b84c0b1cbbffdd5a031d7c4"
+                "reference": "ffbda6fd3bd8b111fb99bfb52ede4884f5597fbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-support-bubble/zipball/53925d33023f4f044b84c0b1cbbffdd5a031d7c4",
-                "reference": "53925d33023f4f044b84c0b1cbbffdd5a031d7c4",
+                "url": "https://api.github.com/repos/spatie/laravel-support-bubble/zipball/ffbda6fd3bd8b111fb99bfb52ede4884f5597fbb",
+                "reference": "ffbda6fd3bd8b111fb99bfb52ede4884f5597fbb",
                 "shasum": ""
             },
             "require": {
@@ -4723,7 +4723,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-support-bubble/tree/1.0.3"
+                "source": "https://github.com/spatie/laravel-support-bubble/tree/1.2.2"
             },
             "funding": [
                 {
@@ -4731,7 +4731,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-06T11:40:03+00:00"
+            "time": "2021-09-08T18:25:43+00:00"
         },
         {
             "name": "spatie/temporary-directory",
