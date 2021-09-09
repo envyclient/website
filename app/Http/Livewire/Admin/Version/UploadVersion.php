@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Version;
 
-use App\Jobs\EncryptVersion;
+use App\Jobs\EncryptVersionJob;
 use App\Models\Version;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -48,8 +48,8 @@ class UploadVersion extends Component
         // store the version
         $this->version->storeAs("versions", "$hash.jar");
 
-        // TODO: dispatch job
-        EncryptVersion::dispatch($version, $hash);
+        // dispatch the job to encrypt the version
+        EncryptVersionJob::dispatch($version, $hash);
 
         $this->done();
     }

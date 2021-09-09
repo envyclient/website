@@ -8,6 +8,7 @@ use App\Http\Controllers\Stripe\Actions\HandleStripeWebhook;
 use App\Http\Controllers\Stripe\StripeController;
 use App\Http\Livewire\ShowStripeSource;
 use App\Http\Middleware\Custom\VerifyPaypalWebhookSignature;
+use App\Http\Middleware\Custom\VerifyStripeWebhookSignature;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -49,7 +50,8 @@ Route::group([], function () {
         Route::get('cancel', [StripeController::class, 'cancel'])
             ->name('stripe.cancel');
 
-        Route::post('webhook', HandleStripeWebhook::class);
+        Route::post('webhook', HandleStripeWebhook::class)
+            ->middleware(VerifyStripeWebhookSignature::class);
     });
 
     Route::group(['prefix' => 'stripe-source'], function () {

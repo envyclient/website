@@ -37,12 +37,7 @@ class HandlePayPalWebhook extends Controller
                         'end_date' => now()->addMonth()
                     ]);
 
-                    Invoice::create([
-                        'user_id' => $user->id,
-                        'subscription_id' => $user->subscription->id,
-                        'method' => Invoice::PAYPAL,
-                        'price' => $user->subscription->plan->price,
-                    ]);
+                    self::createInvoice($user->id, $user->subscription->id, Invoice::PAYPAL, $user->subscription->plan->price);
 
                     $user->notify(new SubscriptionUpdatedNotification(
                         'Subscription Renewed',
@@ -56,12 +51,7 @@ class HandlePayPalWebhook extends Controller
                         'end_date' => now()->addMonth(),
                     ]);
 
-                    Invoice::create([
-                        'user_id' => $user->id,
-                        'subscription_id' => $subscription->id,
-                        'method' => Invoice::PAYPAL,
-                        'price' => $billingAgreement->plan->price,
-                    ]);
+                    self::createInvoice($user->id, $subscription->id, Invoice::PAYPAL, $billingAgreement->plan->price);
 
                     // email user about new subscription
                     $user->notify(new SubscriptionCreatedNotification());

@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Jobs\SendDiscordWebhookJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
@@ -10,22 +11,6 @@ class Discord
     const GUILD = '794374279395147777';
     const STANDARD = '794384676113481738';
     const PREMIUM = '794384624092446730';
-
-    /**
-     * Send a discord webhook.
-     *
-     * @param string $message the message contained in the webhook
-     */
-    public static function sendWebhook(string $message)
-    {
-        HTTP::withBody(json_encode([
-            'username' => 'Envy Client',
-            'avatar_url' => asset('android-chrome-512.png'),
-            'tts' => false,
-            'content' => $message,
-        ]), 'application/json')
-            ->post(config('services.discord.webhook'));
-    }
 
     public static function handleDiscordRoles(User $user, callable $callback)
     {
@@ -54,7 +39,7 @@ class Discord
             self::updateRole($user->discord_id, self::PREMIUM, true);
         }
 
-        self::sendWebhook($callback($user->discord_id, $user->plan?->name));
+        SendDiscordWebhookJob::dispatch($callback($user->discord_id, $user->plan?->name));
     }
 
     /**
