@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Stripe\Actions;
 
 use App\Events\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\Custom\VerifyStripeWebhookSignature;
 use App\Models\Invoice;
 use App\Models\StripeSession;
 use App\Models\StripeSource;
@@ -19,11 +18,6 @@ use Illuminate\Support\Facades\Log;
 
 class HandleStripeWebhook extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(VerifyStripeWebhookSignature::class);
-    }
-
     public function __invoke(Request $request)
     {
         // Handle the event
