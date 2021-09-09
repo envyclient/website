@@ -33,7 +33,8 @@ class HandleStripeWebhook extends Controller
              * Stripe Checkout (CC & GPay)
              */
 
-            // Send after checkout completion
+            // Payment is successful and the subscription is created.
+            // You should provision the subscription and save the customer ID to your database.
             case 'checkout.session.completed':
             {
                 // getting the stripe session
@@ -48,7 +49,9 @@ class HandleStripeWebhook extends Controller
                 break;
             }
 
-            // Sent each billing interval when a payment succeeds.
+            // Continue to provision the subscription as payments continue to be made.
+            // Store the status in your database and check when a user accesses your service.
+            // This approach helps you avoid hitting rate limits.
             case 'invoice.paid':
             {
                 $user = User::where(
@@ -64,12 +67,7 @@ class HandleStripeWebhook extends Controller
                         'end_date' => now()->addMonth()
                     ]);
 
-                    Invoice::create([
-                        'user_id' => $user->id,
-                        'subscription_id' => $user->subscription->id,
-                        'method' => Invoice::STRIPE,
-                        'price' => $user->subscription->plan->price,
-                    ]);
+                    self::createInvoice($user->id, $user->subscription->id, Invoice::STRIPE, $user->subscription->plan->price);
 
                     $user->notify(new SubscriptionUpdatedNotification(
                         'Subscription Renewed',
@@ -84,12 +82,7 @@ class HandleStripeWebhook extends Controller
                         'end_date' => now()->addMonth(),
                     ]);
 
-                    Invoice::create([
-                        'user_id' => $user->id,
-                        'subscription_id' => $subscription->id,
-                        'method' => Invoice::STRIPE,
-                        'price' => $subscription->plan->price,
-                    ]);
+                    self::createInvoice($user->id, $subscription->id, Invoice::STRIPE, $subscription->plan->price);
 
                     // email user about new subscription
                     $user->notify(new SubscriptionCreatedNotification());
@@ -99,7 +92,9 @@ class HandleStripeWebhook extends Controller
                 break;
             }
 
-            // Sent each billing interval if there is an issue with your customer’s payment method.
+            // The payment failed or the customer does not have a valid payment method.
+            // The subscription becomes past_due. Notify your customer and send them to the
+            // customer portal to update their payment information.
             case 'invoice.payment_failed':
             {
                 try {
@@ -222,12 +217,7 @@ class HandleStripeWebhook extends Controller
                     'end_date' => now()->addMonth(),
                 ]);
 
-                Invoice::create([
-                    'user_id' => $source->user_id,
-                    'subscription_id' => $subscription->id,
-                    'method' => Invoice::WECHAT,
-                    'price' => $source->plan->price,
-                ]);
+                self::createInvoice($source->user_id, $subscription->id, Invoice::WECHAT, $source->plan->price);
                 break;
             }
 
@@ -240,7 +230,7 @@ class HandleStripeWebhook extends Controller
             }
         }
 
-        return response()->noContent();
+        return response()->json(['status' => 'success']);
     }
 
     private static function createEvent(int $id, string $type, string $message)

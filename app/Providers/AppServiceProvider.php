@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Invoice;
 use App\Models\User;
-use App\Observers\InvoiceObserver;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
 
         // register observers
         User::observe(UserObserver::class);
-        Invoice::observe(InvoiceObserver::class);
 
         // register macros
         Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));

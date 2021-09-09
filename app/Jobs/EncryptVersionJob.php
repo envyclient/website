@@ -10,13 +10,15 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 
-class EncryptVersion implements ShouldQueue
+class EncryptVersionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public int $tries = 0;
+
     public function __construct(
-        public Version $version,
-        public string  $hash
+        private Version $version,
+        private string  $hash
     )
     {
     }
@@ -42,5 +44,10 @@ class EncryptVersion implements ShouldQueue
         $this->version->update([
             'processed_at' => now(),
         ]);
+    }
+
+    public function retryUntil()
+    {
+        return now()->addDay();
     }
 }
