@@ -19,15 +19,12 @@ Route::post('cancel', CancelSubscription::class)
     ->middleware(['auth', 'verified', 'subscribed'])
     ->name('subscriptions.cancel');
 
-/**v
+/**
  * Paypal
  */
 Route::group(['prefix' => 'paypal'], function () {
-
-    Route::group(['middleware' => ['auth', 'verified']], function () {
-        Route::post('process', [PayPalController::class, 'process'])
-            ->name('paypal.process');
-
+    Route::group(['middleware' => ['auth', 'verified', 'not-subscribed']], function () {
+        Route::post('process', [PayPalController::class, 'process'])->name('paypal.process');
         Route::get('execute', [PayPalController::class, 'execute']);
         Route::get('cancel', [PayPalController::class, 'cancel']);
     });
@@ -37,28 +34,19 @@ Route::group(['prefix' => 'paypal'], function () {
 });
 
 /**
- * Stripe Checkout & Stripe Source
+ * Stripe Checkout
  */
-Route::group([], function () {
-    Route::group(['prefix' => 'stripe'], function () {
-        Route::post('checkout', [StripeController::class, 'checkout'])
-            ->name('stripe.checkout');
+Route::group(['prefix' => 'stripe'], function () {
+    Route::post('checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+    Route::get('success', [StripeController::class, 'success'])->name('stripe.success');
+    Route::get('cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+    Route::post('webhook', HandleStripeWebhook::class)->middleware(VerifyStripeWebhookSignature::class);
+});
 
-        Route::get('success', [StripeController::class, 'success'])
-            ->name('stripe.success');
-
-        Route::get('cancel', [StripeController::class, 'cancel'])
-            ->name('stripe.cancel');
-
-        Route::post('webhook', HandleStripeWebhook::class)
-            ->middleware(VerifyStripeWebhookSignature::class);
-    });
-
-    Route::group(['prefix' => 'stripe-source'], function () {
-        Route::get('{id}', ShowStripeSource::class)
-            ->name('stripe-source.show');
-
-        Route::post('/', CreateStripeSource::class)
-            ->name('stripe-source.store');
-    });
+/**
+ * Stripe Source
+ */
+Route::group(['prefix' => 'stripe-source'], function () {
+    Route::get('{id}', ShowStripeSource::class)->name('stripe-source.show');
+    Route::post('/', CreateStripeSource::class)->name('stripe-source.store');
 });

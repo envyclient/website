@@ -94,13 +94,13 @@ class HandlePayPalWebhook extends Controller
             case 'BILLING.SUBSCRIPTION.SUSPENDED': // subscription run out of retries
             case 'BILLING.SUBSCRIPTION.PAYMENT.FAILED': // payment has failed for a subscription
             {
-                // send request to paypal to cancel the billing agreement
+                // tell PayPal to cancel the users billing agreement
                 $response = Paypal::cancelBillingAgreement(
                     $request->json('resource.id'),
                     'Cancelling agreement due to payment fail.'
                 );
 
-                if ($response !== 204) {
+                if ($response->failed()) {
                     Log::debug($response);
                     die(-1);
                 }

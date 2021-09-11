@@ -14,7 +14,7 @@ use Illuminate\Support\Carbon;
  * @property boolean beta
  * @property string changelog
  * @property string main_class
- * @property Carbon processed_at
+ * @property Carbon|null processed_at
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
