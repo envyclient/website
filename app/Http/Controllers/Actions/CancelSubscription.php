@@ -16,38 +16,46 @@ class CancelSubscription extends Controller
 
         // cancel stripe subscription
         if ($user->subscription->stripe_id !== null) {
+
+            // tell stripe to cancel the users subscription
             $stripe = new StripeClient(config('services.stripe.secret'));
             $stripe->subscriptions->cancel(
                 $user->subscription->stripe_id,
                 []
             );
+
+            // mark the users' subscription as cancelled on our end
             $user->subscription->update([
                 'stripe_status' => Subscription::CANCELED,
             ]);
+
             return redirect()
                 ->route('home.subscription')
                 ->with('success', 'You subscription has been cancelled.');
         }
 
-        // user did not subscribe using paypal or cc
+        // user does not have a reoccurring subscription
         if (!$user->hasBillingAgreement()) {
             return redirect()
                 ->route('home.subscription')
                 ->with('error', 'You do not need to cancel your subscription.');
         }
 
+        // user already cancelled their PayPal billing agreement
         if ($user->isBillingAgreementCancelled()) {
             return redirect()
                 ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');
         }
 
+        // tell PayPal to cancel the users billing agreement
         $response = Paypal::cancelBillingAgreement(
             $user->billingAgreement->billing_agreement_id,
             'User cancelled subscription.'
         );
 
-        if ($response !== 204) {
+        // user has already cancelled agreement or something went wrong
+        if ($response->failed()) {
             return redirect()
                 ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');

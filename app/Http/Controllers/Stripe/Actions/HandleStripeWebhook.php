@@ -24,7 +24,7 @@ class HandleStripeWebhook extends Controller
         switch ($request->json('type')) {
 
             /**
-             * Stripe Checkout (CC & GPay)
+             * Stripe Checkout (CC)
              */
 
             // Payment is successful and the subscription is created.
@@ -35,6 +35,11 @@ class HandleStripeWebhook extends Controller
                 $stripeSession = StripeSession::where(
                     'stripe_session_id', $request->json('data.object.id')
                 )->firstOrFail();
+
+                // marking the stripe session as complete, so it is not auto pruned
+                $stripeSession->update([
+                    'completed_at' => now(),
+                ]);
 
                 // updating the users stripe customer id
                 $stripeSession->user()->update([
@@ -48,26 +53,38 @@ class HandleStripeWebhook extends Controller
             // This approach helps you avoid hitting rate limits.
             case 'invoice.paid':
             {
-                $user = User::where(
-                    'stripe_id', $request->json('data.object.customer')
-                )->firstOrFail();
-
-                $stripeSession = StripeSession::where('user_id', $user->id)
-                    ->latest()
+                // getting the user the invoice is attached to
+                $user = User::where('stripe_id', $request->json('data.object.customer'))
                     ->firstOrFail();
 
                 if ($user->hasSubscription()) {
+
+                    // extending the users' subscription by one month
                     $user->subscription->update([
-                        'end_date' => now()->addMonth()
+                        'end_date' => now()->addMonth(),
                     ]);
 
-                    self::createInvoice($user->id, $user->subscription->id, Invoice::STRIPE, $user->subscription->plan->price);
+                    // creating a new invoice for the payment
+                    self::createInvoice(
+                        $user->id,
+                        $user->subscription->id,
+                        Invoice::STRIPE,
+                        $user->subscription->plan->price
+                    );
 
+                    // notifying the user that their subscription has been renewed
                     $user->notify(new SubscriptionUpdatedNotification(
                         'Subscription Renewed',
                         'Your subscription for Envy Client has been renewed.'
                     ));
                 } else {
+
+                    // getting to stripe session, so we can get the plan id the user subscribed to
+                    $stripeSession = StripeSession::where('user_id', $user->id)
+                        ->latest()
+                        ->firstOrFail();
+
+                    // creating a new subscription for the user
                     $subscription = Subscription::create([
                         'user_id' => $user->id,
                         'plan_id' => $stripeSession->plan_id,
@@ -92,9 +109,8 @@ class HandleStripeWebhook extends Controller
             case 'invoice.payment_failed':
             {
                 try {
-                    $user = User::where(
-                        'stripe_id', $request->json('data.object.customer')
-                    )->firstOrFail();
+                    $user = User::where('stripe_id', $request->json('data.object.customer'))
+                        ->firstOrFail();
 
                     if ($user->hasSubscription()) {
                         $user->subscription->update([
@@ -211,7 +227,13 @@ class HandleStripeWebhook extends Controller
                     'end_date' => now()->addMonth(),
                 ]);
 
-                self::createInvoice($source->user_id, $subscription->id, Invoice::WECHAT, $source->plan->price);
+                // creating a new invoice for the payment
+                self::createInvoice(
+                    $source->user_id,
+                    $subscription->id,
+                    Invoice::WECHAT,
+                    $source->plan->price
+                );
                 break;
             }
 

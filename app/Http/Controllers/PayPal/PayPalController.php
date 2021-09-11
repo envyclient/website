@@ -6,11 +6,14 @@ use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\BillingAgreement;
 use App\Models\Plan;
+use App\Traits\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class PayPalController extends Controller
 {
+    use Payment;
+
     private string $endpoint;
 
     public function __construct()
@@ -21,11 +24,10 @@ class PayPalController extends Controller
     public function process(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|integer|exists:plans'
+            'id' => 'required|integer|exists:plans',
         ]);
 
-        $user = $request->user();
-        if ($user->hasSubscription() || $user->hasBillingAgreement()) {
+        if ($request->user()->hasBillingAgreement()) {
             return back()->with('error', 'You already have a active subscription.');
         }
 
@@ -41,7 +43,7 @@ class PayPalController extends Controller
                     'payment_method' => 'paypal'
                 ]
             ]), 'application/json')
-            ->post("$this->endpoint/v1/payments/billing-agreements/");
+            ->post("$this->endpoint/v1/payments/billing-agreements");
 
         if ($response->status() !== 201) {
             return redirect()
@@ -49,7 +51,7 @@ class PayPalController extends Controller
                 ->with('error', 'Subscription failed.');
         }
 
-        // storing the plan id so we can retrieve it when the user returns
+        // storing the plan_id, so we can retrieve it when the user returns
         session([
             'plan_id' => $request->id
         ]);
@@ -63,36 +65,29 @@ class PayPalController extends Controller
         $planId = session('plan_id');
         session()->forget('plan_id');
 
+        // missing token in url
         if (!$request->has('token')) {
-            return redirect()
-                ->route('home.subscription')
-                ->with('error', 'Subscription failed.');
+            return $this->failed();
         }
 
-        $user = $request->user();
-        if ($user->hasSubscription()) {
-            return back()->with('error', 'You already have a active subscription.');
-        }
-
+        // attempt to execute the billing agreement
         $response = HTTP::withToken(Paypal::getAccessToken())
-            ->withHeaders([
-                'Content-Type:' => 'application/json'
-            ])
+            ->contentType('application/json')
             ->post("$this->endpoint/v1/payments/billing-agreements/$request->token/agreement-execute");
 
-        if ($response->status() !== 200) {
-            return redirect()
-                ->route('home.subscription')
-                ->with('error', 'Subscription failed.');
+        // could not execute billing agreement
+        if ($response->failed()) {
+            return self::failed();
         }
 
         $responseData = $response->json();
+
+        // double-checking if the billing agreement is active
         if ($responseData['state'] !== 'Active') {
-            return redirect()
-                ->route('home.subscription')
-                ->with('error', 'Subscription failed.');
+            return self::failed();
         }
 
+        // create the billing agreement for the user
         BillingAgreement::create([
             'user_id' => $request->user()->id,
             'plan_id' => $planId,
@@ -100,18 +95,12 @@ class PayPalController extends Controller
             'state' => $responseData['state'],
         ]);
 
-        $plan = Plan::findOrFail($planId);
-
-        return redirect()
-            ->route('home.subscription')
-            ->with('success', "Subscribed to the $plan->name plan.");
+        return $this->successful();
     }
 
     public function cancel()
     {
-        return redirect()
-            ->route('home.subscription')
-            ->with('error', 'Subscription cancelled.');
+        return $this->canceled();
     }
 
 }

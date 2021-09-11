@@ -5,31 +5,34 @@ namespace App\Http\Controllers\Stripe;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use App\Models\StripeSession;
+use App\Traits\Payment;
 use Exception;
 use Illuminate\Http\Request;
-use Stripe\Checkout\Session;
 
 class StripeController extends Controller
 {
+    use Payment;
+
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'not-subscribed'])->except('billingPortal');
-        $this->middleware('subscribed')->only('billingPortal');
+        $this->middleware(['auth', 'verified']);
+        $this->middleware('not-subscribed')->except('success');
     }
 
     public function checkout(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|integer|exists:plans'
+            'id' => 'required|integer|exists:plans',
         ]);
 
-        $plan = Plan::where('id', $request->id)->first();
+        $user = $request->user();
+        $plan = Plan::find($request->id);
 
         try {
-            $checkout_session = Session::create([
+            $checkout_session = \Stripe\Checkout\Session::create([
                 'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('stripe.cancel'),
-                'customer_email' => $request->user()->email,
+                'customer_email' => $user->email,
                 'payment_method_types' => ['card'],
                 'mode' => 'subscription',
                 'line_items' => [[
@@ -46,7 +49,7 @@ class StripeController extends Controller
         }
 
         StripeSession::create([
-            'user_id' => auth()->id(),
+            'user_id' => $user->id,
             'plan_id' => $plan->id,
             'stripe_session_id' => $checkout_session['id'],
         ]);
@@ -56,19 +59,16 @@ class StripeController extends Controller
 
     public function success(Request $request)
     {
+        // missing session_id in url
         if (!$request->has('session_id')) {
-            abort(400);
+            return $this->failed();
         }
 
-        return redirect()
-            ->route('home.subscription')
-            ->with('success', 'Subscription successful. Please allow up to 5 minutes to process.');
+        return $this->successful();
     }
 
     public function cancel()
     {
-        return redirect()
-            ->route('home.subscription')
-            ->with('error', 'Subscription cancelled.');
+        return $this->canceled();
     }
 }
