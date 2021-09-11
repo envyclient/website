@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Home
+ * Dashboard Pages
  */
 Route::group(['middleware' => CheckIfPasswordNull::class], function () {
 

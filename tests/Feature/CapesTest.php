@@ -48,7 +48,6 @@ class CapesTest extends TestCase
         Storage::disk('public')->assertExists('capes/' . md5($user->email) . '.png');
     }
 
-
     /** @test */
     public function can_user_reset_cape()
     {

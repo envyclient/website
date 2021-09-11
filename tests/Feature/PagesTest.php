@@ -9,6 +9,10 @@ class PagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    /*
+     * Guest Pages
+     */
+
     /** @test */
     public function can_guest_see_index()
     {
@@ -22,6 +26,10 @@ class PagesTest extends TestCase
         $this->get(route('terms'))
             ->assertOk();
     }
+
+    /*
+    * User Pages
+    */
 
     /** @test */
     public function can_guest_not_see_home()
@@ -44,6 +52,10 @@ class PagesTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
+    /*
+    * Admin Pages
+    */
+
     /** @test */
     public function can_guest_not_see_users()
     {
@@ -55,6 +67,13 @@ class PagesTest extends TestCase
     public function can_guest_not_see_versions()
     {
         $this->get(route('admin.versions'))
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function can_guest_not_see_launcher_and_loader()
+    {
+        $this->get(route('admin.launcher-loader'))
             ->assertRedirect(route('login'));
     }
 
@@ -71,6 +90,10 @@ class PagesTest extends TestCase
         $this->get(route('admin.license-requests'))
             ->assertRedirect(route('login'));
     }
+
+    /*
+    * User Pages
+    */
 
     /** @test */
     public function can_user_see_home()
@@ -96,6 +119,10 @@ class PagesTest extends TestCase
             ->assertOk();
     }
 
+    /*
+    * Admin Pages
+    */
+
     /** @test */
     public function can_user_not_see_users()
     {
@@ -109,6 +136,14 @@ class PagesTest extends TestCase
     {
         $this->actingAs($this->user())
             ->get(route('admin.versions'))
+            ->assertRedirect(route('home'));
+    }
+
+    /** @test */
+    public function can_user_not_see_launcher_and_loader()
+    {
+        $this->actingAs($this->user())
+            ->get(route('admin.launcher-loader'))
             ->assertRedirect(route('home'));
     }
 
@@ -128,6 +163,10 @@ class PagesTest extends TestCase
             ->assertRedirect(route('home'));
     }
 
+    /*
+    * Admin Pages
+    */
+
     /** @test */
     public function can_admin_see_users()
     {
@@ -145,8 +184,16 @@ class PagesTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_see_referral_codes()
+    public function can_admin_see_launcher_and_loader()
     {
+        $this->actingAs($this->admin())
+            ->get(route('admin.launcher-loader'))
+            ->assertOk();
+    }
+
+    /** @test */
+    public function can_admin_see_referral_codes()
+    {~
         $this->actingAs($this->admin())
             ->get(route('admin.referrals'))
             ->assertOk();

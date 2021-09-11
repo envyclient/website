@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read int id
+ * @property-read integer id
  *
- * @property int user_id
- * @property int plan_id
- * @property int|null billing_agreement_id
+ * @property integer user_id
+ * @property integer plan_id
+ * @property integer|null billing_agreement_id
  * @property string|null stripe_id
  * @property string|null stripe_status
  * @property Carbon end_date
@@ -40,21 +41,24 @@ class Subscription extends Model
         'end_date',
     ];
 
-    protected $dates = [
-        'end_date',
+    protected $casts = [
+        'user_id' => 'integer',
+        'plan_id' => 'integer',
+        'billing_agreement_id' => 'integer',
+        'end_date' => 'datetime',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function plan()
+    public function plan(): BelongsTo
     {
         return $this->belongsTo(Plan::class);
     }
 
-    public function billingAgreement()
+    public function billingAgreement(): BelongsTo
     {
         return $this->belongsTo(BillingAgreement::class, 'billing_agreement_id');
     }
