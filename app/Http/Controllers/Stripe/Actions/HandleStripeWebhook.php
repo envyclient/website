@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Stripe\Actions;
 
 use App\Events\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Invoice;
 use App\Models\StripeSession;
 use App\Models\StripeSource;
@@ -20,6 +21,11 @@ class HandleStripeWebhook extends Controller
 {
     public function __invoke(Request $request)
     {
+        $content = 'A webhook has been received.' . PHP_EOL . PHP_EOL;
+        $content = $content . '**Provider**: Stripe' . PHP_EOL;
+        $content = $content . '**Type**: ' . $request->json('type') . PHP_EOL;
+        SendDiscordWebhookJob::dispatch($content);
+
         // Handle the event
         switch ($request->json('type')) {
 

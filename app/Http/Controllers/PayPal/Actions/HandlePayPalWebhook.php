@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PayPal\Actions;
 use App\Events\SubscriptionCreatedEvent;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendDiscordWebhookJob;
 use App\Models\BillingAgreement;
 use App\Models\Invoice;
 use App\Models\Subscription;
@@ -17,7 +18,10 @@ class HandlePayPalWebhook extends Controller
 {
     public function __invoke(Request $request)
     {
-        Log::debug($request->getContent());
+        $content = 'A webhook has been received.' . PHP_EOL . PHP_EOL;
+        $content = $content . '**Provider**: PayPal' . PHP_EOL;
+        $content = $content . '**Type**: ' . $request->json('event_type') . PHP_EOL;
+        SendDiscordWebhookJob::dispatch($content);
 
         switch ($request->json('event_type')) {
 
