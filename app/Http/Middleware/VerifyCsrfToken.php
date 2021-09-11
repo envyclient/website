@@ -12,9 +12,11 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
+
+        // paypal webhook
         'paypal/webhook',
 
-        // checkout using stripe (CC & GPay)
+        // checkout using stripe
         'stripe/checkout',
 
         // stripe & stripe-source webhook

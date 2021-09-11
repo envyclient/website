@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Actions;
 
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Subscription;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 
@@ -29,9 +31,7 @@ class CancelSubscription extends Controller
                 'stripe_status' => Subscription::CANCELED,
             ]);
 
-            return redirect()
-                ->route('home.subscription')
-                ->with('success', 'You subscription has been cancelled.');
+            return self::successful($user->name, 'Stripe');
         }
 
         // user does not have a reoccurring subscription
@@ -61,8 +61,19 @@ class CancelSubscription extends Controller
                 ->with('error', 'You have already cancelled your subscription.');
         }
 
+        return self::successful($user->name, 'PayPal');
+    }
+
+    private static function successful(string $user, string $provider): RedirectResponse
+    {
+        $content = 'A user has cancelled their subscription.' . PHP_EOL . PHP_EOL;
+        $content = $content . '**User**: ' . $user . PHP_EOL;
+        $content = $content . '**Provider**: ' . $provider . PHP_EOL;
+        SendDiscordWebhookJob::dispatch($content);
+
         return redirect()
             ->route('home.subscription')
             ->with('success', 'Your subscription has been queued for cancellation.');
+
     }
 }
