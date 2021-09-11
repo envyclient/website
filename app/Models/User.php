@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 /**
- * @property-read int id
+ * @property-read integer id
  *
  * @property string name
  * @property string email
@@ -21,18 +26,19 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string password
  * @property string api_token
  * @property string|null hwid
- * @property bool admin
- * @property bool banned
- * @property bool disabled
+ * @property boolean admin
+ * @property boolean banned
+ * @property boolean disabled
  * @property string cape
  * @property string|null current_account
- * @property int|null referral_code_id
+ * @property integer|null referral_code_id
  * @property Carbon|null referral_code_used_at
  * @property string|null discord_id
  * @property string|null discord_name
  * @property string|null stripe_id
  *
  * @property-read string image
+ * @property-read string|null remember_token
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
  *
@@ -52,8 +58,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
-        'password',
         'email_verified_at',
+        'password',
         'api_token',
         'hwid',
         'admin',
@@ -69,15 +75,18 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $hidden = [
-        'password',
-        'remember_token',
         'email_verified_at',
+        'password',
         'admin',
+        'remember_token',
     ];
 
     protected $casts = [
-        'banned' => 'bool',
         'email_verified_at' => 'datetime',
+        'admin' => 'bool',
+        'banned' => 'bool',
+        'disabled' => 'bool',
+        'referral_code_id' => 'bool',
         'referral_code_used_at' => 'datetime',
     ];
 
@@ -87,16 +96,16 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('created_at', '<', now()->subDays(10));
     }
 
-    public function scopeSearch(Builder $query, string $search)
+    public function scopeSearch(Builder $query, string $search): Builder
     {
-        if (!empty($search)) {
-            return $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%$search%")
-                    ->orWhere('email', 'like', "%$search%")
-                    ->orWhere('discord_name', 'like', "%$search%");
-            });
+        if (empty($search)) {
+            return $query;
         }
-        return $query;
+        return $query->where(function ($query) use ($search) {
+            $query->where('name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('discord_name', 'like', "%$search%");
+        });
     }
 
     public function getImageAttribute(): string
@@ -104,42 +113,42 @@ class User extends Authenticatable implements MustVerifyEmail
         return 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($this->email))) . '.svg?text=' . strtoupper(substr($this->name, 0, 2));
     }
 
-    public function configs()
+    public function configs(): HasMany
     {
         return $this->hasMany(Config::class);
     }
 
-    public function subscription()
+    public function subscription(): HasOne
     {
         return $this->hasOne(Subscription::class);
     }
 
-    public function plan()
+    public function plan(): HasOneThrough
     {
         return $this->hasOneThrough(Plan::class, Subscription::class, 'user_id', 'id', 'id', 'plan_id');
     }
 
-    public function billingAgreement()
+    public function billingAgreement(): HasOne
     {
         return $this->hasOne(BillingAgreement::class);
     }
 
-    public function downloads()
+    public function downloads(): BelongsToMany
     {
         return $this->belongsToMany(Version::class, 'user_downloads', 'user_id', 'version_id');
     }
 
-    public function referralCode()
+    public function referralCode(): BelongsTo
     {
         return $this->belongsTo(ReferralCode::class);
     }
 
-    public function invoices()
+    public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
     }
 
-    public function licenseRequests()
+    public function licenseRequests(): HasMany
     {
         return $this->hasMany(LicenseRequest::class);
     }

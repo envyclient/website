@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read int id
+ * @property-read integer id
  *
  * @property string name
  * @property boolean beta

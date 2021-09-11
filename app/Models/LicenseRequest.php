@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read int id
+ * @property-read integer id
  *
- * @property int user_id
+ * @property integer user_id
  * @property string name
  * @property string channel
  * @property string channel_name
@@ -31,6 +33,7 @@ class LicenseRequest extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
         'channel',
         'channel_name',
         'channel_image',
@@ -39,19 +42,19 @@ class LicenseRequest extends Model
         'action_at',
     ];
 
-    protected $dates = [
-        'action_at'
+    protected $casts = [
+        'user_id' => 'integer',
+        'action_at' => 'datetime',
     ];
 
-    public function scopeStatus($query, $status)
+    public function scopeStatus(Builder $query, string $status): Builder
     {
-        if ($status !== 'all') {
-            return $query->where('status', $status);
-        }
-        return $query;
+        return $status === 'all'
+            ? $query
+            : $query->where('status', $status);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

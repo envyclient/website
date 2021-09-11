@@ -4,18 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
 /**
- * @property-read int id
+ * @property-read integer id
  *
- * @property int user_id
+ * @property integer user_id
  * @property string name
- * @property string data
+ * @property array data
  * @property boolean public
  * @property boolean official
- * @property int version_id
+ * @property integer version_id
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
@@ -39,15 +40,19 @@ class Config extends Model
     ];
 
     protected $casts = [
-        'data' => 'array'
+        'user_id' => 'integer',
+        'data' => 'array',
+        'public' => 'boolean',
+        'official' => 'boolean',
+        'version_id' => 'integer',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function version()
+    public function version(): BelongsTo
     {
         return $this->belongsTo(Version::class)->withTrashed();
     }

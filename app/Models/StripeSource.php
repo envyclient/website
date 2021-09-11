@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read int id
+ * @property-read integer id
  *
- * @property int user_id
- * @property int plan_id
+ * @property integer user_id
+ * @property integer plan_id
  * @property string source_id
  * @property string client_secret
  * @property string status // pending, canceled, failed, chargeable, succeeded
@@ -40,17 +42,24 @@ class StripeSource extends Model
         'url',
     ];
 
-    public function user()
+    protected $casts = [
+        'user_id' => 'integer',
+        'plan_id' => 'integer',
+    ];
+
+    // TODO: prune all cancelled, also delete associated events
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function plan()
+    public function plan(): BelongsTo
     {
         return $this->belongsTo(Plan::class);
     }
 
-    public function events()
+    public function events(): HasMany
     {
         return $this->hasMany(StripeSourceEvent::class);
     }

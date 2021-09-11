@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read int id
+ * @property-read integer id
  *
- * @property int stripe_source_id
+ * @property integer stripe_source_id
  * @property string type
  * @property string message
  *
@@ -25,7 +26,11 @@ class StripeSourceEvent extends Model
         'message',
     ];
 
-    public function source()
+    protected $casts = [
+        'stripe_source_id' => 'integer',
+    ];
+
+    public function source(): BelongsTo
     {
         return $this->belongsTo(StripeSource::class);
     }
