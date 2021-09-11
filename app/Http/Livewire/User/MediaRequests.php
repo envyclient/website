@@ -14,6 +14,12 @@ class MediaRequests extends Component
     public bool $open = false;
     public string $channel = '';
 
+    public function render()
+    {
+        $licenseRequests = auth()->user()->licenseRequests;
+        return view('livewire.user.media-requests', compact('licenseRequests'));
+    }
+
     public function submit()
     {
         // do basic validation
@@ -64,9 +70,4 @@ class MediaRequests extends Component
         return redirect()->route('home');
     }
 
-    public function render()
-    {
-        $licenseRequests = auth()->user()->licenseRequests;
-        return view('livewire.user.media-requests', compact('licenseRequests'));
-    }
 }
