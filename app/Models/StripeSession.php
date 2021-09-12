@@ -42,7 +42,7 @@ class StripeSession extends Model
     public function prunable()
     {
         return static::whereNull('completed_at')
-            ->where('created_at', '<', now()->subDay());
+            ->where('created_at', '<=', now()->subDay());
     }
 
     public function user(): BelongsTo

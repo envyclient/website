@@ -93,7 +93,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function prunable()
     {
         return static::whereNull('email_verified_at')
-            ->where('created_at', '<', now()->subDays(10));
+            ->where('created_at', '<=', now()->subDays(10));
     }
 
     public function scopeSearch(Builder $query, string $search): Builder
