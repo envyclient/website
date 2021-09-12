@@ -28,7 +28,6 @@ class LicenseRequest extends Model
     const PENDING = 'pending';
     const DENIED = 'denied';
     const APPROVED = 'approved';
-    const EXTENDED = 'extended';
 
     protected $fillable = [
         'user_id',

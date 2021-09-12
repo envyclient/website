@@ -26,7 +26,7 @@ class LicenseRequestUpdatedNotification extends Notification implements ShouldQu
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from('noreply@envyclient.com')
+            ->from(config('mail.from.address'), config('mail.from.name'))
             ->subject($this->subject)
             ->greeting($this->greeting)
             ->line($this->message)

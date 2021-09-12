@@ -13,7 +13,9 @@ class LicenseRequestDeniedNotification extends Notification implements ShouldQue
 
     public function __construct(
         public string $message,
-    ){}
+    )
+    {
+    }
 
     public function via($notifiable)
     {
@@ -23,7 +25,7 @@ class LicenseRequestDeniedNotification extends Notification implements ShouldQue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from('noreply@envyclient.com')
+            ->from(config('mail.from.address'), config('mail.from.name'))
             ->subject('Media License Denied')
             ->markdown('emails.license-request-denied', ['user' => $notifiable, 'message' => $this->message]);
     }

@@ -8,9 +8,9 @@
         <x-input.group for="status" label="Status">
             <x-input.select wire:model="status" id="status">
                 <option value="all" selected>All</option>
-                <option value="pending">Pending</option>
-                <option value="extended">Extended</option>
-                <option value="approved">Approved</option>
+                <option value="{{ \App\Models\LicenseRequest::PENDING }}">Pending</option>
+                <option value="{{ \App\Models\LicenseRequest::APPROVED }}">Approved</option>
+                <option value="{{ \App\Models\LicenseRequest::DENIED }}">Denied</option>
             </x-input.select>
         </x-input.group>
     </div>
@@ -51,17 +51,12 @@
                     <x-table.cell>
                         @if($request->status === \App\Models\LicenseRequest::PENDING)
                             <x-button.link class="block text-indigo-600 hover:text-indigo-900"
-                                           wire:click="approve({{ $request->id }}, 'approve')">
+                                           wire:click="approve({{ $request->id }})">
                                 Approve
                             </x-button.link>
                             <x-button.link class="block text-red-600 hover:text-red-900"
                                            onclick="window.livewire.emit('DENY_REQUEST', {id : {{ $request->id }}, message: prompt('Reason')});">
                                 Deny
-                            </x-button.link>
-                        @elseif($request->status === \App\Models\LicenseRequest::APPROVED)
-                            <x-button.link class="text-blue-600 hover:text-blue-900"
-                                           wire:click="approve({{ $request->id }}, 'extend')">
-                                Extend
                             </x-button.link>
                         @endif
                     </x-table.cell>
