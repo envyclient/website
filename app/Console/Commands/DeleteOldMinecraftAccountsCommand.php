@@ -9,13 +9,13 @@ class DeleteOldMinecraftAccountsCommand extends Command
 {
     protected $signature = 'envy:delete-old-minecraft-accounts';
 
-    public function handle()
+    public function handle(): int
     {
         $this->info('Deleting old minecraft accounts...');
 
         $start = now();
 
-        // clear all the accounts that have been updated in 3 days
+        // clear all the accounts that have not been updated in 3 days
         $count = User::whereNotNull('current_account')
             ->whereDate('updated_at', '<=', today()->subDays(3))
             ->update([

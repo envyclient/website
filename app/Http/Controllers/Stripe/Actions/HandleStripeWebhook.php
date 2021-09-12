@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
-use App\Events\SubscriptionCreatedEvent;
+use App\Events\Subscription\SubscriptionCancelledEvent;
+use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Invoice;
@@ -11,8 +12,6 @@ use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
 use App\Models\User;
-use App\Notifications\Subscription\SubscriptionCreatedNotification;
-use App\Notifications\Subscription\SubscriptionUpdatedNotification;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -77,12 +76,6 @@ class HandleStripeWebhook extends Controller
                         Invoice::STRIPE,
                         $user->subscription->plan->price
                     );
-
-                    // notifying the user that their subscription has been renewed
-                    $user->notify(new SubscriptionUpdatedNotification(
-                        'Subscription Renewed',
-                        'Your subscription for Envy Client has been renewed.'
-                    ));
                 } else {
 
                     // getting to stripe session, so we can get the plan id the user subscribed to
@@ -99,10 +92,12 @@ class HandleStripeWebhook extends Controller
                         'end_date' => now()->addMonth(),
                     ]);
 
-                    self::createInvoice($user->id, $subscription->id, Invoice::STRIPE, $subscription->plan->price);
-
-                    // email user about new subscription
-                    $user->notify(new SubscriptionCreatedNotification());
+                    self::createInvoice(
+                        $user->id,
+                        $subscription->id,
+                        Invoice::STRIPE,
+                        $subscription->plan->price
+                    );
 
                     event(new SubscriptionCreatedEvent($subscription));
                 }
@@ -119,9 +114,21 @@ class HandleStripeWebhook extends Controller
                         ->firstOrFail();
 
                     if ($user->hasSubscription()) {
+
+                        // tell stripe to cancel the users subscription
+                        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+                        $stripe->subscriptions->cancel(
+                            $user->subscription->stripe_id,
+                            []
+                        );
+
+                        // cancel the users subscription
                         $user->subscription->update([
                             'stripe_status' => Subscription::CANCELED,
                         ]);
+
+                        // broadcast the subscription cancelled event
+                        event(new SubscriptionCancelledEvent($user->subscription));
                     }
                 } catch (ModelNotFoundException) {
                     return response()->noContent();
@@ -145,7 +152,7 @@ class HandleStripeWebhook extends Controller
                     'status' => StripeSource::CANCELED,
                 ]);
 
-                self::createEvent(
+                self::createStripeSourceEvent(
                     $source->id,
                     StripeSource::CANCELED,
                     'The payment has expired. Please create a new one to continue your purchase.'
@@ -166,7 +173,7 @@ class HandleStripeWebhook extends Controller
                     'status' => StripeSource::FAILED,
                 ]);
 
-                self::createEvent(
+                self::createStripeSourceEvent(
                     $source->id,
                     StripeSource::FAILED,
                     'The payment has been canceled.'
@@ -187,7 +194,7 @@ class HandleStripeWebhook extends Controller
                     'status' => StripeSource::CHARGEABLE,
                 ]);
 
-                self::createEvent(
+                self::createStripeSourceEvent(
                     $source->id,
                     StripeSource::CHARGEABLE,
                     'The payment has been authorized.'
@@ -220,7 +227,7 @@ class HandleStripeWebhook extends Controller
                     'status' => StripeSource::SUCCEEDED,
                 ]);
 
-                self::createEvent(
+                self::createStripeSourceEvent(
                     $source->id,
                     StripeSource::SUCCEEDED,
                     'You have successfully subscribed using WeChat Pay.'
@@ -240,6 +247,9 @@ class HandleStripeWebhook extends Controller
                     Invoice::WECHAT,
                     $source->plan->price
                 );
+
+                event(new SubscriptionCreatedEvent($subscription));
+
                 break;
             }
 
@@ -255,7 +265,7 @@ class HandleStripeWebhook extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    private static function createEvent(int $id, string $type, string $message)
+    private static function createStripeSourceEvent(int $id, string $type, string $message)
     {
         StripeSourceEvent::create([
             'stripe_source_id' => $id,

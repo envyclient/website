@@ -7,7 +7,7 @@
     {{--Discord Account Connect--}}
     @if($user->discord_id === null)
         <x-card title="Connect Discord Account"
-                subtitle="Connect your discord account to enable role syncing with the server."
+                subtitle="Connect your discord account to enable role syncing."
                 class="mb-4">
             <a href="{{ route('connect.discord') }}">
                 <x-button.primary>Connect</x-button.primary>

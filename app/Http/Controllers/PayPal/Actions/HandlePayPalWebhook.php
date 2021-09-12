@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\PayPal\Actions;
 
-use App\Events\SubscriptionCreatedEvent;
+use App\Events\Subscription\SubscriptionCancelledEvent;
+use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\BillingAgreement;
 use App\Models\Invoice;
 use App\Models\Subscription;
-use App\Notifications\Subscription\SubscriptionCreatedNotification;
-use App\Notifications\Subscription\SubscriptionUpdatedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -41,12 +40,12 @@ class HandlePayPalWebhook extends Controller
                         'end_date' => now()->addMonth()
                     ]);
 
-                    self::createInvoice($user->id, $user->subscription->id, Invoice::PAYPAL, $user->subscription->plan->price);
-
-                    $user->notify(new SubscriptionUpdatedNotification(
-                        'Subscription Renewed',
-                        'Your subscription for Envy Client has been renewed.'
-                    ));
+                    self::createInvoice(
+                        $user->id,
+                        $user->subscription->id,
+                        Invoice::PAYPAL,
+                        $user->subscription->plan->price
+                    );
                 } else {
                     $subscription = Subscription::create([
                         'user_id' => $user->id,
@@ -55,14 +54,15 @@ class HandlePayPalWebhook extends Controller
                         'end_date' => now()->addMonth(),
                     ]);
 
-                    self::createInvoice($user->id, $subscription->id, Invoice::PAYPAL, $billingAgreement->plan->price);
-
-                    // email user about new subscription
-                    $user->notify(new SubscriptionCreatedNotification());
+                    self::createInvoice(
+                        $user->id,
+                        $subscription->id,
+                        Invoice::PAYPAL,
+                        $billingAgreement->plan->price
+                    );
 
                     event(new SubscriptionCreatedEvent($subscription));
                 }
-
                 break;
             }
 
@@ -76,21 +76,14 @@ class HandlePayPalWebhook extends Controller
             case 'BILLING.SUBSCRIPTION.CANCELLED':
             {
                 // get billing agreement
-                $billingAgreement = BillingAgreement::where(
-                    'billing_agreement_id',
-                    $request->json('resource.id')
-                )->firstOrFail();
+                $billingAgreement = BillingAgreement::where('billing_agreement_id', $request->json('resource.id'))
+                    ->firstOrFail()
+                    ->update([
+                        'state' => Subscription::CANCELED,
+                    ]);
 
-                // cancel billing agreement by updating the state
-                $billingAgreement->update([
-                    'state' => 'Cancelled',
-                ]);
-
-                // email user about subscription cancellation
-                $billingAgreement->user->notify(new SubscriptionUpdatedNotification(
-                    'Subscription Cancelled',
-                    'Your subscription has been cancelled and you will not be charged at the next billing cycle.'
-                ));
+                // broadcast the subscription cancelled event
+                event(new SubscriptionCancelledEvent($billingAgreement->subscription));
 
                 break;
             }
