@@ -1,34 +1,36 @@
 <?php
 
-namespace App\Notifications\Subscription;
+namespace App\Notifications;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SubscriptionUpdatedNotification extends Notification implements ShouldQueue
+class SubscriptionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public function __construct(
-        public string $subject,
-        public string $message,
-    ){}
+        private string $subject,
+        private string $message,
+    )
+    {
+    }
 
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable)
+    public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->from('noreply@envyclient.com')
+            ->from(config('mail.from.address'), config('mail.from.name'))
             ->subject($this->subject)
             ->greeting("Hello $notifiable->name,")
             ->line($this->message)
             ->action('Manage Subscription', route('home.subscription'));
     }
-
 }

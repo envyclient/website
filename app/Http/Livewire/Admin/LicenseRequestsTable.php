@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\LicenseRequest;
 use App\Models\Subscription;
+use App\Notifications\LicenseRequest\LicenseRequestApprovedNotification;
 use App\Notifications\LicenseRequest\LicenseRequestDeniedNotification;
-use App\Notifications\LicenseRequest\LicenseRequestUpdatedNotification;
 use Livewire\Component;
 
 class LicenseRequestsTable extends Component
@@ -13,43 +13,6 @@ class LicenseRequestsTable extends Component
     protected $listeners = ['DENY_REQUEST' => 'deny'];
 
     public string $status = 'all';
-
-    public function approve(LicenseRequest $licenseRequest, string $type)
-    {
-        if ($type === 'approve') { // approve
-            $this->handleSubscription($licenseRequest, 3, [
-                'status' => 'approved',
-                'action_reason' => 'Request approved.',
-                'action_at' => now(),
-            ]);
-            session()->flash('success', 'Granted the user a 3 day subscription.');
-        } else { // extend
-            $this->handleSubscription($licenseRequest, 7, [
-                'status' => 'extended',
-                'action_reason' => 'License extended.',
-                'action_at' => now(),
-            ]);
-            session()->flash('success', 'Extended the users subscription by 1 week.');
-        }
-    }
-
-    public function deny($payload)
-    {
-        if ($payload['message'] === null) {
-            return;
-        }
-
-        $licenseRequest = LicenseRequest::findOrFail($payload['id']);
-        $licenseRequest->update([
-            'status' => 'denied',
-            'action_reason' => $payload['message'],
-            'action_at' => now(),
-        ]);
-
-        $licenseRequest->user->notify(new LicenseRequestDeniedNotification($payload['message']));
-
-        session()->flash('success', 'Request denied.');
-    }
 
     public function render()
     {
@@ -61,36 +24,54 @@ class LicenseRequestsTable extends Component
             ->extends('layouts.dash');
     }
 
-    private function handleSubscription(LicenseRequest $licenseRequest, int $daysToAdd, array $data)
+    public function approve(LicenseRequest $licenseRequest)
     {
         $user = $licenseRequest->user;
-        if ($user->hasSubscription()) {
+        if ($user->hasSubscription()) { // extend the users current subscription
             $user->subscription->update([
-                'end_date' => $user->subscription->end_date->addDays($daysToAdd),
+                'end_date' => $user->subscription->end_date->addDays(LicenseRequest::DAYS_TO_ADD),
             ]);
-        } else {
+        } else {  // subscribe the user to the free plan
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,
-                'end_date' => now()->addDays($daysToAdd)
+                'end_date' => now()->addDays(LicenseRequest::DAYS_TO_ADD)
             ]);
         }
 
-        $licenseRequest->update($data);
+        // mark the license request as approved
+        $licenseRequest->update([
+            'status' => LicenseRequest::APPROVED,
+            'action_reason' => 'Request approved.',
+            'action_at' => now(),
+        ]);
 
-        if ($daysToAdd === 3) { //approved
-            $user->notify(new LicenseRequestUpdatedNotification(
-                "Congrats $user->name,",
-                'Media License Approved',
-                'Your media license request has been approved and you have 3 days to use and publish a video of the client.',
-                'Please visit the dashboard to download the launcher.',
-            ));
-        } else { // extended
-            $user->notify(new LicenseRequestUpdatedNotification(
-                "Congrats $user->name,",
-                'Media License Extended',
-                'Your media license has been extended by 7 days.',
-            ));
+        // send email to the user
+        $user->notify(new LicenseRequestApprovedNotification());
+
+        session()->flash('success', 'Approved the license request.');
+    }
+
+    public function deny($payload)
+    {
+        // user clicked cancel on the prompt
+        if ($payload['message'] === null) {
+            return;
         }
+
+        // mark the license request as denied
+        $licenseRequest = LicenseRequest::findOrFail($payload['id']);
+        $licenseRequest->update([
+            'status' => LicenseRequest::DENIED,
+            'action_reason' => $payload['message'],
+            'action_at' => now(),
+        ]);
+
+        // send email to the user
+        $licenseRequest->user->notify(
+            new LicenseRequestDeniedNotification($payload['message'])
+        );
+
+        session()->flash('success', 'Request denied.');
     }
 }

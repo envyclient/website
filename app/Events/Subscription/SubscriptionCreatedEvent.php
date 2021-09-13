@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Subscription;
 
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Queue\SerializesModels;
 
-class SubscriptionExpiredEvent
+class SubscriptionCreatedEvent
 {
     use SerializesModels;
 

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Listeners\DiscordRoleSubscriber;
+use App\Listeners\SubscriptionSubscriber;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +23,7 @@ class EventServiceProvider extends ServiceProvider
 
     protected $subscribe = [
         DiscordRoleSubscriber::class,
+        SubscriptionSubscriber::class,
     ];
 
     /**

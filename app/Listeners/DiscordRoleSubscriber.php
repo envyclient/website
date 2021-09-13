@@ -3,12 +3,21 @@
 namespace App\Listeners;
 
 use App\Events\DiscordAccountConnectedEvent;
-use App\Events\SubscriptionCreatedEvent;
-use App\Events\SubscriptionExpiredEvent;
+use App\Events\Subscription\SubscriptionCreatedEvent;
+use App\Events\Subscription\SubscriptionExpiredEvent;
 use App\Helpers\Discord;
 
 class DiscordRoleSubscriber
 {
+    public function subscribe($events): array
+    {
+        return [
+            DiscordAccountConnectedEvent::class => 'handleDiscordConnected',
+            SubscriptionCreatedEvent::class => 'handleSubscriptionCreated',
+            SubscriptionExpiredEvent::class => 'handleSubscriptionExpired',
+        ];
+    }
+
     public function handleDiscordConnected(DiscordAccountConnectedEvent $event)
     {
         Discord::handleDiscordRoles($event->user, function (string $discord, string $plan = null) {
@@ -28,23 +37,5 @@ class DiscordRoleSubscriber
         Discord::handleDiscordRoles($event->user, function (string $discord, string $plan = null) {
             return "<@$discord> subscription has expired, so I removed their role.";
         });
-    }
-
-    public function subscribe($events)
-    {
-        $events->listen(
-            'App\Events\DiscordAccountConnectedEvent',
-            [DiscordRoleSubscriber::class, 'handleDiscordConnected']
-        );
-
-        $events->listen(
-            'App\Events\SubscriptionCreatedEvent',
-            [DiscordRoleSubscriber::class, 'handleSubscriptionCreated']
-        );
-
-        $events->listen(
-            'App\Events\SubscriptionExpiredEvent',
-            [DiscordRoleSubscriber::class, 'handleSubscriptionExpired']
-        );
     }
 }

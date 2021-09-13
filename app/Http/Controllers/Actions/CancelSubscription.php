@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Actions;
 
+use App\Events\Subscription\SubscriptionCancelledEvent;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Subscription;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Stripe\StripeClient;
 
 class CancelSubscription extends Controller
 {
@@ -20,7 +20,7 @@ class CancelSubscription extends Controller
         if ($user->subscription->stripe_id !== null) {
 
             // tell stripe to cancel the users subscription
-            $stripe = new StripeClient(config('services.stripe.secret'));
+            $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
             $stripe->subscriptions->cancel(
                 $user->subscription->stripe_id,
                 []
@@ -30,6 +30,9 @@ class CancelSubscription extends Controller
             $user->subscription->update([
                 'stripe_status' => Subscription::CANCELED,
             ]);
+
+            // broadcast the subscription cancelled event
+            event(new SubscriptionCancelledEvent($user->subscription));
 
             return self::successful($user->name, 'Stripe');
         }
@@ -60,6 +63,9 @@ class CancelSubscription extends Controller
                 ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');
         }
+
+        // broadcast the subscription cancelled event
+        event(new SubscriptionCancelledEvent($user->subscription));
 
         return self::successful($user->name, 'PayPal');
     }

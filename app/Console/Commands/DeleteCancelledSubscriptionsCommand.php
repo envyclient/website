@@ -2,17 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Events\SubscriptionExpiredEvent;
+use App\Events\Subscription\SubscriptionExpiredEvent;
 use App\Models\Subscription;
-use App\Models\User;
-use App\Notifications\Subscription\SubscriptionUpdatedNotification;
 use Illuminate\Console\Command;
 
 class DeleteCancelledSubscriptionsCommand extends Command
 {
     protected $signature = 'envy:delete-cancelled-subscriptions';
 
-    public function handle()
+    public function handle(): int
     {
         $this->info('Deleting cancelled subscriptions...');
 
@@ -29,19 +27,20 @@ class DeleteCancelledSubscriptionsCommand extends Command
 
             $user = $subscription->user;
 
-            // user subscribed using paypal
+            // user subscribed using PayPal
             if ($subscription->billing_agreement_id !== null) {
-                $billingAgreement = $subscription->billingAgreement;
 
                 // skip deleting if billing plan is active
-                if ($billingAgreement->state !== 'Cancelled') {
+                if ($subscription->billingAgreement->state !== Subscription::CANCELED) {
                     continue;
                 }
 
                 // delete the subscription and billing agreement
                 $user->subscription()->delete();
                 $user->billingAgreement()->delete();
-                self::sendNotification($user, $subscription);
+
+                // broadcast subscription expired event
+                event(new SubscriptionExpiredEvent($subscription));
             } else if ($subscription->stripe_id !== null) { // user subscribed using stripe
 
                 // skip deleting if stripe subscription is active
@@ -50,10 +49,14 @@ class DeleteCancelledSubscriptionsCommand extends Command
                 }
 
                 $user->subscription()->delete();
-                self::sendNotification($user, $subscription);
+
+                // broadcast subscription expired event
+                event(new SubscriptionExpiredEvent($subscription));
             } else { // user purchased subscription
                 $user->subscription()->delete();
-                self::sendNotification($user, $subscription);
+
+                // broadcast subscription expired event
+                event(new SubscriptionExpiredEvent($subscription));
             }
         }
 
@@ -62,13 +65,4 @@ class DeleteCancelledSubscriptionsCommand extends Command
         return 0;
     }
 
-    private static function sendNotification(User $user, Subscription $subscription)
-    {
-        $user->notify(new SubscriptionUpdatedNotification(
-            'Subscription Expired',
-            'Your subscription has expired. Please renew it if you wish to continue using the client.',
-        ));
-
-        event(new SubscriptionExpiredEvent($subscription));
-    }
 }
