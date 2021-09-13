@@ -2,21 +2,16 @@
 
 namespace App\Notifications\LicenseRequest;
 
+use App\Models\LicenseRequest;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LicenseRequestDeniedNotification extends Notification implements ShouldQueue
+class LicenseRequestApprovedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-
-    public function __construct(
-        public string $message,
-    )
-    {
-    }
 
     public function via($notifiable)
     {
@@ -27,8 +22,10 @@ class LicenseRequestDeniedNotification extends Notification implements ShouldQue
     {
         return (new MailMessage)
             ->from(config('mail.from.address'), config('mail.from.name'))
-            ->subject('Media License Denied')
-            ->markdown('emails.license-request-denied', ['user' => $notifiable, 'message' => $this->message]);
+            ->subject('Media License Approved')
+            ->greeting("Congrats $notifiable->name,")
+            ->line('Your media license request has been approved and you have ' . LicenseRequest::DAYS_TO_ADD . ' days to publish a video of the client.')
+            ->line('Please visit the website to download the launcher.')
+            ->action('Download Launcher', route('home'));
     }
-
 }

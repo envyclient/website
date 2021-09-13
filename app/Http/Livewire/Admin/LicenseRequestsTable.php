@@ -4,14 +4,12 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\LicenseRequest;
 use App\Models\Subscription;
+use App\Notifications\LicenseRequest\LicenseRequestApprovedNotification;
 use App\Notifications\LicenseRequest\LicenseRequestDeniedNotification;
-use App\Notifications\LicenseRequest\LicenseRequestUpdatedNotification;
 use Livewire\Component;
 
 class LicenseRequestsTable extends Component
 {
-    const DAYS_TO_ADD = 3;
-
     protected $listeners = ['DENY_REQUEST' => 'deny'];
 
     public string $status = 'all';
@@ -31,13 +29,13 @@ class LicenseRequestsTable extends Component
         $user = $licenseRequest->user;
         if ($user->hasSubscription()) { // extend the users current subscription
             $user->subscription->update([
-                'end_date' => $user->subscription->end_date->addDays(self::DAYS_TO_ADD),
+                'end_date' => $user->subscription->end_date->addDays(LicenseRequest::DAYS_TO_ADD),
             ]);
         } else {  // subscribe the user to the free plan
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,
-                'end_date' => now()->addDays(self::DAYS_TO_ADD)
+                'end_date' => now()->addDays(LicenseRequest::DAYS_TO_ADD)
             ]);
         }
 
@@ -49,12 +47,7 @@ class LicenseRequestsTable extends Component
         ]);
 
         // send email to the user
-        $user->notify(new LicenseRequestUpdatedNotification(
-            "Congrats $user->name,",
-            'Media License Approved',
-            'Your media license request has been approved and you have ' . self::DAYS_TO_ADD . ' days to use and publish a video of the client.',
-            'Please visit the website to download the launcher.',
-        ));
+        $user->notify(new LicenseRequestApprovedNotification());
 
         session()->flash('success', 'Approved the license request.');
     }
