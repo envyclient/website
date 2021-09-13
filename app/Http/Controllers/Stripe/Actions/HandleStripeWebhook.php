@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
-use App\Events\Subscription\SubscriptionCancelledEvent;
 use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
+use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Invoice;
 use App\Models\StripeSession;
@@ -110,25 +110,13 @@ class HandleStripeWebhook extends Controller
             case 'invoice.payment_failed':
             {
                 try {
+                    // get the user related to webhook
                     $user = User::where('stripe_id', $request->json('data.object.customer'))
                         ->firstOrFail();
 
+                    // if the user has a subscription then cancel it
                     if ($user->hasSubscription()) {
-
-                        // tell stripe to cancel the users subscription
-                        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-                        $stripe->subscriptions->cancel(
-                            $user->subscription->stripe_id,
-                            []
-                        );
-
-                        // cancel the users subscription
-                        $user->subscription->update([
-                            'stripe_status' => Subscription::CANCELED,
-                        ]);
-
-                        // broadcast the subscription cancelled event
-                        event(new SubscriptionCancelledEvent($user->subscription));
+                        CancelSubscriptionJob::dispatch($user->subscription, Invoice::STRIPE);
                     }
                 } catch (ModelNotFoundException) {
                     return response()->noContent();
