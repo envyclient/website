@@ -25,7 +25,7 @@ class LicenseRequestApprovedNotification extends Notification implements ShouldQ
             ->subject('Media License Approved')
             ->greeting("Congrats $notifiable->name,")
             ->line('Your media license request has been approved and you have ' . LicenseRequest::DAYS_TO_ADD . ' days to publish a video of the client.')
-            ->line('Please visit the website to download the launcher.')
-            ->action('Download Launcher', route('home'));
+            ->action('Download Launcher', route('home'))
+            ->line('Please visit the website to download the launcher.');
     }
 }
