@@ -2,84 +2,80 @@
 
 namespace App\Http\Controllers\Actions;
 
-use App\Events\Subscription\SubscriptionCancelledEvent;
-use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
-use App\Jobs\SendDiscordWebhookJob;
+use App\Jobs\CancelSubscriptionJob;
+use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CancelSubscription extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): RedirectResponse
     {
-        $user = $request->user();
+        $subscription = $request->user()->subscription;
 
-        // cancel stripe subscription
-        if ($user->subscription->stripe_id !== null) {
-
-            // tell stripe to cancel the users subscription
-            $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-            $stripe->subscriptions->cancel(
-                $user->subscription->stripe_id,
-                []
-            );
-
-            // mark the users' subscription as cancelled on our end
-            $user->subscription->update([
-                'stripe_status' => Subscription::CANCELED,
-            ]);
-
-            // broadcast the subscription cancelled event
-            event(new SubscriptionCancelledEvent($user->subscription));
-
-            return self::successful($user->name, 'Stripe');
+        // users subscription is already in queue for cancellation
+        if ($subscription->queued_for_cancellation) {
+            return redirect()
+                ->route('home.subscription')
+                ->with('error', 'Your subscription is already in queue for cancellation.');
         }
 
+        // cancel subscription
+        if ($subscription->stripe_id !== null) {
+            return self::handleStripe($subscription);
+        } else {
+            return self::handlePayPal($subscription);
+        }
+    }
+
+    private static function handleStripe(Subscription $subscription): RedirectResponse
+    {
+        // check for already cancelled subscription
+        if ($subscription->stripe_status === Subscription::CANCELED) {
+            return self::alreadyCancelled();
+        }
+
+        return self::successful($subscription, Invoice::STRIPE);
+    }
+
+    private static function handlePayPal(Subscription $subscription): RedirectResponse
+    {
         // user does not have a reoccurring subscription
-        if (!$user->hasBillingAgreement()) {
+        if (!$subscription->user->hasBillingAgreement()) {  // TODO: show cancelled message on sub page
             return redirect()
                 ->route('home.subscription')
                 ->with('error', 'You do not need to cancel your subscription.');
         }
 
         // user already cancelled their PayPal billing agreement
-        if ($user->isBillingAgreementCancelled()) {
-            return redirect()
-                ->route('home.subscription')
-                ->with('error', 'You have already cancelled your subscription.');
+        if ($subscription->billingAgreement->state === Subscription::CANCELED) {
+            return self::alreadyCancelled();
         }
 
-        // tell PayPal to cancel the users billing agreement
-        $response = Paypal::cancelBillingAgreement(
-            $user->billingAgreement->billing_agreement_id,
-            'User cancelled subscription.'
-        );
-
-        // user has already cancelled agreement or something went wrong
-        if ($response->failed()) {
-            return redirect()
-                ->route('home.subscription')
-                ->with('error', 'You have already cancelled your subscription.');
-        }
-
-        // broadcast the subscription cancelled event
-        event(new SubscriptionCancelledEvent($user->subscription));
-
-        return self::successful($user->name, 'PayPal');
+        return self::successful($subscription, Invoice::PAYPAL);
     }
 
-    private static function successful(string $user, string $provider): RedirectResponse
+    private static function successful(Subscription $subscription, string $provider): RedirectResponse
     {
-        $content = 'A user has cancelled their subscription.' . PHP_EOL . PHP_EOL;
-        $content = $content . '**User**: ' . $user . PHP_EOL;
-        $content = $content . '**Provider**: ' . $provider . PHP_EOL;
-        SendDiscordWebhookJob::dispatch($content);
+        // mark the subscription as queued for cancellation
+        $subscription->update([
+            'queued_for_cancellation' => true,
+        ]);
+
+        // dispatch the cancel subscription job
+        CancelSubscriptionJob::dispatch($subscription, $provider);
 
         return redirect()
             ->route('home.subscription')
             ->with('success', 'Your subscription has been queued for cancellation.');
+    }
 
+    private static function alreadyCancelled(): RedirectResponse
+    {
+        return redirect()
+            ->route('home.subscription')
+            ->with('error', 'You have already cancelled your subscription.');
     }
 }

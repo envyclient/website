@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property string|null stripe_id
  * @property string|null stripe_status
  * @property Carbon end_date
+ * @property boolean queued_for_cancellation
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
@@ -39,6 +40,7 @@ class Subscription extends Model
         'stripe_id',
         'stripe_status',
         'end_date',
+        'queued_for_cancellation',
     ];
 
     protected $casts = [
@@ -46,6 +48,7 @@ class Subscription extends Model
         'plan_id' => 'integer',
         'billing_agreement_id' => 'integer',
         'end_date' => 'datetime',
+        'queued_for_cancellation' => 'boolean',
     ];
 
     public function user(): BelongsTo

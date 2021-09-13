@@ -17,7 +17,7 @@ class SendDiscordWebhookJob implements ShouldQueue
     public int $tries = 0;
 
     public function __construct(
-        private string $content
+        private string $content,
     )
     {
     }
