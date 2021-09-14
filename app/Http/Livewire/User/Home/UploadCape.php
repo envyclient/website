@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire\User\Home;
 
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -18,8 +18,8 @@ class UploadCape extends Component
 
     public function render()
     {
-        return view('livewire.user.upload-cape')
-            ->with('user', auth()->user());
+        $user = auth()->user();
+        return view('livewire.user.home.upload-cape', compact('user'));
     }
 
     public function submit()

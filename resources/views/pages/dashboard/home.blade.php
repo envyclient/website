@@ -34,11 +34,11 @@
 
     {{--Upload Cape--}}
     @if($user->hasCapesAccess())
-        @livewire('user.upload-cape')
+        @livewire('user.home.upload-cape')
     @endif
 
     {{--Media Applications--}}
-    @livewire('user.media-requests')
+    @livewire('user.home.media-requests')
 
     {{--Download Launcher Button--}}
     @if($user->subscription !== null)

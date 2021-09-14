@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire;
 
 use Livewire\Component;
 
@@ -10,6 +10,6 @@ class ShowProfileImage extends Component
 
     public function render()
     {
-        return view('livewire.user.show-profile-image');
+        return view('livewire.show-profile-image');
     }
 }

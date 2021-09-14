@@ -73,7 +73,7 @@
 
                 {{-- User Profile --}}
                 <div class="flex-shrink-0 flex bg-gray-700 p-4">
-                    @livewire('user.show-profile-image')
+                    @livewire('show-profile-image')
                 </div>
             </div>
 
@@ -111,7 +111,7 @@
 
                     {{-- User Profile --}}
                     <div class="flex-shrink-0 flex bg-gray-700 p-4">
-                        @livewire('user.show-profile-image')
+                        @livewire('show-profile-image')
                     </div>
                 </div>
             </div>

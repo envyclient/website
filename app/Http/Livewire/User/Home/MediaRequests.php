@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire\User\Home;
 
 use App\Helpers\Youtube;
 use App\Models\LicenseRequest;
@@ -17,7 +17,7 @@ class MediaRequests extends Component
     public function render()
     {
         $licenseRequests = auth()->user()->licenseRequests;
-        return view('livewire.user.media-requests', compact('licenseRequests'));
+        return view('livewire.user.home.media-requests', compact('licenseRequests'));
     }
 
     public function submit()

@@ -193,7 +193,7 @@ class PagesTest extends TestCase
 
     /** @test */
     public function can_admin_see_referral_codes()
-    {~
+    {
         $this->actingAs($this->admin())
             ->get(route('admin.referrals'))
             ->assertOk();
