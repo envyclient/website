@@ -29,7 +29,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string|null hwid
  * @property boolean admin
  * @property boolean banned
- * @property boolean disabled
  * @property string cape
  * @property string|null current_account
  * @property integer|null referral_code_id
@@ -51,8 +50,10 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
  * @property-read Collection licenseRequest
+ * @property-read Collection stripeSessions
+ * @property-read Collection stripeSources
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable, Favoriter, HasFactory, Prunable;
 
@@ -65,7 +66,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'hwid',
         'admin',
         'banned',
-        'disabled',
         'cape',
         'current_account',
         'referral_code_id',
@@ -86,7 +86,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'admin' => 'bool',
         'banned' => 'bool',
-        'disabled' => 'bool',
         'referral_code_id' => 'bool',
         'referral_code_used_at' => 'datetime',
     ];
@@ -95,7 +94,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         parent::boot();
         static::creating(function (User $user) {
+
+            // generate a random api_token
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(30));
+
+            // set the default cape
             $user->cape = asset('assets/capes/default.png');
 
             // handle referral code cookie
@@ -121,7 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if (empty($search)) {
             return $query;
         }
-        return $query->where(function ($query) use ($search) {
+        return $query->where(function (Builder $query) use ($search) {
             $query->where('name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%")
                 ->orWhere('discord_name', 'like', "%$search%");
@@ -171,6 +174,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function licenseRequests(): HasMany
     {
         return $this->hasMany(LicenseRequest::class);
+    }
+
+    public function stripeSessions(): HasMany
+    {
+        return $this->hasMany(StripeSession::class);
+    }
+
+    public function stripeSources(): HasMany
+    {
+        return $this->hasMany(StripeSource::class);
     }
 
     public function hasSubscription(): bool
