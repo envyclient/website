@@ -129,10 +129,9 @@
                                     {{ now()->diffInDays($user->subscription->end_date, false) }} days left
                                 </div>
                             @else
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                        No Subscription
-                                    </span>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                    No Subscription
+                                </span>
                             @endif
                         </x-table.cell>
 
@@ -142,34 +141,29 @@
 
                         <x-table.cell class="space-y-1">
                             @if($user->current_account !== null)
-                                <span
-                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                        Using Client
-                                    </span>
+                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    Using Client
+                                </span>
                             @endif
                             @if($user->hwid !== null)
-                                <span
-                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                        HWID Set
-                                    </span>
+                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    HWID Set
+                                </span>
                             @endif
                             @if($user->banned)
-                                <span
-                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                        Banned
-                                    </span>
+                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                    Banned
+                                </span>
                             @endif
                             @if($user->discord_id !== null)
-                                <span
-                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                        {{ $user->discord_name }}
-                                    </span>
+                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    {{ $user->discord_name }}
+                                </span>
                             @endif
                             @if($user->referralCode != null)
-                                <span
-                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                         code: {{ $user->referralCode->code }}
-                                    </span>
+                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    code: {{ $user->referralCode->code }}
+                                </span>
                             @endif
                         </x-table.cell>
 
