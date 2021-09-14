@@ -6,12 +6,12 @@
 
     {{--Update Profile--}}
     <section>
-        @livewire('user.update-profile')
+        @livewire('user.profile.update-profile')
     </section>
 
     {{--Update Password--}}
     <section class="mt-4">
-        @livewire('user.update-password')
+        @livewire('user.profile.update-password')
     </section>
 
     {{--Disable Account--}}
@@ -32,7 +32,7 @@
                 prevFocusable() { return this.focusables()[this.prevFocusableIndex()] || this.lastFocusable() },
                 nextFocusableIndex() { return (this.focusables().indexOf(document.activeElement) + 1) % (this.focusables().length + 1) },
                 prevFocusableIndex() { return Math.max(0, this.focusables().indexOf(document.activeElement)) -1 },
-                autofocus() { let focusable = $el.querySelector('[autofocus]'); if (focusable) focusable.focus() },
+                autofocus() { let focusable = $el.querySelector('[autofocus]'); if (focusable) focusable.focus() }
         }"
         x-init="$watch('show', value => value && setTimeout(autofocus, 50))"
         x-on:close.stop="show = false"

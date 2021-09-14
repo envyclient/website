@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire\User\Profile;
 
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,8 +19,8 @@ class UpdateProfile extends Component
 
     public function render()
     {
-        return view('livewire.user.update-profile')
-            ->with('user', auth()->user());
+        $user = auth()->user();
+        return view('livewire.user.profile.update-profile', compact('user'));
     }
 
     public function submit()

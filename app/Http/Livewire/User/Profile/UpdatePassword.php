@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire\User\Profile;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -20,7 +20,7 @@ class UpdatePassword extends Component
 
     public function render()
     {
-        return view('livewire.user.update-password');
+        return view('livewire.user.profile.update-password');
     }
 
     public function submit()

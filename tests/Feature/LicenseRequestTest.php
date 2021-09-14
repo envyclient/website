@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\User\MediaRequests;
+use App\Http\Livewire\User\Home\MediaRequests;
 use App\Models\LicenseRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
