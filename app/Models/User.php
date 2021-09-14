@@ -53,7 +53,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read Collection stripeSessions
  * @property-read Collection stripeSources
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, Favoriter, HasFactory, Prunable;
 
