@@ -24,13 +24,13 @@ class CancelSubscription extends Controller
 
         // cancel subscription
         if ($subscription->stripe_id !== null) {
-            return self::handleStripe($subscription);
+            return self::handleStripeCancellation($subscription);
         } else {
-            return self::handlePayPal($subscription);
+            return self::handlePayPalCancellation($subscription);
         }
     }
 
-    private static function handleStripe(Subscription $subscription): RedirectResponse
+    private static function handleStripeCancellation(Subscription $subscription): RedirectResponse
     {
         // check for already cancelled subscription
         if ($subscription->stripe_status === Subscription::CANCELED) {
@@ -40,7 +40,7 @@ class CancelSubscription extends Controller
         return self::successful($subscription, Invoice::STRIPE);
     }
 
-    private static function handlePayPal(Subscription $subscription): RedirectResponse
+    private static function handlePayPalCancellation(Subscription $subscription): RedirectResponse
     {
         // user does not have a reoccurring subscription
         if (!$subscription->user->hasBillingAgreement()) {  // TODO: show cancelled message on sub page

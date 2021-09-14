@@ -3,22 +3,19 @@
 namespace App\Http\Controllers\API\Configs\Actions;
 
 use App\Http\Controllers\API\Configs\ConfigsController;
-use App\Http\Resources\Config as ConfigResource;
+use App\Http\Resources\ConfigResource;
 use App\Models\Config;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetConfigsForUser extends ConfigsController
 {
-    public function __invoke(Request $request, $name = null): JsonResponse|AnonymousResourceCollection
+    public function __invoke(Request $request, $name = null): AnonymousResourceCollection
     {
         return is_null($name)
             ? self::getConfigsForAuthUser($request->user())
-            : self::getConfigsForSearchUser(
-                User::where('name', $name)->firstOrFail()
-            );
+            : self::getConfigsForSearchUser(User::where('name', $name)->firstOrFail());
     }
 
     public static function getConfigsForAuthUser(User $user): AnonymousResourceCollection

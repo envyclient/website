@@ -6,7 +6,6 @@ use App\Events\DiscordAccountConnectedEvent;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
-use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 class DiscordController extends Controller
@@ -18,10 +17,10 @@ class DiscordController extends Controller
             ->redirect();
     }
 
-    public function redirect(Request $request)
+    public function redirect()
     {
         try {
-            $user = Socialite::driver('discord')
+            $discordUser = Socialite::driver('discord')
                 ->redirectUrl(config('services.discord.redirect_connect'))
                 ->user();
         } catch (Exception) {
@@ -29,21 +28,26 @@ class DiscordController extends Controller
         }
 
         // check if discord account is already used
-        if (User::where('discord_id', $user->getId())
-            ->where('id', '<>', $request->user()->id)
-            ->exists()) {
+        if (self::isAccountAlreadyLinked($discordUser->getId(), auth()->id())) {
             return redirect(RouteServiceProvider::HOME)->with('error', 'Discord already linked to another account.');
         }
 
         // update user account with discord account info
-        $request->user()->update([
-            'discord_id' => $user->getId(),
-            'discord_name' => $user->getNickname(),
+        auth()->user()->update([
+            'discord_id' => $discordUser->getId(),
+            'discord_name' => $discordUser->getNickname(),
         ]);
 
-        event(new DiscordAccountConnectedEvent($request->user()));
+        // broadcast the discord account connected event
+        event(new DiscordAccountConnectedEvent(auth()->user()));
 
         return redirect(RouteServiceProvider::HOME)->with('success', 'Discord account connected.');
     }
 
+    private static function isAccountAlreadyLinked(string $discordId, int $userId)
+    {
+        return User::where('discord_id', $discordId)
+            ->where('id', '<>', $userId)
+            ->exists();
+    }
 }

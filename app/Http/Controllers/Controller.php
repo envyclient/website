@@ -14,14 +14,21 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public static function bad(): JsonResponse
+    protected static function unauthorized(): JsonResponse
+    {
+        return response()->json([
+            'message' => 'Unauthorized',
+        ], 401);
+    }
+
+    protected static function bad(): JsonResponse
     {
         return response()->json([
             'message' => '400 Bad Request',
         ], 400);
     }
 
-    public static function ok(): JsonResponse
+    protected static function ok(): JsonResponse
     {
         return response()->json([
             'message' => '200 OK',

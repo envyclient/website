@@ -4,22 +4,25 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class DisableAccount extends Controller
 {
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(): RedirectResponse
     {
-        $user = $request->user();
+        $user = auth()->user();
 
+        // if the user has a subscription we redirect them back
         if ($user->hasSubscription()) {
             return back()->with('error', 'You must wait until your subscription has ended before disabling your account.');
         }
 
-        $user->fill([
+        // mark the user as disabled
+        $user->update([
             'disabled' => true
-        ])->save();
+        ]);
 
-        return back()->with('success', 'Account disabled.');
+        // log the user out
+        auth()->logout();
+        return redirect('/');
     }
 }

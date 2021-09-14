@@ -12,14 +12,7 @@ class HomeController extends Controller
             ->user()
             ->load(['subscription', 'configs', 'licenseRequests']);
 
-
-        return view('pages.dashboard.home', [
-            'user' => $user,
-            'configs' => $user->configs()
-                ->withCount('favorites')
-                ->orderBy('updated_at', 'desc')
-                ->get(),
-        ]);
+        return view('pages.dashboard.home', compact('user'));
     }
 
     public function profile()
@@ -28,8 +21,7 @@ class HomeController extends Controller
             ->user()
             ->load(['subscription', 'billingAgreement']);
 
-        return view('pages.dashboard.profile')
-            ->with('user', $user);
+        return view('pages.dashboard.profile', compact('user'));
     }
 
     public function subscription()
@@ -38,9 +30,9 @@ class HomeController extends Controller
             ->user()
             ->load(['subscription.plan', 'billingAgreement.plan']);
 
-        return view('pages.dashboard.subscriptions', [
-            'user' => $user,
-            'plans' => Plan::where('price', '<>', 0)->get(),
-        ]);
+        // get all the non-free plans
+        $plans = Plan::where('price', '<>', 0)->get();
+
+        return view('pages.dashboard.subscriptions', compact('user', 'plans'));
     }
 }
