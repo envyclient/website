@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Actions\DisableAccount;
+use App\Http\Controllers\Actions\DeleteAccount;
 use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
@@ -49,7 +49,7 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
  */
 Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], function () {
     Route::post('referral-code', UseReferralCode::class)->name('users.referral-code');
-    Route::delete('disable', DisableAccount::class)->name('users.disable');
+    Route::delete('delete', DeleteAccount::class)->name('users.delete');
 });
 
 /**

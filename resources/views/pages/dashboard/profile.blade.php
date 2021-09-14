@@ -14,7 +14,7 @@
         @livewire('user.profile.update-password')
     </section>
 
-    {{--Disable Account--}}
+    {{--Delete Account--}}
     <section
         class="mt-4"
         x-data="{
@@ -41,11 +41,11 @@
         x-on:keydown.shift.tab.prevent="prevFocusable().focus()"
     >
 
-        <x-card title="Disable your account" subtitle=" Once you disable your account, you will lose access to it.">
+        <x-card title="Delete your account" subtitle="Once you delete your account all your account data will be gone.">
             <button type="button"
                     @click="show = true"
                     class="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm">
-                Disable account
+                Delete account
             </button>
         </x-card>
 
@@ -95,11 +95,11 @@
                             </div>
                             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                    Disable account
+                                    Delete account
                                 </h3>
                                 <div class="mt-2">
                                     <p class="text-sm text-gray-500">
-                                        By disabling your account you will lose access to your account. Are you sure you
+                                        By deleting your account you will lose access to your account. Are you sure you
                                         want to proceed?
                                     </p>
                                 </div>
@@ -107,11 +107,11 @@
                         </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <form action="{{ route('users.disable') }}" method="post">
+                        <form action="{{ route('users.delete') }}" method="post">
                             @csrf
                             @method('DELETE')
                             <x-button.danger type="submit">
-                                Disable
+                                Delete
                             </x-button.danger>
                         </form>
                         <x-button.secondary type="button" @click="show = false" class="mr-2">

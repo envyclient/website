@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -27,6 +28,8 @@ use Illuminate\Support\Carbon;
  */
 class StripeSource extends Model
 {
+    use Prunable;
+
     const PENDING = 'pending';
     const CANCELED = 'canceled';
     const FAILED = 'failed';
@@ -47,7 +50,16 @@ class StripeSource extends Model
         'plan_id' => 'integer',
     ];
 
-    // TODO: prune all cancelled, also delete associated events
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(fn(StripeSource $source) => $source->events()->delete());
+    }
+
+    public function prunable()
+    {
+        return static::where('status', self::CANCELED)->orWhere('status', self::FAILED);
+    }
 
     public function user(): BelongsTo
     {

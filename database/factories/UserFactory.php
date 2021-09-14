@@ -21,7 +21,6 @@ class UserFactory extends Factory
             'hwid' => Str::random(40),
             'admin' => 0,
             'banned' => 0,
-            'disabled' => 0,
             'cape' => '',
             'current_account' => null,
             'referral_code_id' => null,

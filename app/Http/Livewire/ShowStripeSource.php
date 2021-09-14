@@ -24,7 +24,6 @@ class ShowStripeSource extends Component
             ->orderByDesc('created_at')
             ->get();
 
-        return view('livewire.show-stripe-source', compact('events'))
-            ->extends('layouts.guest');
+        return view('livewire.show-stripe-source', compact('events'))->extends('layouts.guest');
     }
 }

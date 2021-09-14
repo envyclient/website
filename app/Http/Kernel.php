@@ -5,7 +5,6 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\Custom\CheckAdmin;
 use App\Http\Middleware\Custom\CheckBanned;
-use App\Http\Middleware\Custom\CheckDisabled;
 use App\Http\Middleware\Custom\CheckNoSubscription;
 use App\Http\Middleware\Custom\CheckReferralCode;
 use App\Http\Middleware\Custom\CheckSubscription;
@@ -67,7 +66,6 @@ class Kernel extends HttpKernel
 
             // custom
             CheckBanned::class,
-            CheckDisabled::class,
             CheckReferralCode::class,
         ],
 

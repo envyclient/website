@@ -67,11 +67,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Account banned.'], 403);
         }
 
-        // disable check
-        if ($user->disabled) {
-            return response()->json(['message' => 'Account disabled.'], 403);
-        }
-
         // update the users hwid
         $user->update([
             'hwid' => $hwid
