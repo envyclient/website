@@ -47,6 +47,7 @@
                                     Edit
                                 </x-button.link>
                                 <x-button.link class="block text-red-600 hover:text-red-900"
+                                               onclick="confirm('Are you sure?') || event.stopImmediatePropagation()"
                                                wire:click="delete({{ $version->id }})">
                                     Delete
                                 </x-button.link>

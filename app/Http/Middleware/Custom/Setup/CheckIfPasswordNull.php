@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 
 class CheckIfPasswordNull
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check()) {

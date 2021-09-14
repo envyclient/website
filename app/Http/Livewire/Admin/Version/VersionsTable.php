@@ -27,15 +27,17 @@ class VersionsTable extends Component
         $this->editVersion = Version::make();
     }
 
+    public function render()
+    {
+        return view('livewire.admin.version.versions-table', [
+            'versions' => Version::orderBy('created_at')->paginate(5),
+        ]);
+    }
+
     public function edit(Version $version)
     {
         $this->edit = true;
         $this->editVersion = $version;
-    }
-
-    public function delete(Version $version)
-    {
-        $version->delete();
     }
 
     public function save()
@@ -44,10 +46,8 @@ class VersionsTable extends Component
         $this->editVersion->save();
     }
 
-    public function render()
+    public function delete(Version $version)
     {
-        return view('livewire.admin.version.versions-table', [
-            'versions' => Version::orderBy('created_at')->paginate(5),
-        ]);
+        $version->delete();
     }
 }
