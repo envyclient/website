@@ -17,13 +17,15 @@ class UseReferralCode extends Controller
 
         $user = $request->user();
 
+        // checking if the user has already used a referral code
         if ($user->referral_code_id !== null) {
             return back()->with('error', 'You have already used a referral code.');
         }
 
-        $code = ReferralCode::where('code', $data['referral-code'])
-            ->first();
+        // get the referral code model
+        $code = ReferralCode::where('code', $data['referral-code'])->first();
 
+        // update the user to reflect referral code
         $user->update([
             'referral_code_id' => $code->id,
             'referral_code_used_at' => now(),

@@ -7,26 +7,31 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class EmailVerificationController extends Controller
 {
-    public function __invoke(string $id, string $hash): RedirectResponse
+    /**
+     * @throws AuthorizationException
+     */
+    public function __invoke(Request $request, string $id, string $hash): RedirectResponse
     {
-        if (!hash_equals((string)$id, (string)Auth::user()->getKey())) {
+        $user = $request->user();
+
+        if (!hash_equals($id, (string)$user->getKey())) {
             throw new AuthorizationException();
         }
 
-        if (!hash_equals((string)$hash, sha1(Auth::user()->getEmailForVerification()))) {
+        if (!hash_equals($hash, sha1($user->getEmailForVerification()))) {
             throw new AuthorizationException();
         }
 
-        if (Auth::user()->hasVerifiedEmail()) {
+        if ($user->hasVerifiedEmail()) {
             return redirect(RouteServiceProvider::HOME);
         }
 
-        if (Auth::user()->markEmailAsVerified()) {
-            event(new Verified(Auth::user()));
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
         }
 
         return redirect(RouteServiceProvider::HOME);

@@ -35,7 +35,7 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property integer|null referral_code_id
  * @property Carbon|null referral_code_used_at
  * @property string|null discord_id
- * @property string|null discord_name
+ * @property string|null discord_name // TODO: remove
  * @property string|null stripe_id
  *
  * @property-read string image

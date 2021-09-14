@@ -3,27 +3,28 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\VersionResource;
 use App\Models\Version;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class VersionsController extends Controller
 {
-    public function index(Request $request)
+    public function index(): AnonymousResourceCollection
     {
-        $versions = Version::whereNotNull('processed_at')->orderBy('created_at', 'desc');
-        if (!$request->user()->hasBetaAccess()) {
-            $versions->where('beta', false);
-        }
-        return $versions->get(['id', 'name', 'beta', 'changelog', 'main_class']);
+        return VersionResource::collection(
+            Version::query()
+                ->whereNotNull('processed_at')
+                ->orderBy('created_at', 'desc')
+                ->when(!auth()->user()->hasBetaAccess(), fn(Builder $builder) => $builder->where('beta', false))
+                ->get()
+        );
     }
 
-    public function show(Version $version)
+    public function download(Version $version)
     {
-        // get the versions folder path
-        $hash = md5($version->id);
-
         $now = now();
         DB::table('user_downloads')->insert([
             [
@@ -34,6 +35,6 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::download("versions/$hash.jar.enc");
+        return Storage::download('versions/' . md5($version->id) . '.jar.enc');
     }
 }

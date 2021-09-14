@@ -19,7 +19,7 @@ class DiscordController extends Controller
     public function redirect()
     {
         try {
-            $user = Socialite::driver('discord')->user();
+            $discordUser = Socialite::driver('discord')->user();
         } catch (Exception) {
             return redirect('login');
         }
@@ -29,13 +29,13 @@ class DiscordController extends Controller
 
         // create the user
         $user = User::firstOrCreate([
-            'discord_id' => $user->getId(),
+            'discord_id' => $discordUser->getId(),
         ], [
             'name' => "envy_$rand",
             'email' => "envy_$rand@envyclient.com",
             'password' => null,
             'email_verified_at' => now(),
-            'discord_name' => $user->getNickname(),
+            'discord_name' => $discordUser->getNickname(),
         ]);
 
         Auth::login($user, true);

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request): UserResource|JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email'],
@@ -22,13 +24,13 @@ class AuthController extends Controller
         }
 
         if (!auth()->attempt(request(['email', 'password']))) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return self::unauthorized();
         }
 
         return $this->returnUserObject(auth()->user(), $request->hwid);
     }
 
-    public function me(Request $request)
+    public function me(Request $request): UserResource|JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'hwid' => ['required', 'string', 'min:40', 'max:40'],
@@ -42,7 +44,7 @@ class AuthController extends Controller
         return $this->returnUserObject($user, $user->hwid);
     }
 
-    private static function returnUserObject(User $user, string $hwid)
+    private static function returnUserObject(User $user, string $hwid): UserResource|JsonResponse
     {
         // check for duplicate hwid
         $userCheck = User::where('hwid', $hwid)->where('id', '<>', $user->id);
@@ -70,20 +72,11 @@ class AuthController extends Controller
             return response()->json(['message' => 'Account disabled.'], 403);
         }
 
-        // fill users hwid
+        // update the users hwid
         $user->update([
             'hwid' => $hwid
         ]);
 
-        return response()->json([
-            'name' => $user->name,
-            'api_token' => $user->api_token,
-            'date' => $user->created_at->diffForHumans(),
-            'subscription' => [
-                'name' => $user->subscription->plan->name,
-                'days' => $user->subscription->end_date->diffInDays(),
-            ],
-        ]);
+        return new UserResource($user);
     }
-
 }

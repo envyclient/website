@@ -35,14 +35,14 @@ class ConfigsController extends Controller
                 });
         }
 
-        return \App\Http\Resources\Config::collection(
+        return \App\Http\Resources\ConfigResource::collection(
             $configs->paginate(Config::PAGE_LIMIT)
         );
     }
 
     public function show(int $id)
     {
-        return new \App\Http\Resources\Config(
+        return new \App\Http\Resources\ConfigResource(
             Config::with(['user:id,name', 'version:id,name'])
                 ->where('id', $id)
                 ->where('public', true)
@@ -59,7 +59,7 @@ class ConfigsController extends Controller
         $user = $request->user();
         if ($user->configs()->count() >= $user->subscription->plan->config_limit) {
             return response()->json([
-                'message' => 'Config limit reached'
+                'message' => 'ConfigResource limit reached'
             ], 406);
         }
 
