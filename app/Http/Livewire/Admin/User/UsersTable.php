@@ -41,7 +41,7 @@ class UsersTable extends Component
             case 'cancelled-subscription':
             {
                 $user->whereHas('subscription.billingAgreement', function (Builder $query) {
-                    $query->where('state', 'Cancelled');
+                    $query->where('state', Subscription::CANCELED);
                 });
                 break;
             }

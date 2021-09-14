@@ -7,7 +7,7 @@ use App\Http\Middleware\Custom\CheckAdmin;
 use App\Http\Middleware\Custom\CheckBanned;
 use App\Http\Middleware\Custom\CheckDisabled;
 use App\Http\Middleware\Custom\CheckNoSubscription;
-use App\Http\Middleware\Custom\CheckReferral;
+use App\Http\Middleware\Custom\CheckReferralCode;
 use App\Http\Middleware\Custom\CheckSubscription;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -68,7 +68,7 @@ class Kernel extends HttpKernel
             // custom
             CheckBanned::class,
             CheckDisabled::class,
-            CheckReferral::class,
+            CheckReferralCode::class,
         ],
 
         'api' => [
