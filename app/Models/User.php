@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cookie;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 /**
@@ -89,6 +90,25 @@ class User extends Authenticatable implements MustVerifyEmail
         'referral_code_id' => 'bool',
         'referral_code_used_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function (User $user) {
+            $user->api_token = bin2hex(openssl_random_pseudo_bytes(30));
+            $user->cape = asset('assets/capes/default.png');
+
+            // handle referral code cookie
+            if (request()->hasCookie('referral') && ReferralCode::where('code', request()->cookie('referral'))->exists()) {
+                $code = ReferralCode::where('code', request()->cookie('referral'))->first();
+                $user->referral_code_id = $code->id;
+                $user->referral_code_used_at = now();
+
+                // forgetting the referral cookie
+                Cookie::queue(Cookie::forget('referral'));
+            }
+        });
+    }
 
     public function prunable()
     {

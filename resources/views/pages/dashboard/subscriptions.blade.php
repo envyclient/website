@@ -77,6 +77,8 @@
             @endforeach
         @endif
     @else
+
+        {{-- Show current plan card --}}
         <x-plan-card class="mb-5" :plan="$user->subscription->plan">
             <div class="px-4 py-3 bg-gray-100 sm:px-6 text-small">
                 Next payment due in {{ now()->diffInDays($user->subscription->end_date, false) }} days.

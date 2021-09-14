@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Blade;
@@ -24,9 +22,6 @@ class AppServiceProvider extends ServiceProvider
 
         // setting the stripe api key
         Stripe::setApiKey(config('services.stripe.secret'));
-
-        // register observers
-        User::observe(UserObserver::class);
 
         // register macros
         Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));

@@ -6,13 +6,13 @@ use App\Models\ReferralCode;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckReferral
+class CheckReferralCode
 {
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)

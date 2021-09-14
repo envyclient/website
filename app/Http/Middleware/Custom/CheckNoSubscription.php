@@ -15,7 +15,7 @@ class CheckNoSubscription
      * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (auth()->check() && auth()->user()->hasSubscription()) {
             return redirect(RouteServiceProvider::HOME);
