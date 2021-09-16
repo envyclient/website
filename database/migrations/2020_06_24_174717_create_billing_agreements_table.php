@@ -16,7 +16,7 @@ class CreateBillingAgreementsTable extends Migration
         Schema::create('billing_agreements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('plan_id')->constrained();
+            $table->foreignId('plan_id');
             $table->string('billing_agreement_id')->unique();
             $table->string('state', 10);
             $table->timestamps();

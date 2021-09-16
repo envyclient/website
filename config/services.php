@@ -45,6 +45,10 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'plans' => [
+            'standard' => env('STRIPE_PLAN_STANDARD'),
+            'premium' => env('STRIPE_PLAN_PREMIUM'),
+        ],
     ],
 
     'paypal' => [
@@ -52,6 +56,10 @@ return [
         'webhook_id' => env('PAYPAL_WEBHOOK_ID'),
         'client_id' => env('PAYPAL_CLIENT_ID'),
         'secret' => env('PAYPAL_SECRET'),
+        'plans' => [
+            'standard' => env('PAYPAL_PLAN_STANDARD'),
+            'premium' => env('PAYPAL_PLAN_PREMIUM'),
+        ],
     ],
 
     'youtube' => [
