@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\Configs;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConfigRequest;
+use App\Http\Resources\ConfigResource;
 use App\Models\Config;
 use App\Models\Version;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,35 +16,33 @@ class ConfigsController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'search' => 'nullable|string'
+            'search' => ['nullable', 'string'],
         ]);
 
         if ($validator->fails()) {
             return self::bad();
         }
 
-        $validated = $validator->validated();
-        $configs = Config::with(['user:id,name', 'version:id,name'])
+        $data = $validator->validated();
+        $configs = Config::query()
+            ->with(['user:id,name', 'version:id,name'])
             ->withCount('favorites')
             ->where('public', true)
             ->orderByDesc('official')
-            ->orderByDesc('favorites_count');
+            ->orderByDesc('favorites_count')
+            ->when($request->has('search'), function (Builder $query) use ($data) {
+                $query->where('name', 'like', "%{$data['search']}%")
+                    ->orWhereRelation('user', 'name', 'like', "%{$data['search']}%");
+            });
 
-        if ($request->has('search')) {
-            $configs->where('name', 'like', "%{$validated['search']}%")
-                ->orWhereHas('user', function ($query) use ($validated) {
-                    $query->where('name', 'like', "%{$validated['search']}%");
-                });
-        }
-
-        return \App\Http\Resources\ConfigResource::collection(
+        return ConfigResource::collection(
             $configs->paginate(Config::PAGE_LIMIT)
         );
     }
 
     public function show(int $id)
     {
-        return new \App\Http\Resources\ConfigResource(
+        return new ConfigResource(
             Config::with(['user:id,name', 'version:id,name'])
                 ->where('id', $id)
                 ->where('public', true)
@@ -54,21 +54,23 @@ class ConfigsController extends Controller
 
     public function store(StoreConfigRequest $request)
     {
-        $validated = $request->validated();
-
+        $data = $request->validated();
         $user = $request->user();
+
+        // checking if the user has reached their config limit
         if ($user->configs()->count() >= $user->subscription->plan->config_limit) {
             return response()->json([
-                'message' => 'ConfigResource limit reached'
+                'message' => 'Config limit reached.'
             ], 406);
         }
 
+        // creating a new config for the user
         $config = Config::create([
             'user_id' => $user->id,
-            'name' => $validated['name'],
-            'version_id' => Version::where('name', "Envy {$validated['version']}")->first()->id,
-            'data' => $validated['data'],
-            'public' => boolval($validated['public']),
+            'name' => $data['name'],
+            'version_id' => Version::where('name', "Envy {$data['version']}")->first()->id,
+            'data' => $data['data'],
+            'public' => boolval($data['public']),
         ]);
 
         return response()->json([
@@ -79,16 +81,16 @@ class ConfigsController extends Controller
 
     public function update(StoreConfigRequest $request, int $id)
     {
-        $validated = $request->validated();
+        $data = $request->validated();
 
         // update config
         $request->user()
             ->configs()
             ->findOrFail($id)
             ->update([
-                'name' => $validated['name'],
-                'version_id' => Version::where('name', "Envy {$validated['version']}")->first()->id,
-                'data' => $validated['data'],
+                'name' => $data['name'],
+                'version_id' => Version::where('name', "Envy {$data['version']}")->first()->id,
+                'data' => $data['data'],
                 'public' => $request->has('public'),
             ]);
 
