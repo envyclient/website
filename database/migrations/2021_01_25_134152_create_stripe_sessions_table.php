@@ -16,7 +16,7 @@ class CreateStripeSessionsTable extends Migration
         Schema::create('stripe_sessions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('plan_id')->constrained();
+            $table->foreignId('plan_id');
             $table->string('stripe_session_id');
             $table->timestamps();
         });

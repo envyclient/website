@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 
 class FavoriteConfig extends ConfigsController
 {
-    public function __invoke(Request $request, $id)
+    public function __invoke(Request $request, Config $config)
     {
-        $config = Config::findOrFail($id);
         $user = $request->user();
 
         // can not favorite own config

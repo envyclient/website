@@ -17,7 +17,7 @@ class CreateStripeSourcesTable extends Migration
             $table->id();
 
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('plan_id')->constrained();
+            $table->foreignId('plan_id');
 
             $table->string('source_id')->unique();
             $table->string('client_secret');

@@ -22,7 +22,7 @@ class StripeController extends Controller
     public function checkout(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|integer|exists:plans',
+            'id' => 'required|integer|exists:App\Models\Plan',
         ]);
 
         $user = $request->user();

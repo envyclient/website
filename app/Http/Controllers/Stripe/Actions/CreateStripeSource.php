@@ -24,7 +24,7 @@ class CreateStripeSource extends Controller
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|integer|exists:plans'
+            'id' => 'required|integer|exists:App\Models\Plan'
         ]);
 
         $user = $request->user();
