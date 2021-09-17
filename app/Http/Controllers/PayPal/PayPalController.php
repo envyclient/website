@@ -24,7 +24,7 @@ class PayPalController extends Controller
     public function process(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|integer|exists:App\Models\Plan',
+            'id' => 'required|integer|exists:plans',
         ]);
 
         if ($request->user()->hasBillingAgreement()) {

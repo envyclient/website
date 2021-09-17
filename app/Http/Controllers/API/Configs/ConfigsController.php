@@ -68,7 +68,7 @@ class ConfigsController extends Controller
         $config = Config::create([
             'user_id' => $user->id,
             'name' => $data['name'],
-            'version_id' => Version::where('name', "Envy {$data['version']}")->first()->id,
+            'version_id' => Version::where('name', "Envy {$data['version']}")->value('id'),
             'data' => $data['data'],
             'public' => boolval($data['public']),
         ]);
@@ -89,7 +89,7 @@ class ConfigsController extends Controller
             ->findOrFail($id)
             ->update([
                 'name' => $data['name'],
-                'version_id' => Version::where('name', "Envy {$data['version']}")->first()->id,
+                'version_id' => Version::where('name', "Envy {$data['version']}")->value('id'),
                 'data' => $data['data'],
                 'public' => $request->has('public'),
             ]);
