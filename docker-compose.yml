@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  database:
+    image: mariadb:10.6
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - "./database:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+      interval: 30s
+  website:
+    image: envy
+    restart: always
+    env_file: .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    volumes:
+      - ./logs:/app/storage/logs
