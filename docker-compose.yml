@@ -26,4 +26,4 @@ services:
     depends_on:
       - database
     volumes:
-      - ./logs:/app/storage/logs
+      - ./logs:/var/www/html/storage/logs
