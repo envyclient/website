@@ -18,7 +18,7 @@ services:
       timeout: 5s
       interval: 30s
   website:
-    image: envy
+    image: ghcr.io/envyclient/website:latest
     restart: always
     env_file: .env
     ports:
