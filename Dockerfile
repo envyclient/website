@@ -40,13 +40,13 @@ RUN apk --no-cache add \
     composer \
     tzdata
 
-# cleanup
-RUN rm -rf /tmp/* /var/cache/apk/*
-
 # set the timezone
 RUN cp /usr/share/zoneinfo/UTC /etc/localtime \
     && echo "UTC" > /etc/timezone \
     && apk del tzdata
+
+# cleanup
+RUN rm -rf /tmp/* /var/cache/apk/*
 
 # create symlink
 RUN ln -s /usr/bin/php8 /usr/bin/php
