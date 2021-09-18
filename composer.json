@@ -10,7 +10,6 @@
     "require": {
         "php": "^8.0",
         "ext-openssl": "*",
-        "ext-redis": "*",
         "ext-zip": "*",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.0",
