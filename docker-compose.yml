@@ -27,7 +27,7 @@ services:
       ofelia.enabled: "true"
       ofelia.job-exec.pqueue.schedule: "@every 1m"
       ofelia.job-exec.pqueue.command: "php /var/www/html/artisan schedule:run"
-      ofelia.job-exec.pqueue.user: "nobody"
+      ofelia.job-exec.pqueue.user: "nginx"
     ports:
       - "8080:8080"
     volumes:

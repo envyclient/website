@@ -70,9 +70,6 @@ RUN chown -R nginx:nginx /var/www/html \
     && chown -R nginx:nginx /var/lib/nginx \
     && chown -R nginx:nginx /var/log/nginx
 
-# schedule cron job
-#RUN echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/stdout 2>&1" | crontab -
-
 USER nginx
 
 # create the app directory
