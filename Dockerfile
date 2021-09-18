@@ -16,7 +16,6 @@ FROM alpine:edge as production
 # install required packages & php extensions
 RUN apk --no-cache add \
     curl \
-    nginx \
     php8 \
     php8-ctype \
     php8-curl \
@@ -31,6 +30,7 @@ RUN apk --no-cache add \
     php8-openssl \
     php8-pdo_mysql \
     php8-phar \
+    php8-redis \
     php8-session \
     php8-tokenizer \
     php8-xml \
@@ -38,7 +38,8 @@ RUN apk --no-cache add \
     php8-zlib \
     supervisor \
     composer \
-    tzdata
+    tzdata \
+    nginx
 
 # set the timezone
 RUN cp /usr/share/zoneinfo/UTC /etc/localtime \
