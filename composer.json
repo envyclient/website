@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0",
         "ext-openssl": "*",
+        "ext-redis": "*",
         "ext-zip": "*",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.0",
@@ -17,6 +18,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "larabug/larabug": "^2.3",
         "laravel/framework": "^8.0",
+        "laravel/horizon": "^5.7",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.3",
@@ -69,6 +71,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan horizon:publish --ansi"
         ]
     }
 }

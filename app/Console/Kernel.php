@@ -16,16 +16,16 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('envy:delete-cancelled-subscriptions')
-            ->everyMinute();
-
         // prune models
-        $schedule->command('model:prune')
-            ->daily();
+        $schedule->command('model:prune')->daily();
+
+        $schedule->command('envy:delete-cancelled-subscriptions')->everyMinute();
 
         // delete any old  minecraft accounts
-        $schedule->command('envy:delete-old-minecraft-accounts')
-            ->daily();
+        $schedule->command('envy:delete-old-minecraft-accounts')->daily();
+
+        // laravel horizon
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
         // backup
         $schedule->command('backup:clean')
