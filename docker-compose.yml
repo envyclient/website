@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  database:
+    image: mariadb:10.6
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - "./database:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+      interval: 30s
+  website:
+    image: ghcr.io/envyclient/website:latest
+    restart: always
+    env_file: .env
+    depends_on:
+      - database
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.pqueue.schedule: "@every 1m"
+      ofelia.job-exec.pqueue.command: "php /var/www/html/artisan schedule:run"
+      ofelia.job-exec.pqueue.user: "nginx"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/var/www/html/storage/logs
+  ofelia:
+    image: mcuadros/ofelia
+    restart: always
+    network_mode: none
+    depends_on:
+      - website
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

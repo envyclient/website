@@ -9,10 +9,6 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    const EMAILS = [
-        'haqgamer66@gmail.com',
-    ];
-
     protected $commands = [
         DeleteCancelledSubscriptionsCommand::class,
         DeleteOldMinecraftAccountsCommand::class,
@@ -21,21 +17,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('envy:delete-cancelled-subscriptions')
-            ->everyMinute()
-            ->emailOutputOnFailure(self::EMAILS);
+            ->everyMinute();
 
         // prune models
-        $schedule->command('model:prune')->daily();
+        $schedule->command('model:prune')
+            ->daily();
 
         // delete any old  minecraft accounts
         $schedule->command('envy:delete-old-minecraft-accounts')
-            ->daily()
-            ->emailOutputOnFailure(self::EMAILS);
-
-        // clear channels every 3 days
-        // $schedule->command('discord:clear')
-        //    ->cron('0 0 */3 * *')
-        //    ->emailOutputTo(self::EMAILS);
+            ->daily();
 
         // backup
         $schedule->command('backup:clean')
