@@ -198,11 +198,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasBetaAccess(): bool
     {
-        return $this->admin || ($this->hasSubscription() && $this->subscription->plan->beta_access);
+        return $this->hasSubscription() && $this->subscription->plan->beta_access;
     }
 
     public function hasCapesAccess(): bool
     {
-        return $this->admin || ($this->hasSubscription() && $this->subscription->plan->capes_access);
+        return $this->hasSubscription() && $this->subscription->plan->capes_access;
     }
 }

@@ -22,9 +22,5 @@ php artisan migrate --force
 echo -e "symlink storage"
 php artisan storage:link
 
-# start cron jobs
-echo -e "starting cron jobs"
-crond -L /var/log/crond -l 5
-
 echo -e "starting supervisord"
 exec "$@"

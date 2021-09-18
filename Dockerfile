@@ -65,25 +65,24 @@ COPY .docker/nginx.conf /etc/nginx/nginx.conf
 RUN mkdir -p /var/www/html
 
 # fix permissions
-RUN chown -R nobody:nobody /var/www/html \
-    && chown -R nobody:nobody /run \
-    && chown -R nobody:nobody /var/lib/nginx \
-    && chown -R nobody:nobody /var/log/nginx
+RUN chown -R nginx:nginx /var/www/html \
+    && chown -R nginx:nginx /run \
+    && chown -R nginx:nginx /var/lib/nginx \
+    && chown -R nginx:nginx /var/log/nginx
 
 # schedule cron job
-RUN echo "* * * * * php /var/www/html/artisan schedule:run > /dev/stdout 2>&1" | crontab -
+#RUN echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/stdout 2>&1" | crontab -
 
-# switch to non-root user
-USER nobody
+USER nginx
 
 # create the app directory
 WORKDIR /var/www/html
 
 # copy over project files
-COPY --chown=nobody . /var/www/html
+COPY --chown=nginx . /var/www/html
 
 # copy over built assets from npm-build
-COPY --from=npm-build --chown=nobody /app/public ./public
+COPY --from=npm-build --chown=nginx /app/public ./public
 
 # install composer dependencies
 RUN composer install --optimize-autoloader --no-dev

@@ -21,9 +21,23 @@ services:
     image: ghcr.io/envyclient/website:latest
     restart: always
     env_file: .env
-    ports:
-      - "8080:8080"
     depends_on:
       - database
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.pqueue.schedule: "@every 1m"
+      ofelia.job-exec.pqueue.command: "php /var/www/html/artisan schedule:run"
+      ofelia.job-exec.pqueue.user: "nobody"
+    ports:
+      - "8080:8080"
     volumes:
       - ./logs:/var/www/html/storage/logs
+  ofelia:
+    image: mcuadros/ofelia
+    restart: always
+    network_mode: none
+    depends_on:
+      - website
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
