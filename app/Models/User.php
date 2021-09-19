@@ -45,7 +45,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read Collection configs
  * @property-read Subscription|null subscription
  * @property-read Plan|null plan
- * @property-read BillingAgreement|null billingAgreement
  * @property-read Collection downloads
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
@@ -151,11 +150,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOneThrough(Plan::class, Subscription::class, 'user_id', 'id', 'id', 'plan_id');
     }
 
-    public function billingAgreement(): HasOne
-    {
-        return $this->hasOne(BillingAgreement::class);
-    }
-
     public function downloads(): BelongsToMany
     {
         return $this->belongsToMany(Version::class, 'user_downloads', 'user_id', 'version_id');
@@ -189,11 +183,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasSubscription(): bool
     {
         return $this->subscription()->exists();
-    }
-
-    public function hasBillingAgreement(): bool
-    {
-        return $this->billingAgreement()->exists();
     }
 
     public function hasBetaAccess(): bool

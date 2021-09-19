@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\PayPal\Actions;
 
-use App\Events\Subscription\SubscriptionCancelledEvent;
 use App\Events\Subscription\SubscriptionCreatedEvent;
-use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
+use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
-use App\Models\BillingAgreement;
 use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class HandlePayPalWebhook extends Controller
 {
@@ -24,83 +21,87 @@ class HandlePayPalWebhook extends Controller
 
         switch ($request->json('event_type')) {
 
-            // received payment so we extend or create subscription
-            case 'PAYMENT.SALE.COMPLETED':
+            // subscription created for the user
+            case 'BILLING.SUBSCRIPTION.CREATED':
             {
-                // get the user that this billing id belongs to
-                $billingAgreement = BillingAgreement::where(
-                    'billing_agreement_id',
-                    $request->json('resource.billing_agreement_id')
-                )->firstOrFail();
-
-                $user = $billingAgreement->user;
-
-                if ($user->hasSubscription()) {
-                    $user->subscription->update([
-                        'end_date' => now()->addMonth()
-                    ]);
-
-                    self::createInvoice(
-                        $user->id,
-                        $user->subscription->id,
-                        Invoice::PAYPAL,
-                        $user->subscription->plan->price
-                    );
-                } else {
-                    $subscription = Subscription::create([
-                        'user_id' => $user->id,
-                        'plan_id' => $billingAgreement->plan_id,
-                        'billing_agreement_id' => $billingAgreement->id,
-                        'end_date' => now()->addMonth(),
-                    ]);
-
-                    self::createInvoice(
-                        $user->id,
-                        $subscription->id,
-                        Invoice::PAYPAL,
-                        $billingAgreement->plan->price
-                    );
-
-                    event(new SubscriptionCreatedEvent($subscription));
-                }
                 break;
             }
 
-            // paypal could not process the payment
-            case 'PAYMENT.SALE.PENDING':
+            // subscription activated for the user
+            case 'BILLING.SUBSCRIPTION.ACTIVATED':
             {
+
+                // get the subscription
+                $subscription = Subscription::where('paypal_id', $request->json('resource.id'))
+                    ->firstOrFail();
+
+                // set the subscription as active
+                $subscription->update([
+                    'status' => Subscription::ACTIVE,
+                    //'end_date' => Carbon::parse($request->json('resource.billing_info.next_billing_time')),
+                ]);
+
+                // broadcast new subscription event
+                event(new SubscriptionCreatedEvent($subscription));
+
+                break;
+            }
+
+            // payment received for the subscription
+            case 'PAYMENT.SALE.COMPLETED':
+            {
+
+                // get the subscription
+                $subscription = Subscription::where('paypal_id', $request->json('resource.billing_agreement_id'))
+                    ->firstOrFail();
+
+                // extend the subscription
+                $subscription->update([
+                    'end_date' => now()->addMonth()
+                ]);
+
+                // create invoice for the payment
+                self::createInvoice(
+                    $subscription->user->id,
+                    $subscription->id,
+                    Invoice::PAYPAL,
+                    $subscription->plan->price
+                );
+
                 break;
             }
 
             // user has cancelled their subscription
             case 'BILLING.SUBSCRIPTION.CANCELLED':
             {
-                // get billing agreement
-                $billingAgreement = BillingAgreement::where('billing_agreement_id', $request->json('resource.id'))
+
+                // set the subscription as cancelled
+                Subscription::where('paypal_id', $request->json('resource.id'))
                     ->firstOrFail()
                     ->update([
                         'state' => Subscription::CANCELED,
                     ]);
 
-                // broadcast the subscription cancelled event
-                event(new SubscriptionCancelledEvent($billingAgreement->subscription));
-
                 break;
             }
 
+            case 'PAYMENT.SALE.PENDING':  // paypal could not process the payment
             case 'BILLING.SUBSCRIPTION.SUSPENDED': // subscription run out of retries
             case 'BILLING.SUBSCRIPTION.PAYMENT.FAILED': // payment has failed for a subscription
             {
-                // tell PayPal to cancel the users billing agreement
-                $response = Paypal::cancelBillingAgreement(
-                    $request->json('resource.id'),
-                    'Cancelling agreement due to payment fail.'
-                );
 
-                if ($response->failed()) {
-                    Log::debug($response);
-                    die(-1);
-                }
+                // get the subscription
+                $subscription = Subscription::where('paypal_id', $request->json('resource.id'))
+                    ->firstOrFail();
+
+                // mark the subscription as queued for cancellation
+                $subscription->update([
+                    'queued_for_cancellation' => true,
+                ]);
+
+                // dispatch the cancel subscription job
+                CancelSubscriptionJob::dispatch($subscription, Invoice::PAYPAL);
+
                 break;
             }
         }

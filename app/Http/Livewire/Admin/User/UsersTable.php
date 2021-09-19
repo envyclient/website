@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\User;
 
 use App\Models\Subscription;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,7 +21,8 @@ class UsersTable extends Component
 
     public function render()
     {
-        $user = User::with(['subscription.plan', 'referralCode:id,code', 'downloads:id,name'])
+        $user = User::query()
+            ->with(['subscription.plan', 'referralCode:id,code', 'downloads:id,name'])
             ->search($this->search);
 
         switch ($this->type) {
@@ -33,16 +33,12 @@ class UsersTable extends Component
             }
             case 'active-subscription':
             {
-                $user->whereHas('subscription.billingAgreement', function (Builder $query) {
-                    $query->where('state', 'Active');
-                });
+                $user->whereRelation('subscription', 'status', Subscription::ACTIVE);
                 break;
             }
             case 'cancelled-subscription':
             {
-                $user->whereHas('subscription.billingAgreement', function (Builder $query) {
-                    $query->where('state', Subscription::CANCELED);
-                });
+                $user->whereRelation('subscription', 'status', Subscription::CANCELED);
                 break;
             }
             case 'banned':
@@ -58,9 +54,7 @@ class UsersTable extends Component
         }
 
         if ($this->subscription !== 'ignore') {
-            $user->whereHas('subscription', function ($q) {
-                $q->where('plan_id', $this->subscription);
-            });
+            $user->whereRelation('subscription', 'plan_id', $this->subscription);
         }
 
         if ($this->referralCode !== 'ignore') {

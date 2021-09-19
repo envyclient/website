@@ -12,9 +12,9 @@ use Illuminate\Support\Carbon;
  *
  * @property integer user_id
  * @property integer plan_id
- * @property integer|null billing_agreement_id
+ * @property string|null paypal_id
  * @property string|null stripe_id
- * @property string|null stripe_status
+ * @property string status
  * @property Carbon end_date
  * @property boolean queued_for_cancellation
  *
@@ -24,21 +24,21 @@ use Illuminate\Support\Carbon;
  *
  * @property-read User user
  * @property-read Plan plan
- * @property-read BillingAgreement billingAgreement
  */
 class Subscription extends Model
 {
     use SoftDeletes;
 
+    const PENDING = 'Pending';
     const ACTIVE = 'Active';
     const CANCELED = 'Cancelled';
 
     protected $fillable = [
         'user_id',
         'plan_id',
-        'billing_agreement_id',
+        'paypal_id',
         'stripe_id',
-        'stripe_status',
+        'status',
         'end_date',
         'queued_for_cancellation',
     ];
@@ -46,7 +46,6 @@ class Subscription extends Model
     protected $casts = [
         'user_id' => 'integer',
         'plan_id' => 'integer',
-        'billing_agreement_id' => 'integer',
         'end_date' => 'datetime',
         'queued_for_cancellation' => 'boolean',
     ];
@@ -59,10 +58,5 @@ class Subscription extends Model
     public function plan(): BelongsTo
     {
         return $this->belongsTo(Plan::class);
-    }
-
-    public function billingAgreement(): BelongsTo
-    {
-        return $this->belongsTo(BillingAgreement::class, 'billing_agreement_id');
     }
 }

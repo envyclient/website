@@ -23,10 +23,10 @@ Route::post('cancel', CancelSubscription::class)
  * Paypal
  */
 Route::group(['prefix' => 'paypal'], function () {
-    Route::group(['middleware' => ['auth', 'verified', 'not-subscribed']], function () {
-        Route::post('process', [PayPalController::class, 'process'])->name('paypal.process');
-        Route::get('execute', [PayPalController::class, 'execute']);
-        Route::get('cancel', [PayPalController::class, 'cancel']);
+    Route::group(['middleware' => ['auth', 'verified']], function () {
+        Route::post('process', [PayPalController::class, 'checkout'])->name('paypal.checkout');
+        Route::get('success', [PayPalController::class, 'success'])->name('paypal.success');
+        Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
     });
 
     Route::post('webhook', HandlePayPalWebhook::class)

@@ -15,6 +15,20 @@ class CancelSubscription extends Controller
     {
         $subscription = $request->user()->subscription;
 
+        // check for already cancelled subscription
+        if ($subscription->status === Subscription::CANCELED) {
+            return redirect()
+                ->route('home.subscription')
+                ->with('error', 'You have already cancelled your subscription.');
+        }
+
+        // check if the user did not subscribe as subscription
+        if ($subscription->paypal_id === null && $subscription->stripe_id === null) {
+            return redirect()
+                ->route('home.subscription')
+                ->with('error', 'You do not need to cancel your subscription.');
+        }
+
         // users subscription is already in queue for cancellation
         if ($subscription->queued_for_cancellation) {
             return redirect()
@@ -24,37 +38,10 @@ class CancelSubscription extends Controller
 
         // cancel subscription
         if ($subscription->stripe_id !== null) {
-            return self::handleStripeCancellation($subscription);
+            return self::successful($subscription, Invoice::STRIPE);
         } else {
-            return self::handlePayPalCancellation($subscription);
+            return self::successful($subscription, Invoice::PAYPAL);
         }
-    }
-
-    private static function handleStripeCancellation(Subscription $subscription): RedirectResponse
-    {
-        // check for already cancelled subscription
-        if ($subscription->stripe_status === Subscription::CANCELED) {
-            return self::alreadyCancelled();
-        }
-
-        return self::successful($subscription, Invoice::STRIPE);
-    }
-
-    private static function handlePayPalCancellation(Subscription $subscription): RedirectResponse
-    {
-        // user does not have a reoccurring subscription
-        if (!$subscription->user->hasBillingAgreement()) {  // TODO: show cancelled message on sub page
-            return redirect()
-                ->route('home.subscription')
-                ->with('error', 'You do not need to cancel your subscription.');
-        }
-
-        // user already cancelled their PayPal billing agreement
-        if ($subscription->billingAgreement->state === Subscription::CANCELED) {
-            return self::alreadyCancelled();
-        }
-
-        return self::successful($subscription, Invoice::PAYPAL);
     }
 
     private static function successful(Subscription $subscription, string $provider): RedirectResponse
@@ -70,12 +57,5 @@ class CancelSubscription extends Controller
         return redirect()
             ->route('home.subscription')
             ->with('success', 'Your subscription has been queued for cancellation.');
-    }
-
-    private static function alreadyCancelled(): RedirectResponse
-    {
-        return redirect()
-            ->route('home.subscription')
-            ->with('error', 'You have already cancelled your subscription.');
     }
 }

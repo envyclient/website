@@ -88,7 +88,7 @@ class HandleStripeWebhook extends Controller
                         'user_id' => $user->id,
                         'plan_id' => $stripeSession->plan_id,
                         'stripe_id' => $request->json('data.object.subscription'),
-                        'stripe_status' => Subscription::ACTIVE,
+                        'status' => Subscription::ACTIVE,
                         'end_date' => now()->addMonth(),
                     ]);
 
