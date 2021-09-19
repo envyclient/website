@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\Subscription\SubscriptionExpiredEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -49,6 +50,14 @@ class Subscription extends Model
         'end_date' => 'datetime',
         'queued_for_cancellation' => 'boolean',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function (Subscription $subscription) {
+            event(new SubscriptionExpiredEvent($subscription));
+        });
+    }
 
     public function user(): BelongsTo
     {
