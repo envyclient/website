@@ -31,6 +31,7 @@ RUN apk --no-cache add \
     php8-pcntl \
     php8-pdo_mysql \
     php8-phar \
+    php8-posix \
     php8-redis \
     php8-session \
     php8-tokenizer \
