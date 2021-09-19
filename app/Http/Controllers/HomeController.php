@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         $user = auth()
             ->user()
-            ->load(['subscription', 'billingAgreement']);
+            ->load('subscription');
 
         return view('pages.dashboard.profile', compact('user'));
     }
@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
         $user = auth()
             ->user()
-            ->load(['subscription.plan', 'billingAgreement.plan']);
+            ->load('subscription.plan');
 
         // get all the non-free plans
         $plans = Plan::where('price', '<>', 0)->get();

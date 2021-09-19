@@ -12,6 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 
 class CancelSubscriptionJob implements ShouldQueue
 {
@@ -59,17 +60,17 @@ class CancelSubscriptionJob implements ShouldQueue
     private function handleStripe()
     {
         // tell stripe to cancel the users subscription
-        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+        $stripeClient = new \Stripe\StripeClient(config('services.stripe.secret'));
 
         // will throw exception if API call fails
-        $stripe->subscriptions->cancel(
+        $stripeClient->subscriptions->cancel(
             $this->subscription->stripe_id,
             []
         );
 
         // mark the users' subscription as cancelled on our end
         $this->subscription->update([
-            'stripe_status' => Subscription::CANCELED,
+            'status' => Subscription::CANCELED,
         ]);
     }
 
@@ -79,13 +80,14 @@ class CancelSubscriptionJob implements ShouldQueue
     private function handlePayPal()
     {
         // tell PayPal to cancel the users billing agreement
-        $response = Paypal::cancelBillingAgreement(
-            $this->subscription->billingAgreement->billing_agreement_id,
-            'User cancelled subscription.'
-        );
+        $response = HTTP::withToken(Paypal::getAccessToken())
+            ->withBody(json_encode([
+                'note' => 'User cancelled subscription.'
+            ]), 'application/json')
+            ->post(config('services.paypal.endpoint') . '/v1/billing/subscriptions/' . $this->subscription->paypal_id . '/cancel');
 
         // user has already cancelled agreement or something went wrong
-        if ($response->failed()) {
+        if ($response->status() !== 204) {
             throw new Exception('PayPal API request failed.');
         }
 

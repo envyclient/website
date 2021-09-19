@@ -4,7 +4,7 @@
     <div class="bg-white py-6 px-4 sm:p-6">
         <h4 class="text-2xl font-semibold">{{ $plan->name }}</h4>
         <h6 class="my-3 text-large font-medium">
-            <span class="text-xl">${{ $plan->price }}</span> USD / monthly
+            <span class="text-xl">(${{ $plan->price }} USD, ${{ number_format($plan->cad_price / 100) }} CAD) / monthly</span>
         </h6>
 
         <div class="mb-3 group flex items-center space-x-2">

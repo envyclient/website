@@ -3,7 +3,6 @@
 namespace App\Helpers;
 
 use Exception;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 class Paypal
@@ -29,22 +28,5 @@ class Paypal
         }
 
         return $response->json('access_token');
-    }
-
-    /**
-     *
-     *
-     * @param string $id the id of the billing agreement
-     * @param string $message the reason the billing agreement was cancelled
-     * @return Response the response of the request
-     * @throws Exception
-     */
-    public static function cancelBillingAgreement(string $id, string $message): Response
-    {
-        return HTTP::withToken(self::getAccessToken())
-            ->withBody(json_encode([
-                'note' => $message
-            ]), 'application/json')
-            ->post(config('services.paypal.endpoint') . "/v1/payments/billing-agreements/$id/cancel");
     }
 }
