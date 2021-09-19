@@ -28,6 +28,7 @@ RUN apk --no-cache add \
     php8-mbstring \
     php8-opcache \
     php8-openssl \
+    php8-pcntl \
     php8-pdo_mysql \
     php8-phar \
     php8-redis \

@@ -14,7 +14,7 @@ class UpdateSubscriptionsTable extends Migration
     public function up()
     {
         Schema::table('subscriptions', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('billing_agreement_id');
+            $table->dropColumn('billing_agreement_id');
 
             $table->renameColumn('stripe_status', 'status');
             $table->datetime('end_date')->nullable()->change();
