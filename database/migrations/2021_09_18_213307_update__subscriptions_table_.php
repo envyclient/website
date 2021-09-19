@@ -19,7 +19,7 @@ class UpdateSubscriptionsTable extends Migration
             $table->renameColumn('stripe_status', 'status');
             $table->datetime('end_date')->nullable()->change();
 
-            $table->string('paypal_id')->nullable();
+            $table->string('paypal_id')->nullable()->after('plan_id');
         });
     }
 
