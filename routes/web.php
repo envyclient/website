@@ -7,13 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Admin\LicenseRequestsTable;
 use App\Http\Livewire\Admin\User\UsersTable;
 use App\Http\Middleware\Custom\Setup\CheckIfPasswordNull;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-
-Route::get('test', function (){
-    return Carbon::parse('2021-10-18T10:00:00Z')->format('Y-m-d H:i:s');
-});
 
 /**
  * Dashboard Pages
