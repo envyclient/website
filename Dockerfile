@@ -25,11 +25,11 @@ RUN apk --no-cache add \
     php8-xml \
     php8-xmlreader \
     php8-zlib \
-    tzdata \
     nginx
 
 # set the timezone
-RUN cp /usr/share/zoneinfo/UTC /etc/localtime \
+RUN apk add --no-cache tzdata \
+    && cp /usr/share/zoneinfo/UTC /etc/localtime \
     && echo "UTC" > /etc/timezone \
     && apk del tzdata
 
@@ -97,7 +97,7 @@ COPY --from=composer-build --chown=nginx /app ./
 COPY --from=npm-build --chown=nginx /app/public ./public
 
 # fix permissions
-RUN chmod -R 755 storage/* bootstrap/cache
+RUN chmod -R 755 storage/ bootstrap/
 
 # expose nginx port
 EXPOSE 8080
