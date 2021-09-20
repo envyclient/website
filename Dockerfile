@@ -1,17 +1,4 @@
-# stage 0
-FROM mhart/alpine-node:16 as npm-build
-
-# create the app directory
-WORKDIR /app
-
-# copy over project files
-COPY . /app
-
-# build production js & css
-RUN npm install && npm run prod
-
-# stage 1
-FROM alpine:edge as production
+FROM alpine:edge as base
 
 # install required packages & php extensions
 RUN apk --no-cache add \
@@ -38,8 +25,6 @@ RUN apk --no-cache add \
     php8-xml \
     php8-xmlreader \
     php8-zlib \
-    supervisor \
-    composer \
     tzdata \
     nginx
 
@@ -58,9 +43,6 @@ RUN ln -s /usr/bin/php8 /usr/bin/php
 COPY .docker/fpm-pool.conf /etc/php8/php-fpm.d/www.conf
 COPY .docker/php.ini /etc/php8/conf.d/99_envy.ini
 
-# configure supervisord
-COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
 # configure nginx
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 
@@ -73,28 +55,48 @@ RUN chown -R nginx:nginx /var/www/html \
     && chown -R nginx:nginx /var/lib/nginx \
     && chown -R nginx:nginx /var/log/nginx
 
+FROM base as composer-build
+
+# install composer
+RUN apk --no-cache add composer
+
+# create the app directory
+WORKDIR /app
+
+# copy project folder
+COPY . ./
+
+# install composer dependencies
+RUN composer install --optimize-autoloader --no-dev
+
+FROM mhart/alpine-node:16 as npm-build
+
+# create the app directory
+WORKDIR /app
+
+# copy over required files for building css & js
+COPY package.json package-lock.json tailwind.config.js webpack.mix.js ./
+COPY resources/ ./resources
+COPY config/ ./config
+
+# build production css & js
+RUN npm install && npm run prod
+
+FROM base as production
+
+# swtich to nginx user
 USER nginx
 
 # create the app directory
 WORKDIR /var/www/html
 
-# copy over project files
-COPY --chown=nginx . /var/www/html
+# copy over project files from composer-build
+COPY --from=composer-build --chown=nginx /app ./
 
 # copy over built assets from npm-build
 COPY --from=npm-build --chown=nginx /app/public ./public
 
-# install composer dependencies
-RUN composer install --optimize-autoloader --no-dev
-
-# export nginx port
+# expose nginx port
 EXPOSE 8080
 
-# entry point
 ENTRYPOINT ["/bin/ash", ".docker/entrypoint.sh"]
-
-# supervioser start php-fpm & nginx & queue-worker
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
-# health check
-HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD curl -sf http://127.0.0.1:8080/fpm-ping
