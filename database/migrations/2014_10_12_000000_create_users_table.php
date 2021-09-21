@@ -4,48 +4,37 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-
             $table->string('api_token', 60)->unique();
             $table->string('hwid', 40)->nullable()->unique();
-            $table->string('image');
-
             $table->string('cape');
-            $table->char('current_account', 36)->nullable();
-
+            $table->uuid('current_account')->nullable();
             $table->boolean('admin')->default(false);
             $table->boolean('banned')->default(false);
-            $table->boolean('disabled')->default(false);
-
             $table->string('stripe_id')->nullable();
+
+            $table->unsignedBigInteger('referral_code_id')->nullable();
+            $table->timestamp('referral_code_used_at')->nullable();
+
+            $table->string('discord_id', 18)->nullable()->unique();
+            $table->string('discord_name')->nullable();
 
             $table->rememberToken();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('users');
     }
-}
+};

@@ -4,40 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubscriptionsTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('plan_id')->constrained();
-
-            // paypal
-            $table->foreignId('billing_agreement_id')->nullable()->constrained();
-
-            // stripe
+            $table->string('paypal_id')->nullable();
             $table->string('stripe_id')->nullable();
-            $table->string('stripe_status')->nullable();
-
-            $table->timestamp('end_date');
+            $table->string('status');
+            $table->boolean('queued_for_cancellation')->default(false);
+            $table->timestamp('end_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('subscriptions');
     }
-}
+};
