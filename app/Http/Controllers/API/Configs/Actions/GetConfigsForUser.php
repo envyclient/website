@@ -22,6 +22,7 @@ class GetConfigsForUser extends ConfigsController
     {
         $data = collect();
         foreach ($user->configs()
+                     ->with(['user:id,name', 'version:id,name'])
                      ->withCount('favorites')
                      ->orderBy('favorites_count', 'desc')
                      ->get() as $config) {
@@ -29,6 +30,7 @@ class GetConfigsForUser extends ConfigsController
         }
 
         foreach ($user->getFavoriteItems(Config::class)
+                     ->with(['user:id,name', 'version:id,name'])
                      ->withCount('favorites')
                      ->orderBy('favorites_count', 'desc')
                      ->get() as $config) {
@@ -42,6 +44,7 @@ class GetConfigsForUser extends ConfigsController
     {
         return ConfigResource::collection(
             $user->configs()
+                ->with(['user:id,name', 'version:id,name'])
                 ->where('public', true)
                 ->withCount('favorites')
                 ->orderBy('favorites_count', 'desc')

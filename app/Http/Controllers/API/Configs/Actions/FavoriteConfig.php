@@ -10,16 +10,11 @@ class FavoriteConfig extends ConfigsController
 {
     public function __invoke(Request $request, Config $config)
     {
-        $user = $request->user();
-
         // can not favorite own config
-        if ($config->user_id === $user->id) {
-            return response()->json([
-                'message' => 'You can not favorite your own config.'
-            ], 403);
-        }
+        $this->authorize('favorite', $config);
 
-        $user->toggleFavorite($config);
+        // favorite or unfavorite the config depending on ont the status
+        $request->user()->toggleFavorite($config);
 
         return self::ok();
     }

@@ -7,41 +7,32 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     public function login(Request $request): UserResource|JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $data = $this->validate($request, [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
             'hwid' => ['required', 'string', 'min:40', 'max:40'],
         ]);
 
-        if ($validator->fails()) {
-            return self::bad();
-        }
-
         if (!auth()->attempt(request(['email', 'password']))) {
             return self::unauthorized();
         }
 
-        return $this->returnUserObject(auth()->user(), $request->hwid);
+        return $this->returnUserObject($request->user(), $data['hwid']);
     }
 
     public function me(Request $request): UserResource|JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $data = $this->validate($request, [
             'hwid' => ['required', 'string', 'min:40', 'max:40'],
         ]);
 
-        if ($validator->fails()) {
-            return self::bad();
-        }
-
-        $user = User::where('hwid', $request->hwid)->firstOrFail();
-        return $this->returnUserObject($user, $user->hwid);
+        $user = User::where('hwid', $data['hwid'])->firstOrFail();
+        return $this->returnUserObject($user, $data['hwid']);
     }
 
     private static function returnUserObject(User $user, string $hwid): UserResource|JsonResponse

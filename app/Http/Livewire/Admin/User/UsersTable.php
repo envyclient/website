@@ -79,6 +79,7 @@ class UsersTable extends Component
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,
+                'status' => Subscription::ACTIVE,
                 'end_date' => now()->addMonth(),
             ]);
         }

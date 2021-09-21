@@ -54,7 +54,10 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Favoriter, HasFactory, Prunable;
+    use Notifiable;
+    use Favoriter;
+    use HasFactory;
+    use Prunable;
 
     protected $fillable = [
         'name',

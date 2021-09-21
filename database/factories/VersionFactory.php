@@ -4,20 +4,19 @@ namespace Database\Factories;
 
 use App\Models\Version;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class VersionFactory extends Factory
 {
     protected $model = Version::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'name' => $this->faker->firstName,
+            'name' => 'Envy ' . $this->faker->randomFloat(1, 1, 9),
             'beta' => $this->faker->boolean(),
-            'version' => 'versions/' . Str::random(20) . '/version.exe',
-            'assets' => 'versions/' . Str::random(20) . '/assets.jar',
             'changelog' => 'test\ntest\ntest\n',
+            'main_class' => 'test',
+            'processed_at' => now(),
         ];
     }
 }

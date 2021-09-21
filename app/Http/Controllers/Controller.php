@@ -32,7 +32,7 @@ class Controller extends BaseController
     {
         return response()->json([
             'message' => '200 OK',
-        ]);
+        ], 200);
     }
 
     protected static function createInvoice(int $user, int $subscription, string $method, int $price)

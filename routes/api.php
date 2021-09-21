@@ -25,11 +25,12 @@ Route::group(['prefix' => 'auth'], function () {
  */
 Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
     Route::group(['prefix' => 'configs'], function () {
-        Route::get('user/{name?}', GetConfigsForUser::class);
-        Route::put('{config}/favorite', FavoriteConfig::class);
+        Route::get('user/{name?}', GetConfigsForUser::class)->name('configs.search');
+        Route::put('{config}/favorite', FavoriteConfig::class)->name('configs.favorite');
     });
 
-    Route::resource('configs', ConfigsController::class);
+    Route::resource('configs', ConfigsController::class)
+        ->only(['index', 'show', 'store', 'update', 'destroy']);
 });
 
 /**

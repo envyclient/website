@@ -225,6 +225,7 @@ class HandleStripeWebhook extends Controller
                 $subscription = Subscription::create([
                     'user_id' => $source->user_id,
                     'plan_id' => $source->plan_id,
+                    'status' => Subscription::ACTIVE,
                     'end_date' => now()->addMonth(),
                 ]);
 
