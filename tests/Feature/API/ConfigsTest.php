@@ -184,7 +184,7 @@ class ConfigsTest extends TestCase
     {
         $user = self::subscribedUser();
         $config = Config::factory()->create([
-            'user_id' => $this->user()->id,
+            'user_id' => self::user()->id,
             'version_id' => 1,
         ]);
 

@@ -23,7 +23,7 @@ class CapesTest extends TestCase
         Storage::fake('public');
 
         // create non-admin user
-        $user = $this->user();
+        $user = self::user();
 
         // upload a invalid cape
         $this->upload_cape(
@@ -41,7 +41,7 @@ class CapesTest extends TestCase
         Storage::fake('public');
 
         // create non-admin user
-        $user = $this->user();
+        $user = self::user();
 
         // upload a valid cape
         $this->upload_cape(
@@ -60,7 +60,7 @@ class CapesTest extends TestCase
         Storage::fake('public');
 
         // create non-admin user
-        $user = $this->user();
+        $user = self::user();
 
         // upload a valid cape
         $this->upload_cape(
