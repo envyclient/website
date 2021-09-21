@@ -12,6 +12,13 @@ class UsersTest extends TestCase
 {
     use RefreshDatabase;
 
+    // todo: can admin edit user name
+    // todo: can admin give subscription
+    // todo: can admin remove subscription
+    // todo can admin ban user
+    // todo: can admin unban user
+    // todo: can admin reset user hwid
+
     /** @test */
     public function can_admin_reset_user_hwid()
     {

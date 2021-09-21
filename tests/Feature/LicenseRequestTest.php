@@ -55,7 +55,7 @@ class LicenseRequestTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_two_active_license_requests()
+    public function can_user_not_create_2_active_license_requests()
     {
         $this->actingAs(self::user());
 

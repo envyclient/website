@@ -15,16 +15,6 @@
                         <x-input.text wire:model="user.name" id="name"/>
                     </x-input.group>
 
-                    {{-- HWID Toggle--}}
-                    <x-input.group for="hwid" label="HWID">
-                        <x-input.toggle wire:model="user.hwid" id="hwid"/>
-                    </x-input.group>
-
-                    {{-- Banned Toggle--}}
-                    <x-input.group for="banned" label="Banned">
-                        <x-input.toggle wire:model="user.banned" id="banned"/>
-                    </x-input.group>
-
                 </div>
             </x-slot>
 
