@@ -25,7 +25,7 @@ class LicenseRequestTest extends TestCase
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit');
 
-        $this->assertEquals(1, LicenseRequest::count());
+        $this->assertDatabaseCount(LicenseRequest::class, 1);
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class LicenseRequestTest extends TestCase
             ->call('submit')
             ->assertHasErrors('channel');
 
-        $this->assertEquals(0, LicenseRequest::count());
+        $this->assertDatabaseCount(LicenseRequest::class, 0);
     }
 
     /** @test */
@@ -51,7 +51,7 @@ class LicenseRequestTest extends TestCase
             ->call('submit')
             ->assertHasErrors('channel');
 
-        $this->assertEquals(0, LicenseRequest::count());
+        $this->assertDatabaseCount(LicenseRequest::class, 0);
     }
 
     /** @test */
@@ -63,13 +63,13 @@ class LicenseRequestTest extends TestCase
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit');
 
-        $this->assertEquals(1, LicenseRequest::count());
+        $this->assertDatabaseCount(LicenseRequest::class, 1);
 
         Livewire::test(MediaRequests::class)
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit')
             ->assertHasErrors('channel');
 
-        $this->assertEquals(1, LicenseRequest::count());
+        $this->assertDatabaseCount(LicenseRequest::class, 1);
     }
 }
