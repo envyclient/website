@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\User;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class EditUserModal extends Component
@@ -12,7 +11,7 @@ class EditUserModal extends Component
     public User $user;
 
     protected array $rules = [
-        'user.name' => 'required|alpha_dash',
+        'user.name' => ['required', 'string', 'min:3', 'max:255', 'alpha_dash'],
     ];
 
     // make empty user

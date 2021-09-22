@@ -66,26 +66,25 @@ class UsersTable extends Component
         ])->extends('layouts.dash');
     }
 
-    public function updateFreeSubscription(User $user, bool $removing = false): void
+    public function updateFreeSubscription(User $user, bool $remove): void
     {
-        if ($removing) {
+        if ($remove) {
             $user->subscription()
                 ->where('plan_id', 1)
                 ->delete();
         } else {
-            $user->subscription()
-                ->create([
-                    'plan_id' => 1,
-                    'status' => Subscription::ACTIVE,
-                    'end_date' => now()->addMonth(),
-                ]);
+            $user->subscription()->create([
+                'plan_id' => 1,
+                'status' => Subscription::ACTIVE,
+                'end_date' => now()->addMonth(),
+            ]);
         }
     }
 
-    public function updateUserBan(User $user, bool $removing = false): void
+    public function updateUserBan(User $user, bool $state): void
     {
         $user->update([
-            'banned' => !$removing,
+            'banned' => $state,
         ]);
     }
 

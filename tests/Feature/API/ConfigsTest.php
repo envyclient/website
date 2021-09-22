@@ -105,7 +105,7 @@ class ConfigsTest extends TestCase
     public function can_user_not_go_over_config_limit()
     {
         $user = $this->subscribedUser();
-        Config::factory()->count($user->plan->config_limit)->create([
+        Config::factory()->count($user->subscription->plan->config_limit)->create([
             'user_id' => $user->id,
             'version_id' => 1.
         ]);
@@ -114,7 +114,7 @@ class ConfigsTest extends TestCase
             ->postJson(route('configs.store'), self::VALID_CONFIG)
             ->assertStatus(406);
 
-        $this->assertDatabaseCount(Config::class, $user->plan->config_limit);
+        $this->assertDatabaseCount(Config::class, $user->subscription->plan->config_limit);
 
     }
 

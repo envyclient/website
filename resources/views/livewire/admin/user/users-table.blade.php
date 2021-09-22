@@ -178,7 +178,7 @@
                                            @click="$dispatch('edit-user-modal', {{ $user->id }})">
                                 Edit
                             </x-button.link>
-                            @if($user->subscription !== null && $user->plan->id === 1)
+                            @if($user->subscription?->plan->id === 1)
                                 <x-button.link class="block text-red-600 hover:text-red-900"
                                                onclick="confirm('Remove Free Subscription?') || event.stopImmediatePropagation()"
                                                wire:click.prevent="updateFreeSubscription({{ $user->id }}, true)">
@@ -187,20 +187,20 @@
                             @elseif($user->subscription === null)
                                 <x-button.link class="block text-indigo-600 hover:text-indigo-900"
                                                onclick="confirm('Give Free Subscription?') || event.stopImmediatePropagation()"
-                                               wire:click.prevent="updateFreeSubscription({{ $user->id }})">
+                                               wire:click.prevent="updateFreeSubscription({{ $user->id }}, false)">
                                     Give Subscription
                                 </x-button.link>
                             @endif
                             @if($user->banned)
                                 <x-button.link class="block text-indigo-600 hover:text-indigo-900"
                                                onclick="confirm('Ban user?') || event.stopImmediatePropagation()"
-                                               wire:click.prevent="updateUserBan({{ $user->id }}, true)">
+                                               wire:click.prevent="updateUserBan({{ $user->id }}, false)">
                                     Unban User
                                 </x-button.link>
                             @else
                                 <x-button.link class="block text-red-600 hover:text-red-900"
                                                onclick="confirm('Unban user?') || event.stopImmediatePropagation()"
-                                               wire:click.prevent="updateUserBan({{ $user->id }})">
+                                               wire:click.prevent="updateUserBan({{ $user->id }}, true)">
                                     Ban User
                                 </x-button.link>
                             @endif
