@@ -20,9 +20,6 @@ use Illuminate\Support\Carbon;
  * @property boolean beta_access
  * @property boolean capes_access
  *
- * @property-read Carbon created_at
- * @property-read Carbon updated_at
- *
  * @property-read Collection subscriptions
  */
 class Plan extends Model

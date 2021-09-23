@@ -10,7 +10,7 @@ class UserFactory extends Factory
 {
     protected $model = User::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->name,
@@ -19,8 +19,8 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'api_token' => Str::random(60),
             'hwid' => Str::random(40),
-            'admin' => 0,
-            'banned' => 0,
+            'admin' => false,
+            'banned' => false,
             'cape' => '',
             'current_account' => null,
             'referral_code_id' => null,

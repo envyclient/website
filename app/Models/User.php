@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -49,12 +48,14 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
  * @property-read Collection licenseRequest
- * @property-read Collection stripeSessions
  * @property-read Collection stripeSources
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Favoriter, HasFactory, Prunable;
+    use Notifiable;
+    use Favoriter;
+    use HasFactory;
+    use Prunable;
 
     protected $fillable = [
         'name',
@@ -145,11 +146,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Subscription::class);
     }
 
-    public function plan(): HasOneThrough
-    {
-        return $this->hasOneThrough(Plan::class, Subscription::class, 'user_id', 'id', 'id', 'plan_id');
-    }
-
     public function downloads(): BelongsToMany
     {
         return $this->belongsToMany(Version::class, 'user_downloads', 'user_id', 'version_id');
@@ -168,11 +164,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function licenseRequests(): HasMany
     {
         return $this->hasMany(LicenseRequest::class);
-    }
-
-    public function stripeSessions(): HasMany
-    {
-        return $this->hasMany(StripeSession::class);
     }
 
     public function stripeSources(): HasMany

@@ -12,11 +12,11 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  * @property-read integer id
  *
  * @property integer user_id
+ * @property integer version_id
  * @property string name
  * @property array data
  * @property boolean public
  * @property boolean official
- * @property integer version_id
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
@@ -32,19 +32,19 @@ class Config extends Model
 
     protected $fillable = [
         'user_id',
+        'version_id',
         'name',
         'data',
         'public',
         'official',
-        'version_id',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
+        'version_id' => 'integer',
         'data' => 'array',
         'public' => 'boolean',
         'official' => 'boolean',
-        'version_id' => 'integer',
     ];
 
     public function user(): BelongsTo

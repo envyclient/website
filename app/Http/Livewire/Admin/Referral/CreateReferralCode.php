@@ -23,17 +23,18 @@ class CreateReferralCode extends Component
 
     public function submit()
     {
-        $validatedData = $this->validate();
+        $data = $this->validate();
 
         // getting the name beholder
-        $user = User::where('name', $validatedData['user'])->first();
+        $user = User::where('name', $data['user'])->first();
 
         // inserting into the db
         ReferralCode::create([
             'user_id' => $user->id,
-            'code' => $validatedData['code'],
+            'code' => $data['code'],
         ]);
 
+        // reset fields
         $this->user = '';
         $this->code = '';
 

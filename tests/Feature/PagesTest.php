@@ -98,7 +98,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_see_home()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('home'))
             ->assertOk();
     }
@@ -106,7 +106,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_see_profile()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('home.profile'))
             ->assertOk();
     }
@@ -114,7 +114,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_see_subscription()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('home.subscription'))
             ->assertOk();
     }
@@ -126,7 +126,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_not_see_users()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('admin.users'))
             ->assertRedirect(route('home'));
     }
@@ -134,7 +134,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_not_see_versions()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('admin.versions'))
             ->assertRedirect(route('home'));
     }
@@ -142,7 +142,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_not_see_launcher_and_loader()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('admin.launcher-loader'))
             ->assertRedirect(route('home'));
     }
@@ -150,7 +150,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_not_see_referral_codes()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('admin.referrals'))
             ->assertRedirect(route('home'));
     }
@@ -158,7 +158,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_user_not_see_license_requests()
     {
-        $this->actingAs($this->user())
+        $this->actingAs(self::user())
             ->get(route('admin.license-requests'))
             ->assertRedirect(route('home'));
     }
@@ -170,7 +170,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_admin_see_users()
     {
-        $this->actingAs($this->admin())
+        $this->actingAs(self::admin())
             ->get(route('admin.users'))
             ->assertOk();
     }
@@ -178,7 +178,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_admin_see_versions()
     {
-        $this->actingAs($this->admin())
+        $this->actingAs(self::admin())
             ->get(route('admin.versions'))
             ->assertOk();
     }
@@ -186,7 +186,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_admin_see_launcher_and_loader()
     {
-        $this->actingAs($this->admin())
+        $this->actingAs(self::admin())
             ->get(route('admin.launcher-loader'))
             ->assertOk();
     }
@@ -194,7 +194,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_admin_see_referral_codes()
     {
-        $this->actingAs($this->admin())
+        $this->actingAs(self::admin())
             ->get(route('admin.referrals'))
             ->assertOk();
     }
@@ -202,7 +202,7 @@ class PagesTest extends TestCase
     /** @test */
     public function can_admin_see_license_requests()
     {
-        $this->actingAs($this->admin())
+        $this->actingAs(self::admin())
             ->get(route('admin.license-requests'))
             ->assertOk();
     }

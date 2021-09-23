@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\User;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class EditUserModal extends Component
@@ -12,9 +11,7 @@ class EditUserModal extends Component
     public User $user;
 
     protected array $rules = [
-        'user.name' => 'required|alpha_dash',
-        'user.hwid' => 'nullable|string|min:40|max:40',
-        'user.banned' => 'required|bool',
+        'user.name' => ['required', 'string', 'min:3', 'max:255', 'alpha_dash'],
     ];
 
     // make empty user
@@ -32,12 +29,6 @@ class EditUserModal extends Component
 
     public function save(): void
     {
-        // update hwid to use strings
-        $this->user->hwid = match ($this->user->hwid) {
-            true => Str::random(40),
-            default => null
-        };
-
         // validate the user & save
         $this->validate();
         $this->user->save();

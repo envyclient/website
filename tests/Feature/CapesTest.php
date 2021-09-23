@@ -10,6 +10,7 @@ use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
 class CapesTest extends TestCase
@@ -22,11 +23,13 @@ class CapesTest extends TestCase
         Storage::fake('public');
 
         // create non-admin user
-        $user = $this->user();
+        $user = self::user();
 
         // upload a invalid cape
-        $this->upload_cape($user, UploadedFile::fake()->image('cape.png', 10, 10))
-            ->assertHasErrors('cape');
+        $this->upload_cape(
+            $user,
+            UploadedFile::fake()->image('cape.png', 1, 1)
+        )->assertHasErrors('cape');
 
         // assert that cape does exist
         Storage::disk('public')->assertMissing('capes/' . md5($user->email) . '.png');
@@ -38,10 +41,13 @@ class CapesTest extends TestCase
         Storage::fake('public');
 
         // create non-admin user
-        $user = $this->user();
+        $user = self::user();
 
         // upload a valid cape
-        $this->upload_cape($user, UploadedFile::fake()->image('cape.png', 2048, 1024));
+        $this->upload_cape(
+            $user,
+            UploadedFile::fake()->image('cape.png', 2048, 1024)
+        )->assertHasNoErrors();
 
         // assert that cape exists
         $this->assertGreaterThan(0, strlen($user->cape));
@@ -54,20 +60,24 @@ class CapesTest extends TestCase
         Storage::fake('public');
 
         // create non-admin user
-        $user = $this->user();
+        $user = self::user();
 
         // upload a valid cape
-        $this->upload_cape($user, UploadedFile::fake()->image('cape.png', 2048, 1024));
+        $this->upload_cape(
+            $user,
+            UploadedFile::fake()->image('cape.png', 2048, 1024)
+        )->assertHasNoErrors();
 
-        // upload a valid cape
+        // reset cape
         Livewire::test(UploadCape::class)
-            ->call('resetCape');
+            ->call('resetCape')
+            ->assertHasNoErrors();
 
         // assert that cape does not exist
         Storage::disk('public')->assertMissing('capes/' . md5($user->email) . '.png');
     }
 
-    private function upload_cape(User $user, File $file)
+    private function upload_cape(User $user, File $file): TestableLivewire
     {
         // login as the user
         $this->actingAs($user);
@@ -75,8 +85,9 @@ class CapesTest extends TestCase
         // subscribe to free plan
         Subscription::create([
             'user_id' => $user->id,
-            'plan_id' => 1,
-            'end_date' => now()
+            'plan_id' => 1, // free plan
+            'status' => Subscription::ACTIVE,
+            'end_date' => now()->addMonth(),
         ]);
 
         // upload a valid cape

@@ -28,9 +28,6 @@ class DeleteAccountJob implements ShouldQueue
         // delete password_resets
         DB::table('password_resets')->where('email', $this->user->email)->delete();
 
-        // delete stripe_sessions
-        $this->user->stripeSessions()->delete();
-
         // delete stripe_source & stripe_source_events
         $this->user->stripeSources->each->delete();
 

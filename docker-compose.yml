@@ -1,5 +1,6 @@
 version: "3.8"
 services:
+
   database:
     image: mariadb:10.6
     restart: always
@@ -10,12 +11,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
       timeout: 5s
+
   cache:
     image: redis:alpine
     restart: always
@@ -27,6 +27,7 @@ services:
       test: [ "CMD", "redis-cli", "ping" ]
       retries: 3
       timeout: 5s
+
   cron:
     image: mcuadros/ofelia
     restart: always
@@ -36,6 +37,7 @@ services:
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
   website:
     image: ghcr.io/envyclient/website:latest
     restart: always
@@ -57,6 +59,7 @@ services:
       test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8080/fpm-ping" ]
       retries: 3
       timeout: 5s
+
   horizon:
     image: ghcr.io/envyclient/website:latest
     restart: always

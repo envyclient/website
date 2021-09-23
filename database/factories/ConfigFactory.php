@@ -9,15 +9,17 @@ class ConfigFactory extends Factory
 {
     protected $model = Config::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'user_id' => $this->faker->randomNumber(1),
+            'user_id' => $this->faker->randomNumber(),
+            'version_id' => $this->faker->randomNumber(),
             'name' => $this->faker->firstName,
             'data' => json_encode([
                 'name' => 'testing'
             ]),
             'public' => $this->faker->boolean(),
+            'official' => $this->faker->boolean(),
         ];
     }
 }

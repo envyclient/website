@@ -11,10 +11,6 @@ until nc -z -v -w30 "$DB_HOST" "$DB_PORT"; do
 done
 
 function startServer() {
-    # clear application cache
-    echo -e "clearing cache"
-    php artisan optimize:clear
-
     # migrating database
     echo -e "migrating database"
     php artisan migrate --force

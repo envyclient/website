@@ -9,21 +9,15 @@ use App\Models\Config;
 use App\Models\Version;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ConfigsController extends Controller
 {
     public function index(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $data = $this->validate($request, [
             'search' => ['nullable', 'string'],
         ]);
 
-        if ($validator->fails()) {
-            return self::bad();
-        }
-
-        $data = $validator->validated();
         $configs = Config::query()
             ->with(['user:id,name', 'version:id,name'])
             ->withCount('favorites')
@@ -43,7 +37,8 @@ class ConfigsController extends Controller
     public function show(int $id)
     {
         return new ConfigResource(
-            Config::with(['user:id,name', 'version:id,name'])
+            Config::query()
+                ->with(['user:id,name', 'version:id,name'])
                 ->where('id', $id)
                 ->where('public', true)
                 ->withCount('favorites')
@@ -91,7 +86,7 @@ class ConfigsController extends Controller
                 'name' => $data['name'],
                 'version_id' => Version::where('name', "Envy {$data['version']}")->value('id'),
                 'data' => $data['data'],
-                'public' => $request->has('public'),
+                'public' => boolval($data['public']),
             ]);
 
         return self::ok();

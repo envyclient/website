@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class MinecraftController extends Controller
 {
@@ -21,24 +20,20 @@ class MinecraftController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $data = $this->validate($request, [
             'uuid' => ['required', 'uuid'],
         ]);
 
-        if ($validator->fails()) {
-            return self::bad();
-        }
-
         $request->user()->update([
-            'current_account' => $request->uuid,
+            'current_account' => $data['uuid'],
         ]);
 
         return self::ok();
     }
 
-    public function destroy(): JsonResponse
+    public function destroy(Request $request): JsonResponse
     {
-        auth()->user()->update([
+        $request->user()->update([
             'current_account' => null,
         ]);
         return self::ok();

@@ -129,7 +129,8 @@
                                     {{ now()->diffInDays($user->subscription->end_date, false) }} days left
                                 </div>
                             @else
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                                     No Subscription
                                 </span>
                             @endif
@@ -141,27 +142,32 @@
 
                         <x-table.cell class="space-y-1">
                             @if($user->current_account !== null)
-                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                <span
+                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                     Using Client
                                 </span>
                             @endif
                             @if($user->hwid !== null)
-                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                <span
+                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                     HWID Set
                                 </span>
                             @endif
                             @if($user->banned)
-                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                <span
+                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                                     Banned
                                 </span>
                             @endif
                             @if($user->discord_id !== null)
-                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                <span
+                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                     {{ $user->discord_name }}
                                 </span>
                             @endif
                             @if($user->referralCode != null)
-                                <span class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                <span
+                                    class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                     code: {{ $user->referralCode->code }}
                                 </span>
                             @endif
@@ -172,17 +178,37 @@
                                            @click="$dispatch('edit-user-modal', {{ $user->id }})">
                                 Edit
                             </x-button.link>
-                            @if($user->subscription !== null)
+                            @if($user->subscription?->plan->id === 1)
                                 <x-button.link class="block text-red-600 hover:text-red-900"
                                                onclick="confirm('Remove Free Subscription?') || event.stopImmediatePropagation()"
-                                               wire:click.prevent="freeSubscription({{ $user->id }}, true)">
+                                               wire:click.prevent="updateFreeSubscription({{ $user->id }}, true)">
                                     Remove Subscription
                                 </x-button.link>
-                            @else
+                            @elseif($user->subscription === null)
                                 <x-button.link class="block text-indigo-600 hover:text-indigo-900"
                                                onclick="confirm('Give Free Subscription?') || event.stopImmediatePropagation()"
-                                               wire:click.prevent="freeSubscription({{ $user->id }})">
+                                               wire:click.prevent="updateFreeSubscription({{ $user->id }}, false)">
                                     Give Subscription
+                                </x-button.link>
+                            @endif
+                            @if($user->banned)
+                                <x-button.link class="block text-indigo-600 hover:text-indigo-900"
+                                               onclick="confirm('Ban user?') || event.stopImmediatePropagation()"
+                                               wire:click.prevent="updateUserBan({{ $user->id }}, false)">
+                                    Unban User
+                                </x-button.link>
+                            @else
+                                <x-button.link class="block text-red-600 hover:text-red-900"
+                                               onclick="confirm('Unban user?') || event.stopImmediatePropagation()"
+                                               wire:click.prevent="updateUserBan({{ $user->id }}, true)">
+                                    Ban User
+                                </x-button.link>
+                            @endif
+                            @if($user->hwid === null)
+                                <x-button.link class="block text-red-600 hover:text-red-900"
+                                               onclick="confirm('Reset user HWID?') || event.stopImmediatePropagation()"
+                                               wire:click.prevent="resetUserHWID({{ $user->id }})">
+                                    Reset HWID
                                 </x-button.link>
                             @endif
                         </x-table.cell>

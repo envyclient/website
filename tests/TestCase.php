@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -9,18 +10,30 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    private function createUser(array $data): User
+    private static function createUser(array $data): User
     {
         return User::factory()->create($data);
     }
 
-    protected function user(array $data = ['admin' => false]): User
+    protected static function user(): User
     {
-        return $this->createUser($data);
+        return self::createUser(['admin' => false]);
     }
 
-    protected function admin(array $data = ['admin' => true]): User
+    protected static function admin(): User
     {
-        return $this->createUser($data);
+        return self::createUser(['admin' => true]);
+    }
+
+    protected static function subscribedUser(): User
+    {
+        $user = self::admin();
+        Subscription::create([
+            'user_id' => $user->id,
+            'plan_id' => 1,
+            'status' => Subscription::ACTIVE,
+            'end_date' => now()->addMonth(),
+        ]);
+        return $user;
     }
 }
