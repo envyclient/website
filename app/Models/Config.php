@@ -26,7 +26,8 @@ use Overtrue\LaravelFavorite\Traits\Favoriteable;
  */
 class Config extends Model
 {
-    use Favoriteable, HasFactory;
+    use Favoriteable;
+    use HasFactory;
 
     const PAGE_LIMIT = 5;
 

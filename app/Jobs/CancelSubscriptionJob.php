@@ -18,7 +18,8 @@ class CancelSubscriptionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 0;
+    public int $tries = 3;
+    public int $backoff = 15;
 
     public function __construct(
         private Subscription $subscription,
@@ -92,10 +93,5 @@ class CancelSubscriptionJob implements ShouldQueue
         }
 
         // we don't mark the subscription as cancelled since that is handled in HandlePayPalWebhook.php
-    }
-
-    public function retryUntil()
-    {
-        return now()->addDay();
     }
 }

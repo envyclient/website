@@ -14,7 +14,8 @@ class SendDiscordWebhookJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 0;
+    public int $tries = 3;
+    public int $backoff = 15;
 
     public function __construct(
         private string $content,
@@ -36,10 +37,5 @@ class SendDiscordWebhookJob implements ShouldQueue
         if ($response->failed()) {
             throw new Exception('Discord webhook failed.');
         }
-    }
-
-    public function retryUntil()
-    {
-        return now()->addDay();
     }
 }
