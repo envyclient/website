@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\PayPal;
 
+use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Helpers\Paypal;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use App\Models\Subscription;
 use App\Traits\Payment;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class PayPalController extends Controller
@@ -23,13 +26,12 @@ class PayPalController extends Controller
         $this->middleware('not-subscribed')->except('success');
     }
 
-    public function checkout(Request $request)
+    public function checkout(Request $request): RedirectResponse
     {
         $this->validate($request, [
-            'id' => 'required|integer|exists:plans',
+            'id' => ['required', 'integer', 'exists:plans'],
         ]);
 
-        $user = $request->user();
         $plan = Plan::find($request->id);
 
         // create the subscription
@@ -39,7 +41,7 @@ class PayPalController extends Controller
                 'plan_id' => $plan->paypal_id,
                 'start_time' => now()->addSeconds(30)->toIso8601String(),
                 'subscriber' => [
-                    'email_address' => $user->email,
+                    'email_address' => $request->user()->email,
                 ],
                 'application_context' => [
                     'brand_name' => config('app.name'),
@@ -61,37 +63,40 @@ class PayPalController extends Controller
                 ->with('error', 'Unable to create PayPal subscription.');
         }
 
-        // storing the plan_id, so we can retrieve it when the user returns
-        session([
-            'plan_id' => $request->id
-        ]);
+        // storing the plan_id related to the PayPal subscription_id
+        Cache::put($response->json('id'), $plan->id, now()->addHour());
 
         return redirect()->away($response->json('links.0.href'));
     }
 
-    public function success(Request $request)
+    public function success(Request $request): RedirectResponse
     {
-        // getting the plan id from the session
-        $planId = session('plan_id');
-        session()->forget('plan_id');
-
         // missing url parameters
         if (!$request->has(['subscription_id', 'ba_token', 'token'])) {
             return $this->failed();
         }
 
+        // get the PayPal subscription_id from the url
+        $subId = $request->get('subscription_id');
+
+        // get the plan_id related to the PayPal subscription_id
+        $planId = Cache::get($subId);
+
         // create pending subscription for the user
-        Subscription::create([
-            'user_id' => auth()->id(),
+        $subscription = Subscription::create([
+            'user_id' => $request->user()->id,
             'plan_id' => $planId,
-            'paypal_id' => $request->get('subscription_id'),
+            'paypal_id' => $subId,
             'status' => Subscription::PENDING,
         ]);
+
+        // broadcast new subscription event
+        event(new SubscriptionCreatedEvent($subscription));
 
         return $this->successful();
     }
 
-    public function cancel()
+    public function cancel(): RedirectResponse
     {
         return $this->canceled();
     }

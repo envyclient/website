@@ -7,14 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Invoice;
-use App\Models\StripeSession;
 use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class HandleStripeWebhook extends Controller
 {
@@ -36,20 +35,27 @@ class HandleStripeWebhook extends Controller
             // You should provision the subscription and save the customer ID to your database.
             case 'checkout.session.completed':
             {
-                // getting the stripe session
-                $stripeSession = StripeSession::where(
-                    'stripe_session_id', $request->json('data.object.id')
-                )->firstOrFail();
+                // getting the stripe_session from the cache
+                ['user_id' => $userId, 'plan_id' => $planID] = Cache::get($request->json('data.object.id'));
 
-                // marking the stripe session as complete, so it is not auto pruned
-                $stripeSession->update([
-                    'completed_at' => now(),
+                // updating the users stripe customer_id
+                User::query()
+                    ->findOrFail($userId)
+                    ->update([
+                        'stripe_id' => $request->json('data.object.customer'),
+                    ]);
+
+                // create a pending subscription
+                $subscription = Subscription::create([
+                    'user_id' => $userId,
+                    'plan_id' => $planID,
+                    'stripe_id' => $request->json('data.object.subscription'),
+                    'status' => Subscription::PENDING,
                 ]);
 
-                // updating the users stripe customer id
-                $stripeSession->user()->update([
-                    'stripe_id' => $request->json('data.object.customer'),
-                ]);
+                // broadcast new subscription event
+                event(new SubscriptionCreatedEvent($subscription));
+
                 break;
             }
 
@@ -58,49 +64,25 @@ class HandleStripeWebhook extends Controller
             // This approach helps you avoid hitting rate limits.
             case 'invoice.paid':
             {
-                // getting the user the invoice is attached to
-                $user = User::where('stripe_id', $request->json('data.object.customer'))
+
+                // get the subscription model
+                $subscription = Subscription::query()
+                    ->where('stripe_id', $request->json('data.object.subscription'))
                     ->firstOrFail();
 
-                if ($user->hasSubscription()) {
+                // activate the subscription and set end_date
+                $subscription->update([
+                    'status' => Subscription::ACTIVE,
+                    'end_date' => now()->addMonth(),
+                ]);
 
-                    // extending the users' subscription by one month
-                    $user->subscription->update([
-                        'end_date' => now()->addMonth(),
-                    ]);
+                self::createInvoice(
+                    $subscription->user->id,
+                    $subscription->id,
+                    Invoice::STRIPE,
+                    $subscription->plan->price
+                );
 
-                    // creating a new invoice for the payment
-                    self::createInvoice(
-                        $user->id,
-                        $user->subscription->id,
-                        Invoice::STRIPE,
-                        $user->subscription->plan->price
-                    );
-                } else {
-
-                    // getting to stripe session, so we can get the plan id the user subscribed to
-                    $stripeSession = StripeSession::where('user_id', $user->id)
-                        ->latest()
-                        ->firstOrFail();
-
-                    // creating a new subscription for the user
-                    $subscription = Subscription::create([
-                        'user_id' => $user->id,
-                        'plan_id' => $stripeSession->plan_id,
-                        'stripe_id' => $request->json('data.object.subscription'),
-                        'status' => Subscription::ACTIVE,
-                        'end_date' => now()->addMonth(),
-                    ]);
-
-                    self::createInvoice(
-                        $user->id,
-                        $subscription->id,
-                        Invoice::STRIPE,
-                        $subscription->plan->price
-                    );
-
-                    event(new SubscriptionCreatedEvent($subscription));
-                }
                 break;
             }
 
@@ -111,7 +93,8 @@ class HandleStripeWebhook extends Controller
             {
                 try {
                     // get the user related to webhook
-                    $user = User::where('stripe_id', $request->json('data.object.customer'))
+                    $user = User::query()
+                        ->where('stripe_id', $request->json('data.object.customer'))
                         ->firstOrFail();
 
                     // if the user has a subscription then cancel it
@@ -131,10 +114,9 @@ class HandleStripeWebhook extends Controller
             // stripe-source object expired
             case 'source.canceled':
             {
-                $source = StripeSource::where(
-                    'source_id',
-                    $request->json('data.object.id')
-                )->firstOrFail();
+                $source = StripeSource::query()
+                    ->where('source_id', $request->json('data.object.id'))
+                    ->firstOrFail();
 
                 $source->update([
                     'status' => StripeSource::CANCELED,
@@ -152,10 +134,9 @@ class HandleStripeWebhook extends Controller
             // customer declined to authorize the payment
             case 'source.failed':
             {
-                $source = StripeSource::where(
-                    'source_id',
-                    $request->json('data.object.id')
-                )->firstOrFail();
+                $source = StripeSource::query()
+                    ->where('source_id', $request->json('data.object.id'))
+                    ->firstOrFail();
 
                 $source->update([
                     'status' => StripeSource::FAILED,
@@ -173,10 +154,9 @@ class HandleStripeWebhook extends Controller
             // authorized and verified a payment
             case 'source.chargeable':
             {
-                $source = StripeSource::where(
-                    'source_id',
-                    $request->json('data.object.id')
-                )->firstOrFail();
+                $source = StripeSource::query()
+                    ->where('source_id', $request->json('data.object.id'))
+                    ->firstOrFail();
 
                 $source->update([
                     'status' => StripeSource::CHARGEABLE,
@@ -206,10 +186,9 @@ class HandleStripeWebhook extends Controller
                     return response()->noContent();
                 }
 
-                $source = StripeSource::where(
-                    'source_id',
-                    $request->json('data.object.payment_method')
-                )->firstOrFail();
+                $source = StripeSource::query()
+                    ->where('source_id', $request->json('data.object.payment_method'))
+                    ->firstOrFail();
 
                 $source->update([
                     'status' => StripeSource::SUCCEEDED,
@@ -225,7 +204,7 @@ class HandleStripeWebhook extends Controller
                 $subscription = Subscription::create([
                     'user_id' => $source->user_id,
                     'plan_id' => $source->plan_id,
-                    'status' => Subscription::ACTIVE,
+                    'status' => Subscription::CANCELED,
                     'end_date' => now()->addMonth(),
                 ]);
 
@@ -246,7 +225,7 @@ class HandleStripeWebhook extends Controller
             case 'charge.dispute.created':
             {
                 // TODO: handle dispute
-                Log::debug($request->getContent());
+                info($request->getContent());
                 break;
             }
         }

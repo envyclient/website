@@ -22,13 +22,6 @@ class CancelSubscription extends Controller
                 ->with('error', 'You have already cancelled your subscription.');
         }
 
-        // check if the user did not subscribe as subscription
-        if ($subscription->paypal_id === null && $subscription->stripe_id === null) {
-            return redirect()
-                ->route('home.subscription')
-                ->with('error', 'You do not need to cancel your subscription.');
-        }
-
         // users subscription is already in queue for cancellation
         if ($subscription->queued_for_cancellation) {
             return redirect()

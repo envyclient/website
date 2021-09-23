@@ -48,7 +48,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
  * @property-read Collection licenseRequest
- * @property-read Collection stripeSessions
  * @property-read Collection stripeSources
  */
 class User extends Authenticatable implements MustVerifyEmail
@@ -165,11 +164,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function licenseRequests(): HasMany
     {
         return $this->hasMany(LicenseRequest::class);
-    }
-
-    public function stripeSessions(): HasMany
-    {
-        return $this->hasMany(StripeSession::class);
     }
 
     public function stripeSources(): HasMany

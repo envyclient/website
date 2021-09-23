@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Stripe;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
-use App\Models\StripeSession;
 use App\Traits\Payment;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class StripeController extends Controller
 {
@@ -22,14 +22,14 @@ class StripeController extends Controller
     public function checkout(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|integer|exists:plans',
+            'id' => ['required', 'integer', 'exists:plans'],
         ]);
 
         $user = $request->user();
         $plan = Plan::find($request->id);
 
         try {
-            $checkout_session = \Stripe\Checkout\Session::create([
+            $checkoutSession = \Stripe\Checkout\Session::create([
                 'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('stripe.cancel'),
                 'customer_email' => $user->email,
@@ -48,13 +48,13 @@ class StripeController extends Controller
             ], 400);
         }
 
-        StripeSession::create([
+        // store the session for 1 hour
+        Cache::put($checkoutSession['id'], [
             'user_id' => $user->id,
             'plan_id' => $plan->id,
-            'stripe_session_id' => $checkout_session['id'],
-        ]);
+        ], now()->addHour());
 
-        return response()->json(['sessionId' => $checkout_session['id']]);
+        return response()->json(['sessionId' => $checkoutSession['id']]);
     }
 
     public function success(Request $request)

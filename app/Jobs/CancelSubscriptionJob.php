@@ -39,13 +39,13 @@ class CancelSubscriptionJob implements ShouldQueue
             $this->handlePayPal();
         }
 
-        // broadcast the subscription cancelled event
-        event(new SubscriptionCancelledEvent($this->subscription));
-
         // mark the subscription as no longer queued for cancellation
         $this->subscription->update([
             'queued_for_cancellation' => false,
         ]);
+
+        // broadcast the subscription cancelled event
+        event(new SubscriptionCancelledEvent($this->subscription));
 
         // send discord webhook on cancellation
         $content = 'A user has cancelled their subscription.' . PHP_EOL . PHP_EOL;

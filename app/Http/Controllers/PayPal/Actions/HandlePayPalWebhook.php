@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\PayPal\Actions;
 
-use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
@@ -32,7 +31,8 @@ class HandlePayPalWebhook extends Controller
             {
 
                 // get the subscription
-                $subscription = Subscription::where('paypal_id', $request->json('resource.id'))
+                $subscription = Subscription::query()
+                    ->where('paypal_id', $request->json('resource.id'))
                     ->firstOrFail();
 
                 // set the subscription as active
@@ -41,9 +41,6 @@ class HandlePayPalWebhook extends Controller
                     //'end_date' => Carbon::parse($request->json('resource.billing_info.next_billing_time')),
                 ]);
 
-                // broadcast new subscription event
-                event(new SubscriptionCreatedEvent($subscription));
-
                 break;
             }
 
@@ -51,8 +48,9 @@ class HandlePayPalWebhook extends Controller
             case 'PAYMENT.SALE.COMPLETED':
             {
 
-                // get the subscription
-                $subscription = Subscription::where('paypal_id', $request->json('resource.billing_agreement_id'))
+                // get the subscription model
+                $subscription = Subscription::query()
+                    ->where('paypal_id', $request->json('resource.billing_agreement_id'))
                     ->firstOrFail();
 
                 // extend the subscription
@@ -76,22 +74,24 @@ class HandlePayPalWebhook extends Controller
             {
 
                 // set the subscription as cancelled
-                Subscription::where('paypal_id', $request->json('resource.id'))
+                Subscription::query()
+                    ->where('paypal_id', $request->json('resource.id'))
                     ->firstOrFail()
                     ->update([
-                        'state' => Subscription::CANCELED,
+                        'status' => Subscription::CANCELED,
                     ]);
 
                 break;
             }
 
-            case 'PAYMENT.SALE.PENDING':  // paypal could not process the payment
+            case 'PAYMENT.SALE.PENDING': // paypal could not process the payment
             case 'BILLING.SUBSCRIPTION.SUSPENDED': // subscription run out of retries
             case 'BILLING.SUBSCRIPTION.PAYMENT.FAILED': // payment has failed for a subscription
             {
 
                 // get the subscription
-                $subscription = Subscription::where('paypal_id', $request->json('resource.id'))
+                $subscription = Subscription::query()
+                    ->where('paypal_id', $request->json('resource.id'))
                     ->firstOrFail();
 
                 // mark the subscription as queued for cancellation
