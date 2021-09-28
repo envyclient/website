@@ -2,11 +2,14 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\User;
+use App\Http\Livewire\Admin\Version\UploadVersion;
+use App\Jobs\EncryptVersionJob;
 use App\Models\Version;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 // TODO
@@ -17,27 +20,31 @@ class VersionsTest extends TestCase
     /** @test */
     public function can_admin_upload_version()
     {
-        Storage::fake('local');
+        Storage::persistentFake('local');
+        Queue::fake();
 
-        $user = User::factory()->create([
-            'admin' => 1,
-        ]);
+        $this->actingAs(self::admin());
 
-        $this->actingAs($user)
-            ->post(route('admin.versions.upload'), [
-                'name' => 'Beta 1',
-                'beta' => true,
-                'version' => UploadedFile::fake()->create('version.exe', 1000),
-                'assets' => UploadedFile::fake()->create('assets.jar', 1000),
-                'changelog' => '+test\n+test1',
-            ])
-            ->assertRedirect();
+        /*'name' => ['required', 'string', 'max:30', 'unique:versions'],
+        'changelog' => ['required', 'string', 'max:65535'],
+        'main' => ['required', 'string', 'max:255'],
+        'beta' => ['nullable', 'bool'],
+        'version' => ['required', 'file', 'max:25000'],*/
 
-        // Assert the file was stored...
-        $version = Version::find(1);
-        $this->assertTrue($version->exists());
+        Livewire::test(UploadVersion::class)
+            ->set('name', 'Envy 1.0')
+            ->set('changelog', '+test\n+test1')
+            ->set('main', 'com.envyclient.Main')
+            ->set('beta', false)
+            ->set('version', UploadedFile::fake()->create('version.jar', 1000))
+            ->call('submit')
+            ->assertHasNoErrors();
+
+        Queue::assertPushed(EncryptVersionJob::class);
+
         Storage::disk('local')
-            ->assertExists($version->version)
-            ->assertExists($version->assets);
+            ->assertExists('versions/' . md5(1) . '.jar');
+
+        $this->assertDatabaseCount(Version::class, 1);
     }
 }

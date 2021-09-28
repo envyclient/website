@@ -21,10 +21,8 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.3",
-        "nao-pon/flysystem-google-drive": "^1.1",
         "overtrue/laravel-favorite": "^2.0",
         "socialiteproviders/discord": "^4.1",
-        "spatie/laravel-backup": "^7.2",
         "spatie/laravel-support-bubble": "^1.0",
         "stripe/stripe-php": "^7.67"
     },

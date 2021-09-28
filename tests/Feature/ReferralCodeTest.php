@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin;
+namespace Tests\Feature;
 
 use App\Http\Livewire\Admin\Referral\CreateReferralCode;
 use App\Models\ReferralCode;

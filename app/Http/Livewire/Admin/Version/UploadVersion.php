@@ -46,7 +46,7 @@ class UploadVersion extends Component
         $hash = md5($version->id);
 
         // store the version
-        $this->version->storeAs("versions", "$hash.jar");
+        $this->version->storeAs('versions', "$hash.jar");
 
         // dispatch the job to encrypt the version
         EncryptVersionJob::dispatch($version, $hash);
