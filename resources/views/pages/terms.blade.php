@@ -82,7 +82,7 @@
                 </ul>
 
                 <h2 id="payment-practices" class="text-4xl font-semibold my-3">Payment Practices</h2>
-                <p class="mb-2">Envy Client will use PayPal and WeChat Pay to receive payments.</p>
+                <p class="mb-2">Envy Client will use PayPal or Stripe to receive payments.</p>
                 <ul class="list-disc mx-7">
                     <li>The subscription for Envy Client will be in thirty-day billing cycles.</li>
                     <li>Renewals will occur automatically, unless cancelled.</li>
@@ -96,7 +96,7 @@
                         account
                         will lose Envy Client service access.
                     </li>
-                    <li>All payments will be made in USD and CAD.</li>
+                    <li>All payments will be made in CAD.</li>
                 </ul>
 
                 <h2 id="refunds" class="text-4xl font-semibold my-3">Refunds</h2>
