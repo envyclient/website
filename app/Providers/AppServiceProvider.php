@@ -43,6 +43,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // enable n+1 problem check
-        Model::preventLazyLoading();
+        Model::preventLazyLoading(!app()->isProduction());
     }
 }
