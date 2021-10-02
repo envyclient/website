@@ -11,8 +11,6 @@ class ListReferralCodes extends Component
 {
     use WithPagination;
 
-    protected string $paginationTheme = 'bootstrap';
-
     protected $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
 
     public bool $showUsersModal = false;
@@ -39,9 +37,12 @@ class ListReferralCodes extends Component
 
     public function render()
     {
-        $codes = ReferralCode::with(['user:id,name,email', 'subscriptions'])
+        // get all the referral codes
+        $codes = ReferralCode::query()
+            ->with(['user:id,name,email', 'subscriptions'])
             ->orderBy('created_at')
             ->get();
+
         return view('livewire.admin.referral.list-referral-codes', compact('codes'));
     }
 }

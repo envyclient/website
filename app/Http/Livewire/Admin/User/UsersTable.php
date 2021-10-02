@@ -75,7 +75,7 @@ class UsersTable extends Component
         } else {
             $user->subscription()->create([
                 'plan_id' => 1,
-                'status' => Subscription::ACTIVE,
+                'status' => Subscription::CANCELED,
                 'end_date' => now()->addMonth(),
             ]);
         }

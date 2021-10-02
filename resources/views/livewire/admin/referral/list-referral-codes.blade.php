@@ -36,18 +36,18 @@
                     </x-table.cell>
 
                     <x-table.cell>
-                        @if($code->users->count() === 0)
+                        @if($code->users()->count() === 0)
                             0
                         @else
                             <x-button.link class="text-blue-600 hover:text-blue-900"
                                            wire:click="showUsersModal({{ $code->id }})">
-                                {{ $code->users->count() }}
+                                {{ $code->users()->count() }}
                             </x-button.link>
                         @endif
                     </x-table.cell>
 
                     <x-table.cell>
-                        {{ $code->subscriptions->count() }}
+                        {{ $code->subscriptions()->count() }}
                     </x-table.cell>
 
                     <x-table.cell>
