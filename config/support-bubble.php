@@ -7,24 +7,24 @@ return [
      * when a logged in user is detected and `prefill_logged_in_user` is set.
      */
     'fields' => [
-        'name' => false,
-        'email' => false,
+        'name' => true,
+        'email' => true,
         'subject' => true,
         'message' => true,
     ],
+
+    /*
+     * We'll send any chat bubble responses to this e-mail address.
+     *
+     * Set this to
+    */
+    'mail_to' => 'contact@envyclient.com',
 
     /*
      * When set to true we'll use currently logged in user to fill in
      * the name and email fields. Both fields will also be hidden.
      */
     'prefill_logged_in_user' => true,
-
-    /*
-     * We'll send any chat bubble responses to this e-mail address.
-     *
-     * Set this to
-     */
-    'mail_to' => 'contact@envyclient.com',
 
     /*
      * The TailwindCSS classes used on a couple of key components.
@@ -40,9 +40,9 @@ return [
     ],
 
     /*
-      * The default route and controller will be registered using this route name.
-      * This is a good place to hook in your own route and controller if necessary.
-      */
+     * The default route and controller will be registered using this route name.
+     * This is a good place to hook in your own route and controller if necessary.
+     */
     'form_action_route' => 'supportBubble.submit',
 
     /**
