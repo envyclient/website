@@ -54,6 +54,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
+      - ./storage:/var/www/html/storage/app
       - ./logs:/var/www/html/storage/logs
     healthcheck:
       test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8080/fpm-ping" ]
