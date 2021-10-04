@@ -5,6 +5,8 @@ module.exports = {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './config/*.php',
+        './vendor/spatie/laravel-support-bubble/config/**/*.php',
+        './vendor/spatie/laravel-support-bubble/resources/views/**/*.blade.php',
     ],
     darkMode: false,
     theme: {
