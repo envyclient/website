@@ -27,12 +27,6 @@ RUN apk --no-cache add \
     php8-zlib \
     nginx
 
-# set the timezone
-RUN apk add --no-cache tzdata \
-    && cp /usr/share/zoneinfo/UTC /etc/localtime \
-    && echo "UTC" > /etc/timezone \
-    && apk del tzdata
-
 # cleanup
 RUN rm -rf /tmp/* /var/cache/apk/*
 
@@ -40,20 +34,14 @@ RUN rm -rf /tmp/* /var/cache/apk/*
 RUN ln -s /usr/bin/php8 /usr/bin/php
 
 # configure php
-COPY .docker/fpm-pool.conf /etc/php8/php-fpm.d/www.conf
+COPY .docker/www.conf /etc/php8/php-fpm.d/www.conf
 COPY .docker/php.ini /etc/php8/conf.d/99_envy.ini
 
 # configure nginx
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 
-# setup document root
-RUN mkdir -p /var/www/html
-
 # fix permissions
-RUN chown -R nginx:nginx /var/www/html \
-    && chown -R nginx:nginx /run \
-    && chown -R nginx:nginx /var/lib/nginx \
-    && chown -R nginx:nginx /var/log/nginx
+RUN chown -R nginx:nginx /run
 
 FROM base as composer-build
 
@@ -87,7 +75,7 @@ FROM base as production
 # swtich to nginx user
 USER nginx
 
-# create the app directory
+# change to working dir
 WORKDIR /var/www/html
 
 # copy over project files from composer-build
@@ -97,7 +85,7 @@ COPY --from=composer-build --chown=nginx /app ./
 COPY --from=npm-build --chown=nginx /app/public ./public
 
 # fix permissions
-RUN chmod 777 -R bootstrap storage
+# RUN chmod 777 -R bootstrap storage
 
 # expose nginx port
 EXPOSE 8080
