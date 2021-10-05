@@ -84,9 +84,6 @@ COPY --from=composer-build --chown=nginx /app ./
 # copy over built assets from npm-build
 COPY --from=npm-build --chown=nginx /app/public ./public
 
-# fix permissions
-# RUN chmod 777 -R bootstrap storage
-
 # expose nginx port
 EXPOSE 8080
 
