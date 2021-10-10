@@ -18,6 +18,7 @@
         "larabug/larabug": "^2.3",
         "laravel/framework": "^8.0",
         "laravel/horizon": "^5.7",
+        "laravel/octane": "^1.0",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.3",
