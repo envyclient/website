@@ -10,8 +10,6 @@ use App\Models\Invoice;
 use App\Models\StripeSource;
 use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
-use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -37,13 +35,6 @@ class HandleStripeWebhook extends Controller
             {
                 // getting the stripe_session from the cache
                 ['user_id' => $userId, 'plan_id' => $planID] = Cache::get($request->json('data.object.id'));
-
-                // updating the users stripe customer_id
-                User::query()
-                    ->findOrFail($userId)
-                    ->update([
-                        'stripe_id' => $request->json('data.object.customer'),
-                    ]);
 
                 // create a pending subscription
                 $subscription = Subscription::create([
@@ -91,19 +82,15 @@ class HandleStripeWebhook extends Controller
             // customer portal to update their payment information.
             case 'invoice.payment_failed':
             {
-                try {
-                    // get the user related to webhook
-                    $user = User::query()
-                        ->where('stripe_id', $request->json('data.object.customer'))
-                        ->firstOrFail();
 
-                    // if the user has a subscription then cancel it
-                    if ($user->hasSubscription()) {
-                        CancelSubscriptionJob::dispatch($user->subscription, Invoice::STRIPE);
-                    }
-                } catch (ModelNotFoundException) {
-                    return response()->noContent();
-                }
+                // get the related subscription
+                $subscription = Subscription::query()
+                    ->where('stripe_id', $request->json('data.object.subscription'))
+                    ->firstOrFail();
+
+                // queue the subscription for cancellation
+                CancelSubscriptionJob::dispatch($subscription, Invoice::STRIPE);
+
                 break;
             }
 

@@ -94,11 +94,6 @@ class HandlePayPalWebhook extends Controller
                     ->where('paypal_id', $request->json('resource.id'))
                     ->firstOrFail();
 
-                // mark the subscription as queued for cancellation
-                $subscription->update([
-                    'queued_for_cancellation' => true,
-                ]);
-
                 // dispatch the cancel subscription job
                 CancelSubscriptionJob::dispatch($subscription, Invoice::PAYPAL);
 
