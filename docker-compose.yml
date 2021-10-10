@@ -2,7 +2,7 @@ version: "3.8"
 services:
 
   database:
-    image: mariadb:10.6
+    image: mariadb:10.6.4
     restart: always
     ports:
       - "${DB_PORT}:3306"
@@ -33,41 +33,45 @@ services:
     restart: always
     network_mode: none
     depends_on:
-      - website
+      website:
+        condition: service_healthy
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
   website:
-    image: ghcr.io/envyclient/website:latest
+    image: ghcr.io/envyclient/website
     restart: always
     env_file: .env
     command: start:server
     depends_on:
-      - database
-      - cache
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.pqueue.schedule: "@every 1m"
-      ofelia.job-exec.pqueue.command: "php /var/www/html/artisan schedule:run"
-      ofelia.job-exec.pqueue.user: "nginx"
+      ofelia.job-exec.pqueue.command: "php /app/artisan schedule:run"
     ports:
-      - "8080:8080"
+      - "8080:8000"
     volumes:
-      - website:/var/www/html/storage
+      - website:/app/storage
     healthcheck:
-      test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8080/fpm-ping" ]
+      test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8000/octane-ping" ]
       retries: 3
       timeout: 5s
 
   horizon:
-    image: ghcr.io/envyclient/website:latest
+    image: ghcr.io/envyclient/website
     restart: always
     env_file: .env
     command: start:horizon
     depends_on:
-      - database
-      - cache
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
 
 volumes:
   database:
