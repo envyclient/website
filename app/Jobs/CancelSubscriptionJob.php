@@ -26,6 +26,9 @@ class CancelSubscriptionJob implements ShouldQueue
         private string       $provider,
     )
     {
+        $subscription->update([
+            'queued_for_cancellation' => true,
+        ]);
     }
 
     /**
@@ -34,6 +37,11 @@ class CancelSubscriptionJob implements ShouldQueue
      */
     public function handle()
     {
+        // checking the subscription has already been cancelled
+        if ($this->subscription->status === Subscription::CANCELED) {
+            return;
+        }
+
         if ($this->provider === Invoice::STRIPE) {
             $this->handleStripe();
         } else {

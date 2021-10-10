@@ -39,11 +39,6 @@ class CancelSubscription extends Controller
 
     private static function successful(Subscription $subscription, string $provider): RedirectResponse
     {
-        // mark the subscription as queued for cancellation
-        $subscription->update([
-            'queued_for_cancellation' => true,
-        ]);
-
         // dispatch the cancel subscription job
         CancelSubscriptionJob::dispatch($subscription, $provider);
 

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->uuid('current_account')->nullable();
             $table->boolean('admin')->default(false);
             $table->boolean('banned')->default(false);
-            $table->string('stripe_id')->nullable();
 
             $table->unsignedBigInteger('referral_code_id')->nullable();
             $table->timestamp('referral_code_used_at')->nullable();
