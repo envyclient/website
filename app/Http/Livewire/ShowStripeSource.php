@@ -2,28 +2,21 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\StripeSource;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class ShowStripeSource extends Component
 {
-    public $source;
+    public string $stripeSourceId;
 
-    public function mount($id)
+    public function mount(string $stripeSource)
     {
-        $this->source = StripeSource::with('plan')
-            ->where('user_id', auth()->id())
-            ->where('source_id', $id)
-            ->firstOrFail();
+        $this->stripeSourceId = $stripeSource;
     }
 
     public function render()
     {
-        $events = $this->source
-            ->events()
-            ->orderByDesc('created_at')
-            ->get();
-
-        return view('livewire.show-stripe-source', compact('events'))->extends('layouts.guest');
+        $source = Cache::get($this->stripeSourceId);
+        return view('livewire.show-stripe-source', compact('source'))->extends('layouts.guest');
     }
 }

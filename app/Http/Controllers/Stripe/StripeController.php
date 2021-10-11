@@ -48,7 +48,7 @@ class StripeController extends Controller
             ], 400);
         }
 
-        // store the session for 1 hour
+        // store the checkout session for 1 hour
         Cache::put($checkoutSession['id'], [
             'user_id' => $user->id,
             'plan_id' => $plan->id,
