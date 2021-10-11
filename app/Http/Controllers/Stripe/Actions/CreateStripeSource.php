@@ -8,17 +8,9 @@ use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Stripe\Exception\ApiErrorException;
-use Stripe\StripeClient;
 
 class CreateStripeSource extends Controller
 {
-    public StripeClient $stripe;
-
-    public function __construct()
-    {
-        $this->stripe = new StripeClient(config('services.stripe.secret')); // TODO: use laravel singleton
-    }
-
     public function __invoke(Request $request)
     {
         $this->validate($request, [
@@ -30,7 +22,7 @@ class CreateStripeSource extends Controller
 
         // create new stripe source
         try {
-            $response = $this->stripe->sources->create([
+            $response = app('stripeClient')->sources->create([
                 'type' => 'wechat',
                 'amount' => $plan->cad_price,
                 'currency' => 'cad',
