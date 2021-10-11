@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 use Stripe\Stripe;
+use Stripe\StripeClient;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
 
         // setting the stripe api key
         Stripe::setApiKey(config('services.stripe.secret'));
+
+        // create StripeClient singleton
+        $this->app->singleton('stripeClient', function () {
+            return new StripeClient(config('services.stripe.secret'));
+        });
 
         // register macros
         Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));

@@ -4,8 +4,8 @@
             WeChat Pay
         </h1>
         <h5 class="text-lg text-gray-500 mt-1">
-            {{ $source->plan->name }} Plan - (${{ $source->plan->price }} USD,
-            ${{ number_format($source->plan->cad_price / 100) }} CAD)
+            {{ $source['plan']['name'] }} Plan - (${{ $source['plan']['price'] }} USD,
+            ${{ number_format($source['plan']['cad_price'] / 100) }} CAD)
         </h5>
     </div>
     <div class="p-5 flex flex-col md:flex-row">
@@ -30,36 +30,36 @@
                         </x-slot>
 
                         <x-slot name="body">
-                            @foreach($events as $event)
-                                <x-table.row wire:key="row-{{ $event->id }}">
+                            @foreach($source['events'] as $event)
+                                <x-table.row wire:key="row-{{ $loop->iteration}}">
 
                                     <x-table.cell class="flex items-center">
                                         {{ $loop->iteration }}
                                     </x-table.cell>
 
                                     <x-table.cell>
-                                        @if($event->type === \App\Models\StripeSource::PENDING)
+                                        @if($event['type'] === \App\Enums\StripeSource::PENDING)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-blue-100 text-blue-800">
                                                 pending
                                             </span>
-                                        @elseif($event->type === \App\Models\StripeSource::CANCELED)
+                                        @elseif($event['type'] === \App\Enums\StripeSource::CANCELED)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-yellow-100 text-yellow-800">
                                                 expired
                                             </span>
-                                        @elseif($event->type === \App\Models\StripeSource::FAILED)
+                                        @elseif($event['type'] === \App\Enums\StripeSource::FAILED)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-red-100 text-red-800">
                                                 failed
                                             </span>
-                                        @elseif($event->type === \App\Models\StripeSource::CHARGEABLE)
+                                        @elseif($event['type'] === \App\Enums\StripeSource::CHARGEABLE)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800">
                                                 authorized
                                             </span>
                                             <span class="badge rounded-pill bg-info text-dark"></span>
-                                        @elseif($event->type === \App\Models\StripeSource::SUCCEEDED)
+                                        @elseif($event['type'] === \App\Enums\StripeSource::SUCCEEDED)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-green-100 text-green-800">
                                                 succeeded
@@ -68,11 +68,11 @@
                                     </x-table.cell>
 
                                     <x-table.cell class="text-gray-500">
-                                        {{ $event->message }}
+                                        {{ $event['message'] }}
                                     </x-table.cell>
 
                                     <x-table.cell class="text-gray-500">
-                                        {{ $event->created_at->diffForHumans() }}
+                                        {{ \Illuminate\Support\Carbon::parse($event['created_at'])->diffForHumans() }}
                                     </x-table.cell>
                                 </x-table.row>
                             @endforeach
@@ -84,12 +84,12 @@
         <div class="w-3/5 mt-5 md:mt-0 md:ml-5">
             <div class="flex-col bg-white shadow overflow-hidden sm:rounded-lg justify-center items-center flex py-4">
                 <h1 class="text-lg">QR Code</h1>
-                <img src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl={{ urlencode($source->url) }}"
+                <img src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl={{ urlencode($source['url']) }}"
                      alt="qr code"/>
             </div>
         </div>
     </div>
-    @if($source->status !== \App\Models\StripeSource::PENDING && $source->status !== \App\Models\StripeSource::CHARGEABLE)
+    @if($source['status'] !== \App\Enums\StripeSource::PENDING && $source['status'] !== \App\Enums\StripeSource::CHARGEABLE)
         <a href="{{ route('home') }}"
            class="block w-full py-2 px-6 cursor-pointer text-center text-xl text-white bg-green-600 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus:border-green-300 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out">
             Dashboard

@@ -37,14 +37,7 @@ RUN rm -rf /tmp/* /var/cache/apk/*
 RUN ln -s /usr/bin/php8 /usr/bin/php
 
 # configure php
-#COPY .docker/www.conf /etc/php8/php-fpm.d/www.conf
 COPY .docker/php.ini /etc/php8/conf.d/99_envy.ini
-
-# configure nginx
-#COPY .docker/nginx.conf /etc/nginx/nginx.conf
-
-# fix permissions
-#RUN chown -R nginx:nginx /run
 
 FROM base as composer-build
 
@@ -75,9 +68,6 @@ RUN npm install && npm run prod
 
 FROM base as production
 
-# swtich to nginx user
-#USER nginx
-
 # change to working dir
 WORKDIR /app
 
@@ -87,7 +77,7 @@ COPY --from=composer-build /app ./
 # copy over built assets from npm-build
 COPY --from=npm-build /app/public ./public
 
-# expose laravel.octane port
+# expose laravel octane port
 EXPOSE 8000
 
 ENTRYPOINT ["/bin/ash", ".docker/entrypoint.sh"]

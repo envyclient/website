@@ -32,6 +32,7 @@ class PayPalController extends Controller
             'id' => ['required', 'integer', 'exists:plans'],
         ]);
 
+        $user = $request->user();
         $plan = Plan::find($request->id);
 
         // create the subscription
@@ -41,7 +42,7 @@ class PayPalController extends Controller
                 'plan_id' => $plan->paypal_id,
                 'start_time' => now()->addSeconds(30)->toIso8601String(),
                 'subscriber' => [
-                    'email_address' => $request->user()->email,
+                    'email_address' => $user->email,
                 ],
                 'application_context' => [
                     'brand_name' => config('app.name'),
@@ -63,8 +64,11 @@ class PayPalController extends Controller
                 ->with('error', 'Unable to create PayPal subscription.');
         }
 
-        // storing the plan_id related to the PayPal subscription_id
-        Cache::put($response->json('id'), $plan->id, now()->addHour());
+        // storing the PayPal session for 1 hour
+        Cache::put($response->json('id'), [
+            'user_id' => $user->id,
+            'plan_id' => $plan->id,
+        ], now()->addHour());
 
         return redirect()->away($response->json('links.0.href'));
     }
@@ -79,13 +83,13 @@ class PayPalController extends Controller
         // get the PayPal subscription_id from the url
         $subId = $request->get('subscription_id');
 
-        // get the plan_id related to the PayPal subscription_id
-        $planId = Cache::get($subId);
+        // get the user_id, plan_id related to the PayPal subscription_id
+        ['user_id' => $userId, 'plan_id' => $planID] = Cache::get($subId);
 
         // create pending subscription for the user
         $subscription = Subscription::create([
-            'user_id' => $request->user()->id,
-            'plan_id' => $planId,
+            'user_id' => $userId,
+            'plan_id' => $planID,
             'paypal_id' => $subId,
             'status' => Subscription::PENDING,
         ]);

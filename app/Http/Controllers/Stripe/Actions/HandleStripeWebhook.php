@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
+use App\Enums\StripeSource;
 use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Invoice;
-use App\Models\StripeSource;
-use App\Models\StripeSourceEvent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -33,7 +32,7 @@ class HandleStripeWebhook extends Controller
             // You should provision the subscription and save the customer ID to your database.
             case 'checkout.session.completed':
             {
-                // getting the stripe_session from the cache
+                // getting the stripe checkout session from the cache
                 ['user_id' => $userId, 'plan_id' => $planID] = Cache::get($request->json('data.object.id'));
 
                 // create a pending subscription
@@ -101,19 +100,13 @@ class HandleStripeWebhook extends Controller
             // stripe-source object expired
             case 'source.canceled':
             {
-                $source = StripeSource::query()
-                    ->where('source_id', $request->json('data.object.id'))
-                    ->firstOrFail();
 
-                $source->update([
-                    'status' => StripeSource::CANCELED,
-                ]);
-
-                self::createStripeSourceEvent(
-                    $source->id,
+                self::handleStripeSource(
+                    $request->json('data.object.id'),
                     StripeSource::CANCELED,
                     'The payment has expired. Please create a new one to continue your purchase.'
                 );
+
 
                 break;
             }
@@ -121,16 +114,9 @@ class HandleStripeWebhook extends Controller
             // customer declined to authorize the payment
             case 'source.failed':
             {
-                $source = StripeSource::query()
-                    ->where('source_id', $request->json('data.object.id'))
-                    ->firstOrFail();
 
-                $source->update([
-                    'status' => StripeSource::FAILED,
-                ]);
-
-                self::createStripeSourceEvent(
-                    $source->id,
+                self::handleStripeSource(
+                    $request->json('data.object.id'),
                     StripeSource::FAILED,
                     'The payment has been canceled.'
                 );
@@ -141,25 +127,20 @@ class HandleStripeWebhook extends Controller
             // authorized and verified a payment
             case 'source.chargeable':
             {
-                $source = StripeSource::query()
-                    ->where('source_id', $request->json('data.object.id'))
-                    ->firstOrFail();
+                // getting the stripe source id
+                $id = $request->json('data.object.id');
 
-                $source->update([
-                    'status' => StripeSource::CHARGEABLE,
-                ]);
-
-                self::createStripeSourceEvent(
-                    $source->id,
+                $source = self::handleStripeSource(
+                    $id,
                     StripeSource::CHARGEABLE,
                     'The payment has been authorized.'
                 );
 
-                // charge the user
+                // charging the user
                 \Stripe\Charge::create([
-                    'amount' => $source->plan->cad_price,
+                    'amount' => $source['plan']['cad_price'],
                     'currency' => 'cad',
-                    'source' => $source->source_id,
+                    'source' => $id,
                 ]);
 
                 break;
@@ -173,34 +154,26 @@ class HandleStripeWebhook extends Controller
                     return response()->noContent();
                 }
 
-                $source = StripeSource::query()
-                    ->where('source_id', $request->json('data.object.payment_method'))
-                    ->firstOrFail();
-
-                $source->update([
-                    'status' => StripeSource::SUCCEEDED,
-                ]);
-
-                self::createStripeSourceEvent(
-                    $source->id,
+                $source = self::handleStripeSource(
+                    $request->json('data.object.payment_method'),
                     StripeSource::SUCCEEDED,
                     'You have successfully subscribed using WeChat Pay.'
                 );
 
                 // create subscription for the user
                 $subscription = Subscription::create([
-                    'user_id' => $source->user_id,
-                    'plan_id' => $source->plan_id,
+                    'user_id' => $source['user_id'],
+                    'plan_id' => $source['plan']['id'],
                     'status' => Subscription::CANCELED,
                     'end_date' => now()->addMonth(),
                 ]);
 
                 // creating a new invoice for the payment
                 self::createInvoice(
-                    $source->user_id,
+                    $source['user_id'],
                     $subscription->id,
                     Invoice::WECHAT,
-                    $source->plan->price
+                    $source['plan']['price']
                 );
 
                 event(new SubscriptionCreatedEvent($subscription));
@@ -220,13 +193,28 @@ class HandleStripeWebhook extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    private static function createStripeSourceEvent(int $id, string $type, string $message)
+    private static function handleStripeSource(string $stripeSource, string $status, string $message): array
     {
-        StripeSourceEvent::create([
-            'stripe_source_id' => $id,
-            'type' => $type,
+        // get the source
+        $source = Cache::get($stripeSource);
+
+        // checking the stripe source is still cached
+        if ($source === null) {
+            abort(404);
+        }
+
+        // update the source
+        $source['status'] = $status;
+        array_push($source['events'], [
+            'type' => $status,
             'message' => $message,
+            'created_at' => now(),
         ]);
+
+        // store the updated source
+        Cache::put($stripeSource, $source, now()->addHours(2));
+
+        return $source;
     }
 
 }

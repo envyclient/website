@@ -68,11 +68,8 @@ class CancelSubscriptionJob implements ShouldQueue
      */
     private function handleStripe()
     {
-        // tell stripe to cancel the users subscription
-        $stripeClient = new \Stripe\StripeClient(config('services.stripe.secret'));
-
         // will throw exception if API call fails
-        $stripeClient->subscriptions->cancel(
+        app('stripeClient')->subscriptions->cancel(
             $this->subscription->stripe_id,
             []
         );

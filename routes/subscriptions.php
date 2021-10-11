@@ -7,6 +7,7 @@ use App\Http\Controllers\Stripe\Actions\CreateStripeSource;
 use App\Http\Controllers\Stripe\Actions\HandleStripeWebhook;
 use App\Http\Controllers\Stripe\StripeController;
 use App\Http\Livewire\ShowStripeSource;
+use App\Http\Middleware\Custom\CheckStripeSource;
 use App\Http\Middleware\Custom\VerifyPaypalWebhookSignature;
 use App\Http\Middleware\Custom\VerifyStripeWebhookSignature;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,11 @@ Route::group(['prefix' => 'stripe'], function () {
  * Stripe Source
  */
 Route::group(['prefix' => 'stripe-source'], function () {
-    Route::get('{id}', ShowStripeSource::class)->name('stripe-source.show');
-    Route::post('/', CreateStripeSource::class)->name('stripe-source.store');
+    Route::get('{stripeSource}', ShowStripeSource::class)
+        ->middleware(CheckStripeSource::class)
+        ->name('stripe-source.show');
+
+    Route::post('/', CreateStripeSource::class)
+        ->middleware(['auth', 'verified', 'not-subscribed'])
+        ->name('stripe-source.store');
 });
