@@ -7,6 +7,7 @@ use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Invoice;
 use App\Models\Subscription;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class HandlePayPalWebhook extends Controller
@@ -76,7 +77,6 @@ class HandlePayPalWebhook extends Controller
                 // set the subscription as cancelled
                 Subscription::query()
                     ->where('paypal_id', $request->json('resource.id'))
-                    ->firstOrFail()
                     ->update([
                         'status' => Subscription::CANCELED,
                     ]);
@@ -89,13 +89,18 @@ class HandlePayPalWebhook extends Controller
             case 'BILLING.SUBSCRIPTION.PAYMENT.FAILED': // payment has failed for a subscription
             {
 
-                // get the subscription
-                $subscription = Subscription::query()
-                    ->where('paypal_id', $request->json('resource.id'))
-                    ->firstOrFail();
+                try {
 
-                // dispatch the cancel subscription job
-                CancelSubscriptionJob::dispatch($subscription, Invoice::PAYPAL);
+                    // get the subscription
+                    $subscription = Subscription::query()
+                        ->where('paypal_id', $request->json('resource.id'))
+                        ->firstOrFail();
+
+                    // dispatch the cancel subscription job
+                    CancelSubscriptionJob::dispatch($subscription, Invoice::PAYPAL);
+
+                } catch (ModelNotFoundException) {
+                }
 
                 break;
             }
