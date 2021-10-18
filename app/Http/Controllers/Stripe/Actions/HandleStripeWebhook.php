@@ -9,6 +9,7 @@ use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Invoice;
 use App\Models\Subscription;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -82,13 +83,18 @@ class HandleStripeWebhook extends Controller
             case 'invoice.payment_failed':
             {
 
-                // get the related subscription
-                $subscription = Subscription::query()
-                    ->where('stripe_id', $request->json('data.object.subscription'))
-                    ->firstOrFail();
+                try {
 
-                // queue the subscription for cancellation
-                CancelSubscriptionJob::dispatch($subscription, Invoice::STRIPE);
+                    // get the related subscription
+                    $subscription = Subscription::query()
+                        ->where('stripe_id', $request->json('data.object.subscription'))
+                        ->firstOrFail();
+
+                    // queue the subscription for cancellation
+                    CancelSubscriptionJob::dispatch($subscription, Invoice::STRIPE);
+
+                } catch (ModelNotFoundException) {
+                }
 
                 break;
             }
