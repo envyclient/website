@@ -39,7 +39,7 @@ class Discord
             self::updateRole($user->discord_id, self::PREMIUM, true);
         }
 
-        SendDiscordWebhookJob::dispatch($callback($user->discord_id, $user->plan?->name));
+        SendDiscordWebhookJob::dispatch($callback($user->discord_id, $user->subscription?->plan->name));
     }
 
     /**
