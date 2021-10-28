@@ -42,7 +42,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  *
  * @property-read Collection configs
  * @property-read Subscription|null subscription
- * @property-read Plan|null plan
  * @property-read Collection downloads
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
@@ -162,11 +161,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function licenseRequests(): HasMany
     {
         return $this->hasMany(LicenseRequest::class);
-    }
-
-    public function stripeSources(): HasMany
-    {
-        return $this->hasMany(StripeSource::class);
     }
 
     public function hasSubscription(): bool
