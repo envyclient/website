@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('versions', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30)->unique();
-            $table->boolean('beta')->default(false);
+            $table->boolean('beta');
             $table->text('changelog');
-            $table->string('main_class')->nullable();
+            $table->string('main_class');
             $table->timestamp('processed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
