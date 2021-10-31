@@ -68,6 +68,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --provider=\"Spatie\\SupportBubble\\SupportBubbleServiceProvider\" --tag=support-bubble-views --ansi"
         ]
     }
 }
