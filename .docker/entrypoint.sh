@@ -36,18 +36,18 @@ function startServer() {
     done
 }
 
-function startHorizon() {
-    # laravel horizon
-    echo -e "starting laravel horizon"
-    php artisan horizon &
-    horizon_service_pid=$!
+function startWorker() {
+    # queue worker
+    echo -e "starting worker"
+    php artisan queue:work &
+    worker_service_pid=$!
 
     # monitor process
     while (true); do
-        if ! kill -0 "$horizon_service_pid" 2>/dev/null; then
-            echo "[horizon] service is no longer running! exiting..."
+        if ! kill -0 "$worker_service_pid" 2>/dev/null; then
+            echo "[worker] service is no longer running! exiting..."
             sleep 5
-            wait "$horizon_service_pid"
+            wait "$worker_service_pid"
             exit 1
         fi
         sleep 1
@@ -58,8 +58,8 @@ case "$1" in
 start:server)
     startServer
     ;;
-start:horizon)
-    startHorizon
+start:worker)
+    startWorker
     ;;
 *)
     echo -e "no service specified"
