@@ -23,9 +23,6 @@ class Kernel extends ConsoleKernel
 
         // delete any old  minecraft accounts
         $schedule->command('envy:delete-old-minecraft-accounts')->daily();
-
-        // laravel horizon
-        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     protected function commands()
