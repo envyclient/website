@@ -62,11 +62,11 @@ services:
       retries: 3
       timeout: 5s
 
-  horizon:
+  worker:
     image: ghcr.io/envyclient/website
     restart: always
     env_file: .env
-    command: start:horizon
+    command: start:worker
     depends_on:
       database:
         condition: service_healthy
