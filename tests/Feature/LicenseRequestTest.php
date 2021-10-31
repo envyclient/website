@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Feature;
 
 use App\Http\Livewire\User\Home\MediaRequests;
 use App\Models\LicenseRequest;

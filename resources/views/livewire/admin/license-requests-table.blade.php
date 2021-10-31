@@ -8,9 +8,9 @@
         <x-input.group for="status" label="Status">
             <x-input.select wire:model="status" id="status">
                 <option value="all" selected>All</option>
-                <option value="{{ \App\Models\LicenseRequest::PENDING }}">Pending</option>
-                <option value="{{ \App\Models\LicenseRequest::APPROVED }}">Approved</option>
-                <option value="{{ \App\Models\LicenseRequest::DENIED }}">Denied</option>
+                <option value="{{ \App\Enums\LicenseRequest::PENDING }}">Pending</option>
+                <option value="{{ \App\Enums\LicenseRequest::APPROVED }}">Approved</option>
+                <option value="{{ \App\Enums\LicenseRequest::DENIED }}">Denied</option>
             </x-input.select>
         </x-input.group>
     </div>
@@ -49,7 +49,7 @@
                     </x-table.cell>
 
                     <x-table.cell>
-                        @if($request->status === \App\Models\LicenseRequest::PENDING)
+                        @if($request->status === \App\Enums\LicenseRequest::PENDING)
                             <x-button.link class="block text-indigo-600 hover:text-indigo-900"
                                            wire:click="approve({{ $request->id }})">
                                 Approve

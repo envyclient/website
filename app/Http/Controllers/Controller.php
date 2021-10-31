@@ -35,10 +35,9 @@ class Controller extends BaseController
         ], 200);
     }
 
-    protected static function createInvoice(int $user, int $subscription, string $method, int $price)
+    protected static function createInvoice(int $subscription, string $method, int $price)
     {
         $invoice = Invoice::create([
-            'user_id' => $user,
             'subscription_id' => $subscription,
             'method' => $method,
             'price' => $price,
@@ -46,7 +45,7 @@ class Controller extends BaseController
 
         // building the message
         $content = 'A payment has been received.' . PHP_EOL . PHP_EOL;
-        $content = $content . '**User**: ' . $invoice->user->name . PHP_EOL;
+        $content = $content . '**User**: ' . $invoice->subscription->user->name . PHP_EOL;
         $content = $content . '**Plan**: ' . $invoice->subscription->plan->name . PHP_EOL;
         $content = $content . '**Method**: ' . $invoice->method . PHP_EOL;
         $content = $content . '**Amount**: ' . $invoice->price;

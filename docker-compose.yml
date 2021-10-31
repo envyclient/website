@@ -3,7 +3,7 @@ services:
 
   database:
     image: mariadb:10.6.4
-    restart: always
+    restart: unless-stopped
     ports:
       - "${DB_PORT}:3306"
     volumes:
@@ -18,7 +18,7 @@ services:
 
   cache:
     image: redis:alpine
-    restart: always
+    restart: unless-stopped
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
@@ -28,20 +28,9 @@ services:
       retries: 3
       timeout: 5s
 
-  cron:
-    image: mcuadros/ofelia
-    restart: always
-    network_mode: none
-    depends_on:
-      website:
-        condition: service_healthy
-    command: daemon --docker
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
   website:
     image: ghcr.io/envyclient/website
-    restart: always
+    restart: unless-stopped
     env_file: .env
     command: start:server
     depends_on:
@@ -49,10 +38,6 @@ services:
         condition: service_healthy
       cache:
         condition: service_healthy
-    labels:
-      ofelia.enabled: "true"
-      ofelia.job-exec.pqueue.schedule: "@every 1m"
-      ofelia.job-exec.pqueue.command: "php /app/artisan schedule:run"
     ports:
       - "8080:8000"
     volumes:
@@ -64,12 +49,27 @@ services:
 
   worker:
     image: ghcr.io/envyclient/website
-    restart: always
+    restart: unless-stopped
     env_file: .env
     command: start:worker
     depends_on:
-      database:
+      website:
         condition: service_healthy
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.pqueue.schedule: "@every 1m"
+      ofelia.job-exec.pqueue.command: "php /app/artisan schedule:run"
+
+  cron:
+    image: mcuadros/ofelia
+    restart: unless-stopped
+    network_mode: none
+    depends_on:
+      worker:
+        condition: service_healthy
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   database:

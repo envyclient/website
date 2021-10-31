@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin;
+namespace Feature\Admin;
 
 use App\Http\Livewire\Admin\Version\UploadVersion;
 use App\Jobs\EncryptVersionJob;

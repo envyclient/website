@@ -106,7 +106,7 @@
     </svg>
     License Requests
     <span class="bg-gray-900 group-hover:bg-gray-800 ml-auto inline-block py-0.5 px-3 text-xs font-medium rounded-full">
-        {{ \App\Models\LicenseRequest::where('status', \App\Models\LicenseRequest::PENDING)->count() }}
+        {{ \App\Models\LicenseRequest::where('status', \App\Enums\LicenseRequest::PENDING)->count() }}
     </span>
 </a>
 @endadmin

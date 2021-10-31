@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\API;
+namespace Feature\API;
 
 use App\Models\Config;
 use App\Models\Version;

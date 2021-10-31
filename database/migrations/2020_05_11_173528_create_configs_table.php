@@ -13,8 +13,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('version_id')->constrained();
             $table->string('name', 30);
-            $table->json('data'); // JSON
-            $table->boolean('public')->default(false);
+            $table->json('data');
+            $table->boolean('public');
             $table->boolean('official')->default(false);
             $table->timestamps();
         });

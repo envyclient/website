@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\PayPal\Actions;
 
+use App\Enums\Invoice;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
-use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -61,7 +61,6 @@ class HandlePayPalWebhook extends Controller
 
                 // create invoice for the payment
                 self::createInvoice(
-                    $subscription->user->id,
                     $subscription->id,
                     Invoice::PAYPAL,
                     $subscription->plan->price
