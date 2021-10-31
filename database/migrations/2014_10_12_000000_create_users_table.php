@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('banned')->default(false);
 
-            $table->unsignedBigInteger('referral_code_id')->nullable();
+            $table->foreignId('referral_code_id')->nullable()->constrained('referral_codes');
             $table->timestamp('referral_code_used_at')->nullable();
 
             $table->string('discord_id', 18)->nullable()->unique();

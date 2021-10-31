@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
+use App\Enums\Invoice;
 use App\Enums\StripeSource;
 use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
-use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -68,7 +68,6 @@ class HandleStripeWebhook extends Controller
                 ]);
 
                 self::createInvoice(
-                    $subscription->user->id,
                     $subscription->id,
                     Invoice::STRIPE,
                     $subscription->plan->price
@@ -176,7 +175,6 @@ class HandleStripeWebhook extends Controller
 
                 // creating a new invoice for the payment
                 self::createInvoice(
-                    $source['user_id'],
                     $subscription->id,
                     Invoice::WECHAT,
                     $source['plan']['price']

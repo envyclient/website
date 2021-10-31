@@ -130,7 +130,7 @@
                 <x-slot name="body">
                     @foreach($showingInvoices as $invoice)
                         <x-table.row wire:loading.class.delay="opacity-50" wire:key="invoices-{{ $invoice->id }}">
-                            <x-table.cell>{{ $invoice->user->name }}</x-table.cell>
+                            <x-table.cell>{{ $invoice->subscription->user->name }}</x-table.cell>
                             <x-table.cell>{{ $invoice->method }}</x-table.cell>
                             <x-table.cell>${{ $invoice->price }} <span class="text-gray-400">USD</span></x-table.cell>
                         </x-table.row>

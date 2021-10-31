@@ -42,7 +42,7 @@ class LicenseRequestsTable extends Component
 
         // mark the license request as approved
         $licenseRequest->update([
-            'status' => LicenseRequest::APPROVED,
+            'status' => \App\Enums\LicenseRequest::APPROVED,
             'action_reason' => 'Request approved.',
             'action_at' => now(),
         ]);
@@ -63,7 +63,7 @@ class LicenseRequestsTable extends Component
         // mark the license request as denied
         $licenseRequest = LicenseRequest::findOrFail($payload['id']);
         $licenseRequest->update([
-            'status' => LicenseRequest::DENIED,
+            'status' => \App\Enums\LicenseRequest::DENIED,
             'action_reason' => $payload['message'],
             'action_at' => now(),
         ]);
