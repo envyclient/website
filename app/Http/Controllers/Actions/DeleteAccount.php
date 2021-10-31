@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\DeleteAccountJob;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class DeleteAccount extends Controller
 {
@@ -22,8 +22,14 @@ class DeleteAccount extends Controller
             return back()->with('error', 'You cannot delete your account if you have had a subscription.');
         }
 
-        // dispatch the delete_account_job
-        DeleteAccountJob::dispatch($user);
+        // delete license_requests
+        $user->licenseRequests()->delete();
+
+        // delete password_resets
+        DB::table('password_resets')->where('email', $user->email)->delete();
+
+        // delete the user
+        $user->delete();
 
         // log the user out
         auth()->logout();
