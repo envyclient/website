@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -21,7 +20,7 @@ return new class extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('banned')->default(false);
 
-            $table->foreignId('referral_code_id')->nullable()->constrained('referral_codes');
+            $table->unsignedBigInteger('referral_code_id')->nullable();
             $table->timestamp('referral_code_used_at')->nullable();
 
             $table->string('discord_id', 18)->nullable()->unique();
