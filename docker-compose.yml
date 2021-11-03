@@ -16,18 +16,6 @@ services:
       retries: 3
       timeout: 5s
 
-  cache:
-    image: redis:alpine
-    restart: unless-stopped
-    ports:
-      - "${REDIS_PORT}:6379"
-    volumes:
-      - cache:/data
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      retries: 3
-      timeout: 5s
-
   website:
     image: ghcr.io/envyclient/website
     restart: unless-stopped
@@ -35,8 +23,6 @@ services:
     command: start:server
     depends_on:
       database:
-        condition: service_healthy
-      cache:
         condition: service_healthy
     ports:
       - "8080:8000"
@@ -53,7 +39,7 @@ services:
     env_file: .env
     command: start:worker
     depends_on:
-      website:
+      database:
         condition: service_healthy
     labels:
       ofelia.enabled: "true"
@@ -64,14 +50,13 @@ services:
     image: mcuadros/ofelia
     restart: unless-stopped
     network_mode: none
+    command: daemon --docker
     depends_on:
       worker:
-        condition: service_healthy
-    command: daemon --docker
+        condition: service_started
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   database:
-  cache:
   website:
