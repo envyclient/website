@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
-use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +15,7 @@ class CancelSubscription extends Controller
         $subscription = $request->user()->subscription;
 
         // check for already cancelled subscription
-        if ($subscription->status === Subscription::CANCELED) {
+        if ($subscription->status === \App\Enums\Subscription::CANCELED) {
             return redirect()
                 ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');
@@ -31,9 +30,9 @@ class CancelSubscription extends Controller
 
         // cancel subscription
         if ($subscription->stripe_id !== null) {
-            return self::successful($subscription, Invoice::STRIPE);
+            return self::successful($subscription, \App\Enums\Invoice::STRIPE);
         } else {
-            return self::successful($subscription, Invoice::PAYPAL);
+            return self::successful($subscription, \App\Enums\Invoice::PAYPAL);
         }
     }
 

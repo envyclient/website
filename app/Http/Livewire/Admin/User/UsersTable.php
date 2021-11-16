@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\User;
 
-use App\Models\Subscription;
+use App\Enums\Subscription;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;

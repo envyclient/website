@@ -38,7 +38,7 @@ class HandlePayPalWebhook extends Controller
 
                 // set the subscription as active
                 $subscription->update([
-                    'status' => Subscription::ACTIVE,
+                    'status' => \App\Enums\Subscription::ACTIVE,
                     //'end_date' => Carbon::parse($request->json('resource.billing_info.next_billing_time')),
                 ]);
 
@@ -77,7 +77,7 @@ class HandlePayPalWebhook extends Controller
                 Subscription::query()
                     ->where('paypal_id', $request->json('resource.id'))
                     ->update([
-                        'status' => Subscription::CANCELED,
+                        'status' => \App\Enums\Subscription::CANCELED,
                     ]);
 
                 break;

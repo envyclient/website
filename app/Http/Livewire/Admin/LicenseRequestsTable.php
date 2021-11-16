@@ -35,7 +35,7 @@ class LicenseRequestsTable extends Component
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,
-                'status' => Subscription::ACTIVE,
+                'status' => \App\Enums\Subscription::ACTIVE,
                 'end_date' => now()->addDays(LicenseRequest::DAYS_TO_ADD)
             ]);
         }
