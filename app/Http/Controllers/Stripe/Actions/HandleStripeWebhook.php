@@ -41,7 +41,7 @@ class HandleStripeWebhook extends Controller
                     'user_id' => $userId,
                     'plan_id' => $planID,
                     'stripe_id' => $request->json('data.object.subscription'),
-                    'status' => Subscription::PENDING,
+                    'status' => \App\Enums\Subscription::PENDING,
                 ]);
 
                 // broadcast new subscription event
@@ -63,7 +63,7 @@ class HandleStripeWebhook extends Controller
 
                 // activate the subscription and set end_date
                 $subscription->update([
-                    'status' => Subscription::ACTIVE,
+                    'status' => \App\Enums\Subscription::ACTIVE,
                     'end_date' => now()->addMonth(),
                 ]);
 
@@ -169,7 +169,7 @@ class HandleStripeWebhook extends Controller
                 $subscription = Subscription::create([
                     'user_id' => $source['user_id'],
                     'plan_id' => $source['plan']['id'],
-                    'status' => Subscription::CANCELED,
+                    'status' => \App\Enums\Subscription::CANCELED,
                     'end_date' => now()->addMonth(),
                 ]);
 

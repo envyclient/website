@@ -65,7 +65,7 @@
             </div>
         </x-plan-card>
 
-        @if($user->subscription !== null && $user->subscription->status === \App\Models\Subscription::PENDING)
+        @if($user->subscription !== null && $user->subscription->status === \App\Enums\Subscription::PENDING)
             <div class="bg-white shadow sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        @elseif($user->subscription !== null && $user->subscription->status !== \App\Models\Subscription::CANCELED)
+        @elseif($user->subscription !== null && $user->subscription->status !== \App\Enums\Subscription::CANCELED)
             <x-card title="Cancel Subscription"
                     subtitle="Your subscription will be cancelled and will not renew.">
                 <form action="{{ route('subscriptions.cancel') }}" method="post">

@@ -30,10 +30,6 @@ class Subscription extends Model
 {
     use SoftDeletes;
 
-    const PENDING = 'Pending';
-    const ACTIVE = 'Active';
-    const CANCELED = 'Cancelled';
-
     protected $fillable = [
         'user_id',
         'plan_id',

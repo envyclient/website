@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Enums\Invoice;
 use App\Events\Subscription\SubscriptionCancelledEvent;
 use App\Helpers\Paypal;
-use App\Models\Invoice;
 use App\Models\Subscription;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -38,7 +38,7 @@ class CancelSubscriptionJob implements ShouldQueue
     public function handle()
     {
         // checking the subscription has already been cancelled
-        if ($this->subscription->status === Subscription::CANCELED) {
+        if ($this->subscription->status === \App\Enums\Subscription::CANCELED) {
             return;
         }
 
@@ -76,7 +76,7 @@ class CancelSubscriptionJob implements ShouldQueue
 
         // mark the users' subscription as cancelled on our end
         $this->subscription->update([
-            'status' => Subscription::CANCELED,
+            'status' => \App\Enums\Subscription::CANCELED,
         ]);
     }
 
