@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\PayPal\Actions;
 
+use App\Enums\Invoice;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
-use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -38,7 +38,7 @@ class HandlePayPalWebhook extends Controller
 
                 // set the subscription as active
                 $subscription->update([
-                    'status' => Subscription::ACTIVE,
+                    'status' => \App\Enums\Subscription::ACTIVE,
                     //'end_date' => Carbon::parse($request->json('resource.billing_info.next_billing_time')),
                 ]);
 
@@ -61,7 +61,6 @@ class HandlePayPalWebhook extends Controller
 
                 // create invoice for the payment
                 self::createInvoice(
-                    $subscription->user->id,
                     $subscription->id,
                     Invoice::PAYPAL,
                     $subscription->plan->price
@@ -78,7 +77,7 @@ class HandlePayPalWebhook extends Controller
                 Subscription::query()
                     ->where('paypal_id', $request->json('resource.id'))
                     ->update([
-                        'status' => Subscription::CANCELED,
+                        'status' => \App\Enums\Subscription::CANCELED,
                     ]);
 
                 break;

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
+use App\Enums\Invoice;
 use App\Enums\StripeSource;
 use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
-use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class HandleStripeWebhook extends Controller
                     'user_id' => $userId,
                     'plan_id' => $planID,
                     'stripe_id' => $request->json('data.object.subscription'),
-                    'status' => Subscription::PENDING,
+                    'status' => \App\Enums\Subscription::PENDING,
                 ]);
 
                 // broadcast new subscription event
@@ -63,12 +63,11 @@ class HandleStripeWebhook extends Controller
 
                 // activate the subscription and set end_date
                 $subscription->update([
-                    'status' => Subscription::ACTIVE,
+                    'status' => \App\Enums\Subscription::ACTIVE,
                     'end_date' => now()->addMonth(),
                 ]);
 
                 self::createInvoice(
-                    $subscription->user->id,
                     $subscription->id,
                     Invoice::STRIPE,
                     $subscription->plan->price
@@ -170,13 +169,12 @@ class HandleStripeWebhook extends Controller
                 $subscription = Subscription::create([
                     'user_id' => $source['user_id'],
                     'plan_id' => $source['plan']['id'],
-                    'status' => Subscription::CANCELED,
+                    'status' => \App\Enums\Subscription::CANCELED,
                     'end_date' => now()->addMonth(),
                 ]);
 
                 // creating a new invoice for the payment
                 self::createInvoice(
-                    $source['user_id'],
                     $subscription->id,
                     Invoice::WECHAT,
                     $source['plan']['price']

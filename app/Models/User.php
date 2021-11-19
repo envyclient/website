@@ -46,7 +46,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices
  * @property-read Collection licenseRequest
- * @property-read Collection stripeSources
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

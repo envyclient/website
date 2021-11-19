@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Feature\Auth;
 
 use App\Http\Livewire\Auth\Login;
 use App\Models\User;
