@@ -41,21 +41,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    labels:
-      ofelia.enabled: "true"
-      ofelia.job-exec.pqueue.schedule: "@every 1m"
-      ofelia.job-exec.pqueue.command: "php /app/artisan schedule:run"
-
-  cron:
-    image: mcuadros/ofelia
-    restart: unless-stopped
-    network_mode: none
-    command: daemon --docker
-    depends_on:
-      worker:
-        condition: service_started
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   database:

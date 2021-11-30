@@ -39,7 +39,7 @@ function startServer() {
 function startWorker() {
     # cron
     echo -e "starting cron"
-    cron -f &
+    crond -f &
     cron_service_pid=$!
 
     # queue worker
