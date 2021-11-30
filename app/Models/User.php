@@ -42,7 +42,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  *
  * @property-read Collection configs
  * @property-read Subscription|null subscription
- * @property-read Plan|null plan
  * @property-read Collection downloads
  * @property-read ReferralCode|null referralCode
  * @property-read Collection invoices

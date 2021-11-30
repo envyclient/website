@@ -39,6 +39,9 @@ RUN ln -s /usr/bin/php8 /usr/bin/php
 # configure php
 COPY .docker/php.ini /etc/php8/conf.d/99_envy.ini
 
+# schedule cron job
+RUN echo "* * * * * cd /app && php artisan schedule:run" | crontab -
+
 FROM base as composer-build
 
 # install composer
@@ -53,7 +56,7 @@ COPY . ./
 # install composer dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-FROM mhart/alpine-node:16 as npm-build
+FROM node:alpine as npm-build
 
 # create the app directory
 WORKDIR /app

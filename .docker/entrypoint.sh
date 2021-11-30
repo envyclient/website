@@ -37,6 +37,11 @@ function startServer() {
 }
 
 function startWorker() {
+    # cron
+    echo -e "starting cron"
+    cron -f &
+    cron_service_pid=$!
+
     # queue worker
     echo -e "starting worker"
     php artisan queue:work &
@@ -48,6 +53,12 @@ function startWorker() {
             echo "[worker] service is no longer running! exiting..."
             sleep 5
             wait "$worker_service_pid"
+            exit 1
+        fi
+        if ! kill -0 "$cron_service_pid" 2>/dev/null; then
+            echo "[cron] service is no longer running! exiting..."
+            sleep 5
+            wait "$cron_service_pid"
             exit 1
         fi
         sleep 1
