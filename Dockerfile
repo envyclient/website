@@ -1,4 +1,4 @@
-FROM alpine:edge as base
+FROM alpine:edge
 
 # install required packages & php extensions
 RUN apk --no-cache add \
@@ -42,12 +42,10 @@ COPY .docker/php.ini /etc/php8/conf.d/99_envy.ini
 # schedule cron job
 RUN echo "* * * * * cd /app && php artisan schedule:run" | crontab -
 
-FROM base as composer-build
-
 # install composer
 RUN apk --no-cache add composer
 
-# create the app directory
+# change to app dir
 WORKDIR /app
 
 # copy project folder
@@ -56,31 +54,8 @@ COPY . ./
 # install composer dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-FROM node:alpine as npm-build
-
-# create the app directory
-WORKDIR /app
-
-# copy over required files for building css & js
-COPY package.json package-lock.json tailwind.config.js webpack.mix.js ./
-COPY resources/ ./resources
-COPY config/ ./config
-
-# build production css & js
-RUN npm install && npm run prod
-
-FROM base as production
-
-# change to working dir
-WORKDIR /app
-
-# copy over project files from composer-build
-COPY --from=composer-build /app ./
-
-# copy over built assets from npm-build
-COPY --from=npm-build /app/public ./public
-
 # expose laravel octane port
 EXPOSE 8000
 
+# entrypoint
 ENTRYPOINT ["/bin/ash", ".docker/entrypoint.sh"]
