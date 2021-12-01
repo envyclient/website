@@ -2,13 +2,9 @@
 
 namespace App\Enums;
 
-final class Invoice
+enum Invoice: string
 {
-    const STRIPE = 'stripe';
-    const PAYPAL = 'paypal';
-    const WECHAT = 'wechat';
-
-    private function __construct()
-    {
-    }
+    case STRIPE = 'stripe';
+    case PAYPAL = 'paypal';
+    case WECHAT = 'wechat';
 }

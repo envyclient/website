@@ -2,13 +2,9 @@
 
 namespace App\Enums;
 
-final class Subscription
+enum Subscription: string
 {
-    const PENDING = 'Pending';
-    const ACTIVE = 'Active';
-    const CANCELED = 'Cancelled';
-
-    private function __construct()
-    {
-    }
+    case PENDING = 'Pending';
+    case ACTIVE = 'Active';
+    case CANCELED = 'Cancelled';
 }
