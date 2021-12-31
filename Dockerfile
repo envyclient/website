@@ -1,8 +1,6 @@
 FROM alpine:edge
 
 # install required packages & php extensions
-
-# install swoole
 RUN apk --no-cache add \
     -X \
     https://dl-cdn.alpinelinux.org/alpine/edge/testing \
