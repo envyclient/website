@@ -13,3 +13,4 @@ yarn-error.log
 .idea/
 rr
 .rr.yaml
+.DS_Store

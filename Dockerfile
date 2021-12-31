@@ -2,48 +2,43 @@ FROM alpine:edge
 
 # install required packages & php extensions
 RUN apk --no-cache add \
-    curl \
-    php8 \
-    php8-ctype \
-    php8-curl \
-    php8-dom \
-    php8-fileinfo \
-    php8-gd \
-    php8-intl \
-    php8-json \
-    php8-mbstring \
-    php8-opcache \
-    php8-openssl \
-    php8-pcntl \
-    php8-pdo_mysql \
-    php8-phar \
-    php8-posix \
-    php8-session \
-    php8-tokenizer \
-    php8-xml \
-    php8-xmlreader \
-    php8-zlib
-
-# install swoole
-RUN apk --no-cache add \
     -X \
     https://dl-cdn.alpinelinux.org/alpine/edge/testing \
-    php8-pecl-swoole
-
-# cleanup
-RUN rm -rf /tmp/* /var/cache/apk/*
+    curl \
+    php81 \
+    php81-ctype \
+    php81-curl \
+    php81-dom \
+    php81-fileinfo \
+    php81-gd \
+    php81-intl \
+    php81-json \
+    php81-mbstring \
+    php81-opcache \
+    php81-openssl \
+    php81-pcntl \
+    php81-pdo_mysql \
+    php81-phar \
+    php81-posix \
+    php81-session \
+    php81-tokenizer \
+    php81-xml \
+    php81-xmlreader \
+    php81-zip \
+    php81-zlib \
+    php81-pecl-swoole
 
 # create symlink
-RUN ln -s /usr/bin/php8 /usr/bin/php
+RUN ln -s /usr/bin/php81 /usr/bin/php
 
 # configure php
-COPY .docker/php.ini /etc/php8/conf.d/99_envy.ini
+COPY .docker/php.ini /etc/php81/conf.d/99_envy.ini
+
+# install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # schedule cron job
 RUN echo "* * * * * cd /app && php artisan schedule:run" | crontab -
-
-# install composer
-RUN apk --no-cache add composer
 
 # change to app dir
 WORKDIR /app
