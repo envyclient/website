@@ -2,13 +2,9 @@
 
 namespace App\Enums;
 
-final class LicenseRequest
+enum LicenseRequest: string
 {
-    const PENDING = 'pending';
-    const DENIED = 'denied';
-    const APPROVED = 'approved';
-
-    private function __construct()
-    {
-    }
+    case PENDING = 'pending';
+    case DENIED = 'denied';
+    case APPROVED = 'approved';
 }

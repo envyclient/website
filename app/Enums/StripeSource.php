@@ -2,15 +2,11 @@
 
 namespace App\Enums;
 
-final class StripeSource
+enum StripeSource: string
 {
-    const PENDING = 'pending';
-    const CANCELED = 'canceled';
-    const FAILED = 'failed';
-    const CHARGEABLE = 'chargeable';
-    const SUCCEEDED = 'succeeded';
-
-    private function __construct()
-    {
-    }
+    case PENDING = 'pending';
+    case CANCELED = 'canceled';
+    case FAILED = 'failed';
+    case CHARGEABLE = 'chargeable';
+    case SUCCEEDED = 'succeeded';
 }

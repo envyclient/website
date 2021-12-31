@@ -23,7 +23,7 @@ class CancelSubscriptionJob implements ShouldQueue
 
     public function __construct(
         private Subscription $subscription,
-        private string       $provider,
+        private Invoice      $provider,
     )
     {
         $subscription->update([

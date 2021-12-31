@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Actions;
 
+use App\Enums\Invoice;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Models\Subscription;
@@ -36,7 +37,7 @@ class CancelSubscription extends Controller
         }
     }
 
-    private static function successful(Subscription $subscription, string $provider): RedirectResponse
+    private static function successful(Subscription $subscription, Invoice $provider): RedirectResponse
     {
         // dispatch the cancel subscription job
         CancelSubscriptionJob::dispatch($subscription, $provider);
