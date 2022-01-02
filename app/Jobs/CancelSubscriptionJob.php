@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Enums\PaymentProvider;
 use App\Events\Subscription\SubscriptionCancelledEvent;
-use App\Helpers\Paypal;
+use App\Helpers\PaypalHelper;
 use App\Models\Subscription;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -80,7 +80,7 @@ class CancelSubscriptionJob implements ShouldQueue
     private function handlePayPal()
     {
         // tell PayPal to cancel the users billing agreement
-        $response = HTTP::withToken(Paypal::getAccessToken())
+        $response = HTTP::withToken(PaypalHelper::getAccessToken())
             ->withBody(json_encode([
                 'note' => 'User cancelled subscription.'
             ]), 'application/json')

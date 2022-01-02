@@ -5,7 +5,7 @@ namespace App\Helpers;
 use Exception;
 use Illuminate\Support\Facades\Http;
 
-class Paypal
+class PaypalHelper
 {
     /**
      * Get PayPal API access token.

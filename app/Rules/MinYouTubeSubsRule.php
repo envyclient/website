@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Helpers\Youtube;
+use App\Helpers\YoutubeHelper;
 use Exception;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -12,7 +12,7 @@ class MinYouTubeSubsRule implements Rule
     {
         // get channel data
         try {
-            $response = Youtube::getChannelData($value);
+            $response = YoutubeHelper::getChannelData($value);
         } catch (Exception) {
             return false;
         }

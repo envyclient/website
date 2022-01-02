@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\User\Home;
 
-use App\Helpers\Youtube;
+use App\Helpers\YoutubeHelper;
 use App\Models\LicenseRequest;
 use App\Rules\MinYouTubeSubsRule;
 use App\Rules\ValidYouTubeLinkRule;
@@ -50,7 +50,7 @@ class MediaRequests extends Component
 
         // getting the channel data
         try {
-            $youtubeData = Youtube::getChannelData($this->channel);
+            $youtubeData = YoutubeHelper::getChannelData($this->channel);
         } catch (Exception) {
             $this->addError('channel', 'Unable to fetch data from YouTube.');
             return;

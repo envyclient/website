@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\PayPal;
 
 use App\Events\Subscription\SubscriptionCreatedEvent;
-use App\Helpers\Paypal;
+use App\Helpers\PaypalHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use App\Models\Subscription;
@@ -36,7 +36,7 @@ class PayPalController extends Controller
         $plan = Plan::find($request->id);
 
         // create the subscription
-        $response = Http::withToken(Paypal::getAccessToken())
+        $response = Http::withToken(PaypalHelper::getAccessToken())
             ->acceptJson()
             ->withBody(json_encode([
                 'plan_id' => $plan->paypal_id,

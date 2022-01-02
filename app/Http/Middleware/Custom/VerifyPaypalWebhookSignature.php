@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware\Custom;
 
-use App\Helpers\Paypal;
+use App\Helpers\PaypalHelper;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -18,7 +18,7 @@ class VerifyPaypalWebhookSignature
      */
     public function handle(Request $request, Closure $next)
     {
-        $response = HTTP::withToken(Paypal::getAccessToken())
+        $response = HTTP::withToken(PaypalHelper::getAccessToken())
             ->withBody(json_encode([
                 'auth_algo' => $request->header('PAYPAL-AUTH-ALGO'),
                 'cert_url' => $request->header('PAYPAL-CERT-URL'),
