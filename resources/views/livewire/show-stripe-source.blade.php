@@ -38,28 +38,28 @@
                                     </x-table.cell>
 
                                     <x-table.cell>
-                                        @if($event['type'] === \App\Enums\StripeSource::PENDING)
+                                        @if($event['type'] === \App\Enums\StripeSourceStatus::PENDING)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-blue-100 text-blue-800">
                                                 pending
                                             </span>
-                                        @elseif($event['type'] === \App\Enums\StripeSource::CANCELED)
+                                        @elseif($event['type'] === \App\Enums\StripeSourceStatus::CANCELED)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-yellow-100 text-yellow-800">
                                                 expired
                                             </span>
-                                        @elseif($event['type'] === \App\Enums\StripeSource::FAILED)
+                                        @elseif($event['type'] === \App\Enums\StripeSourceStatus::FAILED)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-red-100 text-red-800">
                                                 failed
                                             </span>
-                                        @elseif($event['type'] === \App\Enums\StripeSource::CHARGEABLE)
+                                        @elseif($event['type'] === \App\Enums\StripeSourceStatus::CHARGEABLE)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800">
                                                 authorized
                                             </span>
                                             <span class="badge rounded-pill bg-info text-dark"></span>
-                                        @elseif($event['type'] === \App\Enums\StripeSource::SUCCEEDED)
+                                        @elseif($event['type'] === \App\Enums\StripeSourceStatus::SUCCEEDED)
                                             <span
                                                 class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-green-100 text-green-800">
                                                 succeeded
@@ -89,7 +89,7 @@
             </div>
         </div>
     </div>
-    @if($source['status'] !== \App\Enums\StripeSource::PENDING && $source['status'] !== \App\Enums\StripeSource::CHARGEABLE)
+    @if($source['status'] !== \App\Enums\StripeSourceStatus::PENDING && $source['status'] !== \App\Enums\StripeSourceStatus::CHARGEABLE)
         <a href="{{ route('home') }}"
            class="block w-full py-2 px-6 cursor-pointer text-center text-xl text-white bg-green-600 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus:border-green-300 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out">
             Dashboard

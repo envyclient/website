@@ -35,7 +35,7 @@ class Controller extends BaseController
         ], 200);
     }
 
-    protected static function createInvoice(int $subscription, string $method, int $price)
+    protected static function createInvoice(int $subscription, \App\Enums\Invoice $method, int $price)
     {
         $invoice = Invoice::create([
             'subscription_id' => $subscription,

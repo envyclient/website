@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum StripeSource: string
+enum StripeSourceStatus: string
 {
     case PENDING = 'pending';
     case CANCELED = 'canceled';

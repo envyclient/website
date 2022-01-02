@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Actions;
 
-use App\Enums\Invoice;
+use App\Enums\PaymentProvider;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Models\Subscription;
@@ -31,13 +31,13 @@ class CancelSubscription extends Controller
 
         // cancel subscription
         if ($subscription->stripe_id !== null) {
-            return self::successful($subscription, \App\Enums\Invoice::STRIPE);
+            return self::successful($subscription, PaymentProvider::STRIPE);
         } else {
-            return self::successful($subscription, \App\Enums\Invoice::PAYPAL);
+            return self::successful($subscription, PaymentProvider::PAYPAL);
         }
     }
 
-    private static function successful(Subscription $subscription, Invoice $provider): RedirectResponse
+    private static function successful(Subscription $subscription, PaymentProvider $provider): RedirectResponse
     {
         // dispatch the cancel subscription job
         CancelSubscriptionJob::dispatch($subscription, $provider);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PayPal\Actions;
 
 use App\Enums\Invoice;
+use App\Enums\PaymentProvider;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Jobs\SendDiscordWebhookJob;
@@ -96,7 +97,7 @@ class HandlePayPalWebhook extends Controller
                         ->firstOrFail();
 
                     // dispatch the cancel subscription job
-                    CancelSubscriptionJob::dispatch($subscription, Invoice::PAYPAL);
+                    CancelSubscriptionJob::dispatch($subscription, PaymentProvider::PAYPAL);
 
                 } catch (ModelNotFoundException) {
                 }
