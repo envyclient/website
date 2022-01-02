@@ -204,7 +204,7 @@
                                     Ban User
                                 </x-button.link>
                             @endif
-                            @if($user->hwid === null)
+                            @if($user->hwid !== null)
                                 <x-button.link class="block text-red-600 hover:text-red-900"
                                                onclick="confirm('Reset user HWID?') || event.stopImmediatePropagation()"
                                                wire:click.prevent="resetUserHWID({{ $user->id }})">
