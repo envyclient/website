@@ -6,7 +6,7 @@ use App\Jobs\SendDiscordWebhookJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
-class Discord
+class DiscordHelper
 {
     const GUILD = '794374279395147777';
     const STANDARD = '794384676113481738';

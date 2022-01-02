@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Enums\Invoice;
+use App\Enums\PaymentProvider;
 use App\Events\Subscription\SubscriptionCancelledEvent;
-use App\Helpers\Paypal;
+use App\Helpers\PaypalHelper;
 use App\Models\Subscription;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -22,8 +22,8 @@ class CancelSubscriptionJob implements ShouldQueue
     public int $backoff = 15;
 
     public function __construct(
-        private Subscription $subscription,
-        private Invoice      $provider,
+        private Subscription    $subscription,
+        private PaymentProvider $provider,
     )
     {
         $subscription->update([
@@ -38,11 +38,11 @@ class CancelSubscriptionJob implements ShouldQueue
     public function handle()
     {
         // checking the subscription has already been cancelled
-        if ($this->subscription->status === \App\Enums\Subscription::CANCELED) {
+        if ($this->subscription->status == \App\Enums\Subscription::CANCELED) {
             return;
         }
 
-        if ($this->provider === Invoice::STRIPE) {
+        if ($this->provider === PaymentProvider::STRIPE) {
             $this->handleStripe();
         } else {
             $this->handlePayPal();
@@ -55,12 +55,6 @@ class CancelSubscriptionJob implements ShouldQueue
 
         // broadcast the subscription cancelled event
         event(new SubscriptionCancelledEvent($this->subscription));
-
-        // send discord webhook on cancellation
-        $content = 'A user has cancelled their subscription.' . PHP_EOL . PHP_EOL;
-        $content = $content . '**User**: ' . $this->subscription->user->name . PHP_EOL;
-        $content = $content . '**Provider**: ' . $this->provider . PHP_EOL;
-        SendDiscordWebhookJob::dispatch($content);
     }
 
     /**
@@ -86,7 +80,7 @@ class CancelSubscriptionJob implements ShouldQueue
     private function handlePayPal()
     {
         // tell PayPal to cancel the users billing agreement
-        $response = HTTP::withToken(Paypal::getAccessToken())
+        $response = HTTP::withToken(PaypalHelper::getAccessToken())
             ->withBody(json_encode([
                 'note' => 'User cancelled subscription.'
             ]), 'application/json')

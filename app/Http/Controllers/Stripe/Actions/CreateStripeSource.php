@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Stripe\Actions;
 
-use App\Enums\StripeSource;
+use App\Enums\StripeSourceStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use Illuminate\Http\Request;
@@ -39,11 +39,11 @@ class CreateStripeSource extends Controller
         Cache::put($response->id, [
             'user_id' => $user->id,
             'plan' => $plan->only('id', 'name', 'price', 'cad_price'),
-            'status' => StripeSource::PENDING,
+            'status' => StripeSourceStatus::PENDING,
             'url' => $response->wechat['qr_code_url'],
             'events' => [
                 [
-                    'type' => StripeSource::PENDING,
+                    'type' => StripeSourceStatus::PENDING,
                     'message' => 'Payment initialized.',
                     'created_at' => now(),
                 ],

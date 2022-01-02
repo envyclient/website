@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentProvider;
 use App\Events\Subscription\SubscriptionExpiredEvent;
+use Faker\Provider\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,6 +20,7 @@ use Illuminate\Support\Carbon;
  * @property string status
  * @property Carbon end_date
  * @property boolean queued_for_cancellation
+ * @property-read PaymentProvider paymentProvider
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
@@ -53,6 +56,11 @@ class Subscription extends Model
         static::deleting(function (Subscription $subscription) {
             event(new SubscriptionExpiredEvent($subscription));
         });
+    }
+
+    public function getPaymentProviderAttribute(): PaymentProvider
+    {
+        return $this->paypal_id !== null ? PaymentProvider::PAYPAL : PaymentProvider::STRIPE;
     }
 
     public function user(): BelongsTo

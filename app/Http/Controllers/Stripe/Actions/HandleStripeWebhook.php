@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Stripe\Actions;
 
 use App\Enums\Invoice;
-use App\Enums\StripeSource;
+use App\Enums\PaymentProvider;
+use App\Enums\StripeSourceStatus;
+use App\Events\ReceivedWebhookEvent;
 use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
-use App\Jobs\SendDiscordWebhookJob;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -17,10 +18,8 @@ class HandleStripeWebhook extends Controller
 {
     public function __invoke(Request $request)
     {
-        $content = 'A webhook has been received.' . PHP_EOL . PHP_EOL;
-        $content = $content . '**Provider**: Stripe' . PHP_EOL;
-        $content = $content . '**Type**: ' . $request->json('type') . PHP_EOL;
-        SendDiscordWebhookJob::dispatch($content);
+        // broadcast the received webhook event
+        event(new ReceivedWebhookEvent(PaymentProvider::STRIPE, $request->json('type')));
 
         // Handle the event
         switch ($request->json('type')) {
@@ -90,7 +89,7 @@ class HandleStripeWebhook extends Controller
                         ->firstOrFail();
 
                     // queue the subscription for cancellation
-                    CancelSubscriptionJob::dispatch($subscription, Invoice::STRIPE);
+                    CancelSubscriptionJob::dispatch($subscription, PaymentProvider::STRIPE);
 
                 } catch (ModelNotFoundException) {
                 }
@@ -108,7 +107,7 @@ class HandleStripeWebhook extends Controller
 
                 self::handleStripeSource(
                     $request->json('data.object.id'),
-                    StripeSource::CANCELED,
+                    StripeSourceStatus::CANCELED,
                     'The payment has expired. Please create a new one to continue your purchase.'
                 );
 
@@ -122,7 +121,7 @@ class HandleStripeWebhook extends Controller
 
                 self::handleStripeSource(
                     $request->json('data.object.id'),
-                    StripeSource::FAILED,
+                    StripeSourceStatus::FAILED,
                     'The payment has been canceled.'
                 );
 
@@ -137,7 +136,7 @@ class HandleStripeWebhook extends Controller
 
                 $source = self::handleStripeSource(
                     $id,
-                    StripeSource::CHARGEABLE,
+                    StripeSourceStatus::CHARGEABLE,
                     'The payment has been authorized.'
                 );
 
@@ -161,7 +160,7 @@ class HandleStripeWebhook extends Controller
 
                 $source = self::handleStripeSource(
                     $request->json('data.object.payment_method'),
-                    StripeSource::SUCCEEDED,
+                    StripeSourceStatus::SUCCEEDED,
                     'You have successfully subscribed using WeChat Pay.'
                 );
 
@@ -197,7 +196,7 @@ class HandleStripeWebhook extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    private static function handleStripeSource(string $stripeSource, string $status, string $message): array
+    private static function handleStripeSource(string $stripeSource, StripeSourceStatus $status, string $message): array
     {
         // get the source
         $source = Cache::get($stripeSource);
