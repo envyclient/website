@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Admin;
+namespace Tests\Feature\Admin;
 
 use App\Http\Livewire\Admin\Version\UploadVersion;
 use App\Jobs\EncryptVersionJob;
@@ -33,17 +33,14 @@ class VersionsTest extends TestCase
 
         Livewire::test(UploadVersion::class)
             ->set('name', 'Envy 1.0')
-            ->set('changelog', '+test\n+test1')
             ->set('main', 'com.envyclient.Main')
+            ->set('changelog', '+test\n+test1')
             ->set('beta', false)
             ->set('version', UploadedFile::fake()->create('version.jar', 1000))
             ->call('submit')
             ->assertHasNoErrors();
 
         Queue::assertPushed(EncryptVersionJob::class);
-
-        Storage::disk('local')
-            ->assertExists('versions/' . md5(1) . '.jar');
 
         $this->assertDatabaseCount(Version::class, 1);
     }
