@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use PhpParser\Node\Scalar\String_;
 
 class EncryptVersionJob implements ShouldQueue
 {
@@ -26,17 +28,17 @@ class EncryptVersionJob implements ShouldQueue
 
     public function handle()
     {
-        // get the encryption info
-        ['key' => $key, 'iv' => $iv] = config('version');
+        // get the encryption key
+        $key = config('version.key');
 
         // read the version as a string
         $data = Storage::get("versions/$this->hash.jar");
 
         // encrypt the version
-        $cipher = openssl_encrypt($data, "AES-256-CBC", $key, OPENSSL_RAW_DATA, $iv);
+        $value = openssl_encrypt($data, "AES-256-CBC", $key, OPENSSL_RAW_DATA, hex2bin($this->version->iv));
 
         // store the encrypted version
-        Storage::put("versions/$this->hash.jar.enc", bin2hex($cipher));
+        Storage::put("versions/$this->hash.jar.enc", bin2hex($value));
 
         // delete the uploaded version
         Storage::delete("versions/$this->hash.jar");
