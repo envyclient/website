@@ -84,15 +84,19 @@
                     <x-input.text wire:model.defer="editVersion.name" id="editVersion.name" required/>
                 </x-input.group>
 
-                {{--Beta Input--}}
-                <x-input.group for="version.beta" label="Beta" class="mt-4">
-                    <x-input.toggle wire:model.defer="editVersion.beta" id="editVersion.beta"/>
+                {{--Main Class Input--}}
+                <x-input.group for="editVersion.main_class" label="Main Class" class="mt-4">
+                    <x-input.text wire:model.defer="editVersion.main_class" id="editVersion.main_class" required/>
                 </x-input.group>
 
                 {{--Changelog Input--}}
                 <x-input.group for="editVersion.changelog" label="Changelog" class="mt-4">
-                    <x-input.easymde wire:model.defer="editVersion.changelog" id="editVersion.changelog"
-                                     maxlength="65535"/>
+                    <x-input.textarea wire:model.defer="editVersion.changelog" id="editVersion.changelog" maxlength="65535"/>
+                </x-input.group>
+
+                {{--Beta Input--}}
+                <x-input.group for="version.beta" label="Beta" class="mt-4">
+                    <x-input.toggle wire:model.defer="editVersion.beta" id="editVersion.beta"/>
                 </x-input.group>
 
             </x-slot>

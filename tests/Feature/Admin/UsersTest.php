@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Admin;
+namespace Tests\Feature\Admin;
 
 use App\Http\Livewire\Admin\User\EditUserModal;
 use App\Http\Livewire\Admin\User\UsersTable;

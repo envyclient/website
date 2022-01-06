@@ -27,7 +27,7 @@ abstract class TestCase extends BaseTestCase
 
     protected static function subscribedUser(): User
     {
-        $user = self::admin();
+        $user = self::user();
         Subscription::create([
             'user_id' => $user->id,
             'plan_id' => 1,

@@ -15,8 +15,9 @@ class VersionsTable extends Component
 
     protected array $rules = [
         'editVersion.name' => ['required', 'string', 'max:30'],
-        'editVersion.beta' => ['nullable', 'bool'],
+        'editVersion.main_class' => ['required', 'string', 'max:255'],
         'editVersion.changelog' => ['required', 'string', 'max:65535'],
+        'editVersion.beta' => ['nullable', 'bool'],
     ];
 
     protected $listeners = ['UPDATE_VERSIONS' => '$refresh'];
