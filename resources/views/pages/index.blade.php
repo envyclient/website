@@ -648,7 +648,7 @@
                             </a>
                         </div>
                         <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-                            &copy; 2021 {{ config('app.name') }}
+                            &copy; 2022 {{ config('app.name') }}
                         </p>
                     </div>
                 </div>
