@@ -92,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
         static::creating(function (User $user) {
 
             // generate a random api_token
-            $user->api_token = bin2hex(openssl_random_pseudo_bytes(30));
+            $user->api_token = bin2hex(random_bytes(30));
 
             // set the default cape
             $user->cape = asset('assets/capes/default.png');
@@ -111,8 +111,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function prunable()
     {
-        return static::whereNull('email_verified_at')
-            ->where('created_at', '<=', now()->subDays(10));
+        return static::whereNull('email_verified_at')->where('created_at', '<=', now()->subDays(10));
     }
 
     public function scopeSearch(Builder $query, string $search): Builder

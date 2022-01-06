@@ -37,9 +37,10 @@ class UploadVersion extends Component
         // create the version
         $version = Version::create([
             'name' => $this->name,
-            'main_class' => $this->main,
-            'changelog' => $this->changelog,
             'beta' => $this->beta,
+            'changelog' => $this->changelog,
+            'main_class' => $this->main,
+            'iv' => bin2hex(random_bytes(16)),
         ]);
 
         // generate hash for version file

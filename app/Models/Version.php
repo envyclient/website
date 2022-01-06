@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property boolean beta
  * @property string changelog
  * @property string main_class
+ * @property string iv
  * @property Carbon|null processed_at
  *
  * @property-read Carbon created_at
@@ -34,6 +35,7 @@ class Version extends Model
         'beta',
         'changelog',
         'main_class',
+        'iv',
         'processed_at',
     ];
 
