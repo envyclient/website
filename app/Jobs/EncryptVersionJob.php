@@ -26,17 +26,17 @@ class EncryptVersionJob implements ShouldQueue
 
     public function handle()
     {
-        // get the encrypter
-        $jar = storage_path('app/encrypt.jar');
-
         // get the encryption info
         ['key' => $key, 'iv' => $iv] = config('version');
 
-        $version = storage_path("app/versions/$this->hash.jar");
-        $out = storage_path("app/versions/$this->hash.jar.enc");
+        // read the version as a string
+        $data = Storage::get("versions/$this->hash.jar");
 
-        // encrypt the uploaded version
-        exec("java -jar $jar $key $iv $version $out");
+        // encrypt the version
+        $cipher = openssl_encrypt($data, "AES-256-CBC", $key, OPENSSL_RAW_DATA, $iv);
+
+        // store the encrypted version
+        Storage::put("versions/$this->hash.jar.enc", bin2hex($cipher));
 
         // delete the uploaded version
         Storage::delete("versions/$this->hash.jar");
