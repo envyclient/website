@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Enums\SubscriptionStatus;
 use App\Models\LicenseRequest;
 use App\Models\Subscription;
 use App\Notifications\LicenseRequest\LicenseRequestApprovedNotification;
@@ -35,7 +36,7 @@ class LicenseRequestsTable extends Component
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,
-                'status' => \App\Enums\Subscription::ACTIVE->value,
+                'status' => SubscriptionStatus::ACTIVE->value,
                 'end_date' => now()->addDays(LicenseRequest::DAYS_TO_ADD)
             ]);
         }

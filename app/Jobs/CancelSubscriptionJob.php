@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\PaymentProvider;
+use App\Enums\SubscriptionStatus;
 use App\Events\Subscription\SubscriptionCancelledEvent;
 use App\Helpers\PaypalHelper;
 use App\Models\Subscription;
@@ -38,7 +39,7 @@ class CancelSubscriptionJob implements ShouldQueue
     public function handle()
     {
         // checking the subscription has already been cancelled
-        if ($this->subscription->status == \App\Enums\Subscription::CANCELED->value) {
+        if ($this->subscription->status == SubscriptionStatus::CANCELED->value) {
             return;
         }
 
@@ -70,7 +71,7 @@ class CancelSubscriptionJob implements ShouldQueue
 
         // mark the users' subscription as cancelled on our end
         $this->subscription->update([
-            'status' => \App\Enums\Subscription::CANCELED->value,
+            'status' => SubscriptionStatus::CANCELED->value,
         ]);
     }
 
