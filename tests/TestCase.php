@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Enums\SubscriptionStatus;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -31,7 +32,7 @@ abstract class TestCase extends BaseTestCase
         Subscription::create([
             'user_id' => $user->id,
             'plan_id' => 1,
-            'status' => \App\Enums\Subscription::ACTIVE,
+            'status' => SubscriptionStatus::ACTIVE->value,
             'end_date' => now()->addMonth(),
         ]);
         return $user;

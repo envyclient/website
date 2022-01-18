@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\SubscriptionStatus;
 use App\Http\Livewire\User\Home\UploadCape;
 use App\Models\Subscription;
 use App\Models\User;
@@ -86,7 +87,7 @@ class CapesTest extends TestCase
         Subscription::create([
             'user_id' => $user->id,
             'plan_id' => 1, // free plan
-            'status' => \App\Enums\Subscription::ACTIVE,
+            'status' => SubscriptionStatus::ACTIVE->value,
             'end_date' => now()->addMonth(),
         ]);
 

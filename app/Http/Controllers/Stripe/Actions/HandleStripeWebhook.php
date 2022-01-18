@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stripe\Actions;
 use App\Enums\Invoice;
 use App\Enums\PaymentProvider;
 use App\Enums\StripeSourceStatus;
+use App\Enums\SubscriptionStatus;
 use App\Events\ReceivedWebhookEvent;
 use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Http\Controllers\Controller;
@@ -40,7 +41,7 @@ class HandleStripeWebhook extends Controller
                     'user_id' => $userId,
                     'plan_id' => $planID,
                     'stripe_id' => $request->json('data.object.subscription'),
-                    'status' => \App\Enums\Subscription::PENDING,
+                    'status' => SubscriptionStatus::PENDING->value,
                 ]);
 
                 // broadcast new subscription event
@@ -62,7 +63,7 @@ class HandleStripeWebhook extends Controller
 
                 // activate the subscription and set end_date
                 $subscription->update([
-                    'status' => \App\Enums\Subscription::ACTIVE,
+                    'status' => SubscriptionStatus::ACTIVE->value,
                     'end_date' => now()->addMonth(),
                 ]);
 
@@ -168,7 +169,7 @@ class HandleStripeWebhook extends Controller
                 $subscription = Subscription::create([
                     'user_id' => $source['user_id'],
                     'plan_id' => $source['plan']['id'],
-                    'status' => \App\Enums\Subscription::CANCELED,
+                    'status' => SubscriptionStatus::CANCELED->value,
                     'end_date' => now()->addMonth(),
                 ]);
 
@@ -208,11 +209,11 @@ class HandleStripeWebhook extends Controller
 
         // update the source
         $source['status'] = $status;
-        array_push($source['events'], [
+        $source['events'][] = [
             'type' => $status,
             'message' => $message,
             'created_at' => now(),
-        ]);
+        ];
 
         // store the updated source
         Cache::put($stripeSource, $source, now()->addHours(2));

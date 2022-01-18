@@ -39,7 +39,7 @@ class Controller extends BaseController
     {
         $invoice = Invoice::create([
             'subscription_id' => $subscription,
-            'method' => $method,
+            'method' => $method->value,
             'price' => $price,
         ]);
 

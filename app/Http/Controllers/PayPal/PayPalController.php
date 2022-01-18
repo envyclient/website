@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\PayPal;
 
+use App\Enums\SubscriptionStatus;
 use App\Events\Subscription\SubscriptionCreatedEvent;
 use App\Helpers\PaypalHelper;
 use App\Http\Controllers\Controller;
@@ -91,7 +92,7 @@ class PayPalController extends Controller
             'user_id' => $userId,
             'plan_id' => $planID,
             'paypal_id' => $subId,
-            'status' => \App\Enums\Subscription::PENDING,
+            'status' => SubscriptionStatus::PENDING->value,
         ]);
 
         // broadcast new subscription event

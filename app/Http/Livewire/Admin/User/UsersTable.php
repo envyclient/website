@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\User;
 
-use App\Enums\Subscription;
+use App\Enums\SubscriptionStatus;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -33,12 +33,12 @@ class UsersTable extends Component
             }
             case 'active-subscription':
             {
-                $user->whereRelation('subscription', 'status', Subscription::ACTIVE);
+                $user->whereRelation('subscription', 'status', SubscriptionStatus::ACTIVE->value);
                 break;
             }
             case 'cancelled-subscription':
             {
-                $user->whereRelation('subscription', 'status', Subscription::CANCELED);
+                $user->whereRelation('subscription', 'status', SubscriptionStatus::CANCELED->value);
                 break;
             }
             case 'banned':
@@ -75,7 +75,7 @@ class UsersTable extends Component
         } else {
             $user->subscription()->create([
                 'plan_id' => 1,
-                'status' => Subscription::CANCELED,
+                'status' => SubscriptionStatus::CANCELED->value,
                 'end_date' => now()->addMonth(),
             ]);
         }

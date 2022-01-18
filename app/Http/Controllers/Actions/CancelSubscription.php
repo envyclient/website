@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Enums\PaymentProvider;
+use App\Enums\SubscriptionStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\CancelSubscriptionJob;
 use App\Models\Subscription;
@@ -16,7 +17,7 @@ class CancelSubscription extends Controller
         $subscription = $request->user()->subscription;
 
         // check for already cancelled subscription
-        if ($subscription->status === \App\Enums\Subscription::CANCELED) {
+        if ($subscription->status === SubscriptionStatus::CANCELED->value) {
             return redirect()
                 ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');

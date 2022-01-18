@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Subscription: string
+enum SubscriptionStatus: string
 {
     case PENDING = 'Pending';
     case ACTIVE = 'Active';
