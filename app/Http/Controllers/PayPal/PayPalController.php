@@ -91,7 +91,7 @@ class PayPalController extends Controller
             'user_id' => $userId,
             'plan_id' => $planID,
             'paypal_id' => $subId,
-            'status' => \App\Enums\Subscription::PENDING,
+            'status' => \App\Enums\Subscription::PENDING->value,
         ]);
 
         // broadcast new subscription event

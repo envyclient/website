@@ -35,14 +35,14 @@ class LicenseRequestsTable extends Component
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => 1,
-                'status' => \App\Enums\Subscription::ACTIVE,
+                'status' => \App\Enums\Subscription::ACTIVE->value,
                 'end_date' => now()->addDays(LicenseRequest::DAYS_TO_ADD)
             ]);
         }
 
         // mark the license request as approved
         $licenseRequest->update([
-            'status' => \App\Enums\LicenseRequest::APPROVED,
+            'status' => \App\Enums\LicenseRequest::APPROVED->value,
             'action_reason' => 'Request approved.',
             'action_at' => now(),
         ]);
@@ -63,7 +63,7 @@ class LicenseRequestsTable extends Component
         // mark the license request as denied
         $licenseRequest = LicenseRequest::findOrFail($payload['id']);
         $licenseRequest->update([
-            'status' => \App\Enums\LicenseRequest::DENIED,
+            'status' => \App\Enums\LicenseRequest::DENIED->value,
             'action_reason' => $payload['message'],
             'action_at' => now(),
         ]);

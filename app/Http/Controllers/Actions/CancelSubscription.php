@@ -16,7 +16,7 @@ class CancelSubscription extends Controller
         $subscription = $request->user()->subscription;
 
         // check for already cancelled subscription
-        if ($subscription->status === \App\Enums\Subscription::CANCELED) {
+        if ($subscription->status === \App\Enums\Subscription::CANCELED->value) {
             return redirect()
                 ->route('home.subscription')
                 ->with('error', 'You have already cancelled your subscription.');

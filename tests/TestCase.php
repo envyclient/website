@@ -31,7 +31,7 @@ abstract class TestCase extends BaseTestCase
         Subscription::create([
             'user_id' => $user->id,
             'plan_id' => 1,
-            'status' => \App\Enums\Subscription::ACTIVE,
+            'status' => \App\Enums\Subscription::ACTIVE->value,
             'end_date' => now()->addMonth(),
         ]);
         return $user;

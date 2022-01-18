@@ -10,10 +10,11 @@ use App\Jobs\CancelSubscriptionJob;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class HandlePayPalWebhook extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         // broadcast the received webhook event
         event(new ReceivedWebhookEvent(PaymentProvider::PAYPAL, $request->json('event_type')));
@@ -37,7 +38,7 @@ class HandlePayPalWebhook extends Controller
 
                 // set the subscription as active
                 $subscription->update([
-                    'status' => \App\Enums\Subscription::ACTIVE,
+                    'status' => \App\Enums\Subscription::ACTIVE->value,
                     //'end_date' => Carbon::parse($request->json('resource.billing_info.next_billing_time')),
                 ]);
 
@@ -76,7 +77,7 @@ class HandlePayPalWebhook extends Controller
                 Subscription::query()
                     ->where('paypal_id', $request->json('resource.id'))
                     ->update([
-                        'status' => \App\Enums\Subscription::CANCELED,
+                        'status' => \App\Enums\Subscription::CANCELED->value,
                     ]);
 
                 break;

@@ -33,12 +33,12 @@ class UsersTable extends Component
             }
             case 'active-subscription':
             {
-                $user->whereRelation('subscription', 'status', Subscription::ACTIVE);
+                $user->whereRelation('subscription', 'status', Subscription::ACTIVE->value);
                 break;
             }
             case 'cancelled-subscription':
             {
-                $user->whereRelation('subscription', 'status', Subscription::CANCELED);
+                $user->whereRelation('subscription', 'status', Subscription::CANCELED->value);
                 break;
             }
             case 'banned':
@@ -75,7 +75,7 @@ class UsersTable extends Component
         } else {
             $user->subscription()->create([
                 'plan_id' => 1,
-                'status' => Subscription::CANCELED,
+                'status' => Subscription::CANCELED->value,
                 'end_date' => now()->addMonth(),
             ]);
         }

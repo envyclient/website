@@ -17,7 +17,7 @@ class DeleteCancelledSubscriptionsCommand extends Command
 
         // delete all cancelled & past end_date subscriptions
         Subscription::with('user')
-            ->where('status', \App\Enums\Subscription::CANCELED)
+            ->where('status', \App\Enums\Subscription::CANCELED->value)
             ->where('end_date', '<', $start)
             ->each(fn(Subscription $subscription) => $subscription->delete());
 

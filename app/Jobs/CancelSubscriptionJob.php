@@ -38,7 +38,7 @@ class CancelSubscriptionJob implements ShouldQueue
     public function handle()
     {
         // checking the subscription has already been cancelled
-        if ($this->subscription->status == \App\Enums\Subscription::CANCELED) {
+        if ($this->subscription->status == \App\Enums\Subscription::CANCELED->value) {
             return;
         }
 
@@ -70,7 +70,7 @@ class CancelSubscriptionJob implements ShouldQueue
 
         // mark the users' subscription as cancelled on our end
         $this->subscription->update([
-            'status' => \App\Enums\Subscription::CANCELED,
+            'status' => \App\Enums\Subscription::CANCELED->value,
         ]);
     }
 

@@ -86,7 +86,7 @@ class CapesTest extends TestCase
         Subscription::create([
             'user_id' => $user->id,
             'plan_id' => 1, // free plan
-            'status' => \App\Enums\Subscription::ACTIVE,
+            'status' => \App\Enums\Subscription::ACTIVE->value,
             'end_date' => now()->addMonth(),
         ]);
 
