@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'server' => env('OCTANE_SERVER', 'swoole'),
+    'server' => env('OCTANE_SERVER', 'roadrunner'),
 
     /*
     |--------------------------------------------------------------------------
@@ -101,8 +101,8 @@ return [
 
         OperationTerminated::class => [
             FlushTemporaryContainerInstances::class,
-            DisconnectFromDatabases::class,
-            CollectGarbage::class,
+            // DisconnectFromDatabases::class,
+            // CollectGarbage::class,
         ],
 
         WorkerErrorOccurred::class => [
