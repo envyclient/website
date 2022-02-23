@@ -28,7 +28,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Enviroment setting
+    | Environment setting
     |--------------------------------------------------------------------------
     |
     | This setting determines if the exception should be send over or not.
@@ -36,8 +36,19 @@ return [
     */
 
     'environments' => [
-        'production'
+        'production',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Project version
+    |--------------------------------------------------------------------------
+    |
+    | Set the project version, default: null.
+    | For git repository: shell_exec("git log -1 --pretty=format:'%h' --abbrev-commit")
+    |
+    */
+    'project_version' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -86,8 +97,17 @@ return [
     */
 
     'blacklist' => [
-        'password',
-        'authorization'
+        '*authorization*',
+        '*password*',
+        '*token*',
+        '*auth*',
+        '*verification*',
+        '*credit_card*',
+        'cardToken', // mollie card token
+        '*cvv*',
+        '*iban*',
+        '*name*',
+        '*email*'
     ],
 
     /*
@@ -98,5 +118,28 @@ return [
     |
     */
 
-    // 'release' => trim(exec('git --git-dir ' . base_path('.git') . ' log --pretty="%h" -n1 HEAD'))
+    // 'release' => trim(exec('git --git-dir ' . base_path('.git') . ' log --pretty="%h" -n1 HEAD')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Server setting
+    |--------------------------------------------------------------------------
+    |
+    | This setting allows you to change the server.
+    |
+    */
+
+    'server' => env('LB_SERVER', 'https://www.larabug.com/api/log'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Verify SSL setting
+    |--------------------------------------------------------------------------
+    |
+    | Enables / disables the SSL verification when sending exceptions to LaraBug
+    | Never turn SSL verification off on production instances
+    |
+    */
+    'verify_ssl' => env('LB_VERIFY_SSL', true),
+
 ];

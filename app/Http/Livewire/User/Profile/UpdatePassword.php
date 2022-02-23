@@ -13,7 +13,7 @@ class UpdatePassword extends Component
     public string $password_confirmation = '';
 
     protected array $rules = [
-        'current_password' => ['required'],
+        'current_password' => ['required', 'current_password'],
         'password' => ['required', 'min:8', 'confirmed', 'different:current_password'],
         'password_confirmation' => ['required_with:password'],
     ];
@@ -27,14 +27,7 @@ class UpdatePassword extends Component
     {
         $this->validate();
 
-        $user = auth()->user();
-        if (!Hash::check($this->current_password, $user->password)) {
-            throw ValidationException::withMessages([
-                'current_password' => ['The provided password does not match your current password.'],
-            ]);
-        }
-
-        $user->forceFill([
+        auth()->user()->forceFill([
             'password' => Hash::make($this->password)
         ])->save();
 
