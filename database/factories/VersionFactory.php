@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Version;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class VersionFactory extends Factory
 {
@@ -16,6 +17,7 @@ class VersionFactory extends Factory
             'beta' => $this->faker->boolean(),
             'changelog' => 'test\ntest\ntest\n',
             'main_class' => 'test',
+            'iv' => Str::random(32),
             'processed_at' => now(),
         ];
     }
