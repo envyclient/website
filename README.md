@@ -20,5 +20,4 @@ The official website of Envy Client.
 - [Alpine.js](https://alpinejs.dev)
 - [Tailwind CSS](https://tailwindcss.com)
 - [FilePond](https://github.com/pqina/filepond) (file upload)
-- [cookies.js](https://github.com/madmurphy/cookies.js) (banner)
 - [easymde](https://github.com/Ionaru/easy-markdown-editor) (markdown editor for version upload)

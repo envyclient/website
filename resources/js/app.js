@@ -9,11 +9,6 @@ require('alpinejs');
 window.EasyMDE = require('easymde');
 
 /**
- * Cookies.js
- */
-window.docCookies = require('cookies.js');
-
-/**
  * FilePond
  */
 window.FilePond = require('filepond');

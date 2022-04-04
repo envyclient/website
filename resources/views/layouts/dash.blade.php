@@ -153,8 +153,6 @@
         </div>
     </div>
 
-    @include('inc.banner')
-
     <x-support-bubble/>
 
     @yield('js')
