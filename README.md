@@ -9,7 +9,6 @@ The official website of Envy Client.
 - [LaraBug](https://www.larabug.com) (error tracking)
 - [laravel/socialite](https://laravel.com/docs/8.x/socialite) (connecting discord account)
 - [socialiteproviders/discord](https://github.com/SocialiteProviders/Discord) (discord provider for laravel socialite)
-- [nao-pon/flysystem-google-drive](https://github.com/nao-pon/flysystem-google-drive) (google drive filesystem adapter)
 - [overtrue/laravel-favorite](https://github.com/overtrue/laravel-favorite) (favoriting a config)
 - [spatie/laravel-support-bubble](https://github.com/spatie/laravel-support-bubble) (support contact bubble. only
   visible to authenticated users)
@@ -21,5 +20,4 @@ The official website of Envy Client.
 - [Alpine.js](https://alpinejs.dev)
 - [Tailwind CSS](https://tailwindcss.com)
 - [FilePond](https://github.com/pqina/filepond) (file upload)
-- [cookies.js](https://github.com/madmurphy/cookies.js) (banner)
 - [easymde](https://github.com/Ionaru/easy-markdown-editor) (markdown editor for version upload)
