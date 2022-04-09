@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Listeners\SubscriptionSubscriber;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Carbon;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 /**
  * @property-read integer id
@@ -27,7 +29,8 @@ use Illuminate\Support\Carbon;
 class ReferralCode extends Model
 {
     use HasFactory;
-    
+    use HasRelationships;
+
     protected $fillable = [
         'user_id',
         'code',
@@ -54,6 +57,11 @@ class ReferralCode extends Model
 
     public function invoices(): HasManyThrough
     {
-        return $this->hasManyThrough(Invoice::class, User::class, 'referral_code_id', 'user_id', 'id', 'id');
+        return $this->hasManyDeep(
+            Invoice::class,
+            [User::class, Subscription::class],
+            ['id', 'id', 'subscription_id'],
+            ['id', 'referral_code_id', 'id'],
+        );
     }
 }

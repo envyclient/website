@@ -32,6 +32,11 @@ class Invoice extends Model
         'price' => 'integer',
     ];
 
+    public function user()
+    {
+        return $this->hasOneThrough(User::class, Subscription::class, 'user_id', 'id', 'id');
+    }
+
     public function subscription(): BelongsTo
     {
         return $this->belongsTo(Subscription::class);
