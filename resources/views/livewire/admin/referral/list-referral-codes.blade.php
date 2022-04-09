@@ -36,14 +36,7 @@
                     </x-table.cell>
 
                     <x-table.cell>
-                        @if($code->users()->count() === 0)
-                            0
-                        @else
-                            <x-button.link class="text-blue-600 hover:text-blue-900"
-                                           wire:click="showUsersModal({{ $code->id }})">
-                                {{ $code->users()->count() }}
-                            </x-button.link>
-                        @endif
+                        {{ $code->users()->count() }}
                     </x-table.cell>
 
                     <x-table.cell>
@@ -89,33 +82,6 @@
         </x-slot>
 
     </x-table>
-
-    <x-modal.dialog wire:model.defer="showUsersModal">
-        <x-slot name="title">Uses</x-slot>
-
-        <x-slot name="content">
-            <x-table>
-                <x-slot name="head">
-                    <x-table.heading>User</x-table.heading>
-                    <x-table.heading>Code</x-table.heading>
-                    <x-table.heading>Uses</x-table.heading>
-                </x-slot>
-                <x-slot name="body">
-                    @foreach($showingUsers as $user)
-                        <x-table.row wire:loading.class.delay="opacity-50" wire:key="showing-users-{{ $user->id }}">
-                            <x-table.cell>{{ $user->name }}</x-table.cell>
-                            <x-table.cell>{{ $user->subscription?->plan->name }}</x-table.cell>
-                            <x-table.cell>{{ $user->subscription?->end_date->diffInDays() }}</x-table.cell>
-                        </x-table.row>
-                    @endforeach
-                </x-slot>
-            </x-table>
-        </x-slot>
-
-        <x-slot name="footer">
-            <x-button.secondary wire:click="$set('showUsersModal', false)">Close</x-button.secondary>
-        </x-slot>
-    </x-modal.dialog>
 
     <x-modal.dialog wire:model.defer="showInvoicesModal">
         <x-slot name="title">Invoices</x-slot>

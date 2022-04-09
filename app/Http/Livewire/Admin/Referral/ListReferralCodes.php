@@ -13,19 +13,8 @@ class ListReferralCodes extends Component
 
     protected $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
 
-    public bool $showUsersModal = false;
-    public $showingUsers = [];
-
     public bool $showInvoicesModal = false;
     public $showingInvoices = [];
-
-    public function showUsersModal(int $code): void
-    {
-        $this->showUsersModal = true;
-        $this->showingUsers = User::with('subscription')
-            ->where('referral_code_id', $code)
-            ->get();
-    }
 
     public function showInvoicesModal(ReferralCode $code): void
     {

@@ -11,4 +11,5 @@
     <section class="mt-4">
         @livewire('admin.referral.create-referral-code')
     </section>
+
 @endsection
