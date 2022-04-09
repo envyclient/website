@@ -20,6 +20,7 @@
         <x-slot name="head">
             <x-table.heading>Account</x-table.heading>
             <x-table.heading>Status</x-table.heading>
+            <x-table.heading>Created</x-table.heading>
             <x-table.heading/>
         </x-slot>
 
@@ -46,6 +47,10 @@
 
                     <x-table.cell>
                         <x-license-request-status :status="$request->status"/>
+                    </x-table.cell>
+
+                    <x-table.cell class="text-sm text-gray-500">
+                        {{ $request->created_at->diffForHumans() }}
                     </x-table.cell>
 
                     <x-table.cell>
