@@ -18,12 +18,12 @@
         "filepond-plugin-file-validate-size": "^2.2.4",
         "filepond-plugin-file-validate-type": "^1.2.6",
         "filepond-plugin-image-validate-size": "^1.2.6",
-        "laravel-mix": "^6.0.22",
-        "postcss": "^8.3.6",
-        "postcss-import": "^14.0.2",
         "tailwindcss": "^2.2.9"
     },
     "devDependencies": {
+        "laravel-mix": "^6.0.22",
+        "postcss": "^8.3.6",
+        "postcss-import": "^14.0.2",
         "chokidar": "^3.5.2"
     }
 }
