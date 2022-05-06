@@ -17,7 +17,7 @@ class LicenseRequests extends Component
     public function render()
     {
         $licenseRequests = auth()->user()->licenseRequests;
-        return view('livewire.user.home.media-requests', compact('licenseRequests'));
+        return view('livewire.user.home.license-requests', compact('licenseRequests'));
     }
 
     public function submit()
@@ -69,7 +69,7 @@ class LicenseRequests extends Component
             'status' => \App\Enums\LicenseRequest::PENDING->value,
         ]);
 
-        session()->flash('success', 'License Request submitted.');
+        session()->flash('success', 'License request submitted.');
 
         return redirect()->route('home');
     }
