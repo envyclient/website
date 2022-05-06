@@ -9,7 +9,7 @@ use App\Rules\ValidYouTubeLinkRule;
 use Exception;
 use Livewire\Component;
 
-class MediaRequests extends Component
+class LicenseRequests extends Component
 {
     public bool $open = false;
     public string $channel = '';
@@ -17,7 +17,7 @@ class MediaRequests extends Component
     public function render()
     {
         $licenseRequests = auth()->user()->licenseRequests;
-        return view('livewire.user.home.media-requests', compact('licenseRequests'));
+        return view('livewire.user.home.license-requests', compact('licenseRequests'));
     }
 
     public function submit()
@@ -69,7 +69,7 @@ class MediaRequests extends Component
             'status' => \App\Enums\LicenseRequest::PENDING->value,
         ]);
 
-        session()->flash('success', 'Request submitted.');
+        session()->flash('success', 'License request submitted.');
 
         return redirect()->route('home');
     }

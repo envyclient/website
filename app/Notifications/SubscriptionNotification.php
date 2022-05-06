@@ -13,8 +13,8 @@ class SubscriptionNotification extends Notification implements ShouldQueue
     use Queueable;
 
     public function __construct(
-        private string $subject,
-        private string $message,
+        private readonly string $subject,
+        private readonly string $message,
     )
     {
     }

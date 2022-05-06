@@ -13,7 +13,7 @@ class LicenseRequestDeniedNotification extends Notification implements ShouldQue
     use Queueable;
 
     public function __construct(
-        public string $message,
+        public readonly string $message,
     )
     {
     }

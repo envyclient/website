@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\User\Home\MediaRequests;
+use App\Http\Livewire\User\Home\LicenseRequests;
 use App\Models\LicenseRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -21,7 +21,7 @@ class LicenseRequestTest extends TestCase
     {
         $this->actingAs(self::user());
 
-        Livewire::test(MediaRequests::class)
+        Livewire::test(LicenseRequests::class)
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit');
 
@@ -33,7 +33,7 @@ class LicenseRequestTest extends TestCase
     {
         $this->actingAs(self::user());
 
-        Livewire::test(MediaRequests::class)
+        Livewire::test(LicenseRequests::class)
             ->set('channel', self::INVALID_URL)
             ->call('submit')
             ->assertHasErrors('channel');
@@ -46,7 +46,7 @@ class LicenseRequestTest extends TestCase
     {
         $this->actingAs(self::user());
 
-        Livewire::test(MediaRequests::class)
+        Livewire::test(LicenseRequests::class)
             ->set('channel', self::INVALID_CHANNEL)
             ->call('submit')
             ->assertHasErrors('channel');
@@ -59,13 +59,13 @@ class LicenseRequestTest extends TestCase
     {
         $this->actingAs(self::user());
 
-        Livewire::test(MediaRequests::class)
+        Livewire::test(LicenseRequests::class)
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit');
 
         $this->assertDatabaseCount(LicenseRequest::class, 1);
 
-        Livewire::test(MediaRequests::class)
+        Livewire::test(LicenseRequests::class)
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit')
             ->assertHasErrors('channel');

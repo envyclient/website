@@ -38,7 +38,7 @@
     @endif
 
     {{--Media Applications--}}
-    @livewire('user.home.media-requests')
+    @livewire('user.home.license-requests')
 
     {{--Download Launcher Button--}}
     @if($user->subscription !== null)
