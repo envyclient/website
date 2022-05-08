@@ -37,12 +37,6 @@ class DeleteAccount extends Controller
         // delete configs
         $user->configs()->delete();
 
-        // delete invoices
-        Invoice::where('user_id', $user->id)->delete();
-
-        // delete subscriptions
-        Subscription::where('user_id', $user->id)->delete();
-
         // delete user_downloads
         DB::table('user_downloads')->where('user_id', $user->id)->delete();
 
