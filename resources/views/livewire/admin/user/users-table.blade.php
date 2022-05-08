@@ -211,6 +211,15 @@
                                     Reset HWID
                                 </x-button.link>
                             @endif
+                            <form action="{{ route('users.delete') }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" name="from_admin">
+                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                <x-button.link class="block text-red-600 hover:text-red-900" type="submit">
+                                    Delete User
+                                </x-button.link>
+                            </form>
                         </x-table.cell>
                     </x-table.row>
                 @empty

@@ -3114,16 +3114,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.3",
+            "version": "v0.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "6833626ee48ef9bcc8aca8f9f166760441c12573"
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/6833626ee48ef9bcc8aca8f9f166760441c12573",
-                "reference": "6833626ee48ef9bcc8aca8f9f166760441c12573",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/05c544b339b112226ad14803e1e5b09a61957454",
+                "reference": "05c544b339b112226ad14803e1e5b09a61957454",
                 "shasum": ""
             },
             "require": {
@@ -3184,9 +3184,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.3"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.4"
             },
-            "time": "2022-05-05T02:19:43+00:00"
+            "time": "2022-05-06T12:49:14+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -3800,16 +3800,16 @@
         },
         {
             "name": "spiral/roadrunner",
-            "version": "v2.9.2",
+            "version": "v2.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roadrunner-server/roadrunner.git",
-                "reference": "6ae4b643add41ef93262898892fc617d1d862898"
+                "reference": "c88ed1ea6a9f50e748b2e82a4c4c27b42cb3f7fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roadrunner-server/roadrunner/zipball/6ae4b643add41ef93262898892fc617d1d862898",
-                "reference": "6ae4b643add41ef93262898892fc617d1d862898",
+                "url": "https://api.github.com/repos/roadrunner-server/roadrunner/zipball/c88ed1ea6a9f50e748b2e82a4c4c27b42cb3f7fb",
+                "reference": "c88ed1ea6a9f50e748b2e82a4c4c27b42cb3f7fb",
                 "shasum": ""
             },
             "require": {
@@ -3835,9 +3835,9 @@
             "description": "RoadRunner: High-performance PHP application server, load-balancer and process manager written in Golang",
             "support": {
                 "issues": "https://github.com/roadrunner-server/roadrunner/issues",
-                "source": "https://github.com/roadrunner-server/roadrunner/tree/v2.9.2"
+                "source": "https://github.com/roadrunner-server/roadrunner/tree/v2.9.4"
             },
-            "time": "2022-04-28T10:25:47+00:00"
+            "time": "2022-05-06T16:40:14+00:00"
         },
         {
             "name": "spiral/roadrunner-cli",
