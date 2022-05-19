@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
-use App\Models\Invoice;
-use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -50,7 +48,7 @@ class DeleteAccount extends Controller
         $user->delete();
 
         // log the user out
-        auth()->logout();
+        auth()->logout(); // todo: fix logout
         return redirect('/');
     }
 }
