@@ -3,8 +3,7 @@ FROM alpine:3.15
 # install required packages & php extensions
 RUN apk --no-cache add curl supervisor
 RUN apk --no-cache add \
-    -X \
-    https://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    -X https://dl-cdn.alpinelinux.org/alpine/edge/community \
     php81 \
     php81-curl \
     php81-dom \
