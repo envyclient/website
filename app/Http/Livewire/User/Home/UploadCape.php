@@ -28,8 +28,15 @@ class UploadCape extends Component
 
         $user = auth()->user();
 
-        $fileName = md5($user->email) . '.png';
-        $path = Storage::disk('public')->putFileAs('capes', $this->cape, $fileName);
+        // generating a hash for the cape file
+        $hash = md5($user->id);
+
+        // storing the cape file
+        $path = Storage::disk('public')->putFileAs(
+            'capes',
+            $this->cape,
+            "$hash.png"
+        );
 
         $user->update([
             'cape' => Storage::disk('public')->url($path),
@@ -43,10 +50,13 @@ class UploadCape extends Component
     {
         $user = auth()->user();
 
-        // deleting the actual cape
-        $hash = md5($user->email);
+        // getting the hash for the cape file
+        $hash = md5($user->id);
+
+        // deleting the cape file
         Storage::disk('public')->delete("capes/$hash.png");
 
+        // resetting the user to the default cape
         $user->update([
             'cape' => asset('assets/capes/default.png'),
         ]);
