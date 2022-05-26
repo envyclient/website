@@ -12,7 +12,7 @@ class DiscordHelper
     const STANDARD = '794384676113481738';
     const PREMIUM = '794384624092446730';
 
-    public static function handleDiscordRoles(User $user, callable $callback)
+    public static function handleDiscordRoles(User $user, callable $callback): void
     {
         // check if user does not discord linked
         if ($user->discord_id === null) {

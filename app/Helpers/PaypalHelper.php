@@ -15,7 +15,7 @@ class PaypalHelper
      */
     public static function getAccessToken(): string
     {
-        // send request to get
+        // send request to get the access token
         $response = Http::withBasicAuth(config('services.paypal.client_id'), config('services.paypal.secret'))
             ->asForm()
             ->post(config('services.paypal.endpoint') . '/v1/oauth2/token', [
@@ -27,6 +27,7 @@ class PaypalHelper
             throw new Exception('Invalid Credentials.');
         }
 
+        // return the access_token
         return $response->json('access_token');
     }
 }
