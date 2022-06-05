@@ -30,9 +30,11 @@
         <x-button.primary type="submit" wire:click="submit">
             Upload
         </x-button.primary>
-        <x-button.danger wire:click="resetCape">
-            Reset Cape
-        </x-button.danger>
+        @if(!str_contains($user->cape, 'default.png'))
+            <x-button.danger wire:click="resetCape">
+                Reset Cape
+            </x-button.danger>
+        @endif
         <a href="{{ asset('assets/capes/template.png') }}" download>
             <x-button.secondary>
                 Download Template

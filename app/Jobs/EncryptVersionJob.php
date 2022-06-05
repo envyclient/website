@@ -9,8 +9,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use PhpParser\Node\Scalar\String_;
 
 class EncryptVersionJob implements ShouldQueue
 {
@@ -20,8 +18,8 @@ class EncryptVersionJob implements ShouldQueue
     public int $backoff = 15;
 
     public function __construct(
-        private Version $version,
-        private string  $hash
+        private readonly Version $version,
+        private readonly string  $hash
     )
     {
     }

@@ -33,7 +33,7 @@ class CapesTest extends TestCase
         )->assertHasErrors('cape');
 
         // assert that cape does exist
-        Storage::disk('public')->assertMissing('capes/' . md5($user->email) . '.png');
+        Storage::disk('public')->assertMissing('capes/' . self::getCapeFileHash($user) . '.png');
     }
 
     /** @test */
@@ -52,7 +52,7 @@ class CapesTest extends TestCase
 
         // assert that cape exists
         $this->assertGreaterThan(0, strlen($user->cape));
-        Storage::disk('public')->assertExists('capes/' . md5($user->email) . '.png');
+        Storage::disk('public')->assertExists('capes/' . self::getCapeFileHash($user) . '.png');
     }
 
     /** @test */
@@ -75,7 +75,7 @@ class CapesTest extends TestCase
             ->assertHasNoErrors();
 
         // assert that cape does not exist
-        Storage::disk('public')->assertMissing('capes/' . md5($user->email) . '.png');
+        Storage::disk('public')->assertMissing('capes/' . self::getCapeFileHash($user) . '.png');
     }
 
     private function upload_cape(User $user, File $file): TestableLivewire
@@ -95,5 +95,10 @@ class CapesTest extends TestCase
         return Livewire::test(UploadCape::class)
             ->set('cape', $file)
             ->call('submit');
+    }
+
+    private static function getCapeFileHash(User $user): string
+    {
+        return md5($user->id);
     }
 }

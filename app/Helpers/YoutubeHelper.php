@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Http;
 
 class YoutubeHelper
 {
+    /**
+     * Get the YouTube channel_id of a channel.
+     *
+     * @param string $url the url of the channel
+     * @return string the YouTube channel_id
+     */
     private static function getChannelId(string $url): string
     {
         $html = file_get_contents($url);

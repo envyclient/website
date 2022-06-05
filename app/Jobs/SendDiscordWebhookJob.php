@@ -18,13 +18,17 @@ class SendDiscordWebhookJob implements ShouldQueue
     public int $backoff = 15;
 
     public function __construct(
-        private string $content,
+        private readonly string $content,
     )
     {
     }
 
+    /**
+     * @throws Exception
+     */
     public function handle()
     {
+        // send the webhook
         $response = HTTP::timeout(10)
             ->withBody(json_encode([
                 'username' => 'Envy Client',
@@ -34,6 +38,7 @@ class SendDiscordWebhookJob implements ShouldQueue
             ]), 'application/json')
             ->post(config('services.discord.webhook'));
 
+        // throw an exception if the webhook failed
         if ($response->failed()) {
             throw new Exception('Discord webhook failed.');
         }
