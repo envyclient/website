@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Enums\PaymentProvider;
 use App\Events\Subscription\SubscriptionExpiredEvent;
-use Faker\Provider\Payment;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +20,7 @@ use Illuminate\Support\Carbon;
  * @property string status
  * @property Carbon end_date
  * @property boolean queued_for_cancellation
+ *
  * @property-read PaymentProvider paymentProvider
  *
  * @property-read Carbon created_at
@@ -58,9 +59,11 @@ class Subscription extends Model
         });
     }
 
-    public function getPaymentProviderAttribute(): PaymentProvider
+    protected function paymentProvider(): Attribute
     {
-        return $this->paypal_id !== null ? PaymentProvider::PAYPAL : PaymentProvider::STRIPE;
+        return Attribute::make(
+            get: fn($value, $attributes) => $attributes['paypal_id'] !== null ? PaymentProvider::PAYPAL : PaymentProvider::STRIPE,
+        );
     }
 
     public function user(): BelongsTo

@@ -18,11 +18,15 @@ class CapesTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Storage::fake('cloud');
+    }
+
     /** @test */
     public function can_user_not_upload_invalid_cape()
     {
-        Storage::fake('cloud');
-
         // create non-admin user
         $user = self::user();
 
@@ -33,14 +37,12 @@ class CapesTest extends TestCase
         )->assertHasErrors('cape');
 
         // assert that cape does exist
-        Storage::disk('public')->assertMissing('capes/' . self::getCapeFileHash($user) . '.png');
+        Storage::cloud()->assertMissing('capes/' . $user->hash . '.png');
     }
 
     /** @test */
     public function can_user_upload_valid_cape()
     {
-        Storage::fake('cloud');
-
         // create non-admin user
         $user = self::user();
 
@@ -52,14 +54,12 @@ class CapesTest extends TestCase
 
         // assert that cape exists
         $this->assertGreaterThan(0, strlen($user->cape));
-        Storage::cloud()->assertExists('capes/' . self::getCapeFileHash($user) . '.png');
+        Storage::cloud()->assertExists('capes/' . $user->hash . '.png');
     }
 
     /** @test */
     public function can_user_reset_cape()
     {
-        Storage::fake('cloud');
-
         // create non-admin user
         $user = self::user();
 
@@ -75,7 +75,7 @@ class CapesTest extends TestCase
             ->assertHasNoErrors();
 
         // assert that cape does not exist
-        Storage::cloud()->assertMissing('capes/' . self::getCapeFileHash($user) . '.png');
+        Storage::cloud()->assertMissing('capes/' . $user->hash . '.png');
     }
 
     private function upload_cape(User $user, File $file): TestableLivewire
@@ -95,10 +95,5 @@ class CapesTest extends TestCase
         return Livewire::test(UploadCape::class)
             ->set('cape', $file)
             ->call('submit');
-    }
-
-    private static function getCapeFileHash(User $user): string
-    {
-        return md5($user->id);
     }
 }
