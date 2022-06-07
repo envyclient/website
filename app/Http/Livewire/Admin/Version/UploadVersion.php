@@ -43,14 +43,11 @@ class UploadVersion extends Component
             'iv' => bin2hex(random_bytes(16)),
         ]);
 
-        // generate hash for version file
-        $hash = md5($version->id);
-
         // store the version
-        $this->version->storeAs('versions', "$hash.jar");
+        $this->version->storeAs('versions', "$version->hash.jar");
 
         // dispatch the job to encrypt the version
-        EncryptVersionJob::dispatch($version, $hash);
+        EncryptVersionJob::dispatch($version);
 
         $this->done();
     }

@@ -18,8 +18,7 @@ class EncryptVersionJob implements ShouldQueue
     public int $backoff = 15;
 
     public function __construct(
-        private readonly Version $version,
-        private readonly string  $hash
+        private readonly Version $version
     )
     {
     }
@@ -30,16 +29,22 @@ class EncryptVersionJob implements ShouldQueue
         $key = config('version.key');
 
         // read the version as a string
-        $data = Storage::get("versions/$this->hash.jar");
+        $data = Storage::get("versions/{$this->version->hash}.jar");
 
         // encrypt the version
-        $value = openssl_encrypt($data, "AES-256-CBC", $key, OPENSSL_RAW_DATA, hex2bin($this->version->iv));
+        $value = openssl_encrypt(
+            $data,
+            'AES-256-CBC',
+            $key,
+            OPENSSL_RAW_DATA,
+            hex2bin($this->version->iv)
+        );
 
-        // store the encrypted version
-        Storage::put("versions/$this->hash.jar.enc", bin2hex($value));
+        // store the encrypted version on the cloud
+        Storage::cloud()->put("versions/{$this->version->hash}.jar.enc", bin2hex($value));
 
-        // delete the uploaded version
-        Storage::delete("versions/$this->hash.jar");
+        // delete the uploaded version from local storage
+        Storage::delete("versions/{$this->version->hash}.jar");
 
         // mark version as processed
         $this->version->update([

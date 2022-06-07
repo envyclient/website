@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,8 @@ use Illuminate\Support\Carbon;
  * @property string main_class
  * @property string iv
  * @property Carbon|null processed_at
+ *
+ * @property-read string hash
  *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
@@ -44,8 +47,16 @@ class Version extends Model
         'processed_at' => 'datetime',
     ];
 
+    protected function hash(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => md5($attributes['created_at']),
+        );
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_downloads', 'version_id', 'user_id');
     }
+
 }

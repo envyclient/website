@@ -1,9 +1,10 @@
-FROM alpine:3.15
+FROM alpine:3.16
 
 # install required packages & php extensions
 RUN apk --no-cache add curl supervisor
+
+# install php
 RUN apk --no-cache add \
-    -X https://dl-cdn.alpinelinux.org/alpine/edge/community \
     php81 \
     php81-curl \
     php81-dom \
@@ -16,6 +17,7 @@ RUN apk --no-cache add \
     php81-phar \
     php81-posix \
     php81-session \
+    php81-simplexml \
     php81-sockets \
     php81-tokenizer \
     php81-zip
@@ -37,8 +39,10 @@ RUN echo "* * * * * php /app/artisan schedule:run" | crontab -
 WORKDIR /app
 COPY . ./
 
-# install composer dependencies & octane
+# install composer dependencies
 RUN composer install --optimize-autoloader --no-dev
+
+# install laravel octane
 RUN php artisan octane:install --server=roadrunner
 
 # expose laravel octane port

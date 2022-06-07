@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72df94d2ba0873f074562b90f706055a",
+    "content-hash": "0d7f09cda7737046f984f2e6788fdeaa",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -114,16 +114,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.224.3",
+            "version": "3.224.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "52f45dfe0d1e5a77f33c050bde5134901fc54a57"
+                "reference": "8c8a713b8c1e1a20f66a801f9d2cd7fd80d8d3f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/52f45dfe0d1e5a77f33c050bde5134901fc54a57",
-                "reference": "52f45dfe0d1e5a77f33c050bde5134901fc54a57",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8c8a713b8c1e1a20f66a801f9d2cd7fd80d8d3f8",
+                "reference": "8c8a713b8c1e1a20f66a801f9d2cd7fd80d8d3f8",
                 "shasum": ""
             },
             "require": {
@@ -199,9 +199,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.224.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.224.4"
             },
-            "time": "2022-06-02T18:22:57+00:00"
+            "time": "2022-06-06T18:32:10+00:00"
         },
         {
             "name": "brick/math",
@@ -2147,16 +2147,16 @@
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "3.0.0",
+            "version": "3.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "f8ba6a92a5c1fdcbdd89dede009a1e6e1b93ba8c"
+                "reference": "0074cf016e21a6d1eb99b6db70acdd23743fc371"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/f8ba6a92a5c1fdcbdd89dede009a1e6e1b93ba8c",
-                "reference": "f8ba6a92a5c1fdcbdd89dede009a1e6e1b93ba8c",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/0074cf016e21a6d1eb99b6db70acdd23743fc371",
+                "reference": "0074cf016e21a6d1eb99b6db70acdd23743fc371",
                 "shasum": ""
             },
             "require": {
@@ -2197,9 +2197,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem-aws-s3-v3/issues",
-                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.0.0"
+                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.0.13"
             },
-            "time": "2022-01-13T21:11:49+00:00"
+            "time": "2022-04-01T22:05:11+00:00"
         },
         {
             "name": "league/mime-type-detection",
