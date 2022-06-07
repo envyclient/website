@@ -21,9 +21,10 @@ class UploadLoader extends Component
     public function render()
     {
         $latest = null;
-        if (Storage::disk('public')->exists('manifest/loader.json')) {
-            $manifest = Storage::disk('public')->get('manifest/loader.json');
-            $latest = json_decode($manifest)->version;
+        if (Storage::cloud()->exists('manifest.json')) {
+            $latest = json_decode(
+                Storage::cloud()->get('manifest.json')
+            )->loader->version;
         }
         return view('livewire.admin.upload-loader', compact('latest'));
     }
@@ -32,14 +33,19 @@ class UploadLoader extends Component
     {
         $this->validate();
 
-        // generating the manifest file for the loader
-        Storage::disk('public')->put('manifest/loader.json', json_encode([
+        $data = json_decode(
+            Storage::cloud()->get('manifest.json'),
+            true
+        );
+
+        $data['loader'] = [
             'version' => floatval($this->version),
             'size' => $this->loader->getSize(),
-        ]));
+        ];
 
-        // storing the loader
-        $this->loader->storeAs('', 'loader.exe');
+        Storage::cloud()->put('manifest.json', json_encode($data));
+
+        $this->loader->storeAs('', 'loader.exe', 'cloud');
 
         $this->done();
     }

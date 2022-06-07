@@ -21,9 +21,10 @@ class UploadLauncher extends Component
     public function render()
     {
         $latest = null;
-        if (Storage::disk('public')->exists('manifest/launcher.json')) {
-            $manifest = Storage::disk('public')->get('manifest/launcher.json');
-            $latest = json_decode($manifest)->version;
+        if (Storage::cloud()->exists('manifest.json')) {
+            $latest = json_decode(
+                Storage::cloud()->get('manifest.json')
+            )->launcher->version;
         }
         return view('livewire.admin.upload-launcher', compact('latest'));
     }
@@ -32,13 +33,18 @@ class UploadLauncher extends Component
     {
         $this->validate();
 
-        // generating the manifest file for the launcher
-        Storage::disk('public')->put('manifest/launcher.json', json_encode([
+        $data = json_decode(
+            Storage::cloud()->get('manifest.json'),
+            true
+        );
+
+        $data['launcher'] = [
             'version' => floatval($this->version),
             'size' => $this->launcher->getSize(),
-        ]));
+        ];
 
-        // storing the launcher
+        Storage::cloud()->put('manifest.json', json_encode($data));
+
         $this->launcher->storeAs('', 'launcher.exe');
 
         $this->done();
