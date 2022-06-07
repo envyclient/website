@@ -24,7 +24,7 @@ class UploadLoader extends Component
         if (Storage::cloud()->exists('manifest.json')) {
             $latest = json_decode(
                 Storage::cloud()->get('manifest.json')
-            )->loader->version;
+            )->loader->version ?? null;
         }
         return view('livewire.admin.upload-loader', compact('latest'));
     }
@@ -41,11 +41,13 @@ class UploadLoader extends Component
         $data['loader'] = [
             'version' => floatval($this->version),
             'size' => $this->loader->getSize(),
+            'checksum' => sha1_file($this->loader->getRealPath()),
+            'created_at' => now(),
         ];
 
         Storage::cloud()->put('manifest.json', json_encode($data));
 
-        $this->loader->storeAs('', 'loader.exe', 'cloud');
+        $this->loader->storeAs('', 'loader.exe', 's3');
 
         $this->done();
     }
