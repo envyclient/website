@@ -28,14 +28,11 @@ class UploadCape extends Component
 
         $user = auth()->user();
 
-        // generating a hash for the cape file
-        $hash = md5($user->id);
-
         // storing the cape file
         $path = Storage::cloud()->putFileAs(
             'capes',
             $this->cape,
-            "$hash.png"
+            "$user->hash.png"
         );
 
         $user->update([
@@ -50,11 +47,8 @@ class UploadCape extends Component
     {
         $user = auth()->user();
 
-        // getting the hash for the cape file
-        $hash = md5($user->id);
-
         // deleting the cape file
-        Storage::cloud()->delete("capes/$hash.png");
+        Storage::cloud()->delete("capes/$user->hash.png");
 
         // resetting the user to the default cape
         $user->update([

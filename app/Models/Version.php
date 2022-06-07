@@ -20,6 +20,8 @@ use Illuminate\Support\Carbon;
  * @property string iv
  * @property Carbon|null processed_at
  *
+ * @property-read string hash
+ *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
  * @property-read Carbon deleted_at
@@ -43,10 +45,6 @@ class Version extends Model
     protected $casts = [
         'beta' => 'bool',
         'processed_at' => 'datetime',
-    ];
-
-    protected $appends = [
-        '' => '',
     ];
 
     protected function hash(): Attribute

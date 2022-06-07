@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Prunable;
@@ -36,6 +37,8 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property string|null discord_name // TODO: remove
  *
  * @property-read string image
+ * @property-read string hash
+ *
  * @property-read string|null remember_token
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
@@ -126,9 +129,18 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    public function getImageAttribute(): string
+    protected function image(): Attribute
     {
-        return 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($this->email))) . '.svg?text=' . strtoupper(substr($this->name, 0, 2));
+        return Attribute::make(
+            get: fn($value, $attributes) => 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($attributes['email']))) . '.svg?text=' . strtoupper(substr($attributes['name'], 0, 2)),
+        );
+    }
+
+    protected function hash(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => md5($attributes['created_at']),
+        );
     }
 
     public function configs(): HasMany
