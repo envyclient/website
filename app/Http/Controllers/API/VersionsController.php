@@ -31,10 +31,10 @@ class VersionsController extends Controller
                 'user_id' => auth()->id(),
                 'version_id' => $version->id,
                 'created_at' => $now,
-                'updated_at' => $now
+                'updated_at' => $now,
             ]
         ]);
 
-        return Storage::download('versions/' . md5($version->id) . '.jar.enc');
+        return Storage::cloud()->download('versions/' . md5($version->created_at) . '.jar.enc');
     }
 }

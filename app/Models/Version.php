@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,8 +45,20 @@ class Version extends Model
         'processed_at' => 'datetime',
     ];
 
+    protected $appends = [
+        '' => '',
+    ];
+
+    protected function hash(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => md5($attributes['created_at']),
+        );
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_downloads', 'version_id', 'user_id');
     }
+
 }
