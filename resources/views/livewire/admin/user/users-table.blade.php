@@ -162,7 +162,7 @@
                             @if($user->discord_id !== null)
                                 <span
                                     class="px-2 block text-xs text-center leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    {{ $user->discord_name }}
+                                    Discord Connected
                                 </span>
                             @endif
                             @if($user->referralCode != null)
