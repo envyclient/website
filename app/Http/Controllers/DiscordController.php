@@ -35,7 +35,6 @@ class DiscordController extends Controller
         // update user account with discord account info
         auth()->user()->update([
             'discord_id' => $discordUser->getId(),
-            'discord_name' => $discordUser->getNickname(),
         ]);
 
         // broadcast the discord account connected event

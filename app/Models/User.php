@@ -34,7 +34,6 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  * @property integer|null referral_code_id
  * @property Carbon|null referral_code_used_at
  * @property string|null discord_id
- * @property string|null discord_name // TODO: remove
  *
  * @property-read string image
  * @property-read string hash
@@ -71,7 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'referral_code_id',
         'referral_code_used_at',
         'discord_id',
-        'discord_name',
     ];
 
     protected $hidden = [
@@ -124,8 +122,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return $query->where(function (Builder $query) use ($search) {
             $query->where('name', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('discord_name', 'like', "%$search%");
+                ->orWhere('email', 'like', "%$search%");
         });
     }
 

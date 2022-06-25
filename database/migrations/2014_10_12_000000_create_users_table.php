@@ -25,7 +25,6 @@ return new class extends Migration
             $table->timestamp('referral_code_used_at')->nullable();
 
             $table->string('discord_id', 18)->nullable()->unique();
-            $table->string('discord_name')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

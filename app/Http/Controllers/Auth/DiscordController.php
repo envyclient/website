@@ -35,7 +35,6 @@ class DiscordController extends Controller
             'email' => "envy_$rand@envyclient.com",
             'password' => null,
             'email_verified_at' => now(),
-            'discord_name' => $discordUser->getNickname(),
         ]);
 
         Auth::login($user, true);
