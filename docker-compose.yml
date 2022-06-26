@@ -1,31 +1,14 @@
 version: "3.8"
 services:
 
-  database:
-    image: mariadb:10.6.4
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
-    volumes:
-      - database:/var/lib/mysql
-    ports:
-      - ${DB_PORT}:3306
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
-      retries: 3
-      timeout: 5s
-    restart: unless-stopped
-
   website:
     image: ghcr.io/envyclient/website
     env_file: .env
     ports:
       - 8080:8000
     volumes:
+      - database:/database
       - storage:/app/storage
-    depends_on:
-      database:
-        condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8000/octane-ping" ]
       retries: 3
