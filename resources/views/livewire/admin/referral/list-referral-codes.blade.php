@@ -55,12 +55,12 @@
                     </x-table.cell>
 
                     <x-table.cell>
-                        @if($code->users->last() === null)
+                        @if($code->users()->latest()->first() === null)
                             &#10006;
                         @else
-                            <strong>User</strong>: {{ $code->users->last()->name }}
+                            <strong>User</strong>: {{ $code->users()->latest()->first()->name }}
                             <br>
-                            <strong>Time</strong>: {{ $code->users->last()->referral_code_used_at->diffForHumans()  }}
+                            <strong>Time</strong>: {{ $code->users()->latest()->first()->referral_code_used_at->diffForHumans()  }}
                         @endif
                     </x-table.cell>
 
