@@ -1,14 +1,17 @@
 #!/bin/sh
 
+DATABASE=/database/database.sqlite
 function color() {
     echo -e "\033[33m$1\033[0m"
 }
 
-echo "checking database status"
-until nc -z -v -w30 "$DB_HOST" "$DB_PORT"; do
-    color "waiting for database connection..."
-    sleep 1
-done
+color "checking if database exists"
+if [[ -f "$DATABASE" ]]; then
+    color "database exists"
+else
+    color "creating database"
+    touch "$DATABASE"
+fi
 
 color "migrating database"
 php artisan migrate --force

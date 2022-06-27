@@ -13,7 +13,7 @@ RUN apk --no-cache add \
     php81-mbstring \
     php81-openssl \
     php81-pcntl \
-    php81-pdo_mysql \
+    php81-pdo_sqlite \
     php81-phar \
     php81-posix \
     php81-session \
@@ -49,7 +49,7 @@ RUN php artisan octane:install --server=roadrunner
 EXPOSE 8000
 
 # volumes
-VOLUME ["/app/storage"]
+VOLUME ["/app/storage", "/database"]
 
 ENTRYPOINT ["/bin/ash", ".docker/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

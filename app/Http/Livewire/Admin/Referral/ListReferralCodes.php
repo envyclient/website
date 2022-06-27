@@ -28,7 +28,7 @@ class ListReferralCodes extends Component
     {
         // get all the referral codes
         $codes = ReferralCode::query()
-            ->with(['user:id,name,email', 'subscriptions'])
+            ->with(['user:id,name,email,image', 'subscriptions'])
             ->orderBy('created_at')
             ->get();
 
