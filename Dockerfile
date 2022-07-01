@@ -1,9 +1,9 @@
-FROM alpine:3.16
+FROM alpine:3.16 as base
 
-# install required packages & php extensions
+# install required packages
 RUN apk --no-cache add curl supervisor
 
-# install php
+# install php & php extensions
 RUN apk --no-cache add \
     php81 \
     php81-curl \
@@ -29,14 +29,18 @@ RUN ln -s /usr/bin/php81 /usr/bin/php
 COPY .docker/php.ini /etc/php81/conf.d/99_envy.ini
 COPY .docker/supervisord.conf /etc/supervisord.conf
 
-# install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 # schedule cron job
 RUN echo "* * * * * php /app/artisan schedule:run" | crontab -
 
-# create app dir & copy project files
+FROM base as composer-build
+
+# install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# create the app directory
 WORKDIR /app
+
+# copy project folder
 COPY . ./
 
 # install composer dependencies
@@ -44,6 +48,33 @@ RUN composer install --optimize-autoloader --no-dev
 
 # install laravel octane
 RUN php artisan octane:install --server=roadrunner
+
+FROM node:alpine as npm-build
+
+# create the app directory
+WORKDIR /app
+
+# copy project folder
+COPY . ./
+
+# copy over required files for building css & js
+#COPY package.json package-lock.json tailwind.config.js webpack.mix.js ./
+#COPY resources/ ./resources
+#COPY config/ ./config
+
+# build production css & js
+RUN npm install && npm run build
+
+FROM base as production
+
+# create app dir
+WORKDIR /app
+
+# copy over project files from composer-build
+COPY --from=composer-build /app ./
+
+# copy over built assets from npm-build
+COPY --from=npm-build /app/public/build ./public/build
 
 # expose laravel octane port
 EXPOSE 8000
