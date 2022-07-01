@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @hasSection('title')
+    @hasSection('title  ')
         <title>@yield('title') - Envy Client</title>
     @else
         <title>Envy Client</title>
@@ -31,14 +31,12 @@
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Scripts & Styles -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @livewireStyles
 </head>
 
