@@ -57,11 +57,6 @@ WORKDIR /app
 # copy project folder
 COPY . ./
 
-# copy over required files for building css & js
-#COPY package.json package-lock.json tailwind.config.js webpack.mix.js ./
-#COPY resources/ ./resources
-#COPY config/ ./config
-
 # build production css & js
 RUN npm install && npm run build
 
