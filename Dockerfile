@@ -58,7 +58,7 @@ WORKDIR /app
 COPY . ./
 
 # build production css & js
-RUN npm install && npm run build
+RUN npm install && npm run prod
 
 FROM base as production
 
@@ -69,7 +69,8 @@ WORKDIR /app
 COPY --from=composer-build /app ./
 
 # copy over built assets from npm-build
-COPY --from=npm-build /app/public/build ./public/build
+COPY --from=npm-build /app/public/css ./public/css
+COPY --from=npm-build /app/public/js ./public/js
 
 # expose laravel octane port
 EXPOSE 8000
