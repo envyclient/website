@@ -18,7 +18,12 @@ class HandlePayPalWebhook extends Controller
     public function __invoke(Request $request): Response
     {
         // broadcast the received webhook event
-        event(new ReceivedWebhookEvent(PaymentProvider::PAYPAL, $request->json('event_type')));
+        event(
+            new ReceivedWebhookEvent(
+                PaymentProvider::PAYPAL,
+                $request->json('event_type')
+            )
+        );
 
         switch ($request->json('event_type')) {
 
