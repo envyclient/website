@@ -20,7 +20,12 @@ class HandleStripeWebhook extends Controller
     public function __invoke(Request $request)
     {
         // broadcast the received webhook event
-        event(new ReceivedWebhookEvent(PaymentProvider::STRIPE, $request->json('type')));
+        event(
+            new ReceivedWebhookEvent(
+                PaymentProvider::STRIPE,
+                $request->json('type')
+            )
+        );
 
         // Handle the event
         switch ($request->json('type')) {
@@ -111,7 +116,6 @@ class HandleStripeWebhook extends Controller
                     StripeSourceStatus::CANCELED,
                     'The payment has expired. Please create a new one to continue your purchase.'
                 );
-
 
                 break;
             }

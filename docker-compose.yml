@@ -7,7 +7,6 @@ services:
     ports:
       - 8080:8000
     volumes:
-      - database:/database
       - storage:/app/storage
     healthcheck:
       test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8000/octane-ping" ]
@@ -16,5 +15,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  database:
   storage:

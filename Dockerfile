@@ -69,14 +69,13 @@ WORKDIR /app
 COPY --from=composer-build /app ./
 
 # copy over built assets from npm-build
-COPY --from=npm-build /app/public/css ./public/css
-COPY --from=npm-build /app/public/js ./public/js
+COPY --from=npm-build /app/public ./public
 
 # expose laravel octane port
 EXPOSE 8000
 
 # volumes
-VOLUME ["/app/storage", "/database"]
+VOLUME ["/app/storage"]
 
 ENTRYPOINT ["/bin/ash", ".docker/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
