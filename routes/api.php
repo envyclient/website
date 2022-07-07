@@ -53,7 +53,7 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 /**
  * Download Loader
  */
-Route::get('download-loader', fn() => Storage::cloud()->download('loader.exe'))
+Route::get('download-loader', fn() => Storage::download('loader.exe'))
     ->middleware(['auth:api', 'subscribed']);
 
 /**

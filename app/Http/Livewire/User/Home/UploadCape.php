@@ -29,14 +29,14 @@ class UploadCape extends Component
         $user = auth()->user();
 
         // storing the cape file
-        $path = Storage::cloud()->putFileAs(
+        $path = Storage::disk('public')->putFileAs(
             'capes',
             $this->cape,
             "$user->hash.png"
         );
 
         $user->update([
-            'cape' => Storage::cloud()->url($path),
+            'cape' => Storage::disk('public')->url($path),
         ]);
 
         $this->resetFilePond();
@@ -48,7 +48,7 @@ class UploadCape extends Component
         $user = auth()->user();
 
         // deleting the cape file
-        Storage::cloud()->delete("capes/$user->hash.png");
+        Storage::disk('public')->delete("capes/$user->hash.png");
 
         // resetting the user to the default cape
         $user->update([

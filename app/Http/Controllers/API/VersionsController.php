@@ -35,6 +35,6 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::cloud()->download('versions/' . md5($version->created_at) . '.jar.enc');
+        return Storage::download("versions/$version->hash.jar.enc");
     }
 }
