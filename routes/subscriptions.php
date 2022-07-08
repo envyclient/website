@@ -24,30 +24,37 @@ Route::post('cancel', CancelSubscription::class)
  * Paypal
  */
 Route::group(['prefix' => 'paypal'], function () {
+
     Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('process', [PayPalController::class, 'checkout'])->name('paypal.checkout');
         Route::get('success', [PayPalController::class, 'success'])->name('paypal.success');
         Route::get('cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
     });
 
-    Route::post('webhook', HandlePayPalWebhook::class)
-        ->middleware(VerifyPaypalWebhookSignature::class);
+    Route::post('webhook', HandlePayPalWebhook::class)->middleware(VerifyPaypalWebhookSignature::class);
+
 });
 
 /**
  * Stripe Checkout
  */
 Route::group(['prefix' => 'stripe'], function () {
-    Route::post('checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
-    Route::get('success', [StripeController::class, 'success'])->name('stripe.success');
-    Route::get('cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+
+    Route::group(['middleware' => ['auth', 'verified']], function () {
+        Route::post('checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+        Route::get('success', [StripeController::class, 'success'])->name('stripe.success');
+        Route::get('cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+    });
+
     Route::post('webhook', HandleStripeWebhook::class)->middleware(VerifyStripeWebhookSignature::class);
+
 });
 
 /**
  * Stripe Source
  */
 Route::group(['prefix' => 'stripe-source'], function () {
+
     Route::get('{stripeSource}', ShowStripeSource::class)
         ->middleware(CheckStripeSource::class)
         ->name('stripe-source.show');
@@ -55,4 +62,5 @@ Route::group(['prefix' => 'stripe-source'], function () {
     Route::post('/', CreateStripeSource::class)
         ->middleware(['auth', 'verified', 'not-subscribed'])
         ->name('stripe-source.store');
+
 });

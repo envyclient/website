@@ -64,18 +64,16 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 /**
  * Download Launcher
  */
-Route::get('/download', fn() => Storage::download('launcher.exe', 'envy.exe'))
+Route::get('download', fn() => Storage::download('launcher.exe', 'envy.exe'))
     ->middleware(['auth', 'verified', 'subscribed'])
     ->name('launcher.download');
 
 /**
- * OAuth Connect
+ * Discord Connect
  */
-Route::group(['prefix' => 'connect'], function () {
-    Route::group(['prefix' => 'discord', 'middleware' => ['auth', 'verified']], function () {
-        Route::get('/', [DiscordController::class, 'login'])->name('connect.discord');
-        Route::get('redirect', [DiscordController::class, 'redirect']);
-    });
+Route::group(['prefix' => 'discord', 'middleware' => ['auth', 'verified']], function () {
+    Route::get('/', [DiscordController::class, 'login'])->name('discord.connect');
+    Route::get('redirect', [DiscordController::class, 'redirect'])->name('discord.redirect');
 });
 
 require __DIR__ . '/subscriptions.php';

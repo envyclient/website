@@ -6,6 +6,7 @@ use App\Helpers\PaypalHelper;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class VerifyPaypalWebhookSignature
 {
@@ -32,9 +33,7 @@ class VerifyPaypalWebhookSignature
 
         // webhook signature failed
         if ($response->status() !== 200) {
-            return response()->json([
-                'message' => 'Failed Webhook Signature',
-            ], 400);
+            throw new AccessDeniedHttpException('Failed PayPal Webhook Signature');
         }
 
         return $next($request);

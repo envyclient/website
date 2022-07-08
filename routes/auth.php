@@ -25,7 +25,8 @@ Route::middleware('guest')->group(function () {
     Route::get('login/discord', [DiscordController::class, 'login'])
         ->name('login.discord');
 
-    Route::get('login/discord/redirect', [DiscordController::class, 'redirect']);
+    Route::get('login/discord/redirect', [DiscordController::class, 'redirect'])
+        ->name('login.discord.redirect');
 });
 
 Route::get('forgot-password', Email::class)
