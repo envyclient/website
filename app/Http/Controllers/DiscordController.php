@@ -3,50 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Events\DiscordAccountConnectedEvent;
-use App\Models\User;
+use App\Helpers\DiscordHelper;
 use App\Providers\RouteServiceProvider;
 use Exception;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DiscordController extends Controller
 {
-    public function login()
+    private string $redirect;
+
+    public function __construct()
     {
-        return Socialite::driver('discord')
-            ->redirectUrl(config('services.discord.redirect_connect'))
-            ->redirect();
+        $this->redirect = config('services.discord.redirect.connect');
     }
 
-    public function redirect()
+    public function login()
     {
+        return redirect(
+            DiscordHelper::getRedirectUrl($this->redirect)
+        );
+    }
+
+    public function redirect(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'code' => ['required', 'string']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(RouteServiceProvider::HOME)->with('error', 'Connection cancelled.');
+        }
+
         try {
-            $discordUser = Socialite::driver('discord')
-                ->redirectUrl(config('services.discord.redirect_connect'))
-                ->user();
+            $data = DiscordHelper::getDiscordUser(
+                $request->input('code'),
+                $this->redirect
+            );
         } catch (Exception) {
             return redirect(RouteServiceProvider::HOME)->with('error', 'Connection cancelled.');
         }
 
         // check if discord account is already used
-        if (self::isAccountAlreadyLinked($discordUser->getId(), auth()->id())) {
+        if (DiscordHelper::isAccountAlreadyLinked($data['id'], auth()->id())) {
             return redirect(RouteServiceProvider::HOME)->with('error', 'Discord already linked to another account.');
         }
 
         // update user account with discord account info
         auth()->user()->update([
-            'discord_id' => $discordUser->getId(),
+            'discord_id' => $data['id'],
         ]);
 
         // broadcast the discord account connected event
         event(new DiscordAccountConnectedEvent(auth()->user()));
 
         return redirect(RouteServiceProvider::HOME)->with('success', 'Discord account connected.');
-    }
-
-    private static function isAccountAlreadyLinked(string $discordId, int $userId)
-    {
-        return User::where('discord_id', $discordId)
-            ->where('id', '<>', $userId)
-            ->exists();
     }
 }

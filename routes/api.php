@@ -24,6 +24,7 @@ Route::group(['prefix' => 'auth'], function () {
  * Configs
  */
 Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
+
     Route::group(['prefix' => 'configs'], function () {
         Route::get('user/{name?}', GetConfigsForUser::class)->name('configs.search');
         Route::put('{config}/favorite', FavoriteConfig::class)->name('configs.favorite');
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
 
     Route::resource('configs', ConfigsController::class)
         ->only(['index', 'show', 'store', 'update', 'destroy']);
+
 });
 
 /**
@@ -53,7 +55,7 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 /**
  * Download Loader
  */
-Route::get('download-loader', fn() => Storage::cloud()->download('loader.exe'))
+Route::get('download-loader', fn() => Storage::download('loader.exe'))
     ->middleware(['auth:api', 'subscribed']);
 
 /**

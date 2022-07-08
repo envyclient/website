@@ -21,9 +21,9 @@ class UploadLauncher extends Component
     public function render()
     {
         $latest = null;
-        if (Storage::cloud()->exists('manifest.json')) {
+        if (Storage::disk('public')->exists('manifest.json')) {
             $latest = json_decode(
-                Storage::cloud()->get('manifest.json')
+                Storage::disk('public')->get('manifest.json')
             )->launcher->version ?? null;
         }
         return view('livewire.admin.upload-launcher', compact('latest'));
@@ -34,7 +34,7 @@ class UploadLauncher extends Component
         $this->validate();
 
         $data = json_decode(
-            Storage::cloud()->get('manifest.json'),
+            Storage::disk('public')->get('manifest.json'),
             true
         );
 
@@ -45,9 +45,9 @@ class UploadLauncher extends Component
             'created_at' => now(),
         ];
 
-        Storage::cloud()->put('manifest.json', json_encode($data));
+        Storage::disk('public')->put('manifest.json', json_encode($data));
 
-        $this->launcher->storeAs('', 'launcher.exe', 's3');
+        $this->launcher->storeAs('', 'launcher.exe');
 
         $this->done();
     }

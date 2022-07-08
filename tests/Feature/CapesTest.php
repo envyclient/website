@@ -21,7 +21,7 @@ class CapesTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Storage::fake('cloud');
+        Storage::fake('public');
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class CapesTest extends TestCase
         )->assertHasErrors('cape');
 
         // assert that cape does exist
-        Storage::cloud()->assertMissing('capes/' . $user->hash . '.png');
+        Storage::disk('public')->assertMissing('capes/' . $user->hash . '.png');
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class CapesTest extends TestCase
 
         // assert that cape exists
         $this->assertGreaterThan(0, strlen($user->cape));
-        Storage::cloud()->assertExists('capes/' . $user->hash . '.png');
+        Storage::disk('public')->assertExists('capes/' . $user->hash . '.png');
     }
 
     /** @test */
@@ -75,7 +75,7 @@ class CapesTest extends TestCase
             ->assertHasNoErrors();
 
         // assert that cape does not exist
-        Storage::cloud()->assertMissing('capes/' . $user->hash . '.png');
+        Storage::disk('public')->assertMissing('capes/' . $user->hash . '.png');
     }
 
     private function upload_cape(User $user, File $file): TestableLivewire

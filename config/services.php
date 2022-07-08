@@ -31,14 +31,20 @@ return [
     ],
 
     'discord' => [
+
+        // oauth
         'client_id' => env('DISCORD_ID'),
         'client_secret' => env('DISCORD_SECRET'),
-        'redirect' => env('DISCORD_RETURN_URL'),
-        'redirect_connect' => env('DISCORD_RETURN_URL_CONNECT'),
+        'redirect' => [
+            'login' => env('DISCORD_RETURN_URL'),
+            'connect' => env('DISCORD_RETURN_URL_CONNECT'),
+        ],
 
+        // bot
         'token' => env('DISCORD_TOKEN'),
         'webhook' => env('DISCORD_WEBHOOK'),
         'invite' => 'https://discord.gg/kusdsKtcr5',
+
     ],
 
     'stripe' => [

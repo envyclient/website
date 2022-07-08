@@ -2,24 +2,45 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\DiscordHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DiscordController extends Controller
 {
-    public function login()
+    private string $redirect;
+
+    public function __construct()
     {
-        return Socialite::driver('discord')->redirect();
+        $this->redirect = config('services.discord.redirect.login');
     }
 
-    public function redirect()
+    public function login()
     {
+        return redirect(
+            DiscordHelper::getRedirectUrl($this->redirect)
+        );
+    }
+
+    public function redirect(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'code' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('login');
+        }
+
         try {
-            $discordUser = Socialite::driver('discord')->user();
+            $data = DiscordHelper::getDiscordUser(
+                $request->input('code'),
+                $this->redirect
+            );
         } catch (Exception) {
             return redirect('login');
         }
@@ -29,7 +50,7 @@ class DiscordController extends Controller
 
         // create the user
         $user = User::firstOrCreate([
-            'discord_id' => $discordUser->getId(),
+            'discord_id' => $data['id'],
         ], [
             'name' => "envy_$rand",
             'email' => "envy_$rand@envyclient.com",
@@ -37,7 +58,7 @@ class DiscordController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        Auth::login($user, true);
+        auth()->login($user, true);
 
         return redirect(RouteServiceProvider::HOME);
     }
