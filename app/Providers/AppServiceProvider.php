@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
@@ -50,5 +51,9 @@ class AppServiceProvider extends ServiceProvider
 
         // enable n+1 problem check
         Model::preventLazyLoading(!app()->isProduction());
+
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

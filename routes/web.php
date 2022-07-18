@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Ping route
  */
-Octane::route('GET', '/octane-ping', function () {
-    return new Response();
-});
+Route::get( 'ping', fn () => new Response());
 
 /**
  * Dashboard Pages

@@ -13,12 +13,10 @@
         "guzzlehttp/guzzle": "^7.2",
         "larabug/larabug": "^2.5",
         "laravel/framework": "^9.0",
-        "laravel/octane": "^1.0",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.3",
         "overtrue/laravel-favorite": "^5.0.1",
         "spatie/laravel-support-bubble": "^1.0",
-        "spiral/roadrunner": "^2.7",
         "staudenmeir/eloquent-has-many-deep": "^1.15",
         "stripe/stripe-php": "^7.67"
     },

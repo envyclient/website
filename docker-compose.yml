@@ -9,7 +9,7 @@ services:
     volumes:
       - storage:/app/storage
     healthcheck:
-      test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8000/octane-ping" ]
+      test: [ "CMD", "curl", "--silent", "--fail", "http://127.0.0.1:8000/ping" ]
       retries: 3
       timeout: 5s
     restart: unless-stopped

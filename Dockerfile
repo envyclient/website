@@ -12,13 +12,10 @@ RUN apk --no-cache add \
     php81-json \
     php81-mbstring \
     php81-openssl \
-    php81-pcntl \
     php81-pdo_sqlite \
     php81-phar \
-    php81-posix \
     php81-session \
     php81-simplexml \
-    php81-sockets \
     php81-tokenizer \
     php81-zip
 
@@ -47,7 +44,7 @@ COPY . ./
 RUN composer install --optimize-autoloader --no-dev
 
 # install laravel octane
-RUN php artisan octane:install --server=roadrunner
+#RUN php artisan octane:install --server=roadrunner
 
 FROM node:alpine as npm-build
 
@@ -77,5 +74,5 @@ EXPOSE 8000
 # volumes
 VOLUME ["/app/storage"]
 
-ENTRYPOINT ["/bin/ash", ".docker/entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
