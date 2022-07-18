@@ -18,7 +18,7 @@ RUN apk --no-cache add \
     php81-zip
 
 # install supervisor (go-lang version)
-COPY --from=ochinchina/supervisord /usr/local/bin/supervisord /usr/local/bin/supervisord
+COPY --from=ochinchina/supervisord /usr/local/bin/supervisord /usr/local/bin
 
 # create symlink
 RUN ln -s /usr/bin/php81 /usr/bin/php
@@ -72,5 +72,5 @@ EXPOSE 8000
 # volumes
 VOLUME ["/app/storage"]
 
-ENTRYPOINT ["sh", ".docker/entrypoint.sh"]
-CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
