@@ -1,10 +1,8 @@
 FROM alpine:3.16 as base
 
-# install required packages
-RUN apk --no-cache add curl supervisor
-
-# install php & php extensions
+# install curl & php & php extensions
 RUN apk --no-cache add \
+    curl \
     php81 \
     php81-curl \
     php81-dom \
@@ -18,6 +16,9 @@ RUN apk --no-cache add \
     php81-simplexml \
     php81-tokenizer \
     php81-zip
+
+# install supervisor (go-lang version)
+COPY --from=ochinchina/supervisord /usr/local/bin/supervisord /usr/local/bin/supervisord
 
 # create symlink
 RUN ln -s /usr/bin/php81 /usr/bin/php
@@ -42,9 +43,6 @@ COPY . ./
 
 # install composer dependencies
 RUN composer install --optimize-autoloader --no-dev
-
-# install laravel octane
-#RUN php artisan octane:install --server=roadrunner
 
 FROM node:alpine as npm-build
 
@@ -74,5 +72,5 @@ EXPOSE 8000
 # volumes
 VOLUME ["/app/storage"]
 
-ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["sh", ".docker/entrypoint.sh"]
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]
