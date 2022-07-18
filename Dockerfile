@@ -1,8 +1,9 @@
 FROM alpine:3.16 as base
 
-# install curl & php & php extensions
+# install curl, supervisor & php, php extensions
 RUN apk --no-cache add \
     curl \
+    supervisor \
     php81 \
     php81-curl \
     php81-dom \
@@ -16,9 +17,6 @@ RUN apk --no-cache add \
     php81-simplexml \
     php81-tokenizer \
     php81-zip
-
-# install supervisor (go-lang version)
-COPY --from=ochinchina/supervisord /usr/local/bin/supervisord /usr/local/bin
 
 # create symlink
 RUN ln -s /usr/bin/php81 /usr/bin/php
@@ -66,11 +64,11 @@ COPY --from=composer-build /app ./
 # copy over built assets from npm-build
 COPY --from=npm-build /app/public ./public
 
-# expose laravel octane port
+# php server port
 EXPOSE 8000
 
 # volumes
 VOLUME ["/app/storage"]
 
 ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
-CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
