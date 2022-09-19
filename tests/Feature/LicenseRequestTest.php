@@ -16,11 +16,16 @@ class LicenseRequestTest extends TestCase
     const INVALID_CHANNEL = 'https://www.youtube.com/channel/UCPGP3hEz8oXnGK_nrBvyBbQ';
     const INVALID_URL = 'https://www.google.com';
 
-    /** @test */
-    public function can_user_create_license_request()
+    protected function setUp(): void
     {
-        $this->actingAs(self::user());
+        parent::setUp();
 
+        $this->actingAs(self::user());
+    }
+
+    /** @test */
+    public function can_user_create_license_request(): void
+    {
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit');
@@ -29,10 +34,8 @@ class LicenseRequestTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_license_request_with_invalid_url()
+    public function can_user_not_create_license_request_with_invalid_url(): void
     {
-        $this->actingAs(self::user());
-
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::INVALID_URL)
             ->call('submit')
@@ -42,10 +45,8 @@ class LicenseRequestTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_license_request_with_less_than_200_subs()
+    public function can_user_not_create_license_request_with_less_than_200_subs(): void
     {
-        $this->actingAs(self::user());
-
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::INVALID_CHANNEL)
             ->call('submit')
@@ -55,10 +56,8 @@ class LicenseRequestTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_2_active_license_requests()
+    public function can_user_not_create_2_active_license_requests(): void
     {
-        $this->actingAs(self::user());
-
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::VALID_CHANNEL)
             ->call('submit');

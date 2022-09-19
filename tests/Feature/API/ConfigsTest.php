@@ -28,20 +28,21 @@ class ConfigsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         Version::factory()->create([
             'name' => 'Envy 1.0',
         ]);
     }
 
     /** @test */
-    public function can_unauthenticated_user_not_interact_with_configs()
+    public function can_unauthenticated_user_not_interact_with_configs(): void
     {
         $this->getJson(route('configs.index'))
             ->assertUnauthorized();
     }
 
     /** @test */
-    public function can_unsubscribed_user_not_interact_with_configs()
+    public function can_unsubscribed_user_not_interact_with_configs(): void
     {
         $this->actingAs(self::user(), 'api')
             ->getJson(route('configs.index'))
@@ -51,7 +52,7 @@ class ConfigsTest extends TestCase
     }
 
     /** @test */
-    public function can_user_list_configs()
+    public function can_user_list_configs(): void
     {
         $user = self::subscribedUser();
         Config::factory()->count(10)->create([
@@ -66,7 +67,7 @@ class ConfigsTest extends TestCase
     }
 
     /** @test */
-    public function can_user_search_configs()
+    public function can_user_search_configs(): void
     {
         $user = self::subscribedUser();
         Config::factory()->count(10)->create([
@@ -82,7 +83,7 @@ class ConfigsTest extends TestCase
     }
 
     /** @test */
-    public function can_user_create_valid_config()
+    public function can_user_create_valid_config(): void
     {
         $this->actingAs(self::subscribedUser(), 'api')
             ->postJson(route('configs.store'), self::VALID_CONFIG)
@@ -92,7 +93,7 @@ class ConfigsTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_invalid_config()
+    public function can_user_not_create_invalid_config(): void
     {
         $this->actingAs(self::subscribedUser(), 'api')
             ->postJson(route('configs.store'), self::INVALID_CONFIG)
@@ -102,7 +103,7 @@ class ConfigsTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_go_over_config_limit()
+    public function can_user_not_go_over_config_limit(): void
     {
         $user = $this->subscribedUser();
         Config::factory()->count($user->subscription->plan->config_limit)->create([
@@ -119,7 +120,7 @@ class ConfigsTest extends TestCase
     }
 
     /** @test */
-    public function can_user_update_config()
+    public function can_user_update_config(): void
     {
         $user = self::subscribedUser();
         $config = Config::factory()->create([

@@ -14,7 +14,7 @@ class ReferralCodeTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_user_not_use_invalid_referral_code()
+    public function can_user_not_use_invalid_referral_code(): void
     {
         $user = self::user();
 
@@ -29,7 +29,7 @@ class ReferralCodeTest extends TestCase
     }
 
     /** @test */
-    public function can_user_use_valid_referral_code()
+    public function can_user_use_valid_referral_code(): void
     {
         $user = self::user();
         $referralCode = ReferralCode::factory()->create([
@@ -47,7 +47,7 @@ class ReferralCodeTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_use_more_than_1_valid_referral_code()
+    public function can_user_not_use_more_than_1_valid_referral_code(): void
     {
         $user = self::user();
         $referralCodes = ReferralCode::factory()->count(2)->create([
@@ -75,7 +75,7 @@ class ReferralCodeTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_not_create_invalid_referral_code()
+    public function can_admin_not_create_invalid_referral_code(): void
     {
         Livewire::test(CreateReferralCode::class)
             ->set('user', 'random_name')
@@ -87,7 +87,7 @@ class ReferralCodeTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_create_valid_referral_code()
+    public function can_admin_create_valid_referral_code(): void
     {
         $user = self::admin();
 

@@ -16,7 +16,7 @@ class UsersTest extends TestCase
     const INVALID_NAME = 'this name is not allowed';
 
     /** @test */
-    public function can_admin_update_user_name()
+    public function can_admin_update_user_name(): void
     {
         $user = self::user();
 
@@ -33,7 +33,7 @@ class UsersTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_not_update_invalid_user_name()
+    public function can_admin_not_update_invalid_user_name(): void
     {
         $user = self::user();
         $originalName = $user->name;
@@ -51,7 +51,7 @@ class UsersTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_update_user_subscription()
+    public function can_admin_update_user_subscription(): void
     {
         $user = self::user();
 
@@ -73,7 +73,7 @@ class UsersTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_reset_user_hwid()
+    public function can_admin_reset_user_hwid(): void
     {
         $user = self::user();
 
@@ -89,7 +89,7 @@ class UsersTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_update_user_ban()
+    public function can_admin_update_user_ban(): void
     {
         $user = self::user();
 
