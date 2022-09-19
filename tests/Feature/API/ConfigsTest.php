@@ -28,6 +28,7 @@ class ConfigsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         Version::factory()->create([
             'name' => 'Envy 1.0',
         ]);
