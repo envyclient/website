@@ -23,9 +23,8 @@ class LicenseRequestTest extends TestCase
         $this->actingAs(self::user());
     }
 
-
     /** @test */
-    public function can_user_create_license_request()
+    public function can_user_create_license_request(): void
     {
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::VALID_CHANNEL)
@@ -35,7 +34,7 @@ class LicenseRequestTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_license_request_with_invalid_url()
+    public function can_user_not_create_license_request_with_invalid_url(): void
     {
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::INVALID_URL)
@@ -46,7 +45,7 @@ class LicenseRequestTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_license_request_with_less_than_200_subs()
+    public function can_user_not_create_license_request_with_less_than_200_subs(): void
     {
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::INVALID_CHANNEL)
@@ -57,7 +56,7 @@ class LicenseRequestTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_create_2_active_license_requests()
+    public function can_user_not_create_2_active_license_requests(): void
     {
         Livewire::test(LicenseRequests::class)
             ->set('channel', self::VALID_CHANNEL)

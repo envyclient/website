@@ -14,14 +14,14 @@ class LoginTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_login_page_be_seen()
+    public function can_login_page_be_seen(): void
     {
         $this->get('/login')
             ->assertStatus(200);
     }
 
     /** @test */
-    public function can_user_login()
+    public function can_user_login(): void
     {
         $user = User::factory()->create();
 
@@ -35,7 +35,7 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_login_with_wrong_password()
+    public function can_user_not_login_with_wrong_password(): void
     {
         $user = User::factory()->create();
 

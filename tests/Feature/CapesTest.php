@@ -25,7 +25,7 @@ class CapesTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_upload_invalid_cape()
+    public function can_user_not_upload_invalid_cape(): void
     {
         // create non-admin user
         $user = self::user();
@@ -41,7 +41,7 @@ class CapesTest extends TestCase
     }
 
     /** @test */
-    public function can_user_upload_valid_cape()
+    public function can_user_upload_valid_cape(): void
     {
         // create non-admin user
         $user = self::user();
@@ -58,7 +58,7 @@ class CapesTest extends TestCase
     }
 
     /** @test */
-    public function can_user_reset_cape()
+    public function can_user_reset_cape(): void
     {
         // create non-admin user
         $user = self::user();

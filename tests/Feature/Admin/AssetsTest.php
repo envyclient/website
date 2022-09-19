@@ -27,7 +27,7 @@ class AssetsTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_upload_assets()
+    public function can_admin_upload_assets(): void
     {
         Livewire::test(UploadAssets::class)
             ->set('assets', UploadedFile::fake()->create(self::FILE_NAME, self::FILE_SIZE))
@@ -38,7 +38,7 @@ class AssetsTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_not_upload_empty_assets()
+    public function can_admin_not_upload_empty_assets(): void
     {
         Livewire::test(UploadAssets::class)
             ->call('submit')
@@ -48,7 +48,7 @@ class AssetsTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_not_upload_oversize_assets()
+    public function can_admin_not_upload_oversize_assets(): void
     {
         Livewire::test(UploadAssets::class)
             ->set('assets', UploadedFile::fake()->create(self::FILE_NAME, self::FILE_SIZE_INVALID))
@@ -59,7 +59,7 @@ class AssetsTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_not_upload_non_zip_assets()
+    public function can_admin_not_upload_non_zip_assets(): void
     {
         Livewire::test(UploadAssets::class)
             ->set('assets', UploadedFile::fake()->create(self::FILE_NAME_INVALID, self::FILE_SIZE))

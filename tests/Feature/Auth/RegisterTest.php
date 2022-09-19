@@ -14,14 +14,14 @@ class RegisterTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_register_page_be_seen()
+    public function can_register_page_be_seen(): void
     {
         $this->get('/register')
             ->assertStatus(200);
     }
 
     /** @test */
-    public function can_user_register()
+    public function can_user_register(): void
     {
         Livewire::test(Register::class)
             ->set('name', 'Test_User')
