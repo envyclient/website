@@ -1,7 +1,8 @@
 @props([
 'maxFileSize', 'maxTotalFileSize',
 'minImageWidth', 'maxImageWidth',
-'minImageHeight', 'maxImageHeight'
+'minImageHeight', 'maxImageHeight',
+'fileTypes'
 ])
 
 <div
@@ -17,13 +18,15 @@
         pond.setOptions({
             credits: false,
             required: {{ isset($attributes['required'])  ? 'true' : 'false' }},
-            maxFileSize: '{{ isset($maxFileSize) ? $maxFileSize : null }}',
-            maxTotalFileSize: '{{ isset($maxTotalFileSize) ? $maxTotalFileSize : null }}',
-            imageValidateSizeMinWidth: '{{ isset($minImageWidth) ? $minImageWidth : 1 }}',
-            imageValidateSizeMaxWidth: '{{ isset($maxImageWidth) ? $maxImageWidth : 65535 }}',
-            imageValidateSizeMinHeight: '{{ isset($minImageHeight) ? $minImageHeight : 1 }}',
-            imageValidateSizeMaxHeight: '{{ isset($maxImageHeight) ? $maxImageHeight : 65535 }}',
+            maxFileSize: '{{ $maxFileSize ?? null }}',
+            maxTotalFileSize: '{{ $maxTotalFileSize ?? null }}',
+            imageValidateSizeMinWidth: '{{ $minImageWidth ?? 1 }}',
+            imageValidateSizeMaxWidth: '{{ $maxImageWidth ?? 65535 }}',
+            imageValidateSizeMinHeight: '{{ $minImageHeight ?? 1 }}',
+            imageValidateSizeMaxHeight: '{{ $maxImageHeight ?? 65535 }}',
             allowMultiple: {{ isset($attributes['multiple']) ? 'true' : 'false' }},
+            allowFileTypeValidation: {{ isset($attributes['fileTypes']) ? 'true' : 'false' }},
+            acceptedFileTypes: {{ isset($attributes['fileTypes']) ? $fileTypes : '[]' }},
             server: {
                 process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
                     @this.upload('{{ $attributes['wire:model'] }}', file, load, error, progress)
