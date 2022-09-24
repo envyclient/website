@@ -7,7 +7,7 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
-        "alpinejs": "^2.8.2",
+        "alpinejs": "^3.10.3",
         "easymde": "^2.16.1",
         "filepond": "^4.30.4",
         "filepond-plugin-file-validate-size": "^2.2.7",
