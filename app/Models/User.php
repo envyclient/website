@@ -96,7 +96,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->api_token = bin2hex(random_bytes(30));
 
             // set the default cape
-            $user->cape = asset('assets/capes/default.png'); // TODO
+            $user->cape = asset('assets/capes/default.png'); // TODO: use cloudflare
 
             // handle referral code cookie
             if (request()->hasCookie('referral') && ReferralCode::where('code', request()->cookie('referral'))->exists()) {
