@@ -35,7 +35,7 @@
                 Reset Cape
             </x-button.danger>
         @endif
-        <a href="{{ asset('assets/capes/template.png') }}" download>
+        <a href="{{ \App\Models\User::CAPE_TEMPLATE }}" download="template">
             <x-button.secondary>
                 Download Template
             </x-button.secondary>
