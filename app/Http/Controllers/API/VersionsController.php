@@ -35,6 +35,6 @@ class VersionsController extends Controller
             ]
         ]);
 
-        return Storage::download("versions/$version->hash.jar.enc");
+        return Storage::disk('s3')->download("versions/$version->hash.jar.enc");
     }
 }

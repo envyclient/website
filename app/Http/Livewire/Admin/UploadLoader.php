@@ -21,9 +21,9 @@ class UploadLoader extends Component
     public function render()
     {
         $latest = null;
-        if (Storage::disk('public')->exists('manifest.json')) {
+        if (Storage::disk('s3_public')->exists('manifest.json')) {
             $latest = json_decode(
-                Storage::disk('public')->get('manifest.json')
+                Storage::disk('s3_public')->get('manifest.json')
             )->loader->version ?? null;
         }
         return view('livewire.admin.upload-loader', compact('latest'));
@@ -34,7 +34,7 @@ class UploadLoader extends Component
         $this->validate();
 
         $data = json_decode(
-            Storage::disk('public')->get('manifest.json'),
+            Storage::disk('s3_public')->get('manifest.json'),
             true
         );
 
@@ -45,9 +45,9 @@ class UploadLoader extends Component
             'created_at' => now(),
         ];
 
-        Storage::disk('public')->put('manifest.json', json_encode($data));
+        Storage::disk('s3_public')->put('manifest.json', json_encode($data));
 
-        $this->loader->storeAs('', 'loader.exe');
+        $this->loader->storeAs('', 'loader.exe', 's3');
 
         $this->done();
     }

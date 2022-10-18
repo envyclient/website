@@ -24,7 +24,7 @@ class UploadAssets extends Component
     {
         $this->validate();
 
-        $this->assets->storeAs('', 'assets.zip', 'public');
+        $this->assets->storeAs('', 'assets.zip', 's3_public');
 
         $this->done();
     }

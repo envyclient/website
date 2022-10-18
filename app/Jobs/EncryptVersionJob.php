@@ -41,7 +41,7 @@ class EncryptVersionJob implements ShouldQueue
         );
 
         // store the encrypted version on the cloud
-        Storage::put("versions/{$this->version->hash}.jar.enc", bin2hex($value));
+        Storage::disk('s3')->put("versions/{$this->version->hash}.jar.enc", bin2hex($value));
 
         // delete the uploaded version from local storage
         Storage::delete("versions/{$this->version->hash}.jar");

@@ -62,7 +62,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 /**
  * Download Launcher
  */
-Route::get('download', fn() => Storage::download('launcher.exe', 'envy.exe'))
+Route::get('download', fn() => Storage::disk('s3')->download('launcher.exe', 'envy.exe'))
     ->middleware(['auth', 'verified', 'subscribed'])
     ->name('launcher.download');
 
