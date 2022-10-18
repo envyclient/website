@@ -44,7 +44,8 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'admin']], function () {
         Route::get('users', UsersTable::class)->name('admin.users');
         Route::view('versions', 'pages.dashboard.admin.versions')->name('admin.versions');
-        Route::view('launcher-loader', 'pages.dashboard.admin.launcher-loader')->name('admin.launcher-loader');
+        Route::view('launcher', 'pages.dashboard.admin.launcher')->name('admin.launcher');
+        Route::view('loader', 'pages.dashboard.admin.loader')->name('admin.loader');
         Route::view('referrals', 'pages.dashboard.admin.referrals')->name('admin.referrals');
         Route::get('license-requests', LicenseRequestsTable::class)->name('admin.license-requests');
     });
