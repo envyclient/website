@@ -75,9 +75,13 @@
                 {{ \App\Models\Version::count() }}
             </span>
         </a>
-        <a href="{{ route('admin.launcher-loader') }}"
-           class="{{ Route::is('admin.launcher-loader') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium rounded-md">
-            Launcher & Loader
+        <a href="{{ route('admin.launcher') }}"
+           class="{{ Route::is('admin.launcher') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium rounded-md">
+            Launcher & Assets
+        </a>
+        <a href="{{ route('admin.loader') }}"
+           class="{{ Route::is('admin.loader') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium rounded-md">
+            Loader
         </a>
     </div>
 </div>

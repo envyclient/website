@@ -1,6 +1,6 @@
 @extends('layouts.dash')
 
-@section('title', 'Launcher, Assets & Loader')
+@section('title', 'Launcher & Assets')
 
 @section('content')
 
@@ -10,10 +10,6 @@
 
     <section class="mt-4">
         @livewire('admin.upload-assets')
-    </section>
-
-    <section class="mt-4">
-        @livewire('admin.upload-loader')
     </section>
 
 @endsection

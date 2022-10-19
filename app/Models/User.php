@@ -56,6 +56,9 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use Prunable;
 
+    const CAPE_DEFAULT = 'https://pub-851377c311484efe8f41e8b5018ce8c4.r2.dev/capes/default.png';
+    const CAPE_TEMPLATE = 'https://pub-851377c311484efe8f41e8b5018ce8c4.r2.dev/capes/template.png';
+
     protected $fillable = [
         'name',
         'email',
@@ -96,7 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->api_token = bin2hex(random_bytes(30));
 
             // set the default cape
-            $user->cape = asset('assets/capes/default.png'); // TODO
+            $user->cape = self::CAPE_DEFAULT;
 
             // handle referral code cookie
             if (request()->hasCookie('referral') && ReferralCode::where('code', request()->cookie('referral'))->exists()) {
