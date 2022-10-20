@@ -1,8 +1,8 @@
-name: create and publish docker image
+name: create and publish testing docker image
 
 on:
   push:
-    branches: [ 'master' ]
+    branches: [ 'develop' ]
 
 env:
   REGISTRY: ghcr.io
@@ -39,4 +39,4 @@ jobs:
           context: .
           platforms: linux/amd64, linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:testing
