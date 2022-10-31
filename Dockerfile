@@ -3,7 +3,6 @@ FROM alpine:3.16 as base
 # install curl, supervisor & php, php extensions
 RUN apk --no-cache add \
     curl \
-    supervisor \
     php81 \
     php81-curl \
     php81-dom \
@@ -53,6 +52,19 @@ COPY . ./
 # build production css & js
 RUN npm install && npm run prod
 
+FROM golang:alpine as supervisord-build
+
+# install
+RUN apk --no-cache add gcc git rust
+
+# create the app directory
+WORKDIR /app
+
+# build
+RUN git clone https://github.com/ochinchina/supervisord.git .
+RUN go generate
+RUN GOOS=linux go build -tags release -a -ldflags "-linkmode external -extldflags -static" -o /usr/local/bin/supervisord
+
 FROM base as production
 
 # create app dir
@@ -63,6 +75,9 @@ COPY --from=composer-build /app ./
 
 # copy over built assets from npm-build
 COPY --from=npm-build /app/public ./public
+
+# copy over built supervisord
+COPY --from=supervisord-build /usr/local/bin/supervisord /usr/bin/supervisord
 
 # php server port
 EXPOSE 8000
