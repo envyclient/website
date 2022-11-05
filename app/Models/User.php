@@ -98,9 +98,6 @@ class User extends Authenticatable implements MustVerifyEmail
             // generate a random api_token
             $user->api_token = bin2hex(random_bytes(30));
 
-            // set the default cape
-            $user->cape = self::CAPE_DEFAULT;
-
             // handle referral code cookie
             if (request()->hasCookie('referral') && ReferralCode::where('code', request()->cookie('referral'))->exists()) {
                 $code = ReferralCode::where('code', request()->cookie('referral'))->first();
@@ -127,6 +124,13 @@ class User extends Authenticatable implements MustVerifyEmail
             $query->where('name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%");
         });
+    }
+
+    protected function cape(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => $value ?: User::CAPE_DEFAULT,
+        );
     }
 
     protected function image(): Attribute

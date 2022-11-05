@@ -9,12 +9,11 @@ use App\Http\Livewire\Admin\User\UsersTable;
 use App\Http\Middleware\Custom\Setup\CheckIfPasswordNull;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Ping route
  */
-Route::get( 'ping', fn () => new Response());
+Route::get( 'ping', fn () => response());
 
 /**
  * Dashboard Pages

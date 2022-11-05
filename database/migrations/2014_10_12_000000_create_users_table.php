@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('api_token', 60)->unique();
             $table->string('hwid', 40)->nullable()->unique();
-            $table->string('cape');
+            $table->string('cape')->nullable();
             $table->uuid('current_account')->nullable();
             $table->boolean('admin')->default(false);
             $table->boolean('banned')->default(false);

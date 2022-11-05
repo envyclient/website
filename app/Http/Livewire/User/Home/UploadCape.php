@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\User\Home;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -53,7 +52,7 @@ class UploadCape extends Component
 
         // resetting the user to the default cape
         $user->update([
-            'cape' => User::CAPE_DEFAULT,
+            'cape' => null,
         ]);
 
         $this->emitSelf('small-notify', 'Cape Reset!');
