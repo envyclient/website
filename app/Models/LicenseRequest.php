@@ -26,6 +26,7 @@ use Illuminate\Support\Carbon;
 class LicenseRequest extends Model
 {
     const DAYS_TO_ADD = 3;
+    const SUBSCRIBER_REQUIREMENT = 200;
 
     protected $fillable = [
         'user_id',
