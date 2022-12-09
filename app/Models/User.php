@@ -136,7 +136,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => 'https://avatar.tobi.sh/avatar/' . md5(strtolower(trim($attributes['email']))) . '.svg?text=' . strtoupper(substr($attributes['name'], 0, 2)),
+            get: fn($value, $attributes) => 'https://avatar.vercel.sh/' . $this->hash . '.svg?text=' . strtoupper(substr($attributes['name'], 0, 2)),
         );
     }
 
