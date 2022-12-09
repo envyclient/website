@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use App\Helpers\YoutubeHelper;
+use App\Models\LicenseRequest;
 use Exception;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -18,10 +19,12 @@ class MinYouTubeSubsRule implements Rule
         }
 
         // get subscriber count
-        $sub = intval($response->json('items.0.statistics.subscriberCount'));
+        $sub = intval(
+            $response->json('items.0.statistics.subscriberCount')
+        );
 
-        // checking the sub count is less than 200
-        if ($sub < 200) {
+        // checking the sub count meets the required count
+        if ($sub < LicenseRequest::SUBSCRIBER_REQUIREMENT) {
             return false;
         }
 

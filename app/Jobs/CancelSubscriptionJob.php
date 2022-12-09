@@ -13,7 +13,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
 
 class CancelSubscriptionJob implements ShouldQueue
 {
@@ -23,8 +22,8 @@ class CancelSubscriptionJob implements ShouldQueue
     public int $backoff = 15;
 
     public function __construct(
-        private Subscription    $subscription,
-        private PaymentProvider $provider,
+        private readonly Subscription    $subscription,
+        private readonly PaymentProvider $provider,
     )
     {
         $subscription->update([
@@ -81,16 +80,7 @@ class CancelSubscriptionJob implements ShouldQueue
     private function handlePayPal()
     {
         // tell PayPal to cancel the users billing agreement
-        $response = HTTP::withToken(PaypalHelper::getAccessToken())
-            ->withBody(json_encode([
-                'note' => 'User cancelled subscription.'
-            ]), 'application/json')
-            ->post(config('services.paypal.endpoint') . '/v1/billing/subscriptions/' . $this->subscription->paypal_id . '/cancel');
-
-        // user has already cancelled agreement or something went wrong
-        if ($response->status() !== 204) {
-            throw new Exception('PayPal API request failed.');
-        }
+        PaypalHelper::cancelSubscription($this->subscription);
 
         // we don't mark the subscription as cancelled since that is handled in HandlePayPalWebhook.php
     }
