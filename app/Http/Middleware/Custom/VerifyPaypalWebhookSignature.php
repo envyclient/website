@@ -4,8 +4,8 @@ namespace App\Http\Middleware\Custom;
 
 use App\Helpers\PaypalHelper;
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class VerifyPaypalWebhookSignature
@@ -19,20 +19,9 @@ class VerifyPaypalWebhookSignature
      */
     public function handle(Request $request, Closure $next)
     {
-        $response = HTTP::withToken(PaypalHelper::getAccessToken())
-            ->withBody(json_encode([
-                'auth_algo' => $request->header('PAYPAL-AUTH-ALGO'),
-                'cert_url' => $request->header('PAYPAL-CERT-URL'),
-                'transmission_id' => $request->header('PAYPAL-TRANSMISSION-ID'),
-                'transmission_sig' => $request->header('PAYPAL-TRANSMISSION-SIG'),
-                'transmission_time' => $request->header('PAYPAL-TRANSMISSION-TIME'),
-                'webhook_id' => config('services.paypal.webhook_id'),
-                'webhook_event' => $request->json()
-            ]), 'application/json')
-            ->post(config('services.paypal.endpoint') . '/v1/notifications/verify-webhook-signature');
-
-        // webhook signature failed
-        if ($response->status() !== 200) {
+        try {
+            PaypalHelper::verifyWebhook($request);
+        } catch (Exception) {
             throw new AccessDeniedHttpException('Failed PayPal Webhook Signature');
         }
 
