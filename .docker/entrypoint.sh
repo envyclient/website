@@ -19,5 +19,14 @@ php artisan migrate --force
 color "symlink storage"
 php artisan storage:link
 
+color "caching config"
+php artisan config:cache
+
+color "caching routes"
+php artisan route:cache
+
+color "caching views"
+php artisan view:cache
+
 color "starting supervisord"
 exec "$@"
