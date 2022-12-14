@@ -1,24 +1,24 @@
-FROM alpine:3.16 as base
+FROM alpine:edge as base
 
-# install curl, supervisor & php, php extensions
+# install curl, php & php extensions
 RUN apk --no-cache add \
     curl \
-    php81 \
-    php81-curl \
-    php81-dom \
-    php81-fileinfo \
-    php81-json \
-    php81-mbstring \
-    php81-openssl \
-    php81-pdo_sqlite \
-    php81-phar \
-    php81-session \
-    php81-simplexml \
-    php81-tokenizer \
-    php81-zip
+    php82 \
+    php82-curl \
+    php82-dom \
+    php82-fileinfo \
+    php82-json \
+    php82-mbstring \
+    php82-openssl \
+    php82-pdo_sqlite \
+    php82-phar \
+    php82-session \
+    php82-simplexml \
+    php82-tokenizer \
+    php82-zip
 
 # create symlink
-RUN ln -s /usr/bin/php81 /usr/bin/php
+RUN ln -s /usr/bin/php82 /usr/bin/php
 
 # configure php & supervisord
 COPY .docker/php.ini /etc/php81/conf.d/99_envy.ini
