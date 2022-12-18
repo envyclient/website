@@ -22,9 +22,9 @@ class LicenseRequestApprovedNotification extends Notification implements ShouldQ
     {
         return (new MailMessage)
             ->from(config('mail.from.address'), config('mail.from.name'))
-            ->subject('Media License Approved')
+            ->subject('Media License - Approved')
             ->greeting("Congrats $notifiable->name,")
-            ->line('Your media license request has been approved and you have ' . LicenseRequest::DAYS_TO_ADD . ' days to publish a video of the client.')
+            ->line('Your media license request has been approved. You have been given ' . LicenseRequest::DAYS_TO_ADD . ' days of access.')
             ->action('Download Launcher', route('home'))
             ->line('Please visit the website to download the launcher.');
     }

@@ -12,7 +12,7 @@ Your media license request has been denied. 😢
 Dashboard
 @endcomponent
 
-Don't worry are you can apply again.
+Don't worry you can apply again.
 
 Regards,<br>
 {{ config('app.name') }}

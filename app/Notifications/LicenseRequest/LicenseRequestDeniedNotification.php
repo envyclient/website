@@ -27,7 +27,7 @@ class LicenseRequestDeniedNotification extends Notification implements ShouldQue
     {
         return (new MailMessage)
             ->from(config('mail.from.address'), config('mail.from.name'))
-            ->subject('Media License Denied')
+            ->subject('Media License - Denied')
             ->markdown('emails.license-request-denied', ['user' => $notifiable, 'message' => $this->message]);
     }
 
