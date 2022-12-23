@@ -11,13 +11,9 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "develop"
-    labels:
-      - "composer dependencies"
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
     target-branch: "develop"
-    labels:
-      - "npm dependencies"
