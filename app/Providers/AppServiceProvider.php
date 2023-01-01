@@ -23,11 +23,15 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         // setting the stripe api key
-        Stripe::setApiKey(config('services.stripe.secret'));
+        Stripe::setApiKey(
+            config('services.stripe.secret')
+        );
 
         // create StripeClient singleton
         $this->app->singleton('stripeClient', function () {
-            return new StripeClient(config('services.stripe.secret'));
+            return new StripeClient(
+                config('services.stripe.secret')
+            );
         });
 
         // register macros
@@ -50,8 +54,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // enable n+1 problem check
-        Model::preventLazyLoading(!app()->isProduction());
+        Model::preventLazyLoading(
+            !app()->isProduction()
+        );
 
+        // forcing https scheme
         if($this->app->environment('production')) {
             URL::forceScheme('https');
         }
