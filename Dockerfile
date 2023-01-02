@@ -50,7 +50,7 @@ WORKDIR /app
 COPY . ./
 
 # build production css & js
-RUN npm install && npm run prod
+RUN npm install && npm run build
 
 FROM golang:alpine as supervisord-build
 
@@ -86,4 +86,5 @@ EXPOSE 8000
 VOLUME ["/app/storage"]
 
 ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
+
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
