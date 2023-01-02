@@ -1,12 +1,16 @@
+import EasyMDE from 'easymde';
+import * as FilePond from 'filepond';
+import Alpine from 'alpinejs';
+
 /**
  * EasyMDE
  */
-window.EasyMDE = require('easymde');
+window.EasyMDE = EasyMDE;
 
 /**
  * FilePond
  */
-window.FilePond = require('filepond');
+window.FilePond = FilePond;
 window.FilePondPluginFileValidateSize = require('filepond-plugin-file-validate-size');
 window.FilePondPluginFileValidateType = require('filepond-plugin-file-validate-type');
 window.FilePondPluginImageValidateSize = require('filepond-plugin-image-validate-size');
@@ -14,7 +18,5 @@ window.FilePondPluginImageValidateSize = require('filepond-plugin-image-validate
 /**
  * Alpine.js
  */
-import Alpine from 'alpinejs'
-
-window.Alpine = Alpine
-Alpine.start()
+window.Alpine = Alpine;
+Alpine.start();
