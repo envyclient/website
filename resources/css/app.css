@@ -1,6 +1,6 @@
 @import "load-awesome.css";
-@import "~filepond/dist/filepond.min.css";
-@import "~easymde/dist/easymde.min.css";
+@import "filepond/dist/filepond.min.css";
+@import "easymde/dist/easymde.min.css";
 
 @tailwind base;
 @tailwind components;
