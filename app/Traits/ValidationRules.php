@@ -18,6 +18,10 @@ trait ValidationRules
 
     function passwordRules(): array
     {
-        return ['required', 'string', Password::defaults()];
+        return [
+            'required',
+            'string',
+            Password::min(8)->mixedCase()->uncompromised()
+        ];
     }
 }

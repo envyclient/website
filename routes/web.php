@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Actions\DeleteAccount;
 use App\Http\Controllers\Actions\UseReferralCode;
-use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Admin\LicenseRequestsTable;
 use App\Http\Livewire\Admin\User\UsersTable;
@@ -65,14 +64,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 Route::get('download', fn() => Storage::disk('s3')->download('launcher.exe', 'envy.exe'))
     ->middleware(['auth', 'verified', 'subscribed'])
     ->name('launcher.download');
-
-/**
- * Discord Connect
- */
-Route::group(['prefix' => 'discord', 'middleware' => ['auth', 'verified']], function () {
-    Route::get('/', [DiscordController::class, 'login'])->name('discord.connect');
-    Route::get('redirect', [DiscordController::class, 'redirect'])->name('discord.redirect');
-});
 
 require __DIR__ . '/subscriptions.php';
 require __DIR__ . '/auth.php';

@@ -16,7 +16,7 @@ class DiscordController extends Controller
 
     public function __construct()
     {
-        $this->redirect = config('services.discord.redirect.login');
+        $this->redirect = config('services.discord.redirect');
     }
 
     public function login()

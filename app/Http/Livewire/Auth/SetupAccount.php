@@ -39,7 +39,7 @@ class SetupAccount extends Component
             'email_verified_at' => null,
         ])->save();
 
-        // send the user an confirmation email
+        // send the user a confirmation email
         $user->sendEmailVerificationNotification();
 
         return redirect()->intended(RouteServiceProvider::HOME);

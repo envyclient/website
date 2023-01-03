@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 use Stripe\Stripe;
 use Stripe\StripeClient;
@@ -44,22 +43,13 @@ class AppServiceProvider extends ServiceProvider
             return auth()->check() && auth()->user()->admin;
         });
 
-        // default password rules for validation -> Password::defaults()
-        Password::defaults(function () {
-            $rule = Password::min(8);
-
-            return $this->app->isProduction()
-                ? $rule->mixedCase()->uncompromised()
-                : $rule;
-        });
-
         // enable n+1 problem check
         Model::preventLazyLoading(
             !app()->isProduction()
         );
 
         // forcing https scheme
-        if($this->app->environment('production')) {
+        if($this->app->isProduction()) {
             URL::forceScheme('https');
         }
     }

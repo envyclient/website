@@ -25,6 +25,13 @@ class SubscriptionSubscriber
             'New Subscription',
             'Thank you for subscribing to the ' . $event->subscription->plan->name . ' plan!'
         ));
+
+        // send discord webhook
+        $content = 'A subscription has been created.' . PHP_EOL . PHP_EOL;
+        $content = $content . '**User**: ' . $event->subscription->user->name . PHP_EOL;
+        $content = $content . '**Plan**: ' . $event->subscription->plan->name . PHP_EOL;
+        $content = $content . '**Provider**: ' . $event->subscription->paymentProvider->value . PHP_EOL;
+        SendDiscordWebhookJob::dispatch($content);
     }
 
     public function handleSubscriptionExpired(SubscriptionExpiredEvent $event)
@@ -33,6 +40,13 @@ class SubscriptionSubscriber
             'Subscription Expired',
             'Your subscription has expired. Please renew it if you wish to continue using the client.',
         ));
+
+        // send discord webhook
+        $content = 'A subscription has expired.' . PHP_EOL . PHP_EOL;
+        $content = $content . '**User**: ' . $event->subscription->user->name . PHP_EOL;
+        $content = $content . '**Plan**: ' . $event->subscription->plan->name . PHP_EOL;
+        $content = $content . '**Provider**: ' . $event->subscription->paymentProvider->value . PHP_EOL;
+        SendDiscordWebhookJob::dispatch($content);
     }
 
     public function handleSubscriptionCancelled(SubscriptionCancelledEvent $event)
@@ -43,9 +57,10 @@ class SubscriptionSubscriber
             'Your subscription has been cancelled and you will not be charged at the next billing cycle.'
         ));
 
-        // send discord webhook on cancellation
-        $content = 'A user has cancelled their subscription.' . PHP_EOL . PHP_EOL;
+        // send discord webhook
+        $content = 'A subscription has been cancelled.' . PHP_EOL . PHP_EOL;
         $content = $content . '**User**: ' . $event->subscription->user->name . PHP_EOL;
+        $content = $content . '**Plan**: ' . $event->subscription->plan->name . PHP_EOL;
         $content = $content . '**Provider**: ' . $event->subscription->paymentProvider->value . PHP_EOL;
         SendDiscordWebhookJob::dispatch($content);
     }
