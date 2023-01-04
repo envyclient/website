@@ -51,6 +51,7 @@
                         Setup
                     </x-auth.button>
                 </div>
+
             </form>
         </div>
     </div>

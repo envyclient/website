@@ -4,17 +4,6 @@
 
 @section('content')
 
-    {{--Discord Account Connect--}}
-    @if($user->discord_id === null)
-        <x-card title="Connect Discord Account"
-                subtitle="Connect your discord account to enable role syncing."
-                class="mb-4">
-            <a href="{{ route('discord.connect') }}">
-                <x-button.primary>Connect</x-button.primary>
-            </a>
-        </x-card>
-    @endif
-
     {{--Referral Code--}}
     @if($user->referral_code_id === null)
         <x-card title="Use referral code" subtitle="If you were referred by another user please enter their code.">
