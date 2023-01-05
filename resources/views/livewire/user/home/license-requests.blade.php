@@ -7,11 +7,13 @@
                     License Requests
                 </h3>
             </div>
-            <div class="ml-4 mt-2 flex-shrink-0">
-                <x-button.primary wire:click="$set('open', true)">
-                    Create new application
-                </x-button.primary>
-            </div>
+            @if($user->subscription === null)
+                <div class="ml-4 mt-2 flex-shrink-0">
+                    <x-button.primary wire:click="$set('open', true)">
+                        Create new application
+                    </x-button.primary>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -73,9 +75,9 @@
         @empty
             <li colspan="5">
                 <div class="flex justify-center items-center space-x-2">
-                        <span class="font-medium py-8 text-cool-gray-400 text-xl">
-                            No applications found...
-                        </span>
+                    <span class="font-medium py-8 text-cool-gray-400 text-xl">
+                        No applications found...
+                    </span>
                 </div>
             </li>
         @endforelse
@@ -89,7 +91,7 @@
             <x-slot name="content">
 
                 {{-- Channel Input--}}
-                <x-input.group for="channel" label="Channel">
+                <x-input.group for="channel" label="YouTube Channel Link">
                     <x-input.text wire:model.defer="channel" id="channel"/>
                 </x-input.group>
 
