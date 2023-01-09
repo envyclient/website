@@ -2,6 +2,7 @@ services:
 
   website:
     image: ghcr.io/envyclient/website
+    container_name: envyclient
     env_file: .env
     ports:
       - 8000:8000
@@ -13,5 +14,26 @@ services:
       timeout: 5s
     restart: unless-stopped
 
+  backup:
+    image: ghcr.io/haq/rclone-database-backup
+    container_name: envyclient_backup
+    environment:
+      - TZ=America/Toronto
+      - CRON=0 0 * * *
+      - RCLONE_REMOTE=cf
+      - BACKUP_FOLDER=backup/envyclient
+      - BACKUP_AGE=7
+      - DB_CONNECTION=sqlite
+      - DB_FILE=database/database.sqlite
+    volumes:
+      - rclone_database_backup:/root/.config/rclone
+      - storage:/database
+    depends_on:
+      website:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   storage:
+  rclone_database_backup:
+    external: true
