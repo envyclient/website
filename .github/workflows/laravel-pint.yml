@@ -20,4 +20,3 @@ jobs:
         with:
           commit_message: apply laravel pint
           branch: develop
-          skip_fetch: true
