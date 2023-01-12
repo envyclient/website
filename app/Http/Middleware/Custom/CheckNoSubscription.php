@@ -11,8 +11,8 @@ class CheckNoSubscription
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -20,6 +20,7 @@ class CheckNoSubscription
         if (auth()->check() && auth()->user()->hasSubscription()) {
             return redirect(RouteServiceProvider::HOME);
         }
+
         return $next($request);
     }
 }

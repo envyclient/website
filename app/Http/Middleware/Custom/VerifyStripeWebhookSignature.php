@@ -13,8 +13,8 @@ class VerifyStripeWebhookSignature
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -28,6 +28,7 @@ class VerifyStripeWebhookSignature
         } catch (SignatureVerificationException $exception) {
             throw new AccessDeniedHttpException($exception->getMessage(), $exception);
         }
+
         return $next($request);
     }
 }

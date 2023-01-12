@@ -5,21 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Carbon;
 
 /**
- * @property-read integer id
- *
+ * @property-read int id
  * @property string name
  * @property string description
- * @property integer price
- * @property integer cad_price
+ * @property int price
+ * @property int cad_price
  * @property string paypal_id
  * @property string stripe_id
- * @property integer config_limit
- * @property boolean beta_access
- * @property boolean capes_access
- *
+ * @property int config_limit
+ * @property bool beta_access
+ * @property bool capes_access
  * @property-read Collection subscriptions
  */
 class Plan extends Model

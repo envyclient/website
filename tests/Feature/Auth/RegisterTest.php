@@ -36,5 +36,4 @@ class RegisterTest extends TestCase
             User::where('email', 'test@example.com')->exists()
         );
     }
-
 }

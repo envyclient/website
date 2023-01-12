@@ -26,16 +26,13 @@ class HandlePayPalWebhook extends Controller
         );
 
         switch ($request->json('event_type')) {
-
             // subscription created for the user
             case 'BILLING.SUBSCRIPTION.CREATED':
-            {
-                break;
-            }
 
-            // subscription activated for the user
+                break;
+
+                // subscription activated for the user
             case 'BILLING.SUBSCRIPTION.ACTIVATED':
-            {
 
                 // get the subscription
                 $subscription = Subscription::query()
@@ -49,11 +46,9 @@ class HandlePayPalWebhook extends Controller
                 ]);
 
                 break;
-            }
 
-            // payment received for the subscription
+                // payment received for the subscription
             case 'PAYMENT.SALE.COMPLETED':
-            {
 
                 // get the subscription model
                 $subscription = Subscription::query()
@@ -62,7 +57,7 @@ class HandlePayPalWebhook extends Controller
 
                 // extend the subscription
                 $subscription->update([
-                    'end_date' => now()->addMonth()
+                    'end_date' => now()->addMonth(),
                 ]);
 
                 // create invoice for the payment
@@ -73,11 +68,9 @@ class HandlePayPalWebhook extends Controller
                 );
 
                 break;
-            }
 
-            // user has cancelled their subscription
+                // user has cancelled their subscription
             case 'BILLING.SUBSCRIPTION.CANCELLED':
-            {
 
                 // set the subscription as cancelled
                 Subscription::query()
@@ -87,15 +80,12 @@ class HandlePayPalWebhook extends Controller
                     ]);
 
                 break;
-            }
 
             case 'PAYMENT.SALE.PENDING': // paypal could not process the payment
             case 'BILLING.SUBSCRIPTION.SUSPENDED': // subscription run out of retries
             case 'BILLING.SUBSCRIPTION.PAYMENT.FAILED': // payment has failed for a subscription
-            {
 
                 try {
-
                     // get the subscription
                     $subscription = Subscription::query()
                         ->where('paypal_id', $request->json('resource.id'))
@@ -103,12 +93,10 @@ class HandlePayPalWebhook extends Controller
 
                     // dispatch the cancel subscription job
                     CancelSubscriptionJob::dispatch($subscription, PaymentProvider::PAYPAL);
-
                 } catch (ModelNotFoundException) {
                 }
 
                 break;
-            }
         }
 
         return response()->noContent();

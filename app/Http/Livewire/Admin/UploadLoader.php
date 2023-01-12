@@ -11,6 +11,7 @@ class UploadLoader extends Component
     use WithFileUploads;
 
     public string $version = '';
+
     public $loader;
 
     protected array $rules = [
@@ -26,6 +27,7 @@ class UploadLoader extends Component
                 Storage::disk('s3_public')->get('manifest.json')
             )->loader->version ?? null;
         }
+
         return view('livewire.admin.upload-loader', compact('latest'));
     }
 

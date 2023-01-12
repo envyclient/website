@@ -11,9 +11,10 @@ class CheckBanned
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
+     *
      * @throws ValidationException
      */
     public function handle($request, Closure $next)
@@ -24,6 +25,7 @@ class CheckBanned
                 'email' => ['Account has been banned.'],
             ]);
         }
+
         return $next($request);
     }
 }

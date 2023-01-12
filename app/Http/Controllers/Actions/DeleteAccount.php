@@ -49,6 +49,7 @@ class DeleteAccount extends Controller
 
         // log the user out
         auth()->logout(); // todo: fix logout
+
         return redirect('/');
     }
 }

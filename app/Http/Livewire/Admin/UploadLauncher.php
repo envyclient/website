@@ -11,6 +11,7 @@ class UploadLauncher extends Component
     use WithFileUploads;
 
     public string $version = '';
+
     public $launcher;
 
     protected array $rules = [
@@ -26,6 +27,7 @@ class UploadLauncher extends Component
                 Storage::disk('s3_public')->get('manifest.json')
             )->launcher->version ?? null;
         }
+
         return view('livewire.admin.upload-launcher', compact('latest'));
     }
 

@@ -14,6 +14,4 @@ class SetupAccountTest extends TestCase
     public function can_setup_page_be_seen()
     {
     }
-
-
 }

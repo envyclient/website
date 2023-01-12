@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\User\Profile;
 
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class UpdatePassword extends Component
 {
     public string $current_password = '';
+
     public string $password = '';
+
     public string $password_confirmation = '';
 
     protected array $rules = [
@@ -28,7 +29,7 @@ class UpdatePassword extends Component
         $this->validate();
 
         auth()->user()->forceFill([
-            'password' => Hash::make($this->password)
+            'password' => Hash::make($this->password),
         ])->save();
 
         $this->smallNotify('Your password has been updated.');

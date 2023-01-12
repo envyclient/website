@@ -23,7 +23,7 @@ class DeleteOldMinecraftAccountsCommand extends Command
             ]);
 
         $this->comment("Deleted $count minecraft accounts.");
-        $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
+        $this->info('Command took: '.now()->diffInMilliseconds($start).'ms');
 
         return 0;
     }

@@ -76,7 +76,7 @@ class ConfigsTest extends TestCase
         ]);
 
         $this->actingAs($user, 'api')
-            ->getJson(route('configs.index') . '?search=' . urlencode('random config'))
+            ->getJson(route('configs.index').'?search='.urlencode('random config'))
             ->assertJsonStructure(['data', 'links', 'meta'])
             ->assertJsonCount(0, 'data')
             ->assertOk();
@@ -108,7 +108,7 @@ class ConfigsTest extends TestCase
         $user = $this->subscribedUser();
         Config::factory()->count($user->subscription->plan->config_limit)->create([
             'user_id' => $user->id,
-            'version_id' => 1.
+            'version_id' => 1.,
         ]);
 
         $this->actingAs($user, 'api')
@@ -116,7 +116,6 @@ class ConfigsTest extends TestCase
             ->assertStatus(406);
 
         $this->assertDatabaseCount(Config::class, $user->subscription->plan->config_limit);
-
     }
 
     /** @test */
@@ -130,7 +129,7 @@ class ConfigsTest extends TestCase
         ]);
 
         Version::factory()->create([
-            'name' => 'Envy 1.1'
+            'name' => 'Envy 1.1',
         ]);
 
         $this->actingAs($user, 'api')

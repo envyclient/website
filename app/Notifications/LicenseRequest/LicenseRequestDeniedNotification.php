@@ -14,8 +14,7 @@ class LicenseRequestDeniedNotification extends Notification implements ShouldQue
 
     public function __construct(
         public readonly string $message,
-    )
-    {
+    ) {
     }
 
     public function via($notifiable)
@@ -30,5 +29,4 @@ class LicenseRequestDeniedNotification extends Notification implements ShouldQue
             ->subject('Media License - Denied')
             ->markdown('emails.license-request-denied', ['user' => $notifiable, 'message' => $this->message]);
     }
-
 }

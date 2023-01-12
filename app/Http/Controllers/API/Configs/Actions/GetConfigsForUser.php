@@ -51,5 +51,4 @@ class GetConfigsForUser extends ConfigsController
                 ->paginate(Config::PAGE_LIMIT)
         );
     }
-
 }

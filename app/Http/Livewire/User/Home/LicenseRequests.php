@@ -12,11 +12,13 @@ use Livewire\Component;
 class LicenseRequests extends Component
 {
     public bool $open = false;
+
     public string $channel = '';
 
     public function render()
     {
         $licenseRequests = auth()->user()->licenseRequests;
+
         return view('livewire.user.home.license-requests', compact('licenseRequests'));
     }
 
@@ -42,6 +44,7 @@ class LicenseRequests extends Component
                 ->exists()
         ) {
             $this->addError('channel', 'You may only have one request at a time.');
+
             return;
         }
 
@@ -57,6 +60,7 @@ class LicenseRequests extends Component
             $youtubeData = YoutubeHelper::getChannelData($this->channel);
         } catch (Exception) {
             $this->addError('channel', 'Unable to fetch data from YouTube.');
+
             return;
         }
 
@@ -73,5 +77,4 @@ class LicenseRequests extends Component
 
         return redirect()->route('home');
     }
-
 }

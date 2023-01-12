@@ -13,7 +13,9 @@ class LicenseRequestTest extends TestCase
     use RefreshDatabase;
 
     const VALID_CHANNEL = 'https://www.youtube.com/c/LaravelPHP';
+
     const INVALID_CHANNEL = 'https://www.youtube.com/channel/UCPGP3hEz8oXnGK_nrBvyBbQ';
+
     const INVALID_URL = 'https://www.google.com';
 
     protected function setUp(): void

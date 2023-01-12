@@ -11,6 +11,7 @@ class VersionsTable extends Component
     use WithPagination;
 
     public bool $edit = false;
+
     public Version $editVersion;
 
     protected array $rules = [

@@ -20,10 +20,10 @@ class DeleteCancelledSubscriptionsCommand extends Command
         Subscription::with('user')
             ->where('status', SubscriptionStatus::CANCELED->value)
             ->where('end_date', '<', $start)
-            ->each(fn(Subscription $subscription) => $subscription->delete());
+            ->each(fn (Subscription $subscription) => $subscription->delete());
 
-        $this->info('Command took: ' . now()->diffInMilliseconds($start) . 'ms');
+        $this->info('Command took: '.now()->diffInMilliseconds($start).'ms');
+
         return 0;
     }
-
 }

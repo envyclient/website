@@ -55,7 +55,7 @@ class ConfigsController extends Controller
         // checking if the user has reached their config limit
         if ($user->configs()->count() >= $user->subscription->plan->config_limit) {
             return response()->json([
-                'message' => 'Config limit reached.'
+                'message' => 'Config limit reached.',
             ], 406);
         }
 

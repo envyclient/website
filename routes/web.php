@@ -12,13 +12,12 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Ping route
  */
-Route::get( 'ping', fn () => response());
+Route::get('ping', fn () => response());
 
 /**
  * Dashboard Pages
  */
 Route::group(['middleware' => CheckIfPasswordNull::class], function () {
-
     /**
      * Landing Pages
      */
@@ -47,7 +46,6 @@ Route::group(['middleware' => CheckIfPasswordNull::class], function () {
         Route::view('referrals', 'pages.dashboard.admin.referrals')->name('admin.referrals');
         Route::get('license-requests', LicenseRequestsTable::class)->name('admin.license-requests');
     });
-
 });
 
 /**
@@ -61,9 +59,9 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth', 'verified']], functio
 /**
  * Download Launcher
  */
-Route::get('download', fn() => Storage::disk('s3')->download('launcher.exe', 'envy.exe'))
+Route::get('download', fn () => Storage::disk('s3')->download('launcher.exe', 'envy.exe'))
     ->middleware(['auth', 'verified', 'subscribed'])
     ->name('launcher.download');
 
-require __DIR__ . '/subscriptions.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/subscriptions.php';
+require __DIR__.'/auth.php';

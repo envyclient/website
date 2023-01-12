@@ -7,15 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read integer id
- *
- * @property integer subscription_id
+ * @property-read int id
+ * @property int subscription_id
  * @property string method
- * @property integer price
- *
+ * @property int price
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
- *
  * @property-read User user
  * @property-read Subscription subscription
  */

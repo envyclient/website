@@ -30,7 +30,7 @@ class StripeController extends Controller
 
         try {
             $checkoutSession = \Stripe\Checkout\Session::create([
-                'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
+                'success_url' => route('stripe.success').'?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('stripe.cancel'),
                 'customer_email' => $user->email,
                 'payment_method_types' => ['card'],
@@ -60,7 +60,7 @@ class StripeController extends Controller
     public function success(Request $request)
     {
         // missing session_id in url
-        if (!$request->has('session_id')) {
+        if (! $request->has('session_id')) {
             return $this->failed();
         }
 

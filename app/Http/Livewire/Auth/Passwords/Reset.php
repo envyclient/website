@@ -13,8 +13,11 @@ use Livewire\Component;
 class Reset extends Component
 {
     public string $token = '';
+
     public string $email = '';
+
     public string $password = '';
+
     public string $passwordConfirmation = '';
 
     protected array $rules = [
@@ -42,7 +45,7 @@ class Reset extends Component
             [
                 'token' => $this->token,
                 'email' => $this->email,
-                'password' => $this->password
+                'password' => $this->password,
             ],
             function ($user, $password) {
                 $user->password = Hash::make($password);

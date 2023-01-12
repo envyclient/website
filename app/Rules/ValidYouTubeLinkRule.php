@@ -9,7 +9,8 @@ class ValidYouTubeLinkRule implements Rule
     public function passes($attribute, $value): bool
     {
         $host = strtolower(parse_url($value)['host']);
-        return !($host !== 'youtube.com' && $host !== 'www.youtube.com');
+
+        return ! ($host !== 'youtube.com' && $host !== 'www.youtube.com');
     }
 
     public function message(): string

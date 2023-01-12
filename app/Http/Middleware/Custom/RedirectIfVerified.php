@@ -11,13 +11,13 @@ class RedirectIfVerified
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || is_null(auth()->user()->email_verified_at)) {
+        if (! auth()->check() || is_null(auth()->user()->email_verified_at)) {
             return $next($request);
         } else {
             return redirect(RouteServiceProvider::HOME);

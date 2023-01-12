@@ -13,7 +13,7 @@ class VersionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Envy ' . $this->faker->randomFloat(1, 1, 9),
+            'name' => 'Envy '.$this->faker->randomFloat(1, 1, 9),
             'beta' => $this->faker->boolean(),
             'changelog' => 'test\ntest\ntest\n',
             'main_class' => 'test',

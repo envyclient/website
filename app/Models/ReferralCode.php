@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Listeners\SubscriptionSubscriber;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,14 +12,11 @@ use Illuminate\Support\Carbon;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 /**
- * @property-read integer id
- *
- * @property integer user_id
+ * @property-read int id
+ * @property int user_id
  * @property string code
- *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
- *
  * @property-read User user
  * @property-read Collection users
  * @property-read Collection subscriptions

@@ -206,5 +206,4 @@ class PagesTest extends TestCase
             ->get(route('admin.license-requests'))
             ->assertOk();
     }
-
 }

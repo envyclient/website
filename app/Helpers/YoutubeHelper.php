@@ -11,23 +11,26 @@ class YoutubeHelper
     /**
      * Get the YouTube channel_id of a channel.
      *
-     * @param string $url the url of the channel
+     * @param  string  $url the url of the channel
      * @return string the YouTube channel_id
      */
     private static function getChannelId(string $url): string
     {
         $html = file_get_contents($url);
         preg_match("'<meta itemprop=\"channelId\" content=\"(.*?)\"'si", $html, $match);
-        if ($match && $match[1])
+        if ($match && $match[1]) {
             return $match[1];
+        }
+
         return '';
     }
 
     /**
      * Get YouTube channel data.
      *
-     * @param string $url the url to the channel
+     * @param  string  $url the url to the channel
      * @return Response the data provided by YouTube
+     *
      * @throws Exception thrown when response has no data
      */
     public static function getChannelData(string $url): Response
@@ -44,5 +47,4 @@ class YoutubeHelper
 
         return $response;
     }
-
 }

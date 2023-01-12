@@ -58,7 +58,7 @@ class PayPalController extends Controller
     public function success(Request $request): RedirectResponse
     {
         // missing url parameters
-        if (!$request->has(['subscription_id', 'ba_token', 'token'])) {
+        if (! $request->has(['subscription_id', 'ba_token', 'token'])) {
             return $this->failed();
         }
 

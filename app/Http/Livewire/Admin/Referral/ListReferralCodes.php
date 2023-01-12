@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Referral;
 
 use App\Models\ReferralCode;
-use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +13,7 @@ class ListReferralCodes extends Component
     protected $listeners = ['REFERRAL_CODE_CREATED' => '$refresh'];
 
     public bool $showInvoicesModal = false;
+
     public $showingInvoices = [];
 
     public function showInvoicesModal(ReferralCode $code): void
