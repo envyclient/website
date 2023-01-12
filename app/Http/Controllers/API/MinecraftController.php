@@ -12,6 +12,7 @@ class MinecraftController extends Controller
     public function show(string $uuid): JsonResponse
     {
         $user = User::where('current_account', $uuid)->firstOrFail();
+
         return response()->json([
             'using' => true,
             'cape' => $user->hasCapesAccess() ? $user->cape : null,
@@ -36,6 +37,7 @@ class MinecraftController extends Controller
         $request->user()->update([
             'current_account' => null,
         ]);
+
         return self::ok();
     }
 }

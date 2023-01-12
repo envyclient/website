@@ -15,8 +15,11 @@ class UsersTable extends Component
 
     // filters
     public string $search = '';
+
     public string $type = 'all';
+
     public string $subscription = 'ignore';
+
     public string $referralCode = 'ignore';
 
     public function render()
@@ -27,30 +30,29 @@ class UsersTable extends Component
 
         switch ($this->type) {
             case 'subscribed':
-            {
+
                 $user->has('subscription');
                 break;
-            }
+
             case 'active-subscription':
-            {
+
                 $user->whereRelation('subscription', 'status', SubscriptionStatus::ACTIVE->value);
                 break;
-            }
+
             case 'cancelled-subscription':
-            {
+
                 $user->whereRelation('subscription', 'status', SubscriptionStatus::CANCELED->value);
                 break;
-            }
+
             case 'banned':
-            {
+
                 $user->where('banned', true);
                 break;
-            }
+
             case 'using-client':
-            {
+
                 $user->where('current_account', '<>', null);
                 break;
-            }
         }
 
         if ($this->subscription !== 'ignore') {

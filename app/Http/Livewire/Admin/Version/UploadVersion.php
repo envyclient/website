@@ -12,9 +12,13 @@ class UploadVersion extends Component
     use WithFileUploads;
 
     public string $name = '';
+
     public string $main = '';
+
     public string $changelog = '';
+
     public bool $beta = false;
+
     public $version;
 
     protected array $rules = [

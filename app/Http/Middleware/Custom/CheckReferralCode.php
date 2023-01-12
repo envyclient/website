@@ -11,8 +11,8 @@ class CheckReferralCode
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -23,6 +23,7 @@ class CheckReferralCode
                     cookie()->forever('referral', $request->query('ref'))
                 );
         }
+
         return $next($request);
     }
 }

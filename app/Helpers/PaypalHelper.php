@@ -6,8 +6,8 @@ use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class PaypalHelper
@@ -21,6 +21,7 @@ class PaypalHelper
      * Get PayPal API access token.
      *
      * @return string the access token
+     *
      * @throws Exception
      */
     private static function getAccessToken(): string
@@ -31,7 +32,7 @@ class PaypalHelper
             config('services.paypal.secret')
         )
             ->asForm()
-            ->post(self::getEndpoint() . '/v1/oauth2/token', [
+            ->post(self::getEndpoint().'/v1/oauth2/token', [
                 'grant_type' => 'client_credentials',
             ]);
 
@@ -57,9 +58,9 @@ class PaypalHelper
                 'transmission_sig' => $request->header('PAYPAL-TRANSMISSION-SIG'),
                 'transmission_time' => $request->header('PAYPAL-TRANSMISSION-TIME'),
                 'webhook_id' => config('services.paypal.webhook_id'),
-                'webhook_event' => $request->json()
+                'webhook_event' => $request->json(),
             ]), 'application/json')
-            ->post(self::getEndpoint() . '/v1/notifications/verify-webhook-signature');
+            ->post(self::getEndpoint().'/v1/notifications/verify-webhook-signature');
 
         if ($response->status() !== 200) {
             throw new Exception('Failed PayPal Webhook Signature');
@@ -85,13 +86,13 @@ class PaypalHelper
                     'user_action' => 'SUBSCRIBE_NOW',
                     'payment_method' => [
                         'payer_selected' => 'PAYPAL',
-                        'payee_preferred' => 'IMMEDIATE_PAYMENT_REQUIRED'
+                        'payee_preferred' => 'IMMEDIATE_PAYMENT_REQUIRED',
                     ],
                     'return_url' => route('paypal.success'),
                     'cancel_url' => route('paypal.cancel'),
                 ],
             ]), 'application/json')
-            ->post(self::getEndpoint() . '/v1/billing/subscriptions');
+            ->post(self::getEndpoint().'/v1/billing/subscriptions');
 
         if ($response->status() !== 201) {
             throw new Exception('Could not create subscription.');
@@ -107,9 +108,9 @@ class PaypalHelper
     {
         $response = HTTP::withToken(self::getAccessToken())
             ->withBody(json_encode([
-                'note' => 'User cancelled subscription from website.'
+                'note' => 'User cancelled subscription from website.',
             ]), 'application/json')
-            ->post(self::getEndpoint() . '/v1/billing/subscriptions/' . $subscription->paypal_id . '/cancel');
+            ->post(self::getEndpoint().'/v1/billing/subscriptions/'.$subscription->paypal_id.'/cancel');
 
         if ($response->status() !== 204) {
             throw new Exception('PayPal API request failed.');

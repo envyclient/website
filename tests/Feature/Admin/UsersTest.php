@@ -13,6 +13,7 @@ class UsersTest extends TestCase
     use RefreshDatabase;
 
     const VALID_NAME = 'this_is_a_valid_name';
+
     const INVALID_NAME = 'this name is not allowed';
 
     /** @test */

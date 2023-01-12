@@ -14,8 +14,7 @@ class SubscriptionCancelledEvent
 
     public function __construct(
         public Subscription $subscription,
-    )
-    {
+    ) {
         $this->user = $this->subscription->user;
     }
 }

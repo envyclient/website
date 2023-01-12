@@ -15,8 +15,7 @@ class SubscriptionNotification extends Notification implements ShouldQueue
     public function __construct(
         private readonly string $subject,
         private readonly string $message,
-    )
-    {
+    ) {
     }
 
     public function via($notifiable): array

@@ -18,7 +18,7 @@ class VersionsController extends Controller
             Version::query()
                 ->whereNotNull('processed_at')
                 ->orderBy('created_at', 'desc')
-                ->when(!auth()->user()->hasBetaAccess(), fn(Builder $builder) => $builder->where('beta', false))
+                ->when(! auth()->user()->hasBetaAccess(), fn (Builder $builder) => $builder->where('beta', false))
                 ->get()
         );
     }
@@ -32,7 +32,7 @@ class VersionsController extends Controller
                 'version_id' => $version->id,
                 'created_at' => $now,
                 'updated_at' => $now,
-            ]
+            ],
         ]);
 
         return Storage::disk('s3')->download("versions/$version->hash.jar.enc");

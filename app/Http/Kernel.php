@@ -69,7 +69,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         // custom
-        'admin' =>  \App\Http\Middleware\Custom\CheckAdmin::class,
+        'admin' => \App\Http\Middleware\Custom\CheckAdmin::class,
         'subscribed' => \App\Http\Middleware\Custom\CheckSubscription::class,
         'not-subscribed' => \App\Http\Middleware\Custom\CheckNoSubscription::class,
     ];

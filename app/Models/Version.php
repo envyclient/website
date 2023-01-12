@@ -11,21 +11,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read integer id
- *
+ * @property-read int id
  * @property string name
- * @property boolean beta
+ * @property bool beta
  * @property string changelog
  * @property string main_class
  * @property string iv
  * @property Carbon|null processed_at
- *
  * @property-read string hash
- *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
  * @property-read Carbon deleted_at
- *
  * @property-read Collection users
  */
 class Version extends Model
@@ -50,7 +46,7 @@ class Version extends Model
     protected function hash(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => md5($attributes['created_at']),
+            get: fn ($value, $attributes) => md5($attributes['created_at']),
         );
     }
 
@@ -58,5 +54,4 @@ class Version extends Model
     {
         return $this->belongsToMany(User::class, 'user_downloads', 'version_id', 'user_id');
     }
-
 }

@@ -24,7 +24,6 @@ Route::group(['prefix' => 'auth'], function () {
  * Configs
  */
 Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
-
     Route::group(['prefix' => 'configs'], function () {
         Route::get('user/{name?}', GetConfigsForUser::class)->name('configs.search');
         Route::put('{config}/favorite', FavoriteConfig::class)->name('configs.favorite');
@@ -32,7 +31,6 @@ Route::group(['middleware' => ['auth:api', 'subscribed']], function () {
 
     Route::resource('configs', ConfigsController::class)
         ->only(['index', 'show', 'store', 'update', 'destroy']);
-
 });
 
 /**
@@ -55,14 +53,13 @@ Route::group(['prefix' => 'minecraft', 'middleware' => ['auth:api', 'subscribed'
 /**
  * Download Loader
  */
-Route::get('download-loader', fn() => Storage::disk('s3')->download('loader.exe'))
+Route::get('download-loader', fn () => Storage::disk('s3')->download('loader.exe'))
     ->middleware(['auth:api', 'subscribed']);
 
 /**
  * Ban User
  */
 Route::post('user/ban', function (Request $request) {
-
     // ban the user
     $request->user()->update([
         'banned' => true,

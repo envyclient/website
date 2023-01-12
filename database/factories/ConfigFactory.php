@@ -16,7 +16,7 @@ class ConfigFactory extends Factory
             'version_id' => $this->faker->randomNumber(),
             'name' => $this->faker->firstName,
             'data' => json_encode([
-                'name' => 'testing'
+                'name' => 'testing',
             ]),
             'public' => $this->faker->boolean(),
             'official' => $this->faker->boolean(),

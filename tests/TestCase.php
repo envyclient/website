@@ -35,6 +35,7 @@ abstract class TestCase extends BaseTestCase
             'status' => SubscriptionStatus::ACTIVE->value,
             'end_date' => now()->addMonth(),
         ]);
+
         return $user;
     }
 }

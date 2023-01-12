@@ -9,18 +9,15 @@ use Illuminate\Support\Carbon;
 use Overtrue\LaravelFavorite\Traits\Favoriteable;
 
 /**
- * @property-read integer id
- *
- * @property integer user_id
- * @property integer version_id
+ * @property-read int id
+ * @property int user_id
+ * @property int version_id
  * @property string name
  * @property array data
- * @property boolean public
- * @property boolean official
- *
+ * @property bool public
+ * @property bool official
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
- *
  * @property-read User user
  * @property-read Version version
  */

@@ -17,6 +17,7 @@ class ShowStripeSource extends Component
     public function render()
     {
         $source = Cache::get($this->stripeSourceId);
+
         return view('livewire.show-stripe-source', compact('source'))->extends('layouts.guest');
     }
 }

@@ -9,6 +9,7 @@ use Livewire\Component;
 class CreateReferralCode extends Component
 {
     public string $user = '';
+
     public string $code = '';
 
     protected array $rules = [

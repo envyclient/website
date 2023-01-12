@@ -10,6 +10,7 @@ use Livewire\Component;
 class UpdateProfile extends Component
 {
     public string $name = '';
+
     public string $email = '';
 
     public function mount()
@@ -20,6 +21,7 @@ class UpdateProfile extends Component
     public function render()
     {
         $user = auth()->user();
+
         return view('livewire.user.profile.update-profile', compact('user'));
     }
 
@@ -46,7 +48,6 @@ class UpdateProfile extends Component
         ]);
 
         if ($this->email !== $user->email && $user instanceof MustVerifyEmail) {
-
             // update the user information
             $user->forceFill([
                 'name' => $this->name,
@@ -87,5 +88,4 @@ class UpdateProfile extends Component
         $this->name = $user->name;
         $this->email = $user->email;
     }
-
 }

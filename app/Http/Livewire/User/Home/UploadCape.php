@@ -19,6 +19,7 @@ class UploadCape extends Component
     public function render()
     {
         $user = auth()->user();
+
         return view('livewire.user.home.upload-cape', compact('user'));
     }
 

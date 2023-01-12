@@ -11,13 +11,13 @@ class RedirectIfSetup
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || is_null(auth()->user()->password)) {
+        if (! auth()->check() || is_null(auth()->user()->password)) {
             return $next($request);
         } else {
             return redirect(RouteServiceProvider::HOME);

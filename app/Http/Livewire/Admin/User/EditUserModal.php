@@ -8,6 +8,7 @@ use Livewire\Component;
 class EditUserModal extends Component
 {
     public bool $edit;
+
     public User $user;
 
     protected array $rules = [
@@ -44,5 +45,4 @@ class EditUserModal extends Component
     {
         return view('livewire.admin.user.edit-user-modal');
     }
-
 }

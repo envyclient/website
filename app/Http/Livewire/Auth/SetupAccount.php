@@ -12,8 +12,11 @@ class SetupAccount extends Component
     use ValidationRules;
 
     public string $name = '';
+
     public string $email = '';
+
     public string $password = '';
+
     public string $passwordConfirmation = '';
 
     public function render()

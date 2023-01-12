@@ -11,6 +11,7 @@ class DiscordHelper
     {
         $id = config('services.discord.client_id');
         $url = urlencode($url);
+
         return "https://discord.com/api/oauth2/authorize?client_id=$id&redirect_uri=$url&response_type=code&scope=identify";
     }
 

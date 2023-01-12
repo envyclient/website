@@ -15,12 +15,12 @@ class EncryptVersionJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $tries = 3;
+
     public int $backoff = 15;
 
     public function __construct(
         private readonly Version $version
-    )
-    {
+    ) {
     }
 
     public function handle()

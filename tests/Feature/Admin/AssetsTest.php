@@ -14,8 +14,11 @@ class AssetsTest extends TestCase
     use RefreshDatabase;
 
     const FILE_NAME = 'assets.zip';
+
     const FILE_NAME_INVALID = 'assets.zip.invalid';
+
     const FILE_SIZE = 1000;
+
     const FILE_SIZE_INVALID = 6000;
 
     protected function setUp(): void

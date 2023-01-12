@@ -11,8 +11,7 @@ class ReceivedWebhookEvent
 
     public function __construct(
         public PaymentProvider $provider,
-        public string          $type
-    )
-    {
+        public string $type
+    ) {
     }
 }

@@ -8,24 +8,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property-read integer id
- *
- * @property integer user_id
+ * @property-read int id
+ * @property int user_id
  * @property string channel
  * @property string channel_name
  * @property string channel_image
  * @property string status
  * @property string|null action_reason
  * @property Carbon|null action_at
- *
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
- *
  * @property-read User user
  */
 class LicenseRequest extends Model
 {
     const DAYS_TO_ADD = 3;
+
     const SUBSCRIBER_REQUIREMENT = 200;
 
     protected $fillable = [

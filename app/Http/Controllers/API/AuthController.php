@@ -18,7 +18,7 @@ class AuthController extends Controller
             'hwid' => ['required', 'string', 'min:40', 'max:40'],
         ]);
 
-        if (!auth()->attempt(request(['email', 'password']))) {
+        if (! auth()->attempt(request(['email', 'password']))) {
             return self::unauthorized();
         }
 
@@ -32,6 +32,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('hwid', $data['hwid'])->firstOrFail();
+
         return $this->returnUserObject($user, $data['hwid']);
     }
 
@@ -49,7 +50,7 @@ class AuthController extends Controller
         }
 
         // subscription check
-        if (!$user->hasSubscription()) {
+        if (! $user->hasSubscription()) {
             return response()->json(['message' => 'User does not have subscription for the client.'], 403);
         }
 
@@ -60,7 +61,7 @@ class AuthController extends Controller
 
         // update the users hwid
         $user->update([
-            'hwid' => $hwid
+            'hwid' => $hwid,
         ]);
 
         return new UserResource($user);

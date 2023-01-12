@@ -19,29 +19,25 @@ use Illuminate\Support\Facades\Cookie;
 use Overtrue\LaravelFavorite\Traits\Favoriter;
 
 /**
- * @property-read integer id
- *
+ * @property-read int id
  * @property string name
  * @property string email
  * @property Carbon|null email_verified_at
  * @property string password
  * @property string api_token
  * @property string|null hwid
- * @property boolean admin
- * @property boolean banned
+ * @property bool admin
+ * @property bool banned
  * @property string cape
  * @property string|null current_account
- * @property integer|null referral_code_id
+ * @property int|null referral_code_id
  * @property Carbon|null referral_code_used_at
  * @property string|null discord_id
- *
  * @property-read string image
  * @property-read string hash
- *
  * @property-read string|null remember_token
  * @property-read Carbon created_at
  * @property-read Carbon updated_at
- *
  * @property-read Collection configs
  * @property-read Subscription|null subscription
  * @property-read Collection downloads
@@ -57,6 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Prunable;
 
     const CAPE_DEFAULT = 'https://pub-851377c311484efe8f41e8b5018ce8c4.r2.dev/capes/default.png';
+
     const CAPE_TEMPLATE = 'https://pub-851377c311484efe8f41e8b5018ce8c4.r2.dev/capes/template.png';
 
     protected $fillable = [
@@ -94,7 +91,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         parent::boot();
         static::creating(function (User $user) {
-
             // generate a random api_token
             $user->api_token = bin2hex(random_bytes(30));
 
@@ -120,6 +116,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if (empty($search)) {
             return $query;
         }
+
         return $query->where(function (Builder $query) use ($search) {
             $query->where('name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%");
@@ -129,21 +126,21 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function cape(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => $value ?: User::CAPE_DEFAULT,
+            get: fn ($value, $attributes) => $value ?: User::CAPE_DEFAULT,
         );
     }
 
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => 'https://avatar.vercel.sh/' . $this->hash . '.svg?text=' . strtoupper(substr($attributes['name'], 0, 2)),
+            get: fn ($value, $attributes) => 'https://avatar.vercel.sh/'.$this->hash.'.svg?text='.strtoupper(substr($attributes['name'], 0, 2)),
         );
     }
 
     protected function hash(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => md5($attributes['created_at']),
+            get: fn ($value, $attributes) => md5($attributes['created_at']),
         );
     }
 

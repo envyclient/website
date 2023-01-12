@@ -37,7 +37,7 @@ class LicenseRequestsTable extends Component
                 'user_id' => $user->id,
                 'plan_id' => 1,
                 'status' => SubscriptionStatus::CANCELED->value,
-                'end_date' => now()->addDays(LicenseRequest::DAYS_TO_ADD)
+                'end_date' => now()->addDays(LicenseRequest::DAYS_TO_ADD),
             ]);
         }
 

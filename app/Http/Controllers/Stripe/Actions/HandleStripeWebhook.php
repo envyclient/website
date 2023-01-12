@@ -29,7 +29,6 @@ class HandleStripeWebhook extends Controller
 
         // Handle the event
         switch ($request->json('type')) {
-
             /**
              * Stripe Checkout (CC)
              */
@@ -37,7 +36,7 @@ class HandleStripeWebhook extends Controller
             // Payment is successful and the subscription is created.
             // You should provision the subscription and save the customer ID to your database.
             case 'checkout.session.completed':
-            {
+
                 // getting the stripe checkout session from the cache
                 ['user_id' => $userId, 'plan_id' => $planID] = Cache::get($request->json('data.object.id'));
 
@@ -53,13 +52,11 @@ class HandleStripeWebhook extends Controller
                 event(new SubscriptionCreatedEvent($subscription));
 
                 break;
-            }
 
-            // Continue to provision the subscription as payments continue to be made.
-            // Store the status in your database and check when a user accesses your service.
-            // This approach helps you avoid hitting rate limits.
+                // Continue to provision the subscription as payments continue to be made.
+                // Store the status in your database and check when a user accesses your service.
+                // This approach helps you avoid hitting rate limits.
             case 'invoice.paid':
-            {
 
                 // get the subscription model
                 $subscription = Subscription::query()
@@ -79,16 +76,13 @@ class HandleStripeWebhook extends Controller
                 );
 
                 break;
-            }
 
-            // The payment failed or the customer does not have a valid payment method.
-            // The subscription becomes past_due. Notify your customer and send them to the
-            // customer portal to update their payment information.
+                // The payment failed or the customer does not have a valid payment method.
+                // The subscription becomes past_due. Notify your customer and send them to the
+                // customer portal to update their payment information.
             case 'invoice.payment_failed':
-            {
 
                 try {
-
                     // get the related subscription
                     $subscription = Subscription::query()
                         ->where('stripe_id', $request->json('data.object.subscription'))
@@ -96,20 +90,17 @@ class HandleStripeWebhook extends Controller
 
                     // queue the subscription for cancellation
                     CancelSubscriptionJob::dispatch($subscription, PaymentProvider::STRIPE);
-
                 } catch (ModelNotFoundException) {
                 }
 
                 break;
-            }
 
             /**
              * Stripe Source (WeChat Pay)
              */
 
-            // stripe-source object expired
+                // stripe-source object expired
             case 'source.canceled':
-            {
 
                 self::handleStripeSource(
                     $request->json('data.object.id'),
@@ -118,11 +109,9 @@ class HandleStripeWebhook extends Controller
                 );
 
                 break;
-            }
 
-            // customer declined to authorize the payment
+                // customer declined to authorize the payment
             case 'source.failed':
-            {
 
                 self::handleStripeSource(
                     $request->json('data.object.id'),
@@ -131,11 +120,10 @@ class HandleStripeWebhook extends Controller
                 );
 
                 break;
-            }
 
-            // authorized and verified a payment
+                // authorized and verified a payment
             case 'source.chargeable':
-            {
+
                 // getting the stripe source id
                 $id = $request->json('data.object.id');
 
@@ -153,11 +141,10 @@ class HandleStripeWebhook extends Controller
                 ]);
 
                 break;
-            }
 
-            // charge succeeded and the payment is complete
+                // charge succeeded and the payment is complete
             case 'charge.succeeded':
-            {
+
                 // user subscribed using checkout not stripe-source
                 if ($request->json('data.object.customer') !== null) {
                     return response()->noContent();
@@ -187,15 +174,13 @@ class HandleStripeWebhook extends Controller
                 event(new SubscriptionCreatedEvent($subscription));
 
                 break;
-            }
 
-            // charge back
+                // charge back
             case 'charge.dispute.created':
-            {
+
                 // TODO: handle dispute
                 info($request->getContent());
                 break;
-            }
         }
 
         return response()->json(['status' => 'success']);
@@ -224,5 +209,4 @@ class HandleStripeWebhook extends Controller
 
         return $source;
     }
-
 }

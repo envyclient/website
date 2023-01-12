@@ -20,7 +20,7 @@ class ReferralCodeTest extends TestCase
 
         $this->actingAs($user)
             ->post(route('users.referral-code'), [
-                'referral-code' => 'random_code'
+                'referral-code' => 'random_code',
             ])
             ->assertSessionHasErrors()
             ->assertRedirect();
