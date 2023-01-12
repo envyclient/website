@@ -1,0 +1,24 @@
+name: run and apply laravel pint
+
+on:
+  pull-request:
+    branches: [ 'master' ]
+
+jobs:
+  laravel-pint:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: checkout repository
+        uses: actions/checkout@v3
+      -
+        name: run laravel pint
+        uses: aglipanci/laravel-pint-action@2.1.0
+        with:
+          preset: laravel
+      -
+        name: commit code
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: apply laravel pint
+          skip_fetch: true
