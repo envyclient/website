@@ -85,6 +85,4 @@ EXPOSE 8000
 # volumes
 VOLUME ["/app/storage"]
 
-ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
-
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT [".docker/entrypoint.sh"]
