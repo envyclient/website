@@ -29,4 +29,4 @@ color "caching views"
 php artisan view:cache
 
 color "starting supervisord"
-exec "$@"
+/usr/bin/supervisord -c /etc/supervisord.conf
