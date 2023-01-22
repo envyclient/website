@@ -85,4 +85,5 @@ EXPOSE 8000
 # volumes
 VOLUME ["/app/storage"]
 
-ENTRYPOINT [".docker/entrypoint.sh"]
+# entrypoint
+ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
