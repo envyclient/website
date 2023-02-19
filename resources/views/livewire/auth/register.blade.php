@@ -19,10 +19,10 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-            <form wire:submit.prevent="register">
+            <form wire:submit.prevent="submit">
 
                 <x-input.group for="name" label="Name">
-                    <x-input.text wire:model.defer="name"
+                    <x-input.text wire:model="name"
                                   id="name"
                                   type="text"
                                   autocomplete="username"
@@ -31,7 +31,7 @@
                 </x-input.group>
 
                 <x-input.group for="email" label="Email address" class="mt-4">
-                    <x-input.text wire:model.defer="email"
+                    <x-input.text wire:model="email"
                                   id="email"
                                   type="email"
                                   autocomplete="email"
@@ -39,7 +39,7 @@
                 </x-input.group>
 
                 <x-input.group for="password" label="Password" class="mt-4">
-                    <x-input.text wire:model.defer="password"
+                    <x-input.text wire:model="password"
                                   id="password"
                                   type="password"
                                   autocomplete="new-password"
@@ -47,14 +47,14 @@
                 </x-input.group>
 
                 <x-input.group for="password_confirmation" label="Confirm Password" class="mt-4">
-                    <x-input.text wire:model.defer="passwordConfirmation"
+                    <x-input.text wire:model="passwordConfirmation"
                                   id="password_confirmation"
                                   type="password"
                                   required/>
                 </x-input.group>
 
                 <div class="mt-4">
-                    <x-auth.button type="submit" wire:loading.attr="disabled" wire:target="register">
+                    <x-auth.button type="submit" wire:loading.attr="disabled">
                         Register
                     </x-auth.button>
                 </div>

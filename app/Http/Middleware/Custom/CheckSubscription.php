@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware\Custom;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -20,6 +19,6 @@ class CheckSubscription
             return $next($request);
         }
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('home'));
     }
 }

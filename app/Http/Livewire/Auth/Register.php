@@ -3,10 +3,8 @@
 namespace App\Http\Livewire\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use App\Traits\ValidationRules;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
@@ -27,7 +25,7 @@ class Register extends Component
         return view('livewire.auth.register')->extends('layouts.guest');
     }
 
-    public function register()
+    public function submit()
     {
         $this->validate([
             'name' => $this->nameRules(),
@@ -43,8 +41,8 @@ class Register extends Component
 
         event(new Registered($user));
 
-        Auth::login($user, true);
+        auth()->login($user, true);
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(route('home'));
     }
 }

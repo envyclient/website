@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Validation\Rules\Password;
-
 trait ValidationRules
 {
     public function nameRules(): array
@@ -21,7 +19,9 @@ trait ValidationRules
         return [
             'required',
             'string',
-            Password::min(8)->mixedCase()->uncompromised(),
+            'min:8',
+            'max:255',
+            'same:passwordConfirmation',
         ];
     }
 }

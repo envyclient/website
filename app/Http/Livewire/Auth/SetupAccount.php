@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Auth;
 
-use App\Providers\RouteServiceProvider;
 use App\Traits\ValidationRules;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -45,6 +44,6 @@ class SetupAccount extends Component
         // send the user a confirmation email
         $user->sendEmailVerificationNotification();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(route('home'));
     }
 }

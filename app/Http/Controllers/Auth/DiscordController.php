@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\DiscordHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -60,6 +59,6 @@ class DiscordController extends Controller
 
         auth()->login($user, true);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('home'));
     }
 }

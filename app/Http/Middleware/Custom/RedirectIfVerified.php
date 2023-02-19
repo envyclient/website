@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware\Custom;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -18,7 +17,7 @@ class RedirectIfVerified
         if (! auth()->check() || is_null(auth()->user()->email_verified_at)) {
             return $next($request);
         } else {
-            return redirect(RouteServiceProvider::HOME);
+            return redirect(route('home'));
         }
     }
 }

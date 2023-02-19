@@ -10,14 +10,15 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-            <form wire:submit.prevent="confirm">
+            <form wire:submit.prevent="submit">
+
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 leading-5">
                         Password
                     </label>
 
                     <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="password"
+                        <input wire:model="password"
                                id="password"
                                type="password"
                                required
@@ -44,11 +45,13 @@
                 <div class="mt-6">
                     <span class="block w-full rounded-md shadow-sm">
                         <button type="submit"
+                                wire:loading.attr="disabled"
                                 class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out">
                             Confirm password
                         </button>
                     </span>
                 </div>
+
             </form>
         </div>
     </div>

@@ -19,10 +19,10 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-            <form wire:submit.prevent="login">
+            <form wire:submit.prevent="submit">
 
                 <x-input.group for="email" label="Email">
-                    <x-input.text wire:model.defer="email"
+                    <x-input.text wire:model="email"
                                   id="email"
                                   type="email"
                                   autocomplete="email"
@@ -31,7 +31,7 @@
                 </x-input.group>
 
                 <x-input.group for="password" label="Password" class="mt-4">
-                    <x-input.text wire:model.defer="password"
+                    <x-input.text wire:model="password"
                                   id="password"
                                   type="password"
                                   autocomplete="current-password"
@@ -40,7 +40,7 @@
 
                 <div class="flex items-center justify-between mt-4">
                     <div class="flex items-center">
-                        <input wire:model.lazy="remember"
+                        <input wire:model="remember"
                                class="form-checkbox w-4 h-4 text-green-600 transition duration-150 ease-in-out focus:outline-none focus:ring-gray-900 focus:border-gray-900"
                                id="remember"
                                type="checkbox">
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <x-auth.button type="submit" wire:loading.attr="disabled" wire:target="login">
+                    <x-auth.button type="submit" wire:loading.attr="disabled">
                         Login
                     </x-auth.button>
                 </div>
@@ -78,6 +78,7 @@
                         </svg>
                     </a>
                 </div>
+
             </form>
         </div>
     </div>

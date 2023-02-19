@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware\Custom\Setup;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -18,7 +17,7 @@ class RedirectIfSetup
         if (! auth()->check() || is_null(auth()->user()->password)) {
             return $next($request);
         } else {
-            return redirect(RouteServiceProvider::HOME);
+            return redirect(route('home'));
         }
     }
 }

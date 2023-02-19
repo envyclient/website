@@ -2,28 +2,25 @@
 
 namespace App\Http\Livewire\Auth\Passwords;
 
-use App\Providers\RouteServiceProvider;
 use Livewire\Component;
 
 class Confirm extends Component
 {
     public string $password = '';
 
-    protected array $rules = [
-        'password' => 'required|string|password',
-    ];
-
     public function render()
     {
         return view('livewire.auth.passwords.confirm')->extends('layouts.guest');
     }
 
-    public function confirm()
+    public function submit()
     {
-        $this->validate();
+        $this->validate([
+            'password' => ['required', 'string', 'current_password'],
+        ]);
 
         session()->put('auth.password_confirmed_at', time());
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(route('home'));
     }
 }

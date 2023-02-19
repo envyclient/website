@@ -50,7 +50,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'larabug'],
+            'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
 
@@ -109,10 +109,6 @@ return [
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
-        ],
-
-        'larabug' => [
-            'driver' => 'larabug',
         ],
 
         'emergency' => [

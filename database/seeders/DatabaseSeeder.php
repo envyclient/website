@@ -11,17 +11,17 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         User::factory()
             ->times(15)
             ->create();
+
         Config::factory()
             ->times(50)
             ->create();
+
         Version::factory()
             ->times(10)
             ->create();
