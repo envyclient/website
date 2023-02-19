@@ -17,9 +17,10 @@ class LicenseRequests extends Component
 
     public function render()
     {
-        $licenseRequests = auth()->user()->licenseRequests;
+        $user = auth()->user();
+        $licenseRequests = $user->licenseRequests;
 
-        return view('livewire.user.home.license-requests', compact('licenseRequests'));
+        return view('livewire.user.home.license-requests', compact('user', 'licenseRequests'));
     }
 
     public function submit()

@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware\Custom;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -12,7 +11,6 @@ class CheckAdmin
      * Handle an incoming request.
      *
      * @param  Request  $request
-     * @param  Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -21,6 +19,6 @@ class CheckAdmin
             return $next($request);
         }
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('home'));
     }
 }

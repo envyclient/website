@@ -32,6 +32,7 @@ class ReferralCodeTest extends TestCase
     public function can_user_use_valid_referral_code(): void
     {
         $user = self::user();
+
         $referralCode = ReferralCode::factory()->create([
             'user_id' => $user->id,
         ]);
@@ -50,6 +51,7 @@ class ReferralCodeTest extends TestCase
     public function can_user_not_use_more_than_1_valid_referral_code(): void
     {
         $user = self::user();
+
         $referralCodes = ReferralCode::factory()->count(2)->create([
             'user_id' => $user->id,
         ]);

@@ -21,7 +21,6 @@ class LicenseRequestTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->actingAs(self::user());
     }
 

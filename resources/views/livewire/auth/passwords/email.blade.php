@@ -30,10 +30,10 @@
                 </div>
             @endif
 
-            <form wire:submit.prevent="sendResetPasswordLink">
+            <form wire:submit.prevent="submit">
 
                 <x-input.group for="email" label="Email">
-                    <x-input.text wire:model.defer="email"
+                    <x-input.text wire:model="email"
                                   id="email"
                                   type="email"
                                   autocomplete="email"
@@ -42,11 +42,13 @@
                 </x-input.group>
 
                 <div class="mt-4">
-                    <x-auth.button type="submit" wire:loading.attr="disabled" wire:target="sendResetPasswordLink">
+                    <x-auth.button type="submit" wire:loading.attr="disabled">
                         Send password reset link
                     </x-auth.button>
                 </div>
+
             </form>
+
         </div>
     </div>
 </div>

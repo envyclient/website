@@ -9,20 +9,19 @@ class Email extends Component
 {
     public string $email = '';
 
-    protected array $rules = [
-        'email' => 'required|string|email',
-    ];
-
     public function render()
     {
         return view('livewire.auth.passwords.email')->extends('layouts.guest');
     }
 
-    public function sendResetPasswordLink()
+    public function submit()
     {
-        $this->validate();
+        $this->validate([
+            'email' => ['required', 'string', 'email'],
+        ]);
 
-        $response = $this->broker()->sendResetLink(['email' => $this->email]);
+        $response = Password::broker()->sendResetLink(['email' => $this->email]);
+
         if ($response == Password::RESET_LINK_SENT) {
             session()->flash('status', trans($response));
 
@@ -30,15 +29,5 @@ class Email extends Component
         }
 
         $this->addError('email', trans($response));
-    }
-
-    /**
-     * Get the broker to be used during password reset.
-     *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
-     */
-    public function broker()
-    {
-        return Password::broker();
     }
 }

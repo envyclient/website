@@ -54,7 +54,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_list_configs(): void
     {
-        $user = self::subscribedUser();
+        $user = self::user(subscribed: true);
+
         Config::factory()->count(10)->create([
             'user_id' => $user->id,
             'version_id' => 1,
@@ -69,7 +70,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_search_configs(): void
     {
-        $user = self::subscribedUser();
+        $user = self::user(subscribed: true);
+
         Config::factory()->count(10)->create([
             'user_id' => $user->id,
             'version_id' => 1,
@@ -85,7 +87,7 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_create_valid_config(): void
     {
-        $this->actingAs(self::subscribedUser(), 'api')
+        $this->actingAs(self::user(subscribed: true), 'api')
             ->postJson(route('configs.store'), self::VALID_CONFIG)
             ->assertCreated();
 
@@ -95,7 +97,7 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_not_create_invalid_config(): void
     {
-        $this->actingAs(self::subscribedUser(), 'api')
+        $this->actingAs(self::user(subscribed: true), 'api')
             ->postJson(route('configs.store'), self::INVALID_CONFIG)
             ->assertJsonValidationErrors(['version', 'data']);
 
@@ -105,7 +107,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_not_go_over_config_limit(): void
     {
-        $user = $this->subscribedUser();
+        $user = $this->user(subscribed: true);
+
         Config::factory()->count($user->subscription->plan->config_limit)->create([
             'user_id' => $user->id,
             'version_id' => 1.,
@@ -121,7 +124,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_update_config(): void
     {
-        $user = self::subscribedUser();
+        $user = self::user(subscribed: true);
+
         $config = Config::factory()->create([
             'user_id' => $user->id,
             'version_id' => 1,
@@ -142,6 +146,7 @@ class ConfigsTest extends TestCase
             ->assertOk();
 
         $config->refresh();
+
         $this->assertEquals('new name', $config->name);
         $this->assertEquals(2, $config->version_id);
         $this->assertEquals('{}', $config->data);
@@ -151,7 +156,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_delete_own_config()
     {
-        $user = self::subscribedUser();
+        $user = self::user(subscribed: true);
+
         $config = Config::factory()->create([
             'user_id' => $user->id,
             'version_id' => 1,
@@ -172,7 +178,7 @@ class ConfigsTest extends TestCase
             'version_id' => 1,
         ]);
 
-        $this->actingAs(self::subscribedUser(), 'api')
+        $this->actingAs(self::user(subscribed: true), 'api')
             ->deleteJson(route('configs.destroy', $config->id))
             ->assertNotFound();
 
@@ -182,7 +188,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_favorite_config()
     {
-        $user = self::subscribedUser();
+        $user = self::user(subscribed: true);
+
         $config = Config::factory()->create([
             'user_id' => self::user()->id,
             'version_id' => 1,
@@ -198,7 +205,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_not_favorite_own_config()
     {
-        $user = self::subscribedUser();
+        $user = self::user(subscribed: true);
+
         $config = Config::factory()->create([
             'user_id' => $user->id,
             'version_id' => 1,
@@ -214,7 +222,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_get_own_configs()
     {
-        $user = self::subscribedUser();
+        $user = self::user(subscribed: true);
+
         Config::factory()->count(10)->create([
             'user_id' => $user->id,
             'version_id' => 1,
@@ -228,8 +237,8 @@ class ConfigsTest extends TestCase
     /** @test */
     public function can_user_get_others_configs()
     {
-        $user = self::subscribedUser();
-        $otherUser = self::subscribedUser();
+        $user = self::user(subscribed: true);
+        $otherUser = self::user(subscribed: true);
 
         // create 10 configs for auth user
         Config::factory()->count(10)->create([

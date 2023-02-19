@@ -25,7 +25,6 @@ class UserFactory extends Factory
             'current_account' => null,
             'referral_code_id' => null,
             'referral_code_used_at' => null,
-            'discord_id' => null,
             'remember_token' => null,
         ];
     }

@@ -7,11 +7,12 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-            <form wire:submit.prevent="resetPassword">
+            <form wire:submit.prevent="submit">
+
                 <input wire:model="token" type="hidden">
 
                 <x-input.group for="email" label="Email">
-                    <x-input.text wire:model.defer="email"
+                    <x-input.text wire:model="email"
                                   id="email"
                                   type="email"
                                   autocomplete="email"
@@ -20,7 +21,7 @@
                 </x-input.group>
 
                 <x-input.group for="password" label="Password" class="mt-4">
-                    <x-input.text wire:model.defer="password"
+                    <x-input.text wire:model="password"
                                   id="password"
                                   type="password"
                                   autocomplete="new-password"
@@ -28,17 +29,18 @@
                 </x-input.group>
 
                 <x-input.group for="password_confirmation" label="Confirm Password" class="mt-4">
-                    <x-input.text wire:model.defer="passwordConfirmation"
+                    <x-input.text wire:model="passwordConfirmation"
                                   id="password_confirmation"
                                   type="password"
                                   required/>
                 </x-input.group>
 
                 <div class="mt-4">
-                    <x-auth.button type="submit" wire:loading.attr="disabled" wire:target="resetPassword">
+                    <x-auth.button type="submit" wire:loading.attr="disabled">
                         Reset password
                     </x-auth.button>
                 </div>
+
             </form>
         </div>
     </div>

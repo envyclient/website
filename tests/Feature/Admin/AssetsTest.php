@@ -25,7 +25,7 @@ class AssetsTest extends TestCase
     {
         parent::setUp();
 
-        Storage::fake('public');
+        Storage::fake('s3_public');
         $this->actingAs(self::admin());
     }
 
@@ -37,7 +37,7 @@ class AssetsTest extends TestCase
             ->call('submit')
             ->assertHasNoErrors();
 
-        Storage::disk('public')->assertExists(self::FILE_NAME);
+        Storage::disk('s3_public')->assertExists(self::FILE_NAME);
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class AssetsTest extends TestCase
             ->call('submit')
             ->assertHasErrors();
 
-        Storage::disk('public')->assertMissing(self::FILE_NAME);
+        Storage::disk('s3_public')->assertMissing(self::FILE_NAME);
     }
 
     /** @test */
@@ -58,7 +58,7 @@ class AssetsTest extends TestCase
             ->call('submit')
             ->assertHasErrors();
 
-        Storage::disk('public')->assertMissing(self::FILE_NAME);
+        Storage::disk('s3_public')->assertMissing(self::FILE_NAME);
     }
 
     /** @test */
@@ -69,6 +69,6 @@ class AssetsTest extends TestCase
             ->call('submit')
             ->assertHasErrors();
 
-        Storage::disk('public')->assertMissing(self::FILE_NAME_INVALID);
+        Storage::disk('s3_public')->assertMissing(self::FILE_NAME_INVALID);
     }
 }

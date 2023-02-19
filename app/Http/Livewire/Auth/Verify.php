@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Auth;
 
-use App\Providers\RouteServiceProvider;
 use Livewire\Component;
 
 class Verify extends Component
@@ -12,11 +11,12 @@ class Verify extends Component
         return view('livewire.auth.verify')->extends('layouts.guest');
     }
 
-    public function resend()
+    public function submit()
     {
         $user = auth()->user();
+
         if ($user->hasVerifiedEmail()) {
-            redirect(RouteServiceProvider::HOME);
+            redirect(route('home'));
         }
 
         $user->sendEmailVerificationNotification();

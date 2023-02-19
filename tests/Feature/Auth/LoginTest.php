@@ -3,8 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Http\Livewire\Auth\Login;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -14,37 +12,94 @@ class LoginTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_login_page_be_seen(): void
+    public function can_view_login_page()
     {
-        $this->get('/login')
-            ->assertStatus(200);
+        $this->get(route('login'))
+            ->assertSuccessful()
+            ->assertSeeLivewire(Login::class);
     }
 
     /** @test */
-    public function can_user_login(): void
+    public function is_redirected_if_already_logged_in()
     {
-        $user = User::factory()->create();
+        $user = self::user();
+
+        $this->be($user);
+
+        $this->get(route('login'))
+            ->assertRedirect(route('home'));
+    }
+
+    /** @test */
+    public function a_user_can_login()
+    {
+        $user = self::user();
 
         Livewire::test(Login::class)
             ->set('email', $user->email)
             ->set('password', 'password')
-            ->call('login')
-            ->assertRedirect(RouteServiceProvider::HOME);
+            ->call('submit');
 
-        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs($user);
     }
 
     /** @test */
-    public function can_user_not_login_with_wrong_password(): void
+    public function is_redirected_to_the_home_page_after_login()
     {
-        $user = User::factory()->create();
+        $user = self::user();
+
+        Livewire::test(Login::class)
+            ->set('email', $user->email)
+            ->set('password', 'password')
+            ->call('submit')
+            ->assertRedirect(route('home'));
+    }
+
+    /** @test */
+    public function email_is_required()
+    {
+        self::user();
+
+        Livewire::test(Login::class)
+            ->set('password', 'password')
+            ->call('submit')
+            ->assertHasErrors(['email' => 'required']);
+    }
+
+    /** @test */
+    public function email_must_be_valid_email()
+    {
+        self::user();
+
+        Livewire::test(Login::class)
+            ->set('email', 'invalid-email')
+            ->set('password', 'password')
+            ->call('submit')
+            ->assertHasErrors(['email' => 'email']);
+    }
+
+    /** @test */
+    public function password_is_required()
+    {
+        $user = self::user();
+
+        Livewire::test(Login::class)
+            ->set('email', $user->email)
+            ->call('submit')
+            ->assertHasErrors(['password' => 'required']);
+    }
+
+    /** @test */
+    public function bad_login_attempt_shows_message()
+    {
+        $user = self::user();
 
         Livewire::test(Login::class)
             ->set('email', $user->email)
             ->set('password', 'bad-password')
-            ->call('login')
+            ->call('submit')
             ->assertHasErrors('email');
 
-        $this->assertGuest();
+        $this->assertFalse(auth()->check());
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Auth;
 
-use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Login extends Component
@@ -14,26 +12,24 @@ class Login extends Component
 
     public bool $remember = false;
 
-    protected array $rules = [
-        'email' => ['required', 'string', 'email'],
-        'password' => ['required', 'string'],
-    ];
-
     public function render()
     {
         return view('livewire.auth.login')->extends('layouts.guest');
     }
 
-    public function login()
+    public function submit()
     {
-        $this->validate();
+        $this->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (! auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             $this->addError('email', trans('auth.failed'));
 
             return;
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(route('home'));
     }
 }

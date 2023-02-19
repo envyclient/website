@@ -5,7 +5,6 @@ use App\Http\Controllers\Actions\UseReferralCode;
 use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Admin\LicenseRequestsTable;
 use App\Http\Livewire\Admin\User\UsersTable;
-use App\Http\Middleware\Custom\Setup\CheckIfPasswordNull;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +16,7 @@ Route::get('ping', fn () => response());
 /**
  * Dashboard Pages
  */
-Route::group(['middleware' => CheckIfPasswordNull::class], function () {
+Route::group([], function () {
     /**
      * Landing Pages
      */

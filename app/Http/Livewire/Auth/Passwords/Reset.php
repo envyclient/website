@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Auth\Passwords;
 
-use App\Providers\RouteServiceProvider;
+use App\Models\User;
+use App\Traits\ValidationRules;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -12,6 +12,8 @@ use Livewire\Component;
 
 class Reset extends Component
 {
+    use ValidationRules;
+
     public string $token = '';
 
     public string $email = '';
@@ -19,12 +21,6 @@ class Reset extends Component
     public string $password = '';
 
     public string $passwordConfirmation = '';
-
-    protected array $rules = [
-        'token' => 'required|string',
-        'email' => 'required|string|email',
-        'password' => 'required|string|min:8|same:passwordConfirmation',
-    ];
 
     public function mount($token)
     {
@@ -37,17 +33,21 @@ class Reset extends Component
         return view('livewire.auth.passwords.reset')->extends('layouts.guest');
     }
 
-    public function resetPassword()
+    public function submit()
     {
-        $this->validate();
+        $this->validate([
+            'token' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
+            'password' => $this->passwordRules(),
+        ]);
 
-        $response = $this->broker()->reset(
+        $response = Password::broker()->reset(
             [
                 'token' => $this->token,
                 'email' => $this->email,
                 'password' => $this->password,
             ],
-            function ($user, $password) {
+            function (User $user, string $password) {
                 $user->password = Hash::make($password);
 
                 $user->setRememberToken(Str::random(60));
@@ -56,35 +56,15 @@ class Reset extends Component
 
                 event(new PasswordReset($user));
 
-                $this->guard()->login($user);
+                auth()->login($user);
             }
         );
 
         if ($response == Password::PASSWORD_RESET) {
             //session()->flash(trans($response));
-            return redirect(RouteServiceProvider::HOME);
+            return redirect(route('home'));
         }
 
         $this->addError('email', trans($response));
-    }
-
-    /**
-     * Get the broker to be used during password reset.
-     *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
-     */
-    public function broker()
-    {
-        return Password::broker();
-    }
-
-    /**
-     * Get the guard to be used during password reset.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard();
     }
 }

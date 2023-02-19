@@ -71,9 +71,16 @@ class PagesTest extends TestCase
     }
 
     /** @test */
-    public function can_guest_not_see_launcher_and_loader(): void
+    public function can_guest_not_see_launcher_and_assets(): void
     {
-        $this->get(route('admin.launcher-loader'))
+        $this->get(route('admin.launcher'))
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function can_guest_not_see_loader(): void
+    {
+        $this->get(route('admin.loader'))
             ->assertRedirect(route('login'));
     }
 
@@ -140,10 +147,18 @@ class PagesTest extends TestCase
     }
 
     /** @test */
-    public function can_user_not_see_launcher_and_loader(): void
+    public function can_user_not_see_launcher_and_assets(): void
     {
         $this->actingAs(self::user())
-            ->get(route('admin.launcher-loader'))
+            ->get(route('admin.launcher'))
+            ->assertRedirect(route('home'));
+    }
+
+    /** @test */
+    public function can_user_not_see_loader(): void
+    {
+        $this->actingAs(self::user())
+            ->get(route('admin.loader'))
             ->assertRedirect(route('home'));
     }
 
@@ -184,10 +199,18 @@ class PagesTest extends TestCase
     }
 
     /** @test */
-    public function can_admin_see_launcher_and_loader(): void
+    public function can_admin_see_launcher_and_assets(): void
     {
         $this->actingAs(self::admin())
-            ->get(route('admin.launcher-loader'))
+            ->get(route('admin.launcher'))
+            ->assertOk();
+    }
+
+    /** @test */
+    public function can_admin_see_loader(): void
+    {
+        $this->actingAs(self::admin())
+            ->get(route('admin.loader'))
             ->assertOk();
     }
 
