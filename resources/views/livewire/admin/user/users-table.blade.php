@@ -238,8 +238,10 @@
 
         {{--Users Table Pagination Links--}}
         {{ $users->links() }}
+
     </div>
 
     {{--Edit User Modal--}}
     @livewire('admin.user.edit-user-modal')
+
 </div>
