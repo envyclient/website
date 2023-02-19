@@ -9,16 +9,8 @@ return [
     ],
 
     'discord' => [
-
-        // oauth
-        'client_id' => env('DISCORD_ID'),
-        'client_secret' => env('DISCORD_SECRET'),
-        'redirect' => env('DISCORD_REDIRECT'),
-
-        // server
         'webhook' => env('DISCORD_WEBHOOK'),
         'invite' => env('DISCORD_INVITE'),
-
     ],
 
     'stripe' => [

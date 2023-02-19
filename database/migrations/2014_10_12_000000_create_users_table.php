@@ -24,8 +24,6 @@ return new class extends Migration
             $table->unsignedBigInteger('referral_code_id')->nullable();
             $table->timestamp('referral_code_used_at')->nullable();
 
-            $table->string('discord_id', 18)->nullable()->unique();
-
             $table->rememberToken();
             $table->timestamps();
         });

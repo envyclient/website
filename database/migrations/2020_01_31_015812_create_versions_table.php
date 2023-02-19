@@ -14,6 +14,7 @@ return new class extends Migration
             $table->boolean('beta');
             $table->text('changelog');
             $table->string('main_class');
+            $table->char('iv', 32);
             $table->timestamp('processed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
