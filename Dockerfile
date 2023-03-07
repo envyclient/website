@@ -21,8 +21,8 @@ RUN apk --no-cache add \
 RUN ln -s /usr/bin/php82 /usr/bin/php
 
 # configure php & supervisord
-COPY .docker/php.ini /etc/php81/conf.d/99_envy.ini
-COPY .docker/supervisord.conf /etc/supervisord.conf
+COPY .github/docker/php.ini /etc/php81/conf.d/99_envy.ini
+COPY .github/docker/supervisord.conf /etc/supervisord.conf
 
 # schedule cron job
 RUN echo "* * * * * php /app/artisan schedule:run" | crontab -
@@ -55,14 +55,15 @@ RUN npm install && npm run build
 FROM golang:alpine as supervisord-build
 
 # install
-RUN apk --no-cache add gcc git rust
+RUN apk --no-cache add \
+    build-base \
+    git
 
 # create the app directory
 WORKDIR /app
 
 # build
 RUN git clone https://github.com/ochinchina/supervisord.git .
-RUN go generate
 RUN GOOS=linux go build -tags release -a -ldflags "-linkmode external -extldflags -static" -o /usr/local/bin/supervisord
 
 FROM base as production
@@ -86,4 +87,7 @@ EXPOSE 8000
 VOLUME ["/app/storage"]
 
 # entrypoint
-ENTRYPOINT ["/bin/sh", ".docker/entrypoint.sh"]
+ENTRYPOINT [".github/docker/entrypoint.sh"]
+
+# cmd
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
