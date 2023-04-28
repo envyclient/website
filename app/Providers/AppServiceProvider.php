@@ -35,9 +35,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // register macros
-        Component::macro('resetFilePond', fn() => $this->dispatchBrowserEvent('filepond-reset'));
-        Component::macro('resetEasyMDE', fn() => $this->dispatchBrowserEvent('easymde-reset'));
-        Component::macro('smallNotify', fn($message) => $this->emitSelf('small-notify', $message));
+        Component::macro('resetFilePond', fn () => $this->dispatchBrowserEvent('filepond-reset'));
+        Component::macro('resetEasyMDE', fn () => $this->dispatchBrowserEvent('easymde-reset'));
+        Component::macro('smallNotify', fn ($message) => $this->emitSelf('small-notify', $message));
 
         // blade @admin
         Blade::if('admin', function () {
@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
 
         // enable n+1 problem check
         Model::preventLazyLoading(
-            !app()->isProduction()
+            ! app()->isProduction()
         );
 
         // forcing https scheme
