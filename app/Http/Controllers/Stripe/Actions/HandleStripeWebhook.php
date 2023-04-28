@@ -95,9 +95,9 @@ class HandleStripeWebhook extends Controller
 
                 break;
 
-            /**
-             * Stripe Source (WeChat Pay)
-             */
+                /**
+                 * Stripe Source (WeChat Pay)
+                 */
 
                 // stripe-source object expired
             case 'source.canceled':
