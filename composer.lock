@@ -3481,16 +3481,16 @@
         },
         {
             "name": "spatie/laravel-support-bubble",
-            "version": "1.3.3",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-support-bubble.git",
-                "reference": "166265ac0e0ac5d40e91feb89affabcb2a531aac"
+                "reference": "0d9785c83bab8bcfecac81ebf75f373e4e3b09c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-support-bubble/zipball/166265ac0e0ac5d40e91feb89affabcb2a531aac",
-                "reference": "166265ac0e0ac5d40e91feb89affabcb2a531aac",
+                "url": "https://api.github.com/repos/spatie/laravel-support-bubble/zipball/0d9785c83bab8bcfecac81ebf75f373e4e3b09c0",
+                "reference": "0d9785c83bab8bcfecac81ebf75f373e4e3b09c0",
                 "shasum": ""
             },
             "require": {
@@ -3553,7 +3553,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-support-bubble/issues",
-                "source": "https://github.com/spatie/laravel-support-bubble/tree/1.3.3"
+                "source": "https://github.com/spatie/laravel-support-bubble/tree/1.3.4"
             },
             "funding": [
                 {
@@ -3561,7 +3561,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-25T15:51:14+00:00"
+            "time": "2023-05-24T10:57:19+00:00"
         },
         {
             "name": "staudenmeir/eloquent-has-many-deep",
