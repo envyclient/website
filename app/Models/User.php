@@ -46,9 +46,9 @@ use Overtrue\LaravelFavorite\Traits\Favoriter;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
     use Favoriter;
     use HasFactory;
+    use Notifiable;
     use Prunable;
 
     const CAPE_DEFAULT = 'https://pub-851377c311484efe8f41e8b5018ce8c4.r2.dev/capes/default.png';
