@@ -2595,16 +2595,16 @@
         },
         {
             "name": "overtrue/laravel-favorite",
-            "version": "5.1.1",
+            "version": "5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/laravel-favorite.git",
-                "reference": "0052792214b1bfb781c5b1cb1abf29c9e48a12c6"
+                "reference": "e8c31e2e93a2d13afea5d98fb803413aa72b8180"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/overtrue/laravel-favorite/zipball/0052792214b1bfb781c5b1cb1abf29c9e48a12c6",
-                "reference": "0052792214b1bfb781c5b1cb1abf29c9e48a12c6",
+                "url": "https://api.github.com/repos/overtrue/laravel-favorite/zipball/e8c31e2e93a2d13afea5d98fb803413aa72b8180",
+                "reference": "e8c31e2e93a2d13afea5d98fb803413aa72b8180",
                 "shasum": ""
             },
             "require": {
@@ -2653,7 +2653,7 @@
             "description": "User favorite features for Laravel Application.",
             "support": {
                 "issues": "https://github.com/overtrue/laravel-favorite/issues",
-                "source": "https://github.com/overtrue/laravel-favorite/tree/5.1.1"
+                "source": "https://github.com/overtrue/laravel-favorite/tree/5.1.2"
             },
             "funding": [
                 {
@@ -2661,7 +2661,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-09-12T06:02:19+00:00"
+            "time": "2023-09-13T14:18:57+00:00"
         },
         {
             "name": "phpoption/phpoption",
