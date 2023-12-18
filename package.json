@@ -10,7 +10,7 @@
         "autoprefixer": "^10.4.16",
         "chokidar": "^3.5.3",
         "easymde": "^2.18.0",
-        "filepond": "^4.30.5",
+        "filepond": "^4.30.6",
         "filepond-plugin-file-validate-size": "^2.2.8",
         "filepond-plugin-file-validate-type": "^1.2.8",
         "filepond-plugin-image-validate-size": "^1.2.7",
