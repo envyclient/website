@@ -6,7 +6,7 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
-        "alpinejs": "^3.13.3",
+        "alpinejs": "^3.13.4",
         "autoprefixer": "^10.4.17",
         "chokidar": "^3.5.3",
         "easymde": "^2.18.0",
