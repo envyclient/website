@@ -6,17 +6,17 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
-        "alpinejs": "^3.13.3",
-        "autoprefixer": "^10.4.16",
-        "chokidar": "^3.5.3",
+        "alpinejs": "^3.13.5",
+        "autoprefixer": "^10.4.17",
+        "chokidar": "^3.6.0",
         "easymde": "^2.18.0",
         "filepond": "^4.30.6",
         "filepond-plugin-file-validate-size": "^2.2.8",
         "filepond-plugin-file-validate-type": "^1.2.8",
         "filepond-plugin-image-validate-size": "^1.2.7",
-        "laravel-vite-plugin": "^0.8.1",
-        "postcss": "^8.4.32",
-        "tailwindcss": "^3.4.0",
-        "vite": "^4.5.2"
+        "laravel-vite-plugin": "^1.0.1",
+        "postcss": "^8.4.35",
+        "tailwindcss": "^3.4.1",
+        "vite": "^5.1.1"
     }
 }
