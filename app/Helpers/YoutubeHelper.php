@@ -11,7 +11,7 @@ class YoutubeHelper
     /**
      * Get the YouTube channel_id of a channel.
      *
-     * @param  string  $url the url of the channel
+     * @param  string  $url  the url of the channel
      * @return string the YouTube channel_id
      */
     private static function getChannelId(string $url): string
@@ -28,7 +28,7 @@ class YoutubeHelper
     /**
      * Get YouTube channel data.
      *
-     * @param  string  $url the url to the channel
+     * @param  string  $url  the url to the channel
      * @return Response the data provided by YouTube
      *
      * @throws Exception thrown when response has no data
