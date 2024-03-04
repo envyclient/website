@@ -2684,20 +2684,20 @@
         },
         {
             "name": "overtrue/laravel-favorite",
-            "version": "5.1.3",
+            "version": "5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/laravel-favorite.git",
-                "reference": "c491f1f1cd16cc4a3d3dc52cf9c453d0d95c003e"
+                "reference": "718c978762747fb056328c569b050c851c11e9e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/overtrue/laravel-favorite/zipball/c491f1f1cd16cc4a3d3dc52cf9c453d0d95c003e",
-                "reference": "c491f1f1cd16cc4a3d3dc52cf9c453d0d95c003e",
+                "url": "https://api.github.com/repos/overtrue/laravel-favorite/zipball/718c978762747fb056328c569b050c851c11e9e2",
+                "reference": "718c978762747fb056328c569b050c851c11e9e2",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^9.0|^10.0",
+                "laravel/framework": "^9.0|^10.0|^11.0",
                 "php": "^8.0.2"
             },
             "require-dev": {
@@ -2705,7 +2705,7 @@
                 "friendsofphp/php-cs-fixer": "^3.5",
                 "laravel/pint": "^1.2",
                 "mockery/mockery": "^1.4.4",
-                "orchestra/testbench": "^8.0",
+                "orchestra/testbench": "^8.0|^9.0",
                 "phpunit/phpunit": "^10.0.0"
             },
             "type": "library",
@@ -2742,7 +2742,7 @@
             "description": "User favorite features for Laravel Application.",
             "support": {
                 "issues": "https://github.com/overtrue/laravel-favorite/issues",
-                "source": "https://github.com/overtrue/laravel-favorite/tree/5.1.3"
+                "source": "https://github.com/overtrue/laravel-favorite/tree/5.2.0"
             },
             "funding": [
                 {
@@ -2750,7 +2750,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-22T00:51:31+00:00"
+            "time": "2024-03-02T01:25:18+00:00"
         },
         {
             "name": "phpoption/phpoption",
