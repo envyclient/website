@@ -1772,16 +1772,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.25.0",
+            "version": "3.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "4c44347133618cccd9b3df1729647a1577b4ad99"
+                "reference": "abbd664eb4381102c559d358420989f835208f18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/4c44347133618cccd9b3df1729647a1577b4ad99",
-                "reference": "4c44347133618cccd9b3df1729647a1577b4ad99",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/abbd664eb4381102c559d358420989f835208f18",
+                "reference": "abbd664eb4381102c559d358420989f835208f18",
                 "shasum": ""
             },
             "require": {
@@ -1846,7 +1846,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.25.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.25.1"
             },
             "funding": [
                 {
@@ -1858,7 +1858,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-09T17:06:45+00:00"
+            "time": "2024-03-16T12:53:19+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
@@ -1927,16 +1927,16 @@
         },
         {
             "name": "league/flysystem-local",
-            "version": "3.23.1",
+            "version": "3.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-local.git",
-                "reference": "b884d2bf9b53bb4804a56d2df4902bb51e253f00"
+                "reference": "61a6a90d6e999e4ddd9ce5adb356de0939060b92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/b884d2bf9b53bb4804a56d2df4902bb51e253f00",
-                "reference": "b884d2bf9b53bb4804a56d2df4902bb51e253f00",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/61a6a90d6e999e4ddd9ce5adb356de0939060b92",
+                "reference": "61a6a90d6e999e4ddd9ce5adb356de0939060b92",
                 "shasum": ""
             },
             "require": {
@@ -1970,8 +1970,7 @@
                 "local"
             ],
             "support": {
-                "issues": "https://github.com/thephpleague/flysystem-local/issues",
-                "source": "https://github.com/thephpleague/flysystem-local/tree/3.23.1"
+                "source": "https://github.com/thephpleague/flysystem-local/tree/3.25.1"
             },
             "funding": [
                 {
@@ -1983,7 +1982,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-26T18:25:23+00:00"
+            "time": "2024-03-15T19:58:44+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -2684,16 +2683,16 @@
         },
         {
             "name": "overtrue/laravel-favorite",
-            "version": "5.2.0",
+            "version": "5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/laravel-favorite.git",
-                "reference": "718c978762747fb056328c569b050c851c11e9e2"
+                "reference": "a1cfcc9c0d101a80ea55f422cffb856c929504ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/overtrue/laravel-favorite/zipball/718c978762747fb056328c569b050c851c11e9e2",
-                "reference": "718c978762747fb056328c569b050c851c11e9e2",
+                "url": "https://api.github.com/repos/overtrue/laravel-favorite/zipball/a1cfcc9c0d101a80ea55f422cffb856c929504ed",
+                "reference": "a1cfcc9c0d101a80ea55f422cffb856c929504ed",
                 "shasum": ""
             },
             "require": {
@@ -2742,7 +2741,7 @@
             "description": "User favorite features for Laravel Application.",
             "support": {
                 "issues": "https://github.com/overtrue/laravel-favorite/issues",
-                "source": "https://github.com/overtrue/laravel-favorite/tree/5.2.0"
+                "source": "https://github.com/overtrue/laravel-favorite/tree/5.2.1"
             },
             "funding": [
                 {
@@ -2750,7 +2749,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-02T01:25:18+00:00"
+            "time": "2024-03-18T11:26:52+00:00"
         },
         {
             "name": "phpoption/phpoption",
